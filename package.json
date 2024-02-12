@@ -1,18 +1,20 @@
 {
-  "name": "vite-vanilla-library",
+  "name": "buzzcasting-storage",
   "type": "module",
-  "version": "0.0.0",
+  "version": "1.0.2",
   "private": true,
   "exports": {
     ".": {
-      "import": "./dist/vite-vanilla-library.js",
-      "require": "./dist/vite-vanilla-library.cjs"
+      "import": "./dist/buzzcasting-storage.js",
+      "require": "./dist/buzzcasting-storage.cjs"
     }
   },
-  "main": "./dist/vite-vanilla-library.cjs",
-  "module": "./dist/vite-vanilla-library.js",
-  "types": "./dist/vite-vanilla-library.d.ts",
-  "files": ["dist"],
+  "main": "./dist/buzzcasting-storage.cjs",
+  "module": "./dist/buzzcasting-storage.js",
+  "types": "./dist/buzzcasting-storage.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -41,5 +43,9 @@
   },
   "lint-staged": {
     "*.ts": "pnpm run lint"
+  },
+  "dependencies": {
+    "dexie": "^3.2.5",
+    "idb-keyval": "^6.2.1"
   }
 }
