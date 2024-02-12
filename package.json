@@ -1,8 +1,11 @@
 {
   "name": "buzzcasting-storage",
-  "author": {"name": "Mark Tamis, TouchFlows SAS","email": "mark.tamis@touchflows.com"},
+  "author": {
+    "name": "Mark Tamis, TouchFlows SAS",
+    "email": "mark.tamis@touchflows.com"
+  },
   "type": "module",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "private": false,
   "exports": {
     ".": {
