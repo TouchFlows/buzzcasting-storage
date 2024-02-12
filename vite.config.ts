@@ -15,6 +15,7 @@ export default defineConfig({
       name: camelCase(packageName, { pascalCase: true }),
       fileName: packageName,
     },
+    minify: 'esbuild'
   },
   plugins: [
     dts({ rollupTypes: true }),

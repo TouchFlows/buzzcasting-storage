@@ -1,8 +1,9 @@
 {
   "name": "buzzcasting-storage",
+  "author": {"name": "Mark Tamis, TouchFlows SAS","email": "mark.tamis@touchflows.com"},
   "type": "module",
   "version": "1.0.2",
-  "private": true,
+  "private": false,
   "exports": {
     ".": {
       "import": "./dist/buzzcasting-storage.js",
