@@ -7,6 +7,7 @@ export default antfu({
     'node_modules',
   ],
   rules: {
+    'no-console': 0,
     'style/brace-style': ['error', '1tbs'],
     'style/arrow-parens': ['error', 'always'],
     'curly': ['error', 'all'],

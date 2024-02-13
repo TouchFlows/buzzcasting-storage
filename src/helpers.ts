@@ -1,58 +1,61 @@
-import { IQuery } from "./interfaces/IQuery";
-import { IStorageManager } from "./interfaces/IStorageManager";
+import type { IQuery } from './interfaces/IQuery'
+import type { IStorageOptions } from './interfaces/IStorageOptions'
 
-export const getKey = (query: IQuery): string => {
-  let key = `${query.type}.${query.topics}`;
-  if (query.hasOwnProperty("order")) {
-    key += `.${query.order}`;
+export function getKey(query: IQuery): string {
+  let key = `${query.type}.${query.topics}`
+  if (query.order) {
+    key += `.${query.order}`
   }
-  if (query.hasOwnProperty("period")) {
-    key += `.${query.period}`;
+  if (query.period) {
+    key += `.${query.period}`
   }
-  return key;
-};
-
-export function moderation(options: IStorageManager, query: IQuery): IQuery {
-  switch (options.moderation) {
-    case "before":
-      const date = new Date();
-      const Hms = options.beforeTime?.split(":"); // default = '00:00:00'
-      const H = parseInt(Hms ? Hms[0] : '00'),
-        m = parseInt(Hms ? Hms[1] : "00"),
-        s = parseInt(Hms ? Hms[2] : "00");
-      query.before = date.setHours(H, m, s, 0) / 1000;
-      if (!query.hasOwnProperty("period")) {
-        query.period = date.getDay() === 1 ? 72 : 24; // take the weekend or just yesterday
-      }
-      break;
-    case "delayed":
-      if (options.delay && options.delay > 0) {
-        query.delay = `${options.delay}`;
-      }
-      break;
-    case "approved":
-      query.approved = "1";
-      break;
-    default:
-      if (options.period !== 0) {
-        query.period = options.period;
-      }
-  }
-  return query;
+  return key
 }
 
-const awaitTimeout = (delay: number, reason: string) =>
-  new Promise((resolve, reject) =>
+export function moderation(options: IStorageOptions, query: IQuery): IQuery {
+  let date: Date, Hms: string[] | undefined, H: number, m: number, s: number
+  switch (options.moderation) {
+    case 'before':
+      date = new Date()
+      Hms = options.beforeTime?.split(':') // default = '00:00:00'
+      H = Number.parseInt(Hms ? Hms[0] : '00')
+      m = Number.parseInt(Hms ? Hms[1] : '00')
+      s = Number.parseInt(Hms ? Hms[2] : '00')
+      query.before = date.setHours(H, m, s, 0) / 1000
+      if (!query.period) {
+        query.period = date.getDay() === 1 ? 72 : 24 // take the weekend or just yesterday
+      }
+      break
+    case 'delayed':
+      if (options.delay && options.delay > 0) {
+        query.delay = `${options.delay}`
+      }
+      break
+    case 'approved':
+      query.approved = '1'
+      break
+    default:
+      if (options.period !== 0) {
+        query.period = options.period
+      }
+  }
+  return query
+}
+
+function awaitTimeout(delay: number, reason: string) {
+  return new Promise((resolve, reject) =>
     setTimeout(
-      () => (reason === undefined ? resolve("ok") : reject(reason)),
-      delay
-    )
-  );
+      () => (reason === undefined ? resolve('ok') : reject(reason)),
+      delay,
+    ),
+  )
+}
 
-export const wrapPromise = (promise: any, delay: number, reason: string) =>
-  Promise.race([promise, awaitTimeout(delay, reason)]);
+export function wrapPromise(promise: any, delay: number, reason: string) {
+  return Promise.race([promise, awaitTimeout(delay, reason)])
+}
 
-export const getParameterByName = (key: string) => {
-  const match = RegExp("[?&]" + key + "=([^&]*)").exec(window.location.search);
-  return match && decodeURIComponent(match[1].replace(/\+/g, " "));
-};
+export function getParameterByName(key: string) {
+  const match = RegExp(`[?&]${key}=([^&]*)`).exec(window.location.search)
+  return match && decodeURIComponent(match[1].replace(/\+/g, ' '))
+}

@@ -1,20 +1,18 @@
 {
   "name": "buzzcasting-storage",
+  "type": "module",
+  "version": "2.0.1",
+  "private": false,
   "author": {
     "name": "Mark Tamis, TouchFlows SAS",
     "email": "mark.tamis@touchflows.com"
   },
-  "type": "module",
-  "version": "1.0.3",
-  "private": false,
   "exports": {
     ".": {
-      "import": "./dist/buzzcasting-storage.js",
-      "require": "./dist/buzzcasting-storage.cjs"
+      "import": "./dist/buzzcasting-storage.esm.js"
     }
   },
-  "main": "./dist/buzzcasting-storage.cjs",
-  "module": "./dist/buzzcasting-storage.js",
+  "module": "./dist/buzzcasting-storage.esm.js",
   "types": "./dist/buzzcasting-storage.d.ts",
   "files": [
     "dist"
@@ -22,12 +20,16 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "release": "pnpm test && pnpm build && changelogen --release && pnpm publish && git push --follow-tags",
+    "release": "npm test && pnpm build && changelogen --release && npm publish && git push --follow-tags",
     "lint": "eslint . --fix",
     "test": "vitest --run",
     "test:watch": "vitest",
     "test:coverage": "vitest --coverage",
     "prepare": "husky install"
+  },
+  "dependencies": {
+    "dexie": "^4.0.1-beta.10",
+    "idb-keyval": "^6.2.1"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.6.4",
@@ -47,9 +49,5 @@
   },
   "lint-staged": {
     "*.ts": "pnpm run lint"
-  },
-  "dependencies": {
-    "dexie": "^3.2.5",
-    "idb-keyval": "^6.2.1"
   }
 }

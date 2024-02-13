@@ -2,6 +2,8 @@
 
 This is a wrapper class to use multiple storage options with BuzzCasting.
 
+BuzzCasting Social Media Wall & Dataviz [More info](https://www.touchflows.com/services-buzzcasting-social-media-wall/).
+
 Currently supported are: Local Storage, Session Storage, IDB Keyval, Dexie, Window object
 
 ## Features
@@ -17,8 +19,13 @@ Currently supported are: Local Storage, Session Storage, IDB Keyval, Dexie, Wind
 ## Get started
 
 Example call:
+
 ```js
-import BuzzcastingStorageManager, { IQuery, IStorageManager } from 'buzzcasting-storage'
+import BuzzcastingStorageManager, {
+  IMessages,
+  IQuery,
+  IStorageManager,
+} from 'buzzcasting-storage'
 
 const options: IStorageManager = {
   app: 'my-subdomain',
@@ -30,24 +37,41 @@ const options: IStorageManager = {
   beforeTime: null,
   delay: 0,
   period: 0,
-};
+}
 
-let storageManager = new BuzzcastingStorageManager(options)
+const storageManager = new BuzzcastingStorageManager(options)
 
 const query: IQuery = {
   type: 'messages',
   dashboard: 'dashboard_id',
-  widget: 'widget_id'
+  widget: 'widget_id',
 }
 
-const data = storageManager.getMessages(query)
+const data: IMessages = storageManager.getMessages(query)
 ```
 
 This will initiate a call to the buzzcasting backoffice to retrieve results
 
-### GitHub Template
+The Storage Manager will carry out the API call for the subscriber, and send out a BroadcastChannel on `app` to inform the subcriber that it can retrieve new data. The broadcast channel facilitates its incorporation in for example a Web Worker.
 
-This is a template repo. Click the green [Use this template](https://github.com/hywax/vite-vanilla-library-template/generate) button to get started.
+```js
+const broadcastChannel = new BroadcastChannel('my-subdomain')
+
+broadcastChannel.onmessage = (messageEvent: MessageEvent) => {
+  this.actions(messageEvent)
+}
+
+actions = (messageEvent: MessageEvent) => {
+  switch (messageEvent.data.event) {
+    case 'widget-update':
+      // handle update
+      this.widgetUpdated.emit(messageEvent.data.data)
+      break
+    default:
+      // console.log('[storage]', messageEvent.data)
+  }
+}
+```
 
 ### Git Clone
 
@@ -55,7 +79,7 @@ This is a template repo. Click the green [Use this template](https://github.com/
 git clone https://github.com/TouchFlows/buzzcasting-storage.git
 cd buzzcasting-storage
 pnpm install
-```
+````
 
 ## Usage
 

@@ -8,14 +8,24 @@ import packageJson from './package.json'
 const packageName = packageJson.name.split('/').pop() || packageJson.name
 
 export default defineConfig({
+
   build: {
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
-      formats: ['es', 'cjs', 'umd', 'iife'],
-      name: camelCase(packageName, { pascalCase: true }),
-      fileName: packageName,
+      formats: ['es'],
+      name: `${camelCase(packageName, { pascalCase: true })}`,
+      fileName: (format) => {
+        let name: string = ''
+        switch (format) {
+          case 'es':
+            name = `${packageName}.esm.js`
+            break
+        }
+        return name
+      },
+
     },
-    minify: 'esbuild'
+    minify: 'esbuild',
   },
   plugins: [
     dts({ rollupTypes: true }),

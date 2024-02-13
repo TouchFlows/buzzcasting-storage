@@ -7,9 +7,9 @@ trim_trailing_whitespace = true
 charset = utf-8
 
 [*.ts]
-indent_style = space
+indent_style = tab
 indent_size = 2
 
 [{package.json,*.yml,*.cjson}]
-indent_style = space
+indent_style = tab
 indent_size = 2
