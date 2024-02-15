@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.1.0
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.0.8...v2.1.0)
+
+### 🚀 Enhancements
+
+- Add has to call to avoid updating widgets ([9403ec1](https://github.com/TouchFlows/buzzcasting-storage/commit/9403ec1))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.0.8
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.0.2...v2.0.8)
