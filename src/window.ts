@@ -1,4 +1,4 @@
-import { MESSAGES } from './constants'
+import { API_CSS, MESSAGES } from './constants'
 import { getKey, moderation } from './helpers'
 import type { IQuery } from './interfaces/IQuery'
 import type { IStorageOptions } from './interfaces/IStorageOptions'
@@ -105,6 +105,12 @@ export default class WindowClient {
     if (widgetExists.length) {
       return
     }
+    console.info(
+      '%cstorage',
+      API_CSS,
+      'subscribe',
+      query,
+    )
     this.subscribers.push(query)
   }
 

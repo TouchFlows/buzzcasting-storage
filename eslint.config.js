@@ -7,6 +7,8 @@ export default antfu({
     'node_modules',
   ],
   rules: {
+    'style/no-tabs': 0,
+    'style/no-mixed-spaces-and-tabs': 0,
     'no-console': 0,
     'style/brace-style': ['error', '1tbs'],
     'style/arrow-parens': ['error', 'always'],

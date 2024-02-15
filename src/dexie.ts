@@ -1,6 +1,6 @@
 import Dexie from 'dexie'
 import { moderation } from './helpers'
-import { CLOUD, MESSAGES, SERIES, TOPICS } from './constants'
+import { CLOUD, MESSAGES, SERIES, STORAGE_CSS, TOPICS } from './constants'
 import type { IStorageOptions } from './interfaces/IStorageOptions'
 import type { IQuery } from './interfaces/IQuery'
 import type { Message } from './interfaces/IMessages'
@@ -190,7 +190,12 @@ export default class DexieClient {
     if (query.type === MESSAGES) {
       query = moderation(this.options, query)
     }
-    console.log('[storage] subscribe', query)
+    console.info(
+      '%cstorage',
+      STORAGE_CSS,
+      'subscribe',
+      query,
+    )
     this.subscribers.push(query)
   }
 

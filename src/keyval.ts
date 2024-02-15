@@ -1,6 +1,6 @@
 import { get, set } from 'idb-keyval'
 import { getKey, moderation } from './helpers'
-import { MESSAGES } from './constants'
+import { MESSAGES, STORAGE_CSS } from './constants'
 import type { IQuery } from './interfaces/IQuery'
 import type { IStorageOptions } from './interfaces/IStorageOptions'
 
@@ -85,7 +85,12 @@ export default class KeyvalClient {
     if (alreadySubscribed > 0) {
       return
     }
-
+    console.info(
+      '%cstorage',
+      STORAGE_CSS,
+      'subscribe',
+      query,
+    )
     this.subscribers.push(query)
   }
 

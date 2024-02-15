@@ -5,8 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite App</title>
   </head>
-<body>
-  <div id="app"></div>
-  <script type="module" src="/src/index.ts"></script>
-</body>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/index.ts"></script>
+    <script type="module">
+      import BuzzcastingStorageManager from '.'
+      let options = {
+        app: "axa",
+        domain: "axa.buzzcasting.net",
+        version: "v4",
+        token: "meta",
+        bearer: "1|snwLu2jVj1ic4RG4QtObNHXesofnbmgUgcyrTC2u",
+        storage: "dexie",
+        channel: "01gr6c1g92dyy7mdmm192b8064",
+        display: "",
+        moderation: "realtime",
+        beforeTime: "00:00:00",
+        delay: 0,
+        period: 0,
+        slide: "slide8",
+      };
+      const query = {
+        type: "messages",
+        topics: "lcjp1nuo_donwf3cnmfjq-921324a3_2858_43b5_928d_ab6278369186",
+        dashboard: "lcjp1nuo_donwf3cnmfjq",
+        widget: "921324a3_2858_43b5_928d_ab6278369186",
+        slide:options.slide
+      };
+
+      const bc = new BroadcastChannel(options.slide);
+      let storageManager = new BuzzcastingStorageManager(options);
+      bc.postMessage({ event: "subscribe", data: query });
+      bc.postMessage({ event: "update" });
+
+    </script>
+  </body>
 </html>

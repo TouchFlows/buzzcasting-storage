@@ -1,3 +1,4 @@
+import { API_CSS } from './constants'
 import type { IQuery } from './interfaces/IQuery'
 import type { IStorageOptions } from './interfaces/IStorageOptions'
 
@@ -32,38 +33,41 @@ export default class ApiClient {
     }
   }
 
-  private csrf = () => {
-    if (!this.options?.csrf) {
-      return
-    }
-    // return authorization header with jwt token
+  private headers = () => {
+    const token = `Bearer ${this.options.bearer}`
     return {
       headers: new Headers({
-        'X-Csrf-Token': this.options?.csrf,
+        Authorization: token,
+        Accept: 'application/json',
+        // 'X-Session-Key': localStorage.getItem('guid') || 'invalid',
       }),
     }
   }
 
   public async get(query: IQuery): Promise<any> {
-    const authHeader = this.auth()
-    const csrfHeader = this.csrf()
-
-    const headers = { ...authHeader, ...csrfHeader }
+    const { version }: IStorageOptions = this.options
+    const headers = this.headers()
 
     const search = Object.assign({}, query)
+    delete search.slide
     delete search.type
     const params
-      = Object.keys(search).length > 0
-        ? `?${new URLSearchParams(search).toString()}`
-        : ''
-
+			= Object.keys(search).length > 0
+			  ? `?${new URLSearchParams(search).toString()}`
+			  : ''
+    console.debug(
+      '%capi',
+      API_CSS,
+      query.slide,
+      query.widget,
+    )
     return await fetch(
-      [this.url, 'api', this.options.version, query.type].join('/') + params,
+      [this.url, 'api', version, query.type].join('/') + params,
       { ...headers, method: 'get' },
     )
-      .then((response) => {
+      .then(async (response) => {
         if (!response.ok) {
-          throw new Error(response.statusText)
+          throw new Error(`${response.status}`)
         }
         return response
       })
@@ -74,8 +78,8 @@ export default class ApiClient {
         json.query = query
         return json
       })
-      .catch((message) => {
-        return { succes: false, message, data: [] }
+      .catch((code) => {
+        return { succes: false, status: Number.parseInt(code), data: [] }
       })
   }
 
@@ -83,7 +87,10 @@ export default class ApiClient {
     const { app, version }: IStorageOptions = this.options
     const args = this.auth()
     const params = '?action=visible'
-    console.log(
+    console.info(
+      '%capi',
+      API_CSS,
+      'hide',
       [app, 'api', version, query.type, query.id].join('/') + params,
       { ...args, method: 'put' },
     )

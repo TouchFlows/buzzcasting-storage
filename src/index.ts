@@ -7,9 +7,11 @@ import WindowClient from './window'
 import type { IQuery } from './interfaces/IQuery'
 import type { IStorageOptions } from './interfaces/IStorageOptions'
 import {
+  BROADCAST_CSS,
   CLOUD,
   MESSAGES,
   SERIES,
+  STORAGE_CSS,
   STORAGE_DEXIE,
   STORAGE_KEYVAL,
   STORAGE_LOCAL,
@@ -49,7 +51,12 @@ export default class BuzzcastingStorageManager {
 
     const broadcast = options?.slide || options.app
     this.bc = new BroadcastChannel(broadcast)
-    console.debug('[broadcast] channel', broadcast)
+    console.info(
+      '%cbroadcast',
+      BROADCAST_CSS,
+      'channel',
+      broadcast,
+    )
     this.bc.onmessage = (messageEvent: MessageEvent) => {
       this.actions(messageEvent)
     }
@@ -87,40 +94,61 @@ export default class BuzzcastingStorageManager {
     subscribers?.forEach((dataset) => {
       subscriberQuery.push(this.api.get(dataset))
     })
+
     await Promise.allSettled(subscriberQuery).then((results) =>
       results.forEach(async (res) => {
         let status: number | void = 400
         if (res.status === 'fulfilled') {
           const data = res.value
-          switch (data.query.type) {
-            case MESSAGES:
-              status = await this.sm?.setMessages(data.query, data)
+
+          if (data.success === true) {
+            switch (data.query.type) {
+              case MESSAGES:
+                status = await this.sm?.setMessages(data.query, data)
+                break
+              case CLOUD:
+                status = await this.sm?.setCloud(data.query, data)
+                break
+              case SERIES:
+                status = await this.sm?.setSeries(data.query, data)
+                break
+              default:
+                console.warn(
+                  '%cstorage',
+                  STORAGE_CSS,
+                  'error',
+									`data type ${data.query.type} unknown`,
+                )
+            }
+          } else {
+            status = 401
+          }
+          switch (status) {
+            case 201:
+              console.info(
+                '%cbroadcast',
+                BROADCAST_CSS,
+                data.query.slide,
+                data.data.title ?? data.query.widget,
+              )
+              this.bc.postMessage({ event: 'widget-update', data: data.query })
               break
-            case CLOUD:
-              status = await this.sm?.setCloud(data.query, data)
-              break
-            case SERIES:
-              status = await this.sm?.setSeries(data.query, data)
+            case 400:
+              console.warn(
+                '%cbroadcast',
+                BROADCAST_CSS,
+                data.query.slide,
+                data.data.title ?? data.query.widget,
+              )
               break
             default:
-              console.warn(`[storage] data type ${data.query.type} unknown`)
-          }
-          if (status === 201) {
-            console.debug(
-              '[broadcast]',
-              data.data.title ?? data.query.widget,
-              data.query,
-            )
-            this.bc.postMessage({ event: 'widget-update', data: data.query })
-          } else {
-            console.warn(
-              '[broadcast]',
-              data.data.title ?? data.query.widget,
-              data.query,
-            )
           }
         } else {
-          console.warn('[storage] error]')
+          console.warn(
+            '%cstorage',
+            STORAGE_CSS,
+            'error',
+          )
         }
       }),
     )
@@ -136,7 +164,12 @@ export default class BuzzcastingStorageManager {
         this.sm?.subscribe(messageEvent.data.data)
         break
       case 'update':
-        console.debug('[storage] update', messageEvent.data)
+        console.debug(
+          '%cstorage',
+          STORAGE_CSS,
+          'update',
+          messageEvent.data,
+        )
         await this.update()
         break
       default:
