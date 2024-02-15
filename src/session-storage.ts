@@ -11,7 +11,7 @@ import type { IQuery } from './interfaces/IQuery'
 import type { IStorageOptions } from './interfaces/IStorageOptions'
 
 export default class SessionStorageClient {
-  private subscribers: Array<any> = []
+  public subscribers: Array<any> = []
   private options: IStorageOptions
 
   constructor(options: IStorageOptions) {

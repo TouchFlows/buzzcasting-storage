@@ -16,4 +16,5 @@ export declare interface IQuery {
   hrm?: string
   before?: number
   since?: number
+  hash?: string
 }

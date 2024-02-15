@@ -30,6 +30,7 @@ export default class ApiClient {
     const search = Object.assign({}, query)
     delete search.slide
     delete search.type
+    delete search.hash
     const params
 			= Object.keys(search).length > 0
 			  ? `?${new URLSearchParams(search).toString()}`

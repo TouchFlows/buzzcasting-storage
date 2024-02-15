@@ -7,6 +7,7 @@ import WindowClient from './window'
 import type { IQuery } from './interfaces/IQuery'
 import type { IStorageOptions } from './interfaces/IStorageOptions'
 import {
+  API_CSS,
   BROADCAST_CSS,
   CLOUD,
   MESSAGES,
@@ -18,6 +19,7 @@ import {
   STORAGE_SESSION,
   STORAGE_WINDOW,
 } from './constants'
+import { sum } from './utils/hash-sum'
 
 declare global {
   interface Window {
@@ -48,12 +50,7 @@ export default class BuzzcastingStorageManager {
 
     const broadcast = options?.slide || options.app
     this.bc = new BroadcastChannel(broadcast)
-    console.info(
-      '%cbroadcast',
-      BROADCAST_CSS,
-      'channel',
-      broadcast,
-    )
+    console.info('%cbroadcast', BROADCAST_CSS, 'channel', broadcast)
     this.bc.onmessage = (messageEvent: MessageEvent) => {
       this.actions(messageEvent)
     }
@@ -77,7 +74,7 @@ export default class BuzzcastingStorageManager {
         this.sm = new WindowClient(options)
         break
       default:
-        // this.sm = null
+			// this.sm = null
     }
   }
 
@@ -91,8 +88,8 @@ export default class BuzzcastingStorageManager {
     }
     const subscriberQuery: any[] = []
     // Paralelize calls
-    subscribers?.forEach((dataset) => {
-      subscriberQuery.push(this.api.get(dataset))
+    subscribers?.forEach((query: IQuery) => {
+      subscriberQuery.push(this.api.get(query))
     })
 
     await Promise.allSettled(subscriberQuery).then((results) =>
@@ -100,17 +97,66 @@ export default class BuzzcastingStorageManager {
         let status: number | void = 400
         if (res.status === 'fulfilled') {
           const data = res.value
-
+          if (this.sm === null) {
+            return 400
+          }
           if (data.success === true) {
+            const previousQuery = this.sm.subscribers.filter(
+              (query: IQuery) => query.widget === data.query.widget,
+            )[0]
+            let newHash: string | any[] = ''
             switch (data.query.type) {
               case MESSAGES:
-                status = await this.sm?.setMessages(data.query, data)
+                newHash = sum(data.data.messages)
+                if (previousQuery.hash === newHash) {
+                  console.info(
+                    '%capi',
+                    API_CSS,
+                    MESSAGES,
+                    'no updates',
+                    data.query.slide,
+                    data.query.widget,
+                  )
+                  return 204
+                } else {
+                  previousQuery.hash = newHash
+                  status = await this.sm.setMessages(data.query, data)
+                }
+
                 break
               case CLOUD:
-                status = await this.sm?.setCloud(data.query, data)
+                newHash = sum(data.data)
+                if (previousQuery.hash === newHash) {
+                  console.info(
+                    '%capi',
+                    API_CSS,
+                    CLOUD,
+                    'no updates',
+                    data.query.slide,
+                    data.query.widget,
+                  )
+                  status = 204
+                } else {
+                  previousQuery.hash = newHash
+                  status = await this.sm.setCloud(data.query, data)
+                }
                 break
               case SERIES:
-                status = await this.sm?.setSeries(data.query, data)
+                newHash = sum(data.data)
+                if (previousQuery.hash === newHash) {
+                  console.info(
+                    '%capi',
+                    API_CSS,
+                    SERIES,
+                    'no updates',
+                    data.query.slide,
+                    data.query.widget,
+                  )
+                  status = 204
+                } else {
+                  previousQuery.hash = newHash
+                  status = await this.sm.setSeries(data.query, data)
+                }
                 break
               default:
                 console.warn(
@@ -143,12 +189,10 @@ export default class BuzzcastingStorageManager {
               break
             default:
           }
+          return status
         } else {
-          console.warn(
-            '%cstorage',
-            STORAGE_CSS,
-            'error',
-          )
+          console.warn('%cstorage', STORAGE_CSS, 'error')
+          return 400
         }
       }),
     )
@@ -164,12 +208,7 @@ export default class BuzzcastingStorageManager {
         this.sm?.subscribe(messageEvent.data.data)
         break
       case 'update':
-        console.debug(
-          '%cstorage',
-          STORAGE_CSS,
-          'update',
-          messageEvent.data,
-        )
+        console.debug('%cstorage', STORAGE_CSS, 'update', messageEvent.data)
         await this.update()
         break
       default:
@@ -180,6 +219,11 @@ export default class BuzzcastingStorageManager {
     const retentionDuration = this.options?.retention || 86400 * 4
     return await this.sm?.cleanMessages(retentionDuration)
   }
+
+  // TODO: add checksum to avoid broadcasting update
+  // private setHash(widget: string) {
+
+  // }
 
   public getSubscribers = async () => {
     return await this.sm?.getSubscribers()

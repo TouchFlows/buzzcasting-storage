@@ -16,7 +16,7 @@ import type { Message } from './interfaces/IMessages'
 
 export default class DexieClient {
   private db: Dexie
-  private subscribers: Array<any> = []
+  public subscribers: Array<any> = []
   private options: IStorageOptions
 
   constructor(options: IStorageOptions) {
