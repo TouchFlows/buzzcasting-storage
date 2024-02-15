@@ -27,6 +27,8 @@ declare global {
   }
 }
 
+export * from './interfaces/IQuery'
+
 export * from './interfaces/IStorageOptions'
 
 export * from './constants'
