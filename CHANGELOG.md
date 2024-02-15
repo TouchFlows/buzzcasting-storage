@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.1.1
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.1.0...v2.1.1)
+
+### 🩹 Fixes
+
+- Missing IQuery export ([effe887](https://github.com/TouchFlows/buzzcasting-storage/commit/effe887))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.1.0
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.0.8...v2.1.0)
