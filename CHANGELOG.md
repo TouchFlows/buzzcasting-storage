@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v2.0.8
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.0.2...v2.0.8)
+
+### 🩹 Fixes
+
+- Broadcasting logging ([6ad5760](https://github.com/TouchFlows/buzzcasting-storage/commit/6ad5760))
+
+### 📦 Build
+
+- Remove get accessors ([d9007fb](https://github.com/TouchFlows/buzzcasting-storage/commit/d9007fb))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.0.7
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.0.2...v2.0.7)
