@@ -25,10 +25,6 @@ declare global {
   }
 }
 
-export * from './interfaces/IQuery'
-
-export * from './interfaces/IMessages'
-
 export * from './interfaces/IStorageOptions'
 
 export * from './constants'
@@ -48,6 +44,7 @@ export default class BuzzcastingStorageManager {
 
   constructor(options: IStorageOptions) {
     this.options = options
+    this.sm = null
 
     const broadcast = options?.slide || options.app
     this.bc = new BroadcastChannel(broadcast)
@@ -80,13 +77,16 @@ export default class BuzzcastingStorageManager {
         this.sm = new WindowClient(options)
         break
       default:
-        this.sm = null
+        // this.sm = null
     }
   }
 
   public update = async () => {
-    const subscribers = this.sm?.getSubscribers()
-    if (subscribers?.length === 0) {
+    if (this.sm === null) {
+      return
+    }
+    const subscribers = await this.sm.getSubscribers()
+    if (subscribers.length === 0) {
       return
     }
     const subscriberQuery: any[] = []
@@ -174,18 +174,6 @@ export default class BuzzcastingStorageManager {
         break
       default:
     }
-  }
-
-  public getCloud = async (query: IQuery) => {
-    return await this.sm?.getCloud(query)
-  }
-
-  public getSeries = async (query: IQuery) => {
-    return await this.sm?.getSeries(query)
-  }
-
-  public getMessages = async (query: IQuery) => {
-    return await this.sm?.getMessages(query)
   }
 
   public cleanMessages = async () => {

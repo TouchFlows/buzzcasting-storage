@@ -5,14 +5,14 @@ export declare interface IQuery {
   widget?: string
   compare?: string
   period?: number
-  type?: 'cloud' | 'messages' | 'indicators' | 'proxy'
+  type?: 'cloud' | 'messages' | 'series' | 'proxy'
   order?: string
   media?: number
   dynamics?: number
   geo?: number
   delay?: string
   approved?: string
-  moderation?: 'realtime' | 'delayed' | 'approved'
+  moderation?: 'realtime' | 'delayed' | 'approved' | 'none'
   hrm?: string
   before?: number
   since?: number

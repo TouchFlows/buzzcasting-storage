@@ -1,6 +1,13 @@
-import { get, set } from 'idb-keyval'
+import { set } from 'idb-keyval'
 import { getKey, moderation } from './helpers'
-import { MESSAGES, STORAGE_CSS } from './constants'
+import {
+  CLOUD,
+  MESSAGES,
+  SERIES,
+  STORAGE_CSS,
+  SUBSCRIBE,
+  WIDGET,
+} from './constants'
 import type { IQuery } from './interfaces/IQuery'
 import type { IStorageOptions } from './interfaces/IStorageOptions'
 
@@ -12,7 +19,13 @@ export default class KeyvalClient {
     this.options = options
   }
 
-  setCloud = async (query: IQuery, data: any) => {
+  /**
+   * Update Cloud
+   * @param query IQuery
+   * @param data
+   * @returns number
+   */
+  setCloud = async (query: IQuery, data: any): Promise<number> => {
     if (!data.success) {
       return 400
     }
@@ -21,15 +34,19 @@ export default class KeyvalClient {
     delete data.message
     return await set(key, data)
       .then(() => 201)
-      .catch(() => 400)
+      .catch((error: Error) => {
+        console.error('%cstorage', STORAGE_CSS, CLOUD, query, error)
+        return 400
+      })
   }
 
-  getCloud = async (query: IQuery) => {
-    const key = getKey(query)
-    return await get(key)
-  }
-
-  setSeries = async (query: IQuery, data: any) => {
+  /**
+   * Update Series
+   * @param query IQuery
+   * @param data
+   * @returns bumber
+   */
+  setSeries = async (query: IQuery, data: any): Promise<number> => {
     if (!data.success) {
       return 400
     }
@@ -38,15 +55,19 @@ export default class KeyvalClient {
     delete data.message
     return await set(key, data)
       .then(() => 201)
-      .catch(() => 400)
+      .catch((error: Error) => {
+        console.error('%cstorage', STORAGE_CSS, SERIES, query, error)
+        return 400
+      })
   }
 
-  getSeries = async (query: IQuery) => {
-    const key = getKey(query)
-    return await get(key)
-  }
-
-  setMessages = async (query: IQuery, data: any) => {
+  /**
+   * Update Messages
+   * @param query IQuery
+   * @param data
+   * @returns number
+   */
+  setMessages = async (query: IQuery, data: any): Promise<number> => {
     if (!data.success) {
       return 400
     }
@@ -55,14 +76,10 @@ export default class KeyvalClient {
     delete data.message
     return await set(key, data)
       .then(() => 201)
-      .catch(() => 400)
-  }
-
-  getMessages = async (query: IQuery) => {
-    const key = getKey(query)
-    return await get(key)
-      .then((data) => data)
-      .catch(() => 400)
+      .catch((error: Error) => {
+        console.error('%cstorage', STORAGE_CSS, MESSAGES, query, error)
+        return 400
+      })
   }
 
   cleanMessages = async (_retentionDuration: number) => {
@@ -70,7 +87,32 @@ export default class KeyvalClient {
     return await new Promise<void>((resolve) => resolve())
   }
 
-  subscribe = (query: IQuery) => {
+  /**
+   * Update Cloud
+   * @param query IQuery
+   * @returns number
+   */
+  setWidget = async (query: IQuery): Promise<number> => {
+    const key = getKey(query)
+    const data = {
+      id: query.widget,
+      dashboard_id: query.dashboard,
+      type: query.type,
+    }
+    return await set(key, data)
+      .then(() => 201)
+      .catch((error: Error) => {
+        console.error('%cstorage', STORAGE_CSS, WIDGET, query, error)
+        return 400
+      })
+  }
+
+  /**
+   * Add component subscriber
+   * @param query IQuery
+   * @returns null
+   */
+  subscribe = (query: IQuery): null => {
     if (query.widget === undefined) {
       const topics = query.topics?.split('-')
       query.dashboard = topics ? topics[0] : ''
@@ -83,18 +125,18 @@ export default class KeyvalClient {
       (widget) => widget.widget === query.widget,
     ).length
     if (alreadySubscribed > 0) {
-      return
+      return null
     }
-    console.info(
-      '%cstorage',
-      STORAGE_CSS,
-      'subscribe',
-      query,
-    )
+    console.info('%cstorage', STORAGE_CSS, SUBSCRIBE, query.slide, query.widget)
     this.subscribers.push(query)
+    return null
   }
 
-  getSubscribers() {
-    return this.subscribers
+  /**
+   * Get current subscribers
+   * @returns IQuery[]
+   */
+  getSubscribers = async (): Promise<IQuery[]> => {
+    return await new Promise<IQuery[]>((resolve) => resolve(this.subscribers))
   }
 }

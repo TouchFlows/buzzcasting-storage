@@ -23,16 +23,17 @@ export declare interface Topic {
 }
 
 export declare interface Dynamics {
-  uniquecomments: number
-  engagement: number
-  likesandvotes: number
-  viewcount: number
-  inboundlinks: number
-  forumthread: number
-  shares: number
-  favourite: number
+  engagement?: number
   semrush_visits?: number
   potential_reach?: number
+  facebook_insights_reach?: number
+  facebook_insights_impressions?: number
+  facebook_insights_link_clicks?: number
+  twitter_shares?: number
+  facebook_shares?: number
+  twitter_insights_retweets?: number
+  total_comments: number
+  trending_score?: number
 }
 
 export declare interface Geo {

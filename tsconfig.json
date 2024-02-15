@@ -10,11 +10,11 @@
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "newLine": "lf",
     "noEmit": true,
     "sourceMap": true,
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "newLine": "lf"
+    "forceConsistentCasingInFileNames": true
   },
   "include": ["src/**/*"],
   "exclude": ["**/*.test.ts", "test/**", "node_modules"]

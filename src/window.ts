@@ -1,4 +1,4 @@
-import { API_CSS, MESSAGES } from './constants'
+import { MESSAGES, STORAGE_CSS, SUBSCRIBE, WIDGET } from './constants'
 import { getKey, moderation } from './helpers'
 import type { IQuery } from './interfaces/IQuery'
 import type { IStorageOptions } from './interfaces/IStorageOptions'
@@ -12,65 +12,53 @@ export default class WindowClient {
     window.BuzzCasting.WidgetData = new Set()
   }
 
+  /**
+   * Update Cloud
+   * @param query IQuery
+   * @param data
+   * @returns number
+   */
   setCloud = async (query: IQuery, data: any) => {
     const key = getKey(query)
     try {
       window.BuzzCasting.WidgetData[key] = data
       return 201
     } catch (error) {
-      console.debug('[storage] error', query)
+      console.error('%cstorage', STORAGE_CSS, 'set', query, error)
       return 400
     }
   }
 
-  getCloud = async (query: IQuery) => {
-    const key = getKey(query)
-    try {
-      return window.BuzzCasting.WidgetData[key]
-    } catch (error) {
-      console.debug('[storage] error', query)
-      return 400
-    }
-  }
-
-  setSeries = async (query: IQuery, data: any) => {
+  /**
+   * Update Series
+   * @param query IQuery
+   * @param data
+   * @returns number
+   */
+  setSeries = async (query: IQuery, data: any): Promise<number> => {
     const key = getKey(query)
     try {
       window.BuzzCasting.WidgetData[key] = data
       return 201
     } catch (error) {
-      console.debug('[storage] error', query)
+      console.error('%cstorage', STORAGE_CSS, 'set', query, error)
       return 400
     }
   }
 
-  getSeries = async (query: IQuery) => {
-    const key = getKey(query)
-    try {
-      return window.BuzzCasting.WidgetData[key]
-    } catch (error) {
-      console.debug('[storage] error', query)
-      return 400
-    }
-  }
-
+  /**
+   * Update Messages
+   * @param query IQuery
+   * @param data
+   * @returns number
+   */
   setMessages = async (query: IQuery, data: any) => {
     const key = getKey(query)
     try {
       window.BuzzCasting.WidgetData[key] = data
       return 201
     } catch (error) {
-      console.debug('[storage] error', query)
-      return 400
-    }
-  }
-
-  getMessages = async (query: IQuery) => {
-    const key = getKey(query)
-    try {
-      return window.BuzzCasting.WidgetData[key]
-    } catch (error) {
-      console.debug('[storage] error', query)
+      console.error('%cstorage', STORAGE_CSS, 'set', query, error)
       return 400
     }
   }
@@ -85,12 +73,17 @@ export default class WindowClient {
       window.BuzzCasting.WidgetData[key] = query
       return 201
     } catch (error) {
-      console.debug('[storage] error', query)
+      console.error('%cstorage', STORAGE_CSS, WIDGET, query, error)
       return 400
     }
   }
 
-  subscribe = (query: IQuery) => {
+  /**
+   * Add component subscriber
+   * @param query IQuery
+   * @returns null
+   */
+  subscribe = (query: IQuery): null => {
     if (query.widget === undefined) {
       const topics = query.topics?.split('-')
       query.dashboard = topics ? topics[0] : ''
@@ -103,18 +96,18 @@ export default class WindowClient {
       (widget) => widget.widget === query.widget,
     )
     if (widgetExists.length) {
-      return
+      return null
     }
-    console.info(
-      '%cstorage',
-      API_CSS,
-      'subscribe',
-      query,
-    )
+    console.info('%cstorage', STORAGE_CSS, SUBSCRIBE, query.slide, query.widget)
     this.subscribers.push(query)
+    return null
   }
 
-  getSubscribers(): any[] {
-    return this.subscribers
+  /**
+   * Get current subscribers
+   * @returns IQuery[]
+   */
+  getSubscribers = async (): Promise<IQuery[]> => {
+    return await new Promise<IQuery[]>((resolve) => resolve(this.subscribers))
   }
 }

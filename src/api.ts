@@ -1,5 +1,6 @@
 import { API_CSS } from './constants'
 import type { IQuery } from './interfaces/IQuery'
+import type { IResponse } from './interfaces/IResponse'
 import type { IStorageOptions } from './interfaces/IStorageOptions'
 
 export default class ApiClient {
@@ -9,28 +10,6 @@ export default class ApiClient {
   constructor(options: IStorageOptions) {
     this.options = options
     this.url = `https://${options.app}.buzzcasting.net`
-  }
-
-  private auth() {
-    // return authorization header with jwt token
-    if (!this.options?.token) {
-      return
-    }
-
-    let token: string = ''
-    switch (this.options.token) {
-      case 'meta':
-        token = `Bearer ${this.options.bearer}`
-        break
-      default:
-    }
-
-    return {
-      headers: new Headers({
-        Authorization: token,
-        // 'X-Session-Key': localStorage.getItem('guid') || 'invalid',
-      }),
-    }
   }
 
   private headers = () => {
@@ -44,7 +23,7 @@ export default class ApiClient {
     }
   }
 
-  public async get(query: IQuery): Promise<any> {
+  public async get(query: IQuery): Promise<IResponse> {
     const { version }: IStorageOptions = this.options
     const headers = this.headers()
 
@@ -65,27 +44,27 @@ export default class ApiClient {
       [this.url, 'api', version, query.type].join('/') + params,
       { ...headers, method: 'get' },
     )
-      .then(async (response) => {
+      .then(async (response: Response) => {
         if (!response.ok) {
           throw new Error(`${response.status}`)
         }
         return response
       })
-      .then((response) => {
+      .then((response: Response) => {
         return response.json()
       })
-      .then((json) => {
+      .then((json: IResponse): IResponse => {
         json.query = query
         return json
       })
       .catch((code) => {
-        return { succes: false, status: Number.parseInt(code), data: [] }
+        return { success: false, message: `${code}`, data: null }
       })
   }
 
   public async hideMessage(query: IQuery): Promise<any> {
     const { app, version }: IStorageOptions = this.options
-    const args = this.auth()
+    const args = this.headers()
     const params = '?action=visible'
     console.info(
       '%capi',
