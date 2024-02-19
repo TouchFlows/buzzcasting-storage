@@ -1,6 +1,20 @@
 # Changelog
 
 
+## v2.3.1
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.3.0...v2.3.1)
+
+### 🩹 Fixes
+
+- Export constants and interfaces ([8d2538a](https://github.com/TouchFlows/buzzcasting-storage/commit/8d2538a))
+- Export interfaces and constants ([fd7adde](https://github.com/TouchFlows/buzzcasting-storage/commit/fd7adde))
+- Remove interfaces from default export ([79769b7](https://github.com/TouchFlows/buzzcasting-storage/commit/79769b7))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.3.0
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.2.0...v2.3.0)
