@@ -1,11 +1,5 @@
 import { BuzzcastingStorageManager } from './manager'
 import { BuzzcastingStorageReader } from './reader'
-import { ICloud } from './interfaces/ICloud'
-import { IMessages } from './interfaces/IMessages'
-import { IQuery } from './interfaces/IQuery'
-import { IResponse } from './interfaces/IResponse'
-import { ISeries } from './interfaces/ISeries'
-import { IStorageOptions } from './interfaces/IStorageOptions'
 import {
   API_CSS,
   APP_CSS,
@@ -45,12 +39,6 @@ declare global {
 export {
   BuzzcastingStorageManager,
   BuzzcastingStorageReader,
-  ICloud,
-  IMessages,
-  IQuery,
-  IResponse,
-  ISeries,
-  IStorageOptions,
   MESSAGES,
   CLOUD,
   SERIES,
