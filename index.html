@@ -9,7 +9,7 @@
     <div id="app"></div>
     <script type="module" src="/src/index.ts"></script>
     <script type="module">
-      import BuzzcastingStorageManager from '.'
+      import { BuzzcastingStorageManager, BuzzcastingStorageReader } from '.'
       let options = {
         app: "axa",
         domain: "axa.buzzcasting.net",
@@ -34,10 +34,14 @@
       };
 
       const bc = new BroadcastChannel(options.slide);
-      let storageManager = new BuzzcastingStorageManager(options);
+      const sm = new BuzzcastingStorageManager(options);
+      const sr = new BuzzcastingStorageReader(options);
       bc.postMessage({ event: "subscribe", data: query });
       bc.postMessage({ event: "update" });
-      bc.postMessage({ event: "update" });
+      let data = await sr.getMessages(query)
+      console.log(data)
+      await bc.postMessage({ event: "update" });
+      console.log(data)
 
     </script>
   </body>

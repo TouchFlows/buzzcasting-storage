@@ -1,15 +1,17 @@
-import { set } from 'idb-keyval'
-import { getKey, moderation } from './helpers'
+import { get, set } from 'idb-keyval'
+import { getKey, moderation } from '../utils/helpers'
 import {
+  API_CSS,
   CLOUD,
   MESSAGES,
+  NONE,
   SERIES,
   STORAGE_CSS,
-  SUBSCRIBE,
+  SUBSCRIBE_CSS,
   WIDGET,
-} from './constants'
-import type { IQuery } from './interfaces/IQuery'
-import type { IStorageOptions } from './interfaces/IStorageOptions'
+} from '../constants'
+import type { IQuery } from '../interfaces/IQuery'
+import type { IStorageOptions } from '../interfaces/IStorageOptions'
 
 export default class KeyvalClient {
   public subscribers: Array<any> = []
@@ -17,6 +19,52 @@ export default class KeyvalClient {
 
   constructor(options: IStorageOptions) {
     this.options = options
+  }
+
+  getCloud = async (query: IQuery) => {
+    const key = getKey(query)
+    return await get(key).then((data) => data)
+      .catch(() => {
+        console.warn(
+          '%capi',
+          API_CSS,
+          CLOUD,
+          query.slide,
+          query.widget,
+        )
+        return { data: null, message: 'Cloud Data error', success: false }
+      })
+  }
+
+  getSeries = async (query: IQuery) => {
+    const key = getKey(query)
+    return await get(key).then((data) => data)
+      .catch(() => {
+        console.warn(
+          '%capi',
+          API_CSS,
+          SERIES,
+          query.slide,
+          query.widget,
+        )
+        return { data: null, message: 'Series Data error', success: false }
+      })
+  }
+
+  getMessages = async (query: IQuery) => {
+    const key = getKey(query)
+    return await get(key)
+      .then((data) => data)
+      .catch(() => {
+        console.warn(
+          '%capi',
+          API_CSS,
+          MESSAGES,
+          query.slide,
+          query.widget,
+        )
+        return { data: null, message: 'Messages Data error', success: false }
+      })
   }
 
   /**
@@ -127,7 +175,7 @@ export default class KeyvalClient {
     if (alreadySubscribed > 0) {
       return null
     }
-    console.info('%cstorage', STORAGE_CSS, SUBSCRIBE, query.slide, query.widget)
+    console.debug('%cstorage%c %csubscribe', STORAGE_CSS, NONE, SUBSCRIBE_CSS, query.slide, query.widget)
     this.subscribers.push(query)
     return null
   }

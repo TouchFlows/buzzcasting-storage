@@ -1,18 +1,24 @@
 import Dexie from 'dexie'
-import { moderation } from './helpers'
+import { moderation } from '../utils/helpers'
 import {
+  API_CSS,
   CLOUD,
+  CLOUD_CSS,
   MESSAGES,
+  MESSAGES_CSS,
+  NONE,
   SERIES,
+  SERIES_CSS,
   STORAGE_CSS,
-  SUBSCRIBE,
+  SUBSCRIBE_CSS,
   TOPICS,
   WIDGET,
   WIDGETS,
-} from './constants'
-import type { IStorageOptions } from './interfaces/IStorageOptions'
-import type { IQuery } from './interfaces/IQuery'
-import type { Message } from './interfaces/IMessages'
+} from '../constants'
+import type { IStorageOptions } from '../interfaces/IStorageOptions'
+import type { IQuery } from '../interfaces/IQuery'
+import type { IMessages, Message } from '../interfaces/IMessages'
+import type { IResponse } from '../interfaces/IResponse'
 
 export default class DexieClient {
   private db: Dexie
@@ -38,6 +44,137 @@ export default class DexieClient {
       widgets: 'id,dashboard_id,type',
     })
     this.db.open()
+  }
+
+  /**
+   * Retrieve Cloud Data
+   * @param query IQuery
+   * @returns IResponse
+   */
+  getCloud = async (query: IQuery): Promise<IResponse> => {
+    const data = await this.db
+      .table(CLOUD)
+      .where({ id: query.widget })
+      .last()
+      .catch(() => {
+        console.warn(
+          '%capi%C %ccloud',
+          API_CSS,
+          NONE,
+          CLOUD_CSS,
+          query.slide,
+          query.widget,
+        )
+        return { data: null, message: 'Series Data error', success: false }
+      })
+    data.data.presentation = query?.presentation || 'not set'
+    data.data.slide = query?.slide || 'not set'
+    data.message = 'Messages retrieved successfully'
+    data.success = true
+    return data
+  }
+
+  /**
+   * Retrieve Cloud Data
+   * @param query IQuery
+   * @returns IResponse
+   */
+  getSeries = async (query: IQuery): Promise<IResponse> => {
+    const data = await this.db
+      .table(SERIES)
+      .where({ id: query.widget })
+      .last()
+      .catch(() => {
+        console.warn(
+          '%capi%c %cseries',
+          API_CSS,
+          NONE,
+          SERIES_CSS,
+          query.slide,
+          query.widget,
+        )
+        return { data: null, message: 'Series Data error', success: false }
+      })
+    data.data.presentation = query?.presentation || 'not set'
+    data.data.slide = query?.slide || 'not set'
+    data.message = 'Messages retrieved successfully'
+    data.success = true
+    return data
+  }
+
+  /**
+   * Retrieve Cloud Data
+   * @param query IQuery
+   * @returns IResponse
+   */
+  getMessages = async (query: IQuery): Promise<IResponse> => {
+    const widgetFilter = (topic: { widget_id: string }) =>
+      topic.widget_id === query.widget
+
+    const sinceFilter = (topic: { utc: number }) =>
+      topic.utc > (query?.since || 0)
+
+    const visibleFilter = (topic: { visible: number | undefined }) =>
+      topic?.visible !== 0
+    try {
+      const topicMessages: any = await this.db
+        .table('topics')
+        .orderBy('utc')
+        .reverse()
+        .filter(widgetFilter)
+        .filter(sinceFilter)
+        .filter(visibleFilter)
+        .limit(query?.limit ?? 25)
+        .toArray()
+        .catch(() => {
+          console.warn(
+            '%capi%c %cmessages',
+            API_CSS,
+            NONE,
+            MESSAGES_CSS,
+            query.slide,
+            query.widget,
+          )
+          return { data: null, message: 'Messages Data error', success: false }
+        })
+
+      const title = topicMessages[0] ? topicMessages[0].title : 'No title'
+
+      const messageIds = topicMessages.map(
+        (message: { message_id: any }) => message.message_id,
+      )
+
+      // may not come back in order of call, so need to sort
+      const messages: any[] = await this.db
+        .table('messages')
+        .where('id')
+        .anyOf(messageIds)
+        .toArray()
+        .then((messages) => {
+          return messages.sort((a, b) => {
+            return b.utc - a.utc
+          })
+        })
+
+      const messagesMap: IMessages = messages.map(
+        (message: any) => message.data,
+      ) as IMessages
+
+      return {
+        data: {
+          presentation: query?.presentation || 'not set',
+          slide: query?.slide || 'not set',
+          messages: messagesMap,
+          title,
+          topics: [query.dashboard, query.widget].join('-'),
+          query,
+        },
+        message: 'Messages retrieved successfully',
+        success: true,
+      }
+    } catch (_error) {
+      return { data: null, message: 'Messages Data error', success: false }
+    }
   }
 
   /**
@@ -188,10 +325,11 @@ export default class DexieClient {
     if (query.type === MESSAGES) {
       query = moderation(this.options, query)
     }
-    console.info(
-      '%cstorage',
+    console.debug(
+      '%cstorage%c %csubscribe',
       STORAGE_CSS,
-      SUBSCRIBE,
+      NONE,
+      SUBSCRIBE_CSS,
       query.slide,
       query.widget,
     )

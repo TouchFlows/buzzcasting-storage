@@ -1,7 +1,17 @@
-import { MESSAGES, STORAGE_CSS, SUBSCRIBE, WIDGET } from './constants'
-import { getKey, moderation } from './helpers'
-import type { IQuery } from './interfaces/IQuery'
-import type { IStorageOptions } from './interfaces/IStorageOptions'
+import {
+  API_CSS,
+  CLOUD,
+  MESSAGES,
+  NONE,
+  SERIES,
+  STORAGE_CSS,
+  SUBSCRIBE_CSS,
+  WIDGET,
+} from '../constants'
+import { getKey, moderation } from '../utils/helpers'
+import type { IQuery } from '../interfaces/IQuery'
+import type { IResponse } from '../interfaces/IResponse'
+import type { IStorageOptions } from '../interfaces/IStorageOptions'
 
 export default class WindowClient {
   public subscribers: Array<any> = []
@@ -10,6 +20,36 @@ export default class WindowClient {
   constructor(options: IStorageOptions) {
     this.options = options
     window.BuzzCasting.WidgetData = new Set()
+  }
+
+  getCloud = async (query: IQuery): Promise<IResponse> => {
+    const key = getKey(query)
+    try {
+      return window.BuzzCasting.WidgetData[key]
+    } catch (error) {
+      console.warn('%capi', API_CSS, CLOUD, query.slide, query.widget)
+      return { data: null, message: 'Cloud Data error', success: false }
+    }
+  }
+
+  getSeries = async (query: IQuery): Promise<IResponse> => {
+    const key = getKey(query)
+    try {
+      return window.BuzzCasting.WidgetData[key]
+    } catch (error) {
+      console.warn('%capi', API_CSS, SERIES, query.slide, query.widget)
+      return { data: null, message: 'Series Data error', success: false }
+    }
+  }
+
+  getMessages = async (query: IQuery): Promise<IResponse> => {
+    const key = getKey(query)
+    try {
+      return window.BuzzCasting.WidgetData[key]
+    } catch (error) {
+      console.warn('%capi', API_CSS, MESSAGES, query.slide, query.widget)
+      return { data: null, message: 'Messages Data error', success: false }
+    }
   }
 
   /**
@@ -98,7 +138,14 @@ export default class WindowClient {
     if (widgetExists.length) {
       return null
     }
-    console.info('%cstorage', STORAGE_CSS, SUBSCRIBE, query.slide, query.widget)
+    console.debug(
+      '%cstorage%c %csubscribe',
+      STORAGE_CSS,
+      NONE,
+      SUBSCRIBE_CSS,
+      query.slide,
+      query.widget,
+    )
     this.subscribers.push(query)
     return null
   }

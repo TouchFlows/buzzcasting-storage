@@ -5,11 +5,15 @@ import type { ISeries } from './ISeries'
 
 export declare interface IResponse {
   data: IMessagesData | ISeries | ICloud | null
-  query?: IQuery
   message: string
   success: boolean
+  query?: IQuery
 }
 
 export declare interface IMessagesData {
   messages: IMessages
+  presentation?: string
+  slide?: string
+  topics?: string
+  query: IQuery
 }
