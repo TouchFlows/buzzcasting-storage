@@ -17,7 +17,7 @@ import {
   STORAGE_LOCAL,
   STORAGE_SESSION,
   STORAGE_WINDOW,
-} from '../constants'
+} from '..'
 import type { IResponse } from '../interfaces/IResponse'
 
 // export * from "../interfaces/IQuery";

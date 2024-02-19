@@ -22,7 +22,7 @@ import {
   STORAGE_LOCAL,
   STORAGE_SESSION,
   STORAGE_WINDOW,
-} from '../constants'
+} from '..'
 import { sum } from '../utils/hash-sum'
 
 export class BuzzcastingStorageManager {
@@ -261,3 +261,4 @@ export class BuzzcastingStorageManager {
     return await this.sm?.getSubscribers()
   }
 }
+export { STORAGE_LOCAL }

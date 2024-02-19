@@ -1,4 +1,4 @@
-import { API_CSS, GET_DATA, NONE } from '../constants'
+import { API_CSS, GET_DATA, NONE } from '..'
 import type { IQuery } from '../interfaces/IQuery'
 import type { IResponse } from '../interfaces/IResponse'
 import type { IStorageOptions } from '../interfaces/IStorageOptions'

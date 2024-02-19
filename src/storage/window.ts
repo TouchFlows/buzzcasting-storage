@@ -7,7 +7,7 @@ import {
   STORAGE_CSS,
   SUBSCRIBE_CSS,
   WIDGET,
-} from '../constants'
+} from '..'
 import { getKey, moderation } from '../utils/helpers'
 import type { IQuery } from '../interfaces/IQuery'
 import type { IResponse } from '../interfaces/IResponse'

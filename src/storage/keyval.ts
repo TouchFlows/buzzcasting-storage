@@ -9,7 +9,7 @@ import {
   STORAGE_CSS,
   SUBSCRIBE_CSS,
   WIDGET,
-} from '../constants'
+} from '..'
 import type { IQuery } from '../interfaces/IQuery'
 import type { IStorageOptions } from '../interfaces/IStorageOptions'
 

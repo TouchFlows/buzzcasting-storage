@@ -14,7 +14,7 @@ import {
   TOPICS,
   WIDGET,
   WIDGETS,
-} from '../constants'
+} from '..'
 import type { IStorageOptions } from '../interfaces/IStorageOptions'
 import type { IQuery } from '../interfaces/IQuery'
 import type { IMessages, Message } from '../interfaces/IMessages'

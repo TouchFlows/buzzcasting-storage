@@ -36,6 +36,7 @@
       const bc = new BroadcastChannel(options.slide);
       const sm = new BuzzcastingStorageManager(options);
       const sr = new BuzzcastingStorageReader(options);
+      window.BuzzCasting = {storage: sm, reader: sr}
       bc.postMessage({ event: "subscribe", data: query });
       bc.postMessage({ event: "update" });
       let data = await sr.getMessages(query)
