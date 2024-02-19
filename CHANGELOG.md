@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.2.0
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.1.2...v2.2.0)
+
+### 🚀 Enhancements
+
+- Improved logging output ([772ccc2](https://github.com/TouchFlows/buzzcasting-storage/commit/772ccc2))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.1.2
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.1.1...v2.1.2)
