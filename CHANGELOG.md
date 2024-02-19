@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.3.0
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.2.0...v2.3.0)
+
+### 🚀 Enhancements
+
+- Merge get and set -> Reader & Manager ([7e997af](https://github.com/TouchFlows/buzzcasting-storage/commit/7e997af))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.2.0
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.1.2...v2.2.0)
