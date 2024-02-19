@@ -1,4 +1,4 @@
-import { API_CSS } from './constants'
+import { API_CSS, GET_DATA, NONE } from './constants'
 import type { IQuery } from './interfaces/IQuery'
 import type { IResponse } from './interfaces/IResponse'
 import type { IStorageOptions } from './interfaces/IStorageOptions'
@@ -36,8 +36,10 @@ export default class ApiClient {
 			  ? `?${new URLSearchParams(search).toString()}`
 			  : ''
     console.debug(
-      '%capi',
+      '%capi%c %cget',
       API_CSS,
+      NONE,
+      GET_DATA,
       query.slide,
       query.widget,
     )
@@ -68,8 +70,10 @@ export default class ApiClient {
     const args = this.headers()
     const params = '?action=visible'
     console.info(
-      '%capi',
+      '%capi%c %cpost',
       API_CSS,
+      NONE,
+      GET_DATA,
       'hide',
       [app, 'api', version, query.type, query.id].join('/') + params,
       { ...args, method: 'put' },

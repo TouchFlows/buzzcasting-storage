@@ -1,3 +1,4 @@
+import { version } from '../package.json'
 import ApiClient from './api'
 import DexieClient from './dexie'
 import KeyvalClient from './keyval'
@@ -11,6 +12,8 @@ import {
   BROADCAST_CSS,
   CLOUD,
   MESSAGES,
+  NONE,
+  NO_UPDATES,
   SERIES,
   STORAGE_CSS,
   STORAGE_DEXIE,
@@ -47,12 +50,20 @@ export default class BuzzcastingStorageManager {
   private options: IStorageOptions
 
   constructor(options: IStorageOptions) {
+    console.info('%cstorage', STORAGE_CSS, 'version', version)
     this.options = options
     this.sm = null
 
     const broadcast = options?.slide || options.app
     this.bc = new BroadcastChannel(broadcast)
-    console.info('%cbroadcast', BROADCAST_CSS, 'channel', broadcast)
+    console.info(
+      '%capi%c %cbroadcast',
+      API_CSS,
+      NONE,
+      BROADCAST_CSS,
+      'channel',
+      broadcast,
+    )
     this.bc.onmessage = (messageEvent: MessageEvent) => {
       this.actions(messageEvent)
     }
@@ -111,11 +122,12 @@ export default class BuzzcastingStorageManager {
               case MESSAGES:
                 newHash = sum(data.data.messages)
                 if (previousQuery.hash === newHash) {
-                  console.info(
-                    '%capi',
+                  console.debug(
+                    '%capi%c %cno updates',
                     API_CSS,
+                    NONE,
+                    NO_UPDATES,
                     MESSAGES,
-                    'no updates',
                     data.query.slide,
                     data.query.widget,
                   )
@@ -129,11 +141,12 @@ export default class BuzzcastingStorageManager {
               case CLOUD:
                 newHash = sum(data.data)
                 if (previousQuery.hash === newHash) {
-                  console.info(
-                    '%capi',
+                  console.debug(
+                    '%capi%c %cno updates',
                     API_CSS,
+                    NONE,
+                    NO_UPDATES,
                     CLOUD,
-                    'no updates',
                     data.query.slide,
                     data.query.widget,
                   )
@@ -146,11 +159,12 @@ export default class BuzzcastingStorageManager {
               case SERIES:
                 newHash = sum(data.data)
                 if (previousQuery.hash === newHash) {
-                  console.info(
-                    '%capi',
+                  console.debug(
+                    '%capi%c %cno updates',
                     API_CSS,
+                    NONE,
+                    NO_UPDATES,
                     SERIES,
-                    'no updates',
                     data.query.slide,
                     data.query.widget,
                   )
@@ -162,7 +176,9 @@ export default class BuzzcastingStorageManager {
                 break
               default:
                 console.warn(
-                  '%cstorage',
+                  '%capi%c %cstorage',
+                  API_CSS,
+                  NONE,
                   STORAGE_CSS,
                   'error',
 									`data type ${data.query.type} unknown`,
@@ -174,7 +190,9 @@ export default class BuzzcastingStorageManager {
           switch (status) {
             case 201:
               console.info(
-                '%cbroadcast',
+                '%capp%c %cbroadcast',
+                API_CSS,
+                NONE,
                 BROADCAST_CSS,
                 data.query.slide,
                 data.data.title ?? data.query.widget,
@@ -183,7 +201,9 @@ export default class BuzzcastingStorageManager {
               break
             case 400:
               console.warn(
-                '%cbroadcast',
+                '%capp%c %cbroadcast',
+                API_CSS,
+                NONE,
                 BROADCAST_CSS,
                 data.query.slide,
                 data.data.title ?? data.query.widget,
@@ -193,7 +213,13 @@ export default class BuzzcastingStorageManager {
           }
           return status
         } else {
-          console.warn('%cstorage', STORAGE_CSS, 'error')
+          console.warn(
+            '%capi%c %cstorage',
+            API_CSS,
+            NONE,
+            STORAGE_CSS,
+            'error',
+          )
           return 400
         }
       }),
@@ -210,7 +236,14 @@ export default class BuzzcastingStorageManager {
         this.sm?.subscribe(messageEvent.data.data)
         break
       case 'update':
-        console.debug('%cstorage', STORAGE_CSS, 'update', messageEvent.data)
+        console.debug(
+          '%capi%c %cstorage',
+          API_CSS,
+          NONE,
+          STORAGE_CSS,
+          'update',
+          messageEvent.data,
+        )
         await this.update()
         break
       default:
