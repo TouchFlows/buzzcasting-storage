@@ -14,7 +14,7 @@ function fold(hash: number, text: string) {
   }
   for (i = 0, len = text.length; i < len; i++) {
     chr = text.charCodeAt(i)
-    hash = ((hash << 5) - hash) + chr
+    hash = (hash << 5) - hash + chr
     hash |= 0
   }
   return hash < 0 ? hash * -2 : hash
@@ -27,7 +27,12 @@ function foldObject(hash: any, o: { [x: string]: any }, seen: any) {
   }
 }
 
-function foldValue(input: number, value: any | null | undefined, key: string, seen: any[]): string | number {
+function foldValue(
+  input: number,
+  value: any | null | undefined,
+  key: string,
+  seen: any[],
+): string | number {
   const hash = fold(fold(fold(input, key), toString(value)), typeof value)
   if (value === null) {
     return fold(hash, 'null')

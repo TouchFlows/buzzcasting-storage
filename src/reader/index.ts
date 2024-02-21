@@ -3,8 +3,11 @@ import KeyvalClient from '../storage/keyval'
 import LocalStorageClient from '../storage/local-storage'
 import SessionStorageClient from '../storage/session-storage'
 import WindowClient from '../storage/window'
-import type { IQuery } from '../interfaces/IQuery'
-import type { IStorageOptions } from '../interfaces/IStorageOptions'
+
+import type {
+  IQuery,
+  IResponse,
+  IStorageOptions } from '..'
 import {
   APP_CSS,
   CLOUD,
@@ -18,7 +21,6 @@ import {
   STORAGE_SESSION,
   STORAGE_WINDOW,
 } from '..'
-import type { IResponse } from '../interfaces/IResponse'
 
 // export * from "../interfaces/IQuery";
 

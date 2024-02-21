@@ -1,12 +1,6 @@
-import { version } from '../../package.json'
-import ApiClient from '../api/api'
-import DexieClient from '../storage/dexie'
-import KeyvalClient from '../storage/keyval'
-import LocalStorageClient from '../storage/local-storage'
-import SessionStorageClient from '../storage/session-storage'
-import WindowClient from '../storage/window'
-import type { IQuery } from '../interfaces/IQuery'
-import type { IStorageOptions } from '../interfaces/IStorageOptions'
+import type {
+  IQuery,
+  IStorageOptions } from '..'
 import {
   API_CSS,
   BROADCAST_CSS,
@@ -23,6 +17,13 @@ import {
   STORAGE_SESSION,
   STORAGE_WINDOW,
 } from '..'
+import { version } from '../../package.json'
+import ApiClient from '../api/api'
+import DexieClient from '../storage/dexie'
+import KeyvalClient from '../storage/keyval'
+import LocalStorageClient from '../storage/local-storage'
+import SessionStorageClient from '../storage/session-storage'
+import WindowClient from '../storage/window'
 import { sum } from '../utils/hash-sum'
 
 export class BuzzcastingStorageManager {

@@ -1,3 +1,7 @@
+import type {
+  IQuery,
+  IResponse,
+  IStorageOptions } from '..'
 import {
   API_CSS,
   CLOUD,
@@ -9,9 +13,6 @@ import {
   WIDGET,
 } from '..'
 import { getKey, moderation } from '../utils/helpers'
-import type { IQuery } from '../interfaces/IQuery'
-import type { IResponse } from '../interfaces/IResponse'
-import type { IStorageOptions } from '../interfaces/IStorageOptions'
 
 export default class WindowClient {
   public subscribers: Array<any> = []

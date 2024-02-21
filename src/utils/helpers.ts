@@ -1,5 +1,4 @@
-import type { IQuery } from '../interfaces/IQuery'
-import type { IStorageOptions } from '../interfaces/IStorageOptions'
+import type { IQuery, IStorageOptions } from '..'
 
 export function getKey(query: IQuery): string {
   let key = `${query.type}.${query.topics}`

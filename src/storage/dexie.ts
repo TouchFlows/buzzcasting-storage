@@ -1,5 +1,10 @@
 import Dexie from 'dexie'
-import { moderation } from '../utils/helpers'
+import type {
+  IMessages,
+  IQuery,
+  IResponse,
+  IStorageOptions,
+  Message } from '..'
 import {
   API_CSS,
   CLOUD,
@@ -15,10 +20,7 @@ import {
   WIDGET,
   WIDGETS,
 } from '..'
-import type { IStorageOptions } from '../interfaces/IStorageOptions'
-import type { IQuery } from '../interfaces/IQuery'
-import type { IMessages, Message } from '../interfaces/IMessages'
-import type { IResponse } from '../interfaces/IResponse'
+import { moderation } from '../utils/helpers'
 
 export default class DexieClient {
   private db: Dexie

@@ -1,7 +1,12 @@
-import { API_CSS, GET_DATA, NONE } from '..'
-import type { IQuery } from '../interfaces/IQuery'
-import type { IResponse } from '../interfaces/IResponse'
-import type { IStorageOptions } from '../interfaces/IStorageOptions'
+import type {
+  IQuery,
+  IResponse,
+  IStorageOptions } from '..'
+import {
+  API_CSS,
+  GET_DATA,
+  NONE,
+} from '..'
 
 export default class ApiClient {
   private options: IStorageOptions
