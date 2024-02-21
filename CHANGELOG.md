@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.4.0
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.3.1...v2.4.0)
+
+### 🚀 Enhancements
+
+- Export interfaces ([7fa0023](https://github.com/TouchFlows/buzzcasting-storage/commit/7fa0023))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.3.1
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.3.0...v2.3.1)
