@@ -11,13 +11,13 @@
     <script type="module">
       import { BuzzcastingStorageManager, BuzzcastingStorageReader } from '.'
       let options = {
-        app: "axa",
-        domain: "axa.buzzcasting.net",
+        app: import.meta.env.VITE_APP,
+        domain: import.meta.env.VITE_DOMAIN,
         version: "v4",
         token: "meta",
-        bearer: "1|snwLu2jVj1ic4RG4QtObNHXesofnbmgUgcyrTC2u",
+        bearer: import.meta.env.VITE_BEARER,
         storage: "dexie",
-        channel: "01gr6c1g92dyy7mdmm192b8064",
+        channel: import.meta.env.VITE_CHANNEL,
         display: "",
         moderation: "realtime",
         beforeTime: "00:00:00",
@@ -36,6 +36,7 @@
       const bc = new BroadcastChannel(options.slide);
       const sm = new BuzzcastingStorageManager(options);
       const sr = new BuzzcastingStorageReader(options);
+      bc.onmessage = (ev) => console.log(ev)
       window.BuzzCasting = {storage: sm, reader: sr}
       bc.postMessage({ event: "subscribe", data: query });
       bc.postMessage({ event: "update" });
