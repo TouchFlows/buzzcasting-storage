@@ -48,7 +48,6 @@ export default class Widget {
 
   /**
    * Data received from BroadcastChannel
-   * @param messageEvent
    */
   public startListener() {
     const query: IQuery = this.query

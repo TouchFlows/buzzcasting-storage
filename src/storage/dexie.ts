@@ -1,10 +1,9 @@
 import Dexie from 'dexie'
 import type {
-  IMessages,
+  IMessage,
   IQuery,
   IResponse,
   IStorageOptions,
-  Message,
 } from '..'
 import {
   API_CSS,
@@ -159,9 +158,9 @@ export default class DexieClient {
           })
         })
 
-      const messagesMap: IMessages = messages.map(
+      const messagesMap: IMessage[] = messages.map(
         (message: any) => message.data,
-      ) as IMessages
+      )
 
       return {
         data: {
@@ -239,14 +238,14 @@ export default class DexieClient {
    */
   setMessages = async (
     query: IQuery,
-    data: { title: any, data: { messages: Message[] } },
+    data: { title: any, data: { messages: IMessage[] } },
   ): Promise<number> => {
     if (query.type !== MESSAGES) {
       return 400
     }
     const title = data.title
     try {
-      data.data.messages.forEach(async (message: Message) => {
+      data.data.messages.forEach(async (message: IMessage) => {
         await this.db
           .table(MESSAGES)
           .put({ id: message.id, utc: message.utc, data: message })
