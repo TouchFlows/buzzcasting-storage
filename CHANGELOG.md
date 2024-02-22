@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.5.8
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.5.7...v2.5.8)
+
+### 🩹 Fixes
+
+- ApiData type, Interfaces, widgetParams ([500800c](https://github.com/TouchFlows/buzzcasting-storage/commit/500800c))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.5.7
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.5.6...v2.5.7)
