@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.5.4
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.5.3...v2.5.4)
+
+### 🩹 Fixes
+
+- Interfaces iresponse imessages icloud iseries ([7525b9d](https://github.com/TouchFlows/buzzcasting-storage/commit/7525b9d))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.5.3
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.5.2...v2.5.3)
