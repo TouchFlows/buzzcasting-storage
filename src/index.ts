@@ -41,7 +41,7 @@ import Widget from './widget'
  * Cloud
  */
 export declare interface ICloud {
-  labels: Label[]
+  labels: ILabel[]
   current: any[]
   previous: any[]
   type: string
@@ -50,15 +50,15 @@ export declare interface ICloud {
   previous_total: number
 }
 
-export declare interface Label {
+export declare interface ILabel {
   label: string
   count: number
   info: string
-  current: CloudIndicators
-  previous: CloudIndicators
+  current: ICloudIndicators
+  previous: ICloudIndicators
 }
 
-declare interface CloudIndicators {
+declare interface ICloudIndicators {
   total: number
   positive: number
   negative: number
@@ -70,7 +70,7 @@ declare interface CloudIndicators {
 /**
  * Messages
  */
-export declare interface Sender {
+export declare interface ISender {
   id: string
   title: string
   name: string
@@ -86,7 +86,7 @@ export declare interface Sender {
   influence: number
 }
 
-export declare interface Topic {
+export declare interface ITopic {
   topic: string
   engagement: number
   impressions: number
@@ -94,7 +94,7 @@ export declare interface Topic {
   sentiment: number
 }
 
-export declare interface Dynamics {
+export declare interface IDynamics {
   engagement?: number
   semrush_visits?: number
   potential_reach?: number
@@ -108,30 +108,30 @@ export declare interface Dynamics {
   trending_score?: number
 }
 
-export declare interface Geo {
-  latitude: number
-  longitude: number
-  zip: string
+export declare interface IGeo {
+  latitude?: number
+  longitude?: number
+  zip?: string
   street: string
-  city: string
+  city?: string
   country: string
 }
 
-export declare interface Medium {
+export declare interface IMedium {
   type: string
   url: string
   width: number
   height: number
 }
 
-export declare interface Message {
+export declare interface IMessage {
   id: string
   published: string
   harvested: string
   utc: number
   channel: string
   type: string
-  sender: Sender
+  sender: ISender
   reply: string
   replyto: string
   page: string
@@ -142,31 +142,27 @@ export declare interface Message {
   link: string
   language: string
   region: string
-  topics: Topic[]
-  dynamics?: Dynamics
-  geo?: Geo
-  media?: Medium[]
+  topics: ITopic[]
+  dynamics?: IDynamics
+  geo?: IGeo
+  media?: IMedium[]
 }
 
-export declare interface IMessages {
-  success?: boolean
-  message?: string
-  data?: Message[]
-}
 /**
  * API Response
  */
 export declare interface IResponse {
-  data: IMessagesData | ISeries | ICloud | null
+  data: IMessages | ISeries | ICloud | null
   message: string
   success: boolean
   query?: IQuery
 }
 
-export declare interface IMessagesData {
-  messages: IMessages
+export declare interface IMessages {
+  messages: IMessage[]
   presentation?: string
   slide?: string
+  title?: string
   topics?: string
   query: IQuery
 }
