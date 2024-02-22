@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v2.5.6
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.5.5...v2.5.6)
+
+### 🩹 Fixes
+
+- Correct IMessage in dexie ([3d1378c](https://github.com/TouchFlows/buzzcasting-storage/commit/3d1378c))
+
+### 🏡 Chore
+
+- **release:** V2.5.5 ([f76721d](https://github.com/TouchFlows/buzzcasting-storage/commit/f76721d))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.5.5
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.5.4...v2.5.5)
