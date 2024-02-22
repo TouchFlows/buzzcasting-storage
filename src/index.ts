@@ -241,6 +241,8 @@ export declare interface IStorageOptions {
   channel?: string
   presentation?: string
   slide?: string
+  display?: string
+  monitor?: string
   version: string
   storage: string
 
