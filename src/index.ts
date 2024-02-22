@@ -71,19 +71,20 @@ declare interface ICloudIndicators {
  * Messages
  */
 export declare interface ISender {
-  id: string
-  title: string
-  name: string
-  avatar: string
-  bio: string
-  location: string
-  verified: number
-  following: number
-  followers: number
-  listed: number
-  favourites: number
-  messages: number
-  influence: number
+  id?: string
+  channel?: string
+  title?: string
+  name?: string
+  avatar?: string
+  bio?: string
+  location?: string
+  verified?: number
+  following?: number
+  followers?: number
+  listed?: number
+  favourites?: number
+  messages?: number
+  influence?: number
 }
 
 export declare interface ITopic {
@@ -140,8 +141,8 @@ export declare interface IMessage {
   content: string
   sentiment: number
   link: string
-  language: string
-  region: string
+  language?: string
+  region?: string
   topics: ITopic[]
   dynamics?: IDynamics
   geo?: IGeo
@@ -196,14 +197,14 @@ export declare interface IQuery {
 export declare interface ISeries {
   topic: string
   title: string
-  series: Series[]
-  category: Category
-  metrics: Metrics
-  indicators: Indicators
+  series: ISeriesData[]
+  category: ICategory
+  metrics: IMetrics
+  indicators: IIndicators
   timestamp: number
 }
 
-export declare interface Series {
+export declare interface ISeriesData {
   name: string
   label: string
   current: number[]
@@ -214,18 +215,18 @@ export declare interface Series {
   previous_category: number
 }
 
-export declare interface Category {
+export declare interface ICategory {
   type: string
   data: string[]
 }
 
-export declare interface Metrics {
-  doc: number
-  previous: number
-  change: number
+export declare interface IMetrics {
+  doc?: number
+  previous?: number
+  change?: number
 }
 
-export declare interface Indicators {
+export declare interface IIndicators {
   value: number
 }
 /**
@@ -292,3 +293,5 @@ export {
   SLIDE_CSS,
   PRESENTATION_CSS,
 }
+
+export type ApiData = ISeries & IMessages & ICloud

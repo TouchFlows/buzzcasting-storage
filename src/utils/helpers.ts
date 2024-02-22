@@ -14,8 +14,13 @@ export function getKey(query: IQuery): string {
 export function widgetParams(query: IQuery): IQuery {
   if (query.widget === undefined) {
     const topics = query.topics?.split('-')
-    query.dashboard = topics ? topics[0] : ''
-    query.widget = topics ? topics[1] : ''
+    if (topics && topics.length > 1) {
+      query.dashboard = topics ? topics[0] : ''
+      query.widget = topics ? topics[1] : ''
+    } else {
+      query.widget = query.topics
+      query.dashboard = query.slide
+    }
   }
   if (query.topics === undefined) {
     query.topics = `${query.dashboard}-${query.widget}`
