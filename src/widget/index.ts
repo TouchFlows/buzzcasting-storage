@@ -1,6 +1,4 @@
-import type {
-  IQuery,
-  IResponse } from '..'
+import type { IQuery, IResponse } from '..'
 import {
   BuzzcastingStorageReader,
   CLOUD,
@@ -72,7 +70,7 @@ export default class Widget {
 
   subscribe() {
     console.debug(
-      '%widget%c %csubscribe',
+      '%cwidget%c %csubscribe',
       WIDGET_CSS,
       NONE,
       SUBSCRIBE_CSS,
@@ -84,24 +82,60 @@ export default class Widget {
 
   public getCloud = async (): Promise<IResponse> => {
     if (this.query.type !== CLOUD) {
-      console.warn('%cstorage%c %cwidget', STORAGE_CSS, NONE, WIDGET_CSS, this.query.widget, 'wrong method call for getCloud, expected type is', this.query.type)
-      return { data: null, message: `wrong method call for getMessages, expected type is ${this.query.type}`, success: false }
+      console.warn(
+        '%cstorage%c %cwidget',
+        STORAGE_CSS,
+        NONE,
+        WIDGET_CSS,
+        this.query.widget,
+        'Wrong method call for getCloud, expected type is',
+        this.query.type,
+      )
+      return {
+        data: null,
+        message: `wrong method call for getMessages, expected type is ${this.query.type}`,
+        success: false,
+      }
     }
     return await this.storageReader.getCloud(this.query)
   }
 
   public getMessages = async (): Promise<IResponse> => {
     if (this.query.type !== MESSAGES) {
-      console.warn('%cstorage%c %cwidget', STORAGE_CSS, NONE, WIDGET_CSS, this.query.widget, 'wrong method call for getMessages, expected type is', this.query.type)
-      return { data: null, message: `wrong method call for getMessages, expected type is ${this.query.type}`, success: false }
+      console.warn(
+        '%cstorage%c %cwidget',
+        STORAGE_CSS,
+        NONE,
+        WIDGET_CSS,
+        this.query.widget,
+        'Wrong method call for getMessages, expected type is',
+        this.query.type,
+      )
+      return {
+        data: null,
+        message: `wrong method call for getMessages, expected type is ${this.query.type}`,
+        success: false,
+      }
     }
     return await this.storageReader.getMessages(this.query)
   }
 
   public getSeries = async (): Promise<IResponse> => {
     if (this.query.type !== SERIES) {
-      console.warn('%cstorage%c %cwidget', STORAGE_CSS, NONE, WIDGET_CSS, this.query.widget, 'wrong method call for getSeries, expected type is', this.query.type)
-      return { data: null, message: `wrong method call for getMessages, expected type is ${this.query.type}`, success: false }
+      console.warn(
+        '%cstorage%c %cwidget',
+        STORAGE_CSS,
+        NONE,
+        WIDGET_CSS,
+        this.query.widget,
+        'Wrong method call for getSeries, expected type is',
+        this.query.type,
+      )
+      return {
+        data: null,
+        message: `wrong method call for getMessages, expected type is ${this.query.type}`,
+        success: false,
+      }
     }
     return await this.storageReader.getSeries(this.query)
   }
