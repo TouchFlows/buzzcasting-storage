@@ -105,4 +105,8 @@ export default class Widget {
     }
     return await this.storageReader.getSeries(this.query)
   }
+
+  public destroy() {
+    this.broadcastChannel.close()
+  }
 }
