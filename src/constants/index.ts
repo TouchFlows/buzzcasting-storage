@@ -30,5 +30,6 @@ export const APP_CSS = `color:white;background-color:navy;${STYLE}`
 export const WS_CSS = `color:white;background-color:green;${STYLE}`
 export const SUBSCRIBE_CSS = `color:white;background-color:dodgerblue;${STYLE}`
 
+export const WIDGET_CSS = `color:gret;background-color:lemonchiffon;${STYLE}`
 export const SLIDE_CSS = `color:black;background-color:yellow;${STYLE}`
 export const PRESENTATION_CSS = `color:white;background-color:darkred;${STYLE}`

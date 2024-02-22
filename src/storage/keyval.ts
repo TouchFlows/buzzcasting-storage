@@ -12,7 +12,7 @@ import {
   SUBSCRIBE_CSS,
   WIDGET,
 } from '..'
-import { getKey, moderation } from '../utils/helpers'
+import { getKey, moderation, widgetParams } from '../utils/helpers'
 
 export default class KeyvalClient {
   public subscribers: Array<any> = []
@@ -146,11 +146,7 @@ export default class KeyvalClient {
    * @returns null
    */
   subscribe = (query: IQuery): null => {
-    if (query.widget === undefined) {
-      const topics = query.topics?.split('-')
-      query.dashboard = topics ? topics[0] : ''
-      query.widget = topics ? topics[1] : ''
-    }
+    query = widgetParams(query)
     if (query.type === MESSAGES) {
       query = moderation(this.options, query)
     }

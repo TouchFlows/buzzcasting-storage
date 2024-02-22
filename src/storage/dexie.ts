@@ -4,7 +4,8 @@ import type {
   IQuery,
   IResponse,
   IStorageOptions,
-  Message } from '..'
+  Message,
+} from '..'
 import {
   API_CSS,
   CLOUD,
@@ -20,7 +21,7 @@ import {
   WIDGET,
   WIDGETS,
 } from '..'
-import { moderation } from '../utils/helpers'
+import { moderation, widgetParams } from '../utils/helpers'
 
 export default class DexieClient {
   private db: Dexie
@@ -313,11 +314,8 @@ export default class DexieClient {
    * @returns null
    */
   subscribe = (query: IQuery): null => {
-    if (query.widget === undefined) {
-      const topics = query.topics?.split('-')
-      query.dashboard = topics ? topics[0] : ''
-      query.widget = topics ? topics[1] : ''
-    }
+    query = widgetParams(query)
+
     const alreadySubscribed = this.subscribers.filter(
       (widget) => widget.widget === query.widget,
     ).length

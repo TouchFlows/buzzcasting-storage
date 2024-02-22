@@ -11,6 +11,18 @@ export function getKey(query: IQuery): string {
   return key
 }
 
+export function widgetParams(query: IQuery): IQuery {
+  if (query.widget === undefined) {
+    const topics = query.topics?.split('-')
+    query.dashboard = topics ? topics[0] : ''
+    query.widget = topics ? topics[1] : ''
+  }
+  if (query.topics === undefined) {
+    query.topics = `${query.dashboard}-${query.widget}`
+  }
+  return query
+}
+
 export function moderation(options: IStorageOptions, query: IQuery): IQuery {
   let date: Date, Hms: string[] | undefined, H: number, m: number, s: number
   switch (options.moderation) {

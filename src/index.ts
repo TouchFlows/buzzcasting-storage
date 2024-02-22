@@ -1,5 +1,6 @@
 import { BuzzcastingStorageManager } from './manager'
 import { BuzzcastingStorageReader } from './reader'
+import { widgetParams } from './utils/helpers'
 
 /**
  * Constants
@@ -31,8 +32,10 @@ import {
   TOPICS,
   WIDGET,
   WIDGETS,
+  WIDGET_CSS,
   WS_CSS,
 } from './constants'
+import Widget from './widget'
 
 /**
  * Cloud
@@ -83,7 +86,7 @@ export declare interface Sender {
   influence: number
 }
 
-declare interface Topic {
+export declare interface Topic {
   topic: string
   engagement: number
   impressions: number
@@ -105,7 +108,7 @@ export declare interface Dynamics {
   trending_score?: number
 }
 
-declare interface Geo {
+export declare interface Geo {
   latitude: number
   longitude: number
   zip: string
@@ -160,7 +163,7 @@ export declare interface IResponse {
   query?: IQuery
 }
 
-declare interface IMessagesData {
+export declare interface IMessagesData {
   messages: IMessages
   presentation?: string
   slide?: string
@@ -215,18 +218,18 @@ export declare interface Series {
   previous_category: number
 }
 
-declare interface Category {
+export declare interface Category {
   type: string
   data: string[]
 }
 
-declare interface Metrics {
+export declare interface Metrics {
   doc: number
   previous: number
   change: number
 }
 
-declare interface Indicators {
+export declare interface Indicators {
   value: number
 }
 /**
@@ -234,10 +237,13 @@ declare interface Indicators {
  */
 export declare interface IStorageOptions {
   app: string
+  domain?: string
+  channel?: string
+  presentation?: string
+  slide?: string
   version: string
   storage: string
-  slide?: string
-  presentation?: string
+
   token?: string
   bearer?: string
   csrf?: string
@@ -257,6 +263,8 @@ declare global {
 export {
   BuzzcastingStorageManager,
   BuzzcastingStorageReader,
+  Widget,
+  widgetParams,
   MESSAGES,
   CLOUD,
   SERIES,
@@ -282,6 +290,7 @@ export {
   APP_CSS,
   WS_CSS,
   SUBSCRIBE_CSS,
+  WIDGET_CSS,
   SLIDE_CSS,
   PRESENTATION_CSS,
 }
