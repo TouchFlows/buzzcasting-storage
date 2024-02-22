@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.5.0
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.4.0...v2.5.0)
+
+### 🚀 Enhancements
+
+- Widget class for components ([19b2a20](https://github.com/TouchFlows/buzzcasting-storage/commit/19b2a20))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.4.0
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.3.1...v2.4.0)
