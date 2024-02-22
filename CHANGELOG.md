@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.5.9
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.5.8...v2.5.9)
+
+### 🩹 Fixes
+
+- Logging output for widget subscribe event ([3e833a7](https://github.com/TouchFlows/buzzcasting-storage/commit/3e833a7))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.5.8
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.5.7...v2.5.8)
