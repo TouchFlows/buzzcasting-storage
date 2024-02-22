@@ -195,7 +195,7 @@ export class BuzzcastingStorageManager {
                 data.query.slide,
                 data.data.title ?? data.query.widget,
               )
-              this.bc.postMessage({ event: 'widget-update', data: data.query })
+              this.bc.postMessage({ event: 'widget-update', data })
               break
             case 400:
               console.warn(
