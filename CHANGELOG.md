@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.5.3
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.5.2...v2.5.3)
+
+### 🩹 Fixes
+
+- Tests ([14faad1](https://github.com/TouchFlows/buzzcasting-storage/commit/14faad1))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.5.2
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.5.1...v2.5.2)
