@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.5.7
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.5.6...v2.5.7)
+
+### 🩹 Fixes
+
+- Add destroy method to widget ([1754bda](https://github.com/TouchFlows/buzzcasting-storage/commit/1754bda))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.5.6
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.5.5...v2.5.6)
