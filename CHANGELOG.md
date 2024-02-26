@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.6.0
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.5.13...v2.6.0)
+
+### 🚀 Enhancements
+
+- ISeries interfaces and showModal Widget call ([0c6165a](https://github.com/TouchFlows/buzzcasting-storage/commit/0c6165a))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.5.13
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.5.12...v2.5.13)
