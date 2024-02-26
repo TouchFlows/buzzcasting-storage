@@ -133,6 +133,6 @@ export class BuzzcastingStorageReader {
         success: false,
       }
     }
-    return await this.sm?.getMessages(query)
+    return await this.sm?.getSeries(query)
   }
 }

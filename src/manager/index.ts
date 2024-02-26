@@ -1,6 +1,4 @@
-import type {
-  IQuery,
-  IStorageOptions } from '..'
+import type { IQuery, IStorageOptions } from '..'
 import {
   API_CSS,
   BROADCAST_CSS,
@@ -89,7 +87,7 @@ export class BuzzcastingStorageManager {
     }
   }
 
-  public update = async () => {
+  public update = async (query?: IQuery) => {
     if (this.sm === null) {
       return
     }
@@ -98,10 +96,16 @@ export class BuzzcastingStorageManager {
       return
     }
     const subscriberQuery: any[] = []
-    // Paralelize calls
-    subscribers?.forEach((query: IQuery) => {
+
+    // single update for initial load
+    if (query) {
       subscriberQuery.push(this.api.get(query))
-    })
+    } else {
+      // Paralelize calls
+      subscribers?.forEach((query: IQuery) => {
+        subscriberQuery.push(this.api.get(query))
+      })
+    }
 
     await Promise.allSettled(subscriberQuery).then((results) =>
       results.forEach(async (res) => {
