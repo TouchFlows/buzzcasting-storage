@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v2.7.0
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.6.1...v2.7.0)
+
+### 🚀 Enhancements
+
+- Refactor to use enums ([c87fe5f](https://github.com/TouchFlows/buzzcasting-storage/commit/c87fe5f))
+
+### 🩹 Fixes
+
+- Unit test ([7b2b665](https://github.com/TouchFlows/buzzcasting-storage/commit/7b2b665))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.6.1
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.6.0...v2.6.1)
