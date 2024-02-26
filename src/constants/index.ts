@@ -27,14 +27,16 @@ export enum CSS {
 }
 
 export enum EVENTS {
-  APP_READT = 'appReady',
+  APP_READY = 'appReady',
   CHANNEL = 'channel',
   ERROR = 'error',
   GOTO_SLIDE = 'gotoSlide',
   HIDE_MESSAGE = 'hideMessage',
   NEXT_SLIDE = 'nextSlide',
+  PAUSE_PRESENTATION = 'pausePresentation',
   PRESENTATION_READY = 'presentationReady',
   PREV_SLIDE = 'prevSlide',
+  RELOAD_PRESENTATION = 'reloadPresentation',
   SHOW_MODAL = 'showModal',
   SLIDE_DID_LOAD = 'slideDidLoad',
   SLIDE_READY = 'slideReady',
