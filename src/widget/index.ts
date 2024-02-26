@@ -140,6 +140,20 @@ export default class Widget {
     return await this.storageReader.getSeries(this.query)
   }
 
+  public showModal = (componentName: any) => {
+    const ev = new CustomEvent('show-modal', {
+      detail: {
+        component: componentName,
+        attributes: this.query,
+      },
+      bubbles: true,
+      cancelable: true,
+      composed: true,
+    })
+    // console.debug(ev.detail)
+    window.dispatchEvent(ev)
+  }
+
   public destroy() {
     this.broadcastChannel.close()
   }

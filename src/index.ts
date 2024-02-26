@@ -53,9 +53,10 @@ export declare interface ICloud {
 export declare interface ILabel {
   label: string
   count: number
-  info: string
+  info?: string
   current: ICloudIndicators
-  previous: ICloudIndicators
+  previous?: ICloudIndicators
+  percentage?: number
 }
 
 declare interface ICloudIndicators {
