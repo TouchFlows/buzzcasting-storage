@@ -129,7 +129,7 @@ export class BuzzcastingStorageReader {
       )
       return {
         data: null,
-        message: `'wrong method call for getMessages, type used is ${query.type}`,
+        message: `'wrong method call for getSeries, type used is ${query.type}`,
         success: false,
       }
     }

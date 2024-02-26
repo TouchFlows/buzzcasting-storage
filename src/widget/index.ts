@@ -54,7 +54,7 @@ export default class Widget {
       const update: IQuery = messageEvent.data.data
       switch (messageEvent.data.event) {
         case 'widget-update':
-          if (update.slide === query.slide && update.widget === query.widget) {
+          if (update.query.slide === query.slide && update.query.widget === query.widget) {
             this.listeners.forEach((cb) => {
               cb(messageEvent.data.data)
             })
