@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.6.1
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.6.0...v2.6.1)
+
+### 🩹 Fixes
+
+- Remove obligatory props from ISeriesData ([950601e](https://github.com/TouchFlows/buzzcasting-storage/commit/950601e))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.6.0
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.5.13...v2.6.0)
