@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.5.12
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.5.10...v2.5.12)
+
+### 🩹 Fixes
+
+- In Reader getSeries not returning series (messages instead) ([353ea5a](https://github.com/TouchFlows/buzzcasting-storage/commit/353ea5a))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.5.10
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.5.9...v2.5.10)
