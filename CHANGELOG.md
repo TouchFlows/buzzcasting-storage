@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.5.13
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.5.12...v2.5.13)
+
+### 🩹 Fixes
+
+- Broadcast widget update was not sending on channel ([f0f7a7a](https://github.com/TouchFlows/buzzcasting-storage/commit/f0f7a7a))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.5.12
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.5.10...v2.5.12)
