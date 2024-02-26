@@ -6,19 +6,8 @@ import type {
   IStorageOptions,
 } from '..'
 import {
-  API_CSS,
-  CLOUD,
-  CLOUD_CSS,
-  MESSAGES,
-  MESSAGES_CSS,
-  NONE,
-  SERIES,
-  SERIES_CSS,
-  STORAGE_CSS,
-  SUBSCRIBE_CSS,
-  TOPICS,
-  WIDGET,
-  WIDGETS,
+  API,
+  CSS,
 } from '..'
 import { moderation, widgetParams } from '../utils/helpers'
 
@@ -55,15 +44,15 @@ export default class DexieClient {
    */
   getCloud = async (query: IQuery): Promise<IResponse> => {
     const data = await this.db
-      .table(CLOUD)
+      .table(API.CLOUD)
       .where({ id: query.widget })
       .last()
       .catch(() => {
         console.warn(
           '%capi%C %ccloud',
-          API_CSS,
-          NONE,
-          CLOUD_CSS,
+          CSS.API,
+          CSS.NONE,
+          CSS.CLOUD,
           query.slide,
           query.widget,
         )
@@ -83,15 +72,15 @@ export default class DexieClient {
    */
   getSeries = async (query: IQuery): Promise<IResponse> => {
     const data = await this.db
-      .table(SERIES)
+      .table(API.SERIES)
       .where({ id: query.widget })
       .last()
       .catch(() => {
         console.warn(
           '%capi%c %cseries',
-          API_CSS,
-          NONE,
-          SERIES_CSS,
+          CSS.API,
+          CSS.NONE,
+          CSS.SERIES,
           query.slide,
           query.widget,
         )
@@ -120,7 +109,7 @@ export default class DexieClient {
       topic?.visible !== 0
     try {
       const topicMessages: any = await this.db
-        .table('topics')
+        .table(API.TOPICS)
         .orderBy('utc')
         .reverse()
         .filter(widgetFilter)
@@ -131,9 +120,9 @@ export default class DexieClient {
         .catch(() => {
           console.warn(
             '%capi%c %cmessages',
-            API_CSS,
-            NONE,
-            MESSAGES_CSS,
+            CSS.API,
+            CSS.NONE,
+            CSS.MESSAGES,
             query.slide,
             query.widget,
           )
@@ -148,7 +137,7 @@ export default class DexieClient {
 
       // may not come back in order of call, so need to sort
       const messages: any[] = await this.db
-        .table('messages')
+        .table(API.MESSAGES)
         .where('id')
         .anyOf(messageIds)
         .toArray()
@@ -186,9 +175,9 @@ export default class DexieClient {
    * @returns number
    */
   setCloud = async (query: IQuery, data: any): Promise<number> => {
-    if (query.type === CLOUD && data !== '') {
+    if (query.type === API.CLOUD && data !== '') {
       return await this.db
-        .table(CLOUD)
+        .table(API.CLOUD)
         .put({
           id: query.widget,
           dashboard_id: query.dashboard,
@@ -196,7 +185,7 @@ export default class DexieClient {
         })
         .then(() => 201)
         .catch((error: Error) => {
-          console.error('%cstorage', STORAGE_CSS, 'set', query, error)
+          console.error('%cstorage', CSS.STORAGE, 'set', query, error)
           return 400
         })
     }
@@ -210,9 +199,9 @@ export default class DexieClient {
    * @returns number
    */
   setSeries = async (query: IQuery, data: any): Promise<number> => {
-    if (query.type === SERIES && data !== '') {
+    if (query.type === API.SERIES && data !== '') {
       return await this.db
-        .table(SERIES)
+        .table(API.SERIES)
         .put({
           id: query.widget,
           dashboard_id: query.dashboard,
@@ -220,7 +209,7 @@ export default class DexieClient {
         })
         .then(() => 201)
         .catch((error: Error) => {
-          console.error('%cstorage', STORAGE_CSS, 'set', query, error)
+          console.error('%cstorage', CSS.STORAGE, 'set', query, error)
           return 400
         })
     }
@@ -240,16 +229,16 @@ export default class DexieClient {
     query: IQuery,
     data: { title: any, data: { messages: IMessage[] } },
   ): Promise<number> => {
-    if (query.type !== MESSAGES) {
+    if (query.type !== API.MESSAGES) {
       return 400
     }
     const title = data.title
     try {
       data.data.messages.forEach(async (message: IMessage) => {
         await this.db
-          .table(MESSAGES)
+          .table(API.MESSAGES)
           .put({ id: message.id, utc: message.utc, data: message })
-        await this.db.table(TOPICS).put({
+        await this.db.table(API.TOPICS).put({
           widget_id: query.widget,
           message_id: message.id,
           dashboard_id: query.dashboard,
@@ -263,7 +252,7 @@ export default class DexieClient {
       })
       return 201
     } catch (error) {
-      console.error('%cstorage', STORAGE_CSS, 'set', query, error)
+      console.error('%cstorage', CSS.STORAGE, 'set', query, error)
       return 400
     }
   }
@@ -294,7 +283,7 @@ export default class DexieClient {
    */
   setWidget = async (query: IQuery): Promise<number> => {
     return await this.db
-      .table(WIDGETS)
+      .table(API.WIDGETS)
       .put({
         id: query.widget,
         dashboard_id: query.dashboard,
@@ -302,7 +291,7 @@ export default class DexieClient {
       })
       .then(() => 201)
       .catch((error: Error) => {
-        console.error('%cstorage', STORAGE_CSS, WIDGET, query, error)
+        console.error('%cstorage', CSS.STORAGE, API.WIDGET, query, error)
         return 400
       })
   }
@@ -321,14 +310,14 @@ export default class DexieClient {
     if (alreadySubscribed > 0) {
       return null
     }
-    if (query.type === MESSAGES) {
+    if (query.type === API.MESSAGES) {
       query = moderation(this.options, query)
     }
     console.debug(
       '%cstorage%c %csubscribe',
-      STORAGE_CSS,
-      NONE,
-      SUBSCRIBE_CSS,
+      CSS.STORAGE,
+      CSS.NONE,
+      CSS.SUBSCRIBE,
       query.slide,
       query.widget,
     )

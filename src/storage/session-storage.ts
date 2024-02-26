@@ -3,14 +3,8 @@ import type {
   IResponse,
   IStorageOptions } from '..'
 import {
-  API_CSS,
-  CLOUD,
-  MESSAGES,
-  NONE,
-  SERIES,
-  STORAGE_CSS,
-  SUBSCRIBE_CSS,
-  WIDGET,
+  API,
+  CSS,
 } from '..'
 import { getKey, moderation, widgetParams } from '../utils/helpers'
 
@@ -39,7 +33,7 @@ export default class SessionStorageClient {
     try {
       return sessionStorage.getObject(key)
     } catch (error) {
-      console.warn('%capi', API_CSS, CLOUD, query.slide, query.widget)
+      console.warn('%capi', CSS.API, API.CLOUD, query.slide, query.widget)
       return { data: null, message: 'Messages Data error', success: false }
     }
   }
@@ -49,7 +43,7 @@ export default class SessionStorageClient {
     try {
       return sessionStorage.getObject(key)
     } catch (error) {
-      console.warn('%capi', API_CSS, SERIES, query.slide, query.widget)
+      console.warn('%capi', CSS.API, API.SERIES, query.slide, query.widget)
       return { data: null, message: 'Messages Data error', success: false }
     }
   }
@@ -59,7 +53,7 @@ export default class SessionStorageClient {
     try {
       return sessionStorage.getObject(key)
     } catch (error) {
-      console.warn('%capi', API_CSS, MESSAGES, query.slide, query.widget)
+      console.warn('%capi', CSS.API, API.MESSAGES, query.slide, query.widget)
       return { data: null, message: 'Messages Data error', success: false }
     }
   }
@@ -76,7 +70,7 @@ export default class SessionStorageClient {
       sessionStorage.setObject(key, data)
       return 201
     } catch (error) {
-      console.error('%cstorage', STORAGE_CSS, CLOUD, query, error)
+      console.error('%cstorage', CSS.STORAGE, API.CLOUD, query, error)
       return 400
     }
   }
@@ -93,7 +87,7 @@ export default class SessionStorageClient {
       sessionStorage.setObject(key, data)
       return 201
     } catch (error) {
-      console.error('%cstorage', STORAGE_CSS, SERIES, query, error)
+      console.error('%cstorage', CSS.STORAGE, API.SERIES, query, error)
       return 400
     }
   }
@@ -108,9 +102,9 @@ export default class SessionStorageClient {
     const key = getKey(query)
     try {
       sessionStorage.setObject(key, data)
-      return 201
+      return 200
     } catch (error) {
-      console.error('%cstorage', STORAGE_CSS, MESSAGES, query, error)
+      console.error('%cstorage', CSS.STORAGE, API.MESSAGES, query, error)
       return 400
     }
   }
@@ -125,7 +119,7 @@ export default class SessionStorageClient {
       sessionStorage.setObject(key, query)
       return 201
     } catch (error) {
-      console.error('%cstorage', STORAGE_CSS, WIDGET, query, error)
+      console.error('%cstorage', CSS.STORAGE, API.WIDGET, query, error)
       return 400
     }
   }
@@ -137,7 +131,7 @@ export default class SessionStorageClient {
    */
   subscribe = (query: IQuery): null => {
     query = widgetParams(query)
-    if (query.type === MESSAGES) {
+    if (query.type === API.MESSAGES) {
       query = moderation(this.options, query)
     }
     const widgetExists = this.subscribers.filter(
@@ -148,9 +142,9 @@ export default class SessionStorageClient {
     }
     console.debug(
       '%cstorage%c %csubscribe',
-      STORAGE_CSS,
-      NONE,
-      SUBSCRIBE_CSS,
+      CSS.STORAGE,
+      CSS.NONE,
+      CSS.SUBSCRIBE,
       query.slide,
       query.widget,
     )

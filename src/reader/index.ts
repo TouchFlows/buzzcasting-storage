@@ -4,23 +4,13 @@ import LocalStorageClient from '../storage/local-storage'
 import SessionStorageClient from '../storage/session-storage'
 import WindowClient from '../storage/window'
 
-import type {
-  IQuery,
-  IResponse,
-  IStorageOptions } from '..'
 import {
-  APP_CSS,
-  CLOUD,
-  GET_DATA,
-  MESSAGES,
-  NONE,
-  SERIES,
-  STORAGE_DEXIE,
-  STORAGE_KEYVAL,
-  STORAGE_LOCAL,
-  STORAGE_SESSION,
-  STORAGE_WINDOW,
-} from '..'
+  API,
+  CSS,
+  type IQuery,
+  type IResponse,
+  type IStorageOptions,
+  STORAGE } from '..'
 
 // export * from "../interfaces/IQuery";
 
@@ -41,19 +31,19 @@ export class BuzzcastingStorageReader {
     this.sm = null
 
     switch (options.storage) {
-      case STORAGE_DEXIE:
+      case STORAGE.DEXIE:
         this.sm = new DexieClient(options)
         break
-      case STORAGE_LOCAL:
+      case STORAGE.LOCAL:
         this.sm = new SessionStorageClient(options)
         break
-      case STORAGE_SESSION:
+      case STORAGE.SESSION:
         this.sm = new LocalStorageClient(options)
         break
-      case STORAGE_KEYVAL:
+      case STORAGE.KEYVAL:
         this.sm = new KeyvalClient(options)
         break
-      case STORAGE_WINDOW:
+      case STORAGE.WINDOW:
         this.sm = new WindowClient(options)
         break
       default:
@@ -67,12 +57,12 @@ export class BuzzcastingStorageReader {
    * @returns IResponse
    */
   public getCloud = async (query: IQuery): Promise<IResponse> => {
-    if (query.type !== CLOUD) {
+    if (query.type !== API.CLOUD) {
       console.warn(
         '%capp%c %get',
-        APP_CSS,
-        NONE,
-        GET_DATA,
+        CSS.APP,
+        CSS.NONE,
+        CSS.GET_DATA,
         query.widget,
         'wrong method call for getMessages, type used is',
         query.type,
@@ -92,12 +82,12 @@ export class BuzzcastingStorageReader {
    * @returns IResponse
    */
   public getMessages = async (query: IQuery): Promise<IResponse> => {
-    if (query.type !== MESSAGES) {
+    if (query.type !== API.MESSAGES) {
       console.warn(
         '%capp%c %get',
-        APP_CSS,
-        NONE,
-        GET_DATA,
+        CSS.APP,
+        CSS.NONE,
+        CSS.GET_DATA,
         query.widget,
         'wrong method call for getMessages, type used is',
         query.type,
@@ -117,12 +107,12 @@ export class BuzzcastingStorageReader {
    * @returns IResponse
    */
   public getSeries = async (query: IQuery): Promise<IResponse> => {
-    if (query.type !== SERIES) {
+    if (query.type !== API.SERIES) {
       console.warn(
         '%capp%c %get',
-        APP_CSS,
-        NONE,
-        GET_DATA,
+        CSS.APP,
+        CSS.NONE,
+        CSS.GET_DATA,
         query.widget,
         'wrong method call for getMessages, type used is',
         query.type,

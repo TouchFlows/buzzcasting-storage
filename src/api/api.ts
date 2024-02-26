@@ -1,11 +1,11 @@
 import type {
   IQuery,
   IResponse,
-  IStorageOptions } from '..'
+  IStorageOptions,
+} from '..'
 import {
-  API_CSS,
-  GET_DATA,
-  NONE,
+  CSS,
+  EVENTS,
 } from '..'
 
 export default class ApiClient {
@@ -42,9 +42,9 @@ export default class ApiClient {
 			  : ''
     console.debug(
       '%capi%c %cget',
-      API_CSS,
-      NONE,
-      GET_DATA,
+      CSS.API,
+      CSS.NONE,
+      CSS.GET_DATA,
       query.slide,
       query.widget,
     )
@@ -76,10 +76,10 @@ export default class ApiClient {
     const params = '?action=visible'
     console.info(
       '%capi%c %cpost',
-      API_CSS,
-      NONE,
-      GET_DATA,
-      'hide',
+      CSS.API,
+      CSS.NONE,
+      CSS.GET_DATA,
+      EVENTS.HIDE_MESSAGE,
       [app, 'api', version, query.type, query.id].join('/') + params,
       { ...args, method: 'put' },
     )

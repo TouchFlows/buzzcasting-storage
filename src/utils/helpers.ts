@@ -1,4 +1,4 @@
-import type { IQuery, IStorageOptions } from '..'
+import { type IQuery, type IStorageOptions, MODERATION } from '..'
 
 export function getKey(query: IQuery): string {
   let key = `${query.type}.${query.topics}`
@@ -31,7 +31,7 @@ export function widgetParams(query: IQuery): IQuery {
 export function moderation(options: IStorageOptions, query: IQuery): IQuery {
   let date: Date, Hms: string[] | undefined, H: number, m: number, s: number
   switch (options.moderation) {
-    case 'before':
+    case MODERATION.BEFORE:
       date = new Date()
       Hms = options.beforeTime?.split(':') // default = '00:00:00'
       H = Number.parseInt(Hms ? Hms[0] : '00')
@@ -42,12 +42,12 @@ export function moderation(options: IStorageOptions, query: IQuery): IQuery {
         query.period = date.getDay() === 1 ? 72 : 24 // take the weekend or just yesterday
       }
       break
-    case 'delayed':
+    case MODERATION.DELAYED:
       if (options.delay && options.delay > 0) {
         query.delay = `${options.delay}`
       }
       break
-    case 'approved':
+    case MODERATION.APPROVED:
       query.approved = '1'
       break
     default:

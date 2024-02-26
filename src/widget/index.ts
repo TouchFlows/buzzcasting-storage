@@ -1,13 +1,9 @@
 import type { IQuery, IResponse } from '..'
 import {
+  API,
   BuzzcastingStorageReader,
-  CLOUD,
-  MESSAGES,
-  NONE,
-  SERIES,
-  STORAGE_CSS,
-  SUBSCRIBE_CSS,
-  WIDGET_CSS,
+  CSS,
+  EVENTS,
   widgetParams,
 } from '..'
 
@@ -53,14 +49,14 @@ export default class Widget {
     this.broadcastChannel.onmessage = async (messageEvent: MessageEvent) => {
       const update: IQuery = messageEvent.data.data
       switch (messageEvent.data.event) {
-        case 'widget-update':
+        case EVENTS.WIDGET_UPDATE:
           if (update.query.slide === query.slide && update.query.widget === query.widget) {
             this.listeners.forEach((cb) => {
               cb(messageEvent.data.data)
             })
           }
           break
-        case 'slide-ready':
+        case EVENTS.SLIDE_READY:
           this.subscribe()
           break
         default:
@@ -71,9 +67,9 @@ export default class Widget {
   subscribe() {
     console.debug(
       '%cwidget%c %csubscribe',
-      WIDGET_CSS,
-      NONE,
-      SUBSCRIBE_CSS,
+      CSS.WIDGET,
+      CSS.NONE,
+      CSS.SUBSCRIBE,
       this.query.slide,
       this.query.widget,
     )
@@ -81,19 +77,19 @@ export default class Widget {
   }
 
   public getCloud = async (): Promise<IResponse> => {
-    if (this.query.type !== CLOUD) {
+    if (this.query.type !== API.CLOUD) {
       console.warn(
         '%cstorage%c %cwidget',
-        STORAGE_CSS,
-        NONE,
-        WIDGET_CSS,
+        CSS.STORAGE,
+        CSS.NONE,
+        CSS.WIDGET,
         this.query.widget,
         'Wrong method call for getCloud, expected type is',
         this.query.type,
       )
       return {
         data: null,
-        message: `wrong method call for getMessages, expected type is ${this.query.type}`,
+        message: `wrong method call for getCloud, expected type is ${this.query.type}`,
         success: false,
       }
     }
@@ -101,12 +97,12 @@ export default class Widget {
   }
 
   public getMessages = async (): Promise<IResponse> => {
-    if (this.query.type !== MESSAGES) {
+    if (this.query.type !== API.MESSAGES) {
       console.warn(
         '%cstorage%c %cwidget',
-        STORAGE_CSS,
-        NONE,
-        WIDGET_CSS,
+        CSS.STORAGE,
+        CSS.NONE,
+        CSS.WIDGET,
         this.query.widget,
         'Wrong method call for getMessages, expected type is',
         this.query.type,
@@ -121,12 +117,12 @@ export default class Widget {
   }
 
   public getSeries = async (): Promise<IResponse> => {
-    if (this.query.type !== SERIES) {
+    if (this.query.type !== API.SERIES) {
       console.warn(
         '%cstorage%c %cwidget',
-        STORAGE_CSS,
-        NONE,
-        WIDGET_CSS,
+        CSS.STORAGE,
+        CSS.NONE,
+        CSS.WIDGET,
         this.query.widget,
         'Wrong method call for getSeries, expected type is',
         this.query.type,
@@ -141,7 +137,7 @@ export default class Widget {
   }
 
   public showModal = (componentName: any) => {
-    const ev = new CustomEvent('show-modal', {
+    const ev = new CustomEvent(EVENTS.SHOW_MODAL, {
       detail: {
         component: componentName,
         attributes: this.query,

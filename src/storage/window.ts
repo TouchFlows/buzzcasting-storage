@@ -1,16 +1,11 @@
 import type {
   IQuery,
   IResponse,
-  IStorageOptions } from '..'
+  IStorageOptions,
+} from '..'
 import {
-  API_CSS,
-  CLOUD,
-  MESSAGES,
-  NONE,
-  SERIES,
-  STORAGE_CSS,
-  SUBSCRIBE_CSS,
-  WIDGET,
+  API,
+  CSS,
 } from '..'
 import { getKey, moderation, widgetParams } from '../utils/helpers'
 
@@ -28,7 +23,7 @@ export default class WindowClient {
     try {
       return window.BuzzCasting.WidgetData[key]
     } catch (error) {
-      console.warn('%capi', API_CSS, CLOUD, query.slide, query.widget)
+      console.warn('%capi', CSS.API, API.CLOUD, query.slide, query.widget)
       return { data: null, message: 'Cloud Data error', success: false }
     }
   }
@@ -38,7 +33,7 @@ export default class WindowClient {
     try {
       return window.BuzzCasting.WidgetData[key]
     } catch (error) {
-      console.warn('%capi', API_CSS, SERIES, query.slide, query.widget)
+      console.warn('%capi', CSS.API, API.SERIES, query.slide, query.widget)
       return { data: null, message: 'Series Data error', success: false }
     }
   }
@@ -48,7 +43,7 @@ export default class WindowClient {
     try {
       return window.BuzzCasting.WidgetData[key]
     } catch (error) {
-      console.warn('%capi', API_CSS, MESSAGES, query.slide, query.widget)
+      console.warn('%capi', CSS.API, API.MESSAGES, query.slide, query.widget)
       return { data: null, message: 'Messages Data error', success: false }
     }
   }
@@ -65,7 +60,7 @@ export default class WindowClient {
       window.BuzzCasting.WidgetData[key] = data
       return 201
     } catch (error) {
-      console.error('%cstorage', STORAGE_CSS, 'set', query, error)
+      console.error('%cstorage', CSS.STORAGE, 'set', query, error)
       return 400
     }
   }
@@ -82,7 +77,7 @@ export default class WindowClient {
       window.BuzzCasting.WidgetData[key] = data
       return 201
     } catch (error) {
-      console.error('%cstorage', STORAGE_CSS, 'set', query, error)
+      console.error('%cstorage', CSS.STORAGE, 'set', query, error)
       return 400
     }
   }
@@ -99,7 +94,7 @@ export default class WindowClient {
       window.BuzzCasting.WidgetData[key] = data
       return 201
     } catch (error) {
-      console.error('%cstorage', STORAGE_CSS, 'set', query, error)
+      console.error('%cstorage', CSS.STORAGE, 'set', query, error)
       return 400
     }
   }
@@ -114,7 +109,7 @@ export default class WindowClient {
       window.BuzzCasting.WidgetData[key] = query
       return 201
     } catch (error) {
-      console.error('%cstorage', STORAGE_CSS, WIDGET, query, error)
+      console.error('%cstorage', CSS.STORAGE, API.WIDGET, query, error)
       return 400
     }
   }
@@ -126,7 +121,7 @@ export default class WindowClient {
    */
   subscribe = (query: IQuery): null => {
     query = widgetParams(query)
-    if (query.type === MESSAGES) {
+    if (query.type === API.MESSAGES) {
       query = moderation(this.options, query)
     }
     const widgetExists = this.subscribers.filter(
@@ -137,9 +132,9 @@ export default class WindowClient {
     }
     console.debug(
       '%cstorage%c %csubscribe',
-      STORAGE_CSS,
-      NONE,
-      SUBSCRIBE_CSS,
+      CSS.STORAGE,
+      CSS.NONE,
+      CSS.SUBSCRIBE,
       query.slide,
       query.widget,
     )

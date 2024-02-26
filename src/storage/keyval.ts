@@ -1,17 +1,9 @@
 import { get, set } from 'idb-keyval'
-import type {
-  IQuery,
-  IStorageOptions } from '..'
 import {
-  API_CSS,
-  CLOUD,
-  MESSAGES,
-  NONE,
-  SERIES,
-  STORAGE_CSS,
-  SUBSCRIBE_CSS,
-  WIDGET,
-} from '..'
+  API,
+  CSS,
+  type IQuery,
+  type IStorageOptions } from '..'
 import { getKey, moderation, widgetParams } from '../utils/helpers'
 
 export default class KeyvalClient {
@@ -27,7 +19,7 @@ export default class KeyvalClient {
     return await get(key)
       .then((data) => data)
       .catch(() => {
-        console.warn('%capi', API_CSS, CLOUD, query.slide, query.widget)
+        console.warn('%capi', CSS.API, API.CLOUD, query.slide, query.widget)
         return { data: null, message: 'Cloud Data error', success: false }
       })
   }
@@ -37,7 +29,7 @@ export default class KeyvalClient {
     return await get(key)
       .then((data) => data)
       .catch(() => {
-        console.warn('%capi', API_CSS, SERIES, query.slide, query.widget)
+        console.warn('%capi', CSS.API, API.SERIES, query.slide, query.widget)
         return { data: null, message: 'Series Data error', success: false }
       })
   }
@@ -47,7 +39,7 @@ export default class KeyvalClient {
     return await get(key)
       .then((data) => data)
       .catch(() => {
-        console.warn('%capi', API_CSS, MESSAGES, query.slide, query.widget)
+        console.warn('%capi', CSS.API, API.MESSAGES, query.slide, query.widget)
         return { data: null, message: 'Messages Data error', success: false }
       })
   }
@@ -68,7 +60,7 @@ export default class KeyvalClient {
     return await set(key, data)
       .then(() => 201)
       .catch((error: Error) => {
-        console.error('%cstorage', STORAGE_CSS, CLOUD, query, error)
+        console.error('%cstorage', CSS.STORAGE, API.CLOUD, query, error)
         return 400
       })
   }
@@ -89,7 +81,7 @@ export default class KeyvalClient {
     return await set(key, data)
       .then(() => 201)
       .catch((error: Error) => {
-        console.error('%cstorage', STORAGE_CSS, SERIES, query, error)
+        console.error('%cstorage', CSS.STORAGE, API.SERIES, query, error)
         return 400
       })
   }
@@ -110,7 +102,7 @@ export default class KeyvalClient {
     return await set(key, data)
       .then(() => 201)
       .catch((error: Error) => {
-        console.error('%cstorage', STORAGE_CSS, MESSAGES, query, error)
+        console.error('%cstorage', CSS.STORAGE, API.MESSAGES, query, error)
         return 400
       })
   }
@@ -135,7 +127,7 @@ export default class KeyvalClient {
     return await set(key, data)
       .then(() => 201)
       .catch((error: Error) => {
-        console.error('%cstorage', STORAGE_CSS, WIDGET, query, error)
+        console.error('%cstorage', CSS.STORAGE, API.WIDGET, query, error)
         return 400
       })
   }
@@ -147,7 +139,7 @@ export default class KeyvalClient {
    */
   subscribe = (query: IQuery): null => {
     query = widgetParams(query)
-    if (query.type === MESSAGES) {
+    if (query.type === API.MESSAGES) {
       query = moderation(this.options, query)
     }
     const alreadySubscribed = this.subscribers.filter(
@@ -158,9 +150,9 @@ export default class KeyvalClient {
     }
     console.debug(
       '%cstorage%c %csubscribe',
-      STORAGE_CSS,
-      NONE,
-      SUBSCRIBE_CSS,
+      CSS.STORAGE,
+      CSS.NONE,
+      CSS.SUBSCRIBE,
       query.slide,
       query.widget,
     )
