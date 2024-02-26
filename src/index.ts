@@ -200,20 +200,20 @@ export declare interface ISeries {
   title: string
   series: ISeriesData[]
   category: ICategory
-  metrics: IMetrics
-  indicators: IIndicators
-  timestamp: number
+  metrics?: IMetrics
+  indicators?: IIndicators
+  timestamp?: number
 }
 
 export declare interface ISeriesData {
-  name: string
-  label: string
-  current: number[]
-  current_total: number
-  previous_total: number
-  previous: number[]
-  current_category: number
-  previous_category: number
+  name?: string
+  label?: string
+  current?: number[]
+  current_total?: number
+  previous_total?: number
+  previous?: number[]
+  current_category?: number
+  previous_category?: number
 }
 
 export declare interface ICategory {
