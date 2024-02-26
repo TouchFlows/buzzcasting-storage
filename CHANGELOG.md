@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.7.1
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.7.0...v2.7.1)
+
+### 🩹 Fixes
+
+- Add event enum values ([351d6bd](https://github.com/TouchFlows/buzzcasting-storage/commit/351d6bd))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.7.0
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.6.1...v2.7.0)
