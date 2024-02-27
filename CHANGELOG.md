@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.7.2
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.7.1...v2.7.2)
+
+### 🩹 Fixes
+
+- Add event & css enum vals ([51513ff](https://github.com/TouchFlows/buzzcasting-storage/commit/51513ff))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.7.1
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.7.0...v2.7.1)
