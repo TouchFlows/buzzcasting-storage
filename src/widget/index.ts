@@ -129,7 +129,7 @@ export default class Widget {
       )
       return {
         data: null,
-        message: `wrong method call for getMessages, expected type is ${this.query.type}`,
+        message: `wrong method call for getSeries, expected type is ${this.query.type}`,
         success: false,
       }
     }

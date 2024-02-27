@@ -11,6 +11,7 @@ export enum CSS {
   API = 'color:white;background-color:grey;padding:0 4px 0 4px;border-radius:5px;',
   APP = 'color:white;background-color:navy;padding:0 4px 0 4px;border-radius:5px;',
   BROADCAST = 'color:white;background-color:orange;padding:0 4px 0 4px;border-radius:5px;',
+  DATA = 'color:grey;background-color:lightskyblue;padding:0 4px 0 4px;border-radius:5px;',
   CLOUD = 'color:grey;background-color:mistyrose;padding:0 4px 0 4px;border-radius:5px;',
   GET_DATA = 'color:black;background-color:lime;padding:0 4px 0 4px;border-radius:5px;',
   HIDE = 'color:white;background-color:red;padding:0 4px 0 4px;border-radius:5px;',
@@ -28,6 +29,7 @@ export enum CSS {
 
 export enum EVENTS {
   APP_READY = 'appReady',
+  API_UPDATE = 'apiUpdate',
   CHANNEL = 'channel',
   ERROR = 'error',
   GOTO_SLIDE = 'gotoSlide',
@@ -39,8 +41,10 @@ export enum EVENTS {
   RELOAD_PRESENTATION = 'reloadPresentation',
   SHOW_MODAL = 'showModal',
   SLIDE_DID_LOAD = 'slideDidLoad',
+  SLIDE_GOTO = 'slideGoto',
   SLIDE_READY = 'slideReady',
   SLIDE_TRANSITIONER = 'slideTransitioner',
+  START_TRANSITIONER = 'startTransitioner',
   STORAGE_INIT = 'stroageInit',
   SUBSCRIBE = 'subscribe',
   UPDATE = 'update',
