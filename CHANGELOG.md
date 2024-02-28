@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.9.2
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.9.1...v2.9.2)
+
+### 🩹 Fixes
+
+- ShowModal logging ([f55c5ea](https://github.com/TouchFlows/buzzcasting-storage/commit/f55c5ea))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.9.1
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.9.0...v2.9.1)
