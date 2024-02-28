@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.8.0
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.7.2...v2.8.0)
+
+### 🚀 Enhancements
+
+- Change in widget showModal processing ([0a2f948](https://github.com/TouchFlows/buzzcasting-storage/commit/0a2f948))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.7.2
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.7.1...v2.7.2)
