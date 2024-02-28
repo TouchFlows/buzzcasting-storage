@@ -17,6 +17,14 @@ import { filterAttributes } from './utils/attributes'
 import { messageId } from './utils/modal-event'
 
 /**
+ * IModal
+ */
+export declare interface IModal {
+  showComponent: string
+  dataset?: any
+  attributes?: any
+}
+/**
  * Cloud
  */
 export declare interface ICloud {
