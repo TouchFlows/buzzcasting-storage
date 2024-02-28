@@ -13,6 +13,8 @@ import {
   STORAGE,
 } from './constants'
 import Widget from './widget'
+import { filterAttributes } from './utils/attributes'
+import { messageId } from './utils/modal-event'
 
 /**
  * Cloud
@@ -241,6 +243,8 @@ export {
   BuzzcastingStorageManager,
   BuzzcastingStorageReader,
   Widget,
+  filterAttributes,
+  messageId,
   widgetParams,
   API,
   CSS,

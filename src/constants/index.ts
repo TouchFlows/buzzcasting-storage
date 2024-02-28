@@ -28,6 +28,7 @@ export enum CSS {
 }
 
 export enum EVENTS {
+  ADD_SLIDE = 'addSlide',
   APP_READY = 'appReady',
   API_UPDATE = 'apiUpdate',
   CHANNEL = 'channel',

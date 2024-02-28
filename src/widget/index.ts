@@ -1,33 +1,39 @@
 import type { IQuery, IResponse } from '..'
-import {
-  API,
-  BuzzcastingStorageReader,
-  CSS,
-  EVENTS,
-  widgetParams,
-} from '..'
+import { API, BuzzcastingStorageReader, CSS, EVENTS, filterAttributes, widgetParams } from '..'
 
 export default class Widget {
   private storageReader: BuzzcastingStorageReader
   private broadcastChannel: BroadcastChannel
   private query: IQuery
+  private attributes: { [x: string]: string }
 
-  private readonly listeners: Array<(arg: IResponse) => void>
+  private listeners: Array<(arg: IResponse) => void>
 
   /**
    *
    * @param callbacks functions in the widget that will receive the update
    * @param query
    */
-  constructor(callbacks: Array<(arg: IResponse) => void>, query: IQuery) {
+  constructor(
+    element: HTMLElement,
+    callbacks: Array<(arg: IResponse) => void>,
+    selector?: string,
+  ) {
+    selector = typeof selector !== 'undefined' ? selector : 'buzzcasting-slide'
+
     this.listeners = callbacks
+
+    let query: IQuery
+    query = { ...element.dataset }
+    delete query.hmr
+
+    query.slide
+			= element.closest(selector.toUpperCase())?.id ?? `${selector} not found`
+
     query = widgetParams(query)
-    if (query.widget === undefined) {
-      const topics = query.topics?.split('-')
-      query.dashboard = topics ? topics[0] : ''
-      query.widget = topics ? topics[1] : ''
-    }
     this.query = query
+
+    this.attributes = filterAttributes(element.attributes)
 
     const options = window.BuzzCasting.getOptions()
     this.storageReader = new BuzzcastingStorageReader(options)
@@ -50,7 +56,10 @@ export default class Widget {
       const update: IQuery = messageEvent.data.data
       switch (messageEvent.data.event) {
         case EVENTS.WIDGET_UPDATE:
-          if (update.query.slide === query.slide && update.query.widget === query.widget) {
+          if (
+            update.query.slide === query.slide
+            && update.query.widget === query.widget
+          ) {
             this.listeners.forEach((cb) => {
               cb(messageEvent.data.data)
             })
@@ -73,7 +82,10 @@ export default class Widget {
       this.query.slide,
       this.query.widget,
     )
-    this.broadcastChannel.postMessage({ event: 'subscribe', data: this.query })
+    this.broadcastChannel.postMessage({
+      event: EVENTS.SUBSCRIBE,
+      data: this.query,
+    })
   }
 
   public getCloud = async (): Promise<IResponse> => {
@@ -136,11 +148,16 @@ export default class Widget {
     return await this.storageReader.getSeries(this.query)
   }
 
-  public showModal = (componentName: any) => {
+  public showModal = (modal: {
+    showComponent: string
+    dataset?: any
+    attributes?: any
+  }) => {
     const ev = new CustomEvent(EVENTS.SHOW_MODAL, {
       detail: {
-        component: componentName,
-        attributes: this.query,
+        component: modal.showComponent,
+        attributes: { ...modal.attributes, ...this.attributes },
+        dataset: { ...modal.dataset, ...this.query },
       },
       bubbles: true,
       cancelable: true,
