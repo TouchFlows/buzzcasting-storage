@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.9.1
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.9.0...v2.9.1)
+
+### 🩹 Fixes
+
+- Add generic getData function ([1bc6e57](https://github.com/TouchFlows/buzzcasting-storage/commit/1bc6e57))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.9.0
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.7.2...v2.9.0)
