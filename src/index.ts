@@ -14,7 +14,6 @@ import {
 } from './constants'
 import Widget from './widget'
 import { filterAttributes } from './utils/attributes'
-import { messageId } from './utils/modal-event'
 
 /**
  * IModal
@@ -252,7 +251,6 @@ export {
   BuzzcastingStorageReader,
   Widget,
   filterAttributes,
-  messageId,
   widgetParams,
   API,
   CSS,

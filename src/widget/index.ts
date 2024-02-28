@@ -207,11 +207,21 @@ export default class Widget {
    * @param modal IModal
    */
   public showModal = (modal: IModal) => {
+    const dataset = { ...modal.dataset, ...this.query }
+    const attributes = { ...modal.attributes, ...this.attributes }
+    console.debug(
+      '%cwidget',
+      CSS.WIDGET,
+      EVENTS.SHOW_MODAL,
+      modal.showComponent,
+      attributes,
+      dataset,
+    )
     const ev = new CustomEvent(EVENTS.SHOW_MODAL, {
       detail: {
         component: modal.showComponent,
-        attributes: { ...modal.attributes, ...this.attributes },
-        dataset: { ...modal.dataset, ...this.query },
+        attributes,
+        dataset,
       },
       bubbles: true,
       cancelable: true,
