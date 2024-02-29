@@ -214,8 +214,7 @@ export default class Widget {
       CSS.WIDGET,
       EVENTS.SHOW_MODAL,
       modal.showComponent,
-      attributes,
-      dataset,
+      dataset.widget,
     )
     const ev = new CustomEvent(EVENTS.SHOW_MODAL, {
       detail: {
