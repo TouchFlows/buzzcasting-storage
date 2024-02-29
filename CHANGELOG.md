@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.9.4
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.9.3...v2.9.4)
+
+### 🩹 Fixes
+
+- Add message approve, star constants ([6721dc4](https://github.com/TouchFlows/buzzcasting-storage/commit/6721dc4))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.9.3
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.9.2...v2.9.3)
