@@ -6,7 +6,7 @@ import {
   API,
   CSS,
 } from '..'
-import { getKey, moderation, widgetParams } from '../utils/helpers'
+import { getKey, moderation, widgetParams } from '../utils/widget'
 
 export default class LocalStorageClient {
   public subscribers: Array<any> = []

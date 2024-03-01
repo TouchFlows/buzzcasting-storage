@@ -12,7 +12,7 @@ import KeyvalClient from '../storage/keyval'
 import LocalStorageClient from '../storage/local-storage'
 import SessionStorageClient from '../storage/session-storage'
 import WindowClient from '../storage/window'
-import { sum } from '../utils/hash-sum'
+import { hashSum } from '../utils'
 
 export class BuzzcastingStorageManager {
   private sm:
@@ -112,7 +112,7 @@ export class BuzzcastingStorageManager {
             let newHash: string | any[] = ''
             switch (data.query.type) {
               case API.MESSAGES:
-                newHash = sum(data.data.messages)
+                newHash = hashSum(data.data.messages)
                 if (previousQuery.hash === newHash) {
                   console.debug(
                     '%capi%c %cno updates',
@@ -131,7 +131,7 @@ export class BuzzcastingStorageManager {
 
                 break
               case API.CLOUD:
-                newHash = sum(data.data)
+                newHash = hashSum(data.data)
                 if (previousQuery.hash === newHash) {
                   console.debug(
                     '%capi%c %cno updates',
@@ -149,7 +149,7 @@ export class BuzzcastingStorageManager {
                 }
                 break
               case API.SERIES:
-                newHash = sum(data.data)
+                newHash = hashSum(data.data)
                 if (previousQuery.hash === newHash) {
                   console.debug(
                     '%capi%c %cno updates',

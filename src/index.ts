@@ -1,6 +1,6 @@
 import { BuzzcastingStorageManager } from './manager'
 import { BuzzcastingStorageReader } from './reader'
-import { widgetParams } from './utils/helpers'
+import { camelCase, camelize, filterAttributes, widgetParams } from './utils'
 
 /**
  * Constants
@@ -13,7 +13,6 @@ import {
   STORAGE,
 } from './constants'
 import Widget from './widget'
-import { filterAttributes } from './utils/attributes'
 
 /**
  * IModal
@@ -252,6 +251,8 @@ export {
   Widget,
   filterAttributes,
   widgetParams,
+  camelCase,
+  camelize,
   API,
   CSS,
   EVENTS,

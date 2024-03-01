@@ -4,7 +4,7 @@ import {
   CSS,
   type IQuery,
   type IStorageOptions } from '..'
-import { getKey, moderation, widgetParams } from '../utils/helpers'
+import { getKey, moderation, widgetParams } from '../utils/widget'
 
 export default class KeyvalClient {
   public subscribers: Array<any> = []

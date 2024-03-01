@@ -65,6 +65,6 @@ function toString(o: any) {
   return Object.prototype.toString.call(o)
 }
 
-export function sum(o: any) {
+export function hashSum(o: any) {
   return pad(foldValue(0, o, '', []).toString(16), 8)
 }

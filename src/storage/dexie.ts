@@ -9,7 +9,7 @@ import {
   API,
   CSS,
 } from '..'
-import { moderation, widgetParams } from '../utils/helpers'
+import { moderation, widgetParams } from '../utils/widget'
 
 export default class DexieClient {
   private db: Dexie
