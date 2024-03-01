@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.10.0
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.9.6...v2.10.0)
+
+### 🚀 Enhancements
+
+- Modal attribute management ([9725b89](https://github.com/TouchFlows/buzzcasting-storage/commit/9725b89))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.9.6
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.9.5...v2.9.6)
