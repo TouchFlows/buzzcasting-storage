@@ -4,9 +4,9 @@ import {
   BuzzcastingStorageReader,
   CSS,
   EVENTS,
-  filterAttributes,
   widgetParams,
 } from '..'
+import { camelCasedProps } from '../utils'
 
 /**
  * Main class for managing widgets and data updates
@@ -45,7 +45,7 @@ export default class Widget {
     query = widgetParams(query)
     this.query = query
 
-    this.props = filterAttributes(element.attributes)
+    this.props = camelCasedProps(element.attributes)
 
     const options = window.BuzzCasting.getOptions()
     this.storageReader = new BuzzcastingStorageReader(options)
