@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.9.5
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.9.4...v2.9.5)
+
+### 🩹 Fixes
+
+- Widget util functions ([5efc8cf](https://github.com/TouchFlows/buzzcasting-storage/commit/5efc8cf))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.9.4
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.9.3...v2.9.4)
