@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.10.1
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.10.0...v2.10.1)
+
+### 🩹 Fixes
+
+- Read props from element in widget showModal ([e7cfbc1](https://github.com/TouchFlows/buzzcasting-storage/commit/e7cfbc1))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.10.0
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.9.6...v2.10.0)
