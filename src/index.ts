@@ -19,8 +19,7 @@ import Widget from './widget'
  */
 export declare interface IModal {
   showComponent: string
-  dataset?: any
-  attributes?: any
+  props?: any
 }
 /**
  * Cloud

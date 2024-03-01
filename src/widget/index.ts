@@ -15,7 +15,7 @@ export default class Widget {
   private storageReader: BuzzcastingStorageReader
   private broadcastChannel: BroadcastChannel
   private query: IQuery
-  private attributes: { [x: string]: string }
+  private props: { [x: string]: string | object }
 
   private listeners: Array<(arg: IResponse) => void>
 
@@ -45,7 +45,7 @@ export default class Widget {
     query = widgetParams(query)
     this.query = query
 
-    this.attributes = filterAttributes(element.attributes)
+    this.props = filterAttributes(element.attributes)
 
     const options = window.BuzzCasting.getOptions()
     this.storageReader = new BuzzcastingStorageReader(options)
@@ -207,20 +207,18 @@ export default class Widget {
    * @param modal IModal
    */
   public showModal = (modal: IModal) => {
-    const dataset = { ...modal.dataset, ...this.query }
-    const attributes = { ...modal.attributes, ...this.attributes }
+    const props = { ...modal.props, ...this.props }
     console.debug(
       '%cwidget',
       CSS.WIDGET,
       EVENTS.SHOW_MODAL,
       modal.showComponent,
-      dataset.widget,
+      props.widget,
     )
     const ev = new CustomEvent(EVENTS.SHOW_MODAL, {
       detail: {
         component: modal.showComponent,
-        attributes,
-        dataset,
+        props,
       },
       bubbles: true,
       cancelable: true,
