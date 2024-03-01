@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.10.2
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.10.1...v2.10.2)
+
+### 🩹 Fixes
+
+- Props I.O. mergedProps ([c048d50](https://github.com/TouchFlows/buzzcasting-storage/commit/c048d50))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.10.1
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.10.0...v2.10.1)
