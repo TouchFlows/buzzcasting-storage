@@ -220,7 +220,7 @@ export default class Widget {
     const ev = new CustomEvent(EVENTS.SHOW_MODAL, {
       detail: {
         component: modal.showComponent,
-        mergedProps,
+        props: mergedProps,
       },
       bubbles: true,
       cancelable: true,
