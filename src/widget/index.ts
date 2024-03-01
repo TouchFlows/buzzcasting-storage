@@ -14,8 +14,8 @@ import { camelCasedProps } from '../utils'
 export default class Widget {
   private storageReader: BuzzcastingStorageReader
   private broadcastChannel: BroadcastChannel
+  private element: HTMLElement
   private query: IQuery
-  private props: { [x: string]: string | object }
 
   private listeners: Array<(arg: IResponse) => void>
 
@@ -31,9 +31,11 @@ export default class Widget {
     callbacks: Array<(arg: IResponse) => void>,
     selector?: string,
   ) {
-    selector = typeof selector !== 'undefined' ? selector : 'buzzcasting-slide'
+    this.element = element
 
     this.listeners = callbacks
+
+    selector = typeof selector !== 'undefined' ? selector : 'buzzcasting-slide'
 
     let query: IQuery
     query = { ...element.dataset }
@@ -44,8 +46,6 @@ export default class Widget {
 
     query = widgetParams(query)
     this.query = query
-
-    this.props = camelCasedProps(element.attributes)
 
     const options = window.BuzzCasting.getOptions()
     this.storageReader = new BuzzcastingStorageReader(options)
@@ -207,7 +207,9 @@ export default class Widget {
    * @param modal IModal
    */
   public showModal = (modal: IModal) => {
-    const props = { ...modal.props, ...this.props }
+    const props = camelCasedProps(this.element.attributes)
+    const mergedProps = { ...modal.props, ...props }
+
     console.debug(
       '%cwidget',
       CSS.WIDGET,
@@ -218,7 +220,7 @@ export default class Widget {
     const ev = new CustomEvent(EVENTS.SHOW_MODAL, {
       detail: {
         component: modal.showComponent,
-        props,
+        mergedProps,
       },
       bubbles: true,
       cancelable: true,
