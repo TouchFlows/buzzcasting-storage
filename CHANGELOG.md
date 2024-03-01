@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.9.6
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.9.5...v2.9.6)
+
+### 🩹 Fixes
+
+- Use propos instead of attributes ([4ea3531](https://github.com/TouchFlows/buzzcasting-storage/commit/4ea3531))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.9.5
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.9.4...v2.9.5)
