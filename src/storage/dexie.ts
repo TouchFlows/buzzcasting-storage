@@ -1,14 +1,6 @@
 import Dexie from 'dexie'
-import type {
-  IMessage,
-  IQuery,
-  IResponse,
-  IStorageOptions,
-} from '..'
-import {
-  API,
-  CSS,
-} from '..'
+import type { IMessage, IQuery, IResponse, IStorageOptions } from '..'
+import { API, CSS } from '..'
 import { moderation, widgetParams } from '../utils/widget'
 
 export default class DexieClient {
@@ -56,8 +48,10 @@ export default class DexieClient {
           query.slide,
           query.widget,
         )
-        return { data: null, message: 'Series Data error', success: false }
       })
+    if (data === undefined) {
+      return { data: null, message: 'Cloud Data error', success: false }
+    }
     data.data.presentation = query?.presentation || 'not set'
     data.data.slide = query?.slide || 'not set'
     data.message = 'Messages retrieved successfully'
@@ -84,8 +78,10 @@ export default class DexieClient {
           query.slide,
           query.widget,
         )
-        return { data: null, message: 'Series Data error', success: false }
       })
+    if (data === undefined) {
+      return { data: null, message: 'Series Data error', success: false }
+    }
     data.data.presentation = query?.presentation || 'not set'
     data.data.slide = query?.slide || 'not set'
     data.message = 'Messages retrieved successfully'
@@ -126,8 +122,10 @@ export default class DexieClient {
             query.slide,
             query.widget,
           )
-          return { data: null, message: 'Messages Data error', success: false }
         })
+      if (topicMessages.length === 0) {
+        return { data: null, message: 'No Messages error', success: false }
+      }
 
       const title = topicMessages[0] ? topicMessages[0].title : 'No title'
 

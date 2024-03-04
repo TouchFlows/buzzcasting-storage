@@ -1,9 +1,5 @@
 import { get, set } from 'idb-keyval'
-import {
-  API,
-  CSS,
-  type IQuery,
-  type IStorageOptions } from '..'
+import { API, CSS, type IQuery, type IStorageOptions } from '..'
 import { getKey, moderation, widgetParams } from '../utils/widget'
 
 export default class KeyvalClient {
