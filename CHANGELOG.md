@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.10.5
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.10.4...v2.10.5)
+
+### 🩹 Fixes
+
+- Attrs for widget ([6d16216](https://github.com/TouchFlows/buzzcasting-storage/commit/6d16216))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.10.4
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.10.3...v2.10.4)
