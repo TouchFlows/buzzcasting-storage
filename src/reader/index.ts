@@ -10,7 +10,8 @@ import {
   type IQuery,
   type IResponse,
   type IStorageOptions,
-  STORAGE } from '..'
+  STORAGE,
+} from '..'
 
 // export * from "../interfaces/IQuery";
 
