@@ -1,18 +1,16 @@
 import { camelCase } from '.'
 
 export interface IFilteredAttributes {
-  [x: string]: string
+  [key: string]: string | object
 }
 
-export function attrs(attributes: NamedNodeMap): IFilteredAttributes[] {
-  const filteredAttributes = []
+export function attrs(attributes: NamedNodeMap): any {
+  const filteredAttributes: IFilteredAttributes = {}
 
   for (let i = 0; i < attributes.length; i++) {
     const attribute = attributes.item(i)
     if (attribute?.name) {
-      const obj: IFilteredAttributes = {}
-      obj[attribute.name] = attribute.value
-      filteredAttributes.push(obj)
+      filteredAttributes[attribute.name] = attribute.value
     }
   }
   return filteredAttributes

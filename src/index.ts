@@ -1,6 +1,6 @@
 import { BuzzcastingStorageManager } from './manager'
 import { BuzzcastingStorageReader } from './reader'
-import { camelCase, camelize, filterAttributes, widgetParams } from './utils'
+import { attrs, camelCase, camelize, filterAttributes, widgetParams } from './utils'
 
 /**
  * Constants
@@ -248,6 +248,7 @@ export {
   BuzzcastingStorageManager,
   BuzzcastingStorageReader,
   Widget,
+  attrs,
   filterAttributes,
   widgetParams,
   camelCase,
