@@ -208,7 +208,7 @@ export default class Widget {
    */
   public showModal = (modal: IModal) => {
     const props: any[] = attrs(this.element.attributes)
-    if (props.includes('data-topics')) {
+    if (Object.prototype.hasOwnProperty.call(props, 'data-topics')) {
       // @ts-expect-error cannot get string type out of IFilteredAttributes props
       const topic = props['data-topics'].split('-')
       // @ts-expect-error cannot get string type out of IFilteredAttributes props
