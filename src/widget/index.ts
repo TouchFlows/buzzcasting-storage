@@ -1,11 +1,5 @@
 import type { IModal, IQuery, IResponse } from '..'
-import {
-  API,
-  BuzzcastingStorageReader,
-  CSS,
-  EVENTS,
-  widgetParams,
-} from '..'
+import { API, BuzzcastingStorageReader, CSS, EVENTS, widgetParams } from '..'
 import { attrs } from '../utils'
 
 /**
@@ -211,10 +205,17 @@ export default class Widget {
     if (Object.prototype.hasOwnProperty.call(props, 'data-topics')) {
       // @ts-expect-error cannot get string type out of IFilteredAttributes props
       const topic = props['data-topics'].split('-')
-      // @ts-expect-error cannot get string type out of IFilteredAttributes props
-      props['data-widget'] = topic[1]
-      // @ts-expect-error cannot get string type out of IFilteredAttributes props
-      props['data-dashboard'] = topic[0]
+      if (topic.length > 1) {
+        // @ts-expect-error cannot get string type out of IFilteredAttributes props
+        props['data-widget'] = topic[1]
+        // @ts-expect-error cannot get string type out of IFilteredAttributes props
+        props['data-dashboard'] = topic[0]
+      } else {
+        // @ts-expect-error cannot get string type out of IFilteredAttributes props
+        props['data-widget'] = topic[0]
+        // @ts-expect-error cannot get string type out of IFilteredAttributes props
+        props['data-dashboard'] = this.query.slide
+      }
     }
     const mergedProps = { ...modal.props, ...props }
 
