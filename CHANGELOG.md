@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.10.7
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.10.6...v2.10.7)
+
+### 🩹 Fixes
+
+- SetData on widget ([9a0b9b9](https://github.com/TouchFlows/buzzcasting-storage/commit/9a0b9b9))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.10.6
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.10.5...v2.10.6)
