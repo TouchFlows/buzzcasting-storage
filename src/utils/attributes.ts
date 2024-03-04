@@ -1,7 +1,21 @@
 import { camelCase } from '.'
 
-interface IFilteredAttributes {
+export interface IFilteredAttributes {
   [x: string]: string
+}
+
+export function attrs(attributes: NamedNodeMap): IFilteredAttributes[] {
+  const filteredAttributes = []
+
+  for (let i = 0; i < attributes.length; i++) {
+    const attribute = attributes.item(i)
+    if (attribute?.name) {
+      const obj: IFilteredAttributes = {}
+      obj[attribute.name] = attribute.value
+      filteredAttributes.push(obj)
+    }
+  }
+  return filteredAttributes
 }
 
 export function filterAttributes(

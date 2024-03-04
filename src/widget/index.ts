@@ -6,7 +6,7 @@ import {
   EVENTS,
   widgetParams,
 } from '..'
-import { camelCasedProps } from '../utils'
+import { attrs } from '../utils'
 
 /**
  * Main class for managing widgets and data updates
@@ -207,7 +207,15 @@ export default class Widget {
    * @param modal IModal
    */
   public showModal = (modal: IModal) => {
-    const props = camelCasedProps(this.element.attributes)
+    const props: any[] = attrs(this.element.attributes)
+    if (props.includes('data-topics')) {
+      // @ts-expect-error cannot get string type out of IFilteredAttributes props
+      const topic = props['data-topics'].split('-')
+      // @ts-expect-error cannot get string type out of IFilteredAttributes props
+      props['data-widget'] = topic[1]
+      // @ts-expect-error cannot get string type out of IFilteredAttributes props
+      props['data-dashboard'] = topic[0]
+    }
     const mergedProps = { ...modal.props, ...props }
 
     console.debug(
@@ -215,7 +223,8 @@ export default class Widget {
       CSS.WIDGET,
       EVENTS.SHOW_MODAL,
       modal.showComponent,
-      props.widget,
+      // @ts-expect-error cannot get string type out of IFilteredAttributes props
+      props['data-widget'],
     )
     const ev = new CustomEvent(EVENTS.SHOW_MODAL, {
       detail: {
