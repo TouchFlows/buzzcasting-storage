@@ -1,4 +1,5 @@
-import { type IQuery, type IStorageOptions, MODERATION } from '..'
+import type { IQuery, IStorageOptions } from '..'
+import { MODERATION } from '../constants'
 
 export function getKey(query: IQuery): string {
   let key = `${query.type}.${query.topics}`

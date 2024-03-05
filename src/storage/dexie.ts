@@ -1,6 +1,6 @@
 import Dexie from 'dexie'
 import type { IMessage, IQuery, IResponse, IStorageOptions } from '..'
-import { API, CSS } from '..'
+import { API, CSS } from '../constants'
 import { moderation, widgetParams } from '../utils/widget'
 
 export default class DexieClient {

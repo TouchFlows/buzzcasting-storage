@@ -1,11 +1,5 @@
-import type {
-  IQuery,
-  IResponse,
-  IStorageOptions } from '..'
-import {
-  API,
-  CSS,
-} from '..'
+import type { IQuery, IResponse, IStorageOptions } from '..'
+import { API, CSS } from '../constants'
 import { getKey, moderation, widgetParams } from '../utils/widget'
 
 export default class SessionStorageClient {

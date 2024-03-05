@@ -1,17 +1,14 @@
+import type {
+  IQuery,
+  IResponse,
+  IStorageOptions,
+} from '..'
+import { API, CSS, STORAGE } from '../constants'
 import DexieClient from '../storage/dexie'
 import KeyvalClient from '../storage/keyval'
 import LocalStorageClient from '../storage/local-storage'
 import SessionStorageClient from '../storage/session-storage'
 import WindowClient from '../storage/window'
-
-import {
-  API,
-  CSS,
-  type IQuery,
-  type IResponse,
-  type IStorageOptions,
-  STORAGE,
-} from '..'
 
 // export * from "../interfaces/IQuery";
 

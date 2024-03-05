@@ -1,12 +1,7 @@
 import type { IQuery, IStorageOptions } from '..'
-import {
-  API,
-  CSS,
-  EVENTS,
-  STORAGE,
-} from '..'
 import { version } from '../../package.json'
 import ApiClient from '../api/api'
+import { API, CSS, EVENTS, STORAGE } from '../constants'
 import DexieClient from '../storage/dexie'
 import KeyvalClient from '../storage/keyval'
 import LocalStorageClient from '../storage/local-storage'
