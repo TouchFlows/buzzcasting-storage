@@ -244,7 +244,7 @@ declare global {
   }
 }
 
-export {
+export default {
   BuzzcastingStorageManager,
   BuzzcastingStorageReader,
   Widget,
