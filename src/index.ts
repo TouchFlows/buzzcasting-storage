@@ -238,15 +238,15 @@ export declare interface IStorageOptions {
   retention?: number
 }
 
-export type ApiData = ISeries & IMessages & ICloud
-
 declare global {
   interface Window {
     BuzzCasting: any
   }
 }
 
-export default {
+export type ApiData = ISeries & IMessages & ICloud
+
+export {
   BuzzcastingStorageManager,
   BuzzcastingStorageReader,
   Widget,

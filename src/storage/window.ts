@@ -3,7 +3,10 @@ import type {
   IResponse,
   IStorageOptions,
 } from '..'
-import { API, CSS } from '../constants'
+import {
+  API,
+  CSS,
+} from '..'
 import { getKey, moderation, widgetParams } from '../utils/widget'
 
 export default class WindowClient {

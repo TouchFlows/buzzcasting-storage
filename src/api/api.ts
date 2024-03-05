@@ -1,5 +1,12 @@
-import type { IQuery, IResponse, IStorageOptions } from '..'
-import { CSS, EVENTS } from '../constants'
+import type {
+  IQuery,
+  IResponse,
+  IStorageOptions,
+} from '..'
+import {
+  CSS,
+  EVENTS,
+} from '..'
 
 export default class ApiClient {
   private options: IStorageOptions
