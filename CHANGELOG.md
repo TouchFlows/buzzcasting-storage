@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v2.10.9
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.10.8...v2.10.9)
+
+### 🩹 Fixes
+
+- Export default storage ([a786f10](https://github.com/TouchFlows/buzzcasting-storage/commit/a786f10))
+- Constants ([c356e06](https://github.com/TouchFlows/buzzcasting-storage/commit/c356e06))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.10.8
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.10.7...v2.10.8)
