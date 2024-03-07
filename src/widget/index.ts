@@ -231,6 +231,7 @@ export default class Widget {
       detail: {
         component: modal.showComponent,
         props: mergedProps,
+        timeout: modal?.timeout,
       },
       bubbles: true,
       cancelable: true,
