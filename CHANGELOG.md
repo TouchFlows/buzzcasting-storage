@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.10.13
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.10.12...v2.10.13)
+
+### 🩹 Fixes
+
+- IModal timeout property override ([9526dd5](https://github.com/TouchFlows/buzzcasting-storage/commit/9526dd5))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.10.12
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.10.11...v2.10.12)
