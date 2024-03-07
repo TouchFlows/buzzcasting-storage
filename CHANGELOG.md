@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.10.12
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.10.11...v2.10.12)
+
+### 🩹 Fixes
+
+- Add constants ([5c19979](https://github.com/TouchFlows/buzzcasting-storage/commit/5c19979))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.10.11
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.10.10...v2.10.11)
