@@ -1,4 +1,4 @@
-import type { IQuery, IStorageOptions } from '..'
+import type { IQuery, IResponse, IStorageOptions } from '..'
 import {
   API,
   CSS,
@@ -247,10 +247,13 @@ export class BuzzcastingStorageManager {
     return await this.sm?.cleanMessages(retentionDuration)
   }
 
-  // TODO: add checksum to avoid broadcasting update
-  // private setHash(widget: string) {
+  public hideMessage = async (query: IQuery): Promise<IResponse> => {
+    return await this.api.hideMessage(query)
+  }
 
-  // }
+  public hideLabels = async (query: IQuery): Promise<IResponse> => {
+    return await this.api.hideLabels(query)
+  }
 
   public getSubscribers = async () => {
     return await this.sm?.getSubscribers()

@@ -162,6 +162,7 @@ export declare interface IQuery {
   topics?: string
   dashboard?: string
   widget?: string
+  labels?: string[]
   compare?: string
   period?: number
   type?: 'cloud' | 'messages' | 'series' | 'proxy'

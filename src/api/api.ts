@@ -75,7 +75,7 @@ export default class ApiClient {
     const args = this.headers()
     const params = '?action=visible'
     console.info(
-      '%capi%c %cpost',
+      '%capi%c %put',
       CSS.API,
       CSS.NONE,
       CSS.GET_DATA,
@@ -86,6 +86,36 @@ export default class ApiClient {
     return await fetch(
       [app, 'api', version, query.type, query.id].join('/') + params,
       { ...args, method: 'put' },
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(response.statusText)
+        }
+        return response
+      })
+      .then((response) => {
+        return response.json()
+      })
+      .catch((message) => {
+        return { succes: false, message, data: [] }
+      })
+  }
+
+  public async hideLabels(query: IQuery): Promise<any> {
+    const { app, version }: IStorageOptions = this.options
+    const args = this.headers()
+    console.info(
+      '%capi%c %put',
+      CSS.API,
+      CSS.NONE,
+      CSS.GET_DATA,
+      EVENTS.HIDE_MESSAGE,
+      [app, 'api', version, query.type, query.widget].join('/'),
+      { ...args, body: JSON.stringify(query.labels), method: 'put' },
+    )
+    return await fetch(
+      [app, 'api', version, query.type, query.widget].join('/'),
+      { ...args, body: JSON.stringify(query.labels), method: 'put' },
     )
       .then((response) => {
         if (!response.ok) {
