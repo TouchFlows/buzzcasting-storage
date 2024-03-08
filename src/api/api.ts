@@ -71,21 +71,21 @@ export default class ApiClient {
   }
 
   public async hideMessage(query: IQuery): Promise<any> {
-    const { app, version }: IStorageOptions = this.options
-    const args = this.headers()
+    const { version }: IStorageOptions = this.options
+    const headers = this.headers()
     const params = '?action=visible'
     console.info(
-      '%capi%c %put',
+      '%capi%c %cput',
       CSS.API,
       CSS.NONE,
       CSS.GET_DATA,
       EVENTS.HIDE_MESSAGE,
-      [app, 'api', version, query.type, query.id].join('/') + params,
-      { ...args, method: 'put' },
+      query.widget,
+      query.id,
     )
     return await fetch(
-      [app, 'api', version, query.type, query.id].join('/') + params,
-      { ...args, method: 'put' },
+      [this.url, 'api', version, query.type, query.id].join('/') + params,
+      { ...headers, method: 'put' },
     )
       .then((response) => {
         if (!response.ok) {
@@ -102,20 +102,21 @@ export default class ApiClient {
   }
 
   public async hideLabels(query: IQuery): Promise<any> {
-    const { app, version }: IStorageOptions = this.options
-    const args = this.headers()
+    const { version }: IStorageOptions = this.options
+    const headers = this.headers()
+    const body = JSON.stringify(query.labels)
     console.info(
-      '%capi%c %put',
+      '%capi%c %cput',
       CSS.API,
       CSS.NONE,
       CSS.GET_DATA,
-      EVENTS.HIDE_MESSAGE,
-      [app, 'api', version, query.type, query.widget].join('/'),
-      { ...args, body: JSON.stringify(query.labels), method: 'put' },
+      EVENTS.HIDE_LABELS,
+      query.widget,
+      body,
     )
     return await fetch(
-      [app, 'api', version, query.type, query.widget].join('/'),
-      { ...args, body: JSON.stringify(query.labels), method: 'put' },
+      [this.url, 'api', version, query.type, query.widget].join('/'),
+      { ...headers, body, method: 'put' },
     )
       .then((response) => {
         if (!response.ok) {

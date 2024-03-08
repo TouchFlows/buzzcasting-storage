@@ -37,6 +37,7 @@ export enum EVENTS {
   ERROR = 'error',
   GOTO_SLIDE = 'gotoSlide',
   HIDE_MESSAGE = 'hideMessage',
+  HIDE_LABELS = 'hideLabels',
   NEXT_SLIDE = 'nextSlide',
   PAUSE_PRESENTATION = 'pausePresentation',
   PRESENTATION_READY = 'presentationReady',
