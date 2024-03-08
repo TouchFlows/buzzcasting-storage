@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.11.2
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.11.1...v2.11.2)
+
+### 🩹 Fixes
+
+- Api domain for hide messages & labels ([69ab2f8](https://github.com/TouchFlows/buzzcasting-storage/commit/69ab2f8))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.11.1
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.11.0...v2.11.1)
