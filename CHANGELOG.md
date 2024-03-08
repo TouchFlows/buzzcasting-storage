@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.11.0
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.10.14...v2.11.0)
+
+### 🚀 Enhancements
+
+- Api methods for hiding message and labels ([3d7dc00](https://github.com/TouchFlows/buzzcasting-storage/commit/3d7dc00))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.10.14
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.10.13...v2.10.14)
