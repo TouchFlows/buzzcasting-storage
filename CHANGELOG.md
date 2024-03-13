@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.11.4
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.11.3...v2.11.4)
+
+### 🩹 Fixes
+
+- No-unused-expressions error ([c0d8594](https://github.com/TouchFlows/buzzcasting-storage/commit/c0d8594))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.11.3
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.11.2...v2.11.3)
