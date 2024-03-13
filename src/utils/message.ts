@@ -67,17 +67,16 @@ export const anonymize = (name: string) => {
 // 	return messages;
 // };
 
-// /**
-//  * Clear Container range contents of template code when the web component is connected to the DOM
-//  * @param myNode
-//  */
-// export const clearContents = (myNode: HTMLElement): void => {
-// 	// using range as mostly we use the Host tag to encapsulate HTMLElements
-// 	let range = document.createRange();
-// 	range.selectNodeContents(myNode);
-// 	range.deleteContents();
-// 	return;
-// };
+/**
+ * Clear Container range contents of template code when the web component is connected to the DOM
+ * @param myNode
+ */
+export function clearContents(myNode: HTMLElement): void {
+  // using range as mostly we use the Host tag to encapsulate HTMLElements
+  const range = document.createRange()
+  range.selectNodeContents(myNode)
+  range.deleteContents()
+}
 
 export function formatContent(message: IMessage): string {
   return `${
