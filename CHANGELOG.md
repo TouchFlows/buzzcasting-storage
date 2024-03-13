@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v2.11.3
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.11.2...v2.11.3)
+
+### 🩹 Fixes
+
+- Move clearContents to storage ([5021f89](https://github.com/TouchFlows/buzzcasting-storage/commit/5021f89))
+- ClearContents ([046dd5e](https://github.com/TouchFlows/buzzcasting-storage/commit/046dd5e))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.11.2
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.11.1...v2.11.2)
