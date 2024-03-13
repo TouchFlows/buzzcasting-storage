@@ -1,7 +1,7 @@
 import { BuzzcastingStorageManager } from './manager'
 import { BuzzcastingStorageReader } from './reader'
 import {
-  anonymize,
+  // anonymize,
   attrs,
   brandLogo,
   camelCase,
@@ -9,9 +9,9 @@ import {
   clearContents,
   filterAttributes,
   formatContent,
-  intToString,
+  /* intToString,
   sanitize,
-  shuffleMessages,
+  shuffleMessages, */
   widgetParams,
 } from './utils'
 
@@ -264,7 +264,7 @@ export {
   MODERATION,
   STORAGE,
   Widget,
-  anonymize,
+  // anonymize,
   attrs,
   brandLogo,
   camelCase,
@@ -272,8 +272,8 @@ export {
   clearContents,
   filterAttributes,
   formatContent,
-  intToString,
-  sanitize,
-  shuffleMessages,
+  // intToString,
+  // sanitize,
+  // shuffleMessages,
   widgetParams,
 }
