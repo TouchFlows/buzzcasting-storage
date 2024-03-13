@@ -1,17 +1,24 @@
 import { BuzzcastingStorageManager } from './manager'
 import { BuzzcastingStorageReader } from './reader'
-import { attrs, camelCase, camelize, filterAttributes, widgetParams } from './utils'
+import {
+  anonymize,
+  attrs,
+  brandLogo,
+  camelCase,
+  camelize,
+  clearContents,
+  filterAttributes,
+  formatContent,
+  intToString,
+  sanitize,
+  shuffleMessages,
+  widgetParams,
+} from './utils'
 
 /**
  * Constants
  */
-import {
-  API,
-  CSS,
-  EVENTS,
-  MODERATION,
-  STORAGE,
-} from './constants'
+import { API, CSS, EVENTS, MODERATION, STORAGE } from './constants'
 import Widget from './widget'
 
 /**
@@ -249,17 +256,24 @@ declare global {
 export type ApiData = ISeries & IMessages & ICloud
 
 export {
+  API,
   BuzzcastingStorageManager,
   BuzzcastingStorageReader,
-  Widget,
-  attrs,
-  filterAttributes,
-  widgetParams,
-  camelCase,
-  camelize,
-  API,
   CSS,
   EVENTS,
   MODERATION,
   STORAGE,
+  Widget,
+  anonymize,
+  attrs,
+  brandLogo,
+  camelCase,
+  camelize,
+  clearContents,
+  filterAttributes,
+  formatContent,
+  intToString,
+  sanitize,
+  shuffleMessages,
+  widgetParams,
 }

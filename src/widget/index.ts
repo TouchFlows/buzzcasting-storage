@@ -1,6 +1,6 @@
 import type { IModal, IQuery, IResponse } from '..'
 import { API, BuzzcastingStorageReader, CSS, EVENTS, widgetParams } from '..'
-import { attrs } from '../utils'
+import { attrs, clearContents } from '../utils'
 
 /**
  * Main class for managing widgets and data updates
@@ -40,6 +40,8 @@ export default class Widget {
 
     query = widgetParams(query)
     this.query = query
+
+    clearContents(element)
 
     const options = window.BuzzCasting.getOptions()
     this.storageReader = new BuzzcastingStorageReader(options)
