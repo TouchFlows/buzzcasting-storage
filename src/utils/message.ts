@@ -1,15 +1,15 @@
 import type { IMessage } from '..'
 
-/* export const shuffleMessages = (messages: IMessage[]) => {
-	const clone = [...messages];
-	for (let i = clone.length - 1; i > 0; i--) {
-		const j = Math.floor(Math.random() * (i + 1));
-		[clone[i], clone[j]] = [clone[j], clone[i]];
-	}
-	return clone;
-};
+export function shuffleMessages(messages: IMessage[]) {
+  const clone = [...messages]
+  for (let i = clone.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [clone[i], clone[j]] = [clone[j], clone[i]]
+  }
+  return clone
+}
 
-export const anonymize = (name: string) => {
+/* export const anonymize = (name: string) => {
 	const names: string[] = name.toUpperCase().split(/[\s_-]+/); // space and underscore
 	if (names.length > 0) {
 		names.forEach((element: string, index) => {
