@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.11.5
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.11.4...v2.11.5)
+
+### 🏡 Chore
+
+- Bump tsc & nodejs ([ce0efd7](https://github.com/TouchFlows/buzzcasting-storage/commit/ce0efd7))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.11.4
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.11.3...v2.11.4)
