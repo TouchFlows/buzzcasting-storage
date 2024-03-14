@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v2.11.7
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.11.6...v2.11.7)
+
+### 🩹 Fixes
+
+- New generic functions ([62a44d0](https://github.com/TouchFlows/buzzcasting-storage/commit/62a44d0))
+- Anonymize message ([44b6a97](https://github.com/TouchFlows/buzzcasting-storage/commit/44b6a97))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.11.6
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.11.5...v2.11.6)
