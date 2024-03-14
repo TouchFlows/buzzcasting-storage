@@ -9,9 +9,10 @@ import {
   clearContents,
   filterAttributes,
   formatContent,
-  /* intToString,
-  sanitize,
-  shuffleMessages, */
+  intToString,
+  numberFormatter,
+  // sanitize,
+  shuffleMessages,
   widgetParams,
 } from './utils'
 
@@ -263,7 +264,7 @@ export {
   EVENTS,
   MODERATION,
   STORAGE,
-  Widget,
+  // Widget,
   // anonymize,
   attrs,
   brandLogo,
@@ -272,8 +273,9 @@ export {
   clearContents,
   filterAttributes,
   formatContent,
-  // intToString,
+  intToString,
+  numberFormatter,
   // sanitize,
-  // shuffleMessages,
+  shuffleMessages,
   widgetParams,
 }

@@ -9,17 +9,17 @@ export function shuffleMessages(messages: IMessage[]) {
   return clone
 }
 
-/* export const anonymize = (name: string) => {
-	const names: string[] = name.toUpperCase().split(/[\s_-]+/); // space and underscore
-	if (names.length > 0) {
-		names.forEach((element: string, index) => {
-			names[index] = element.charAt(0) + ".";
-		});
-		return names.join(" ");
-	}
-	return "";
-};
-*/
+// export const anonymize = (name: string) => {
+// 	const names: string[] = name.toUpperCase().split(/[\s_-]+/); // space and underscore
+// 	if (names.length > 0) {
+// 		names.forEach((element: string, index) => {
+// 			names[index] = element.charAt(0) + ".";
+// 		});
+// 		return names.join(" ");
+// 	}
+// 	return "";
+// };
+
 // export const sanitize = (messages: IMessage[]) => {
 // 	messages.forEach((message: IMessage) => {
 // 		// remove all links
@@ -104,31 +104,31 @@ export function numberFormatter(num: number, digits: number) {
   return (num / si[i].value).toFixed(digits).replace(rx, '$1') + si[i].symbol
 }
 
-// export const intToString = (num: any, digits: number): string => {
-// 	num = num.toString().replace(/[^0-9.]/g, "");
-// 	if (num < 1000) {
-// 		return num;
-// 	}
-// 	const si = [
-// 		{ v: 1e3, s: "K" },
-// 		{ v: 1e6, s: "M" },
-// 		{ v: 1e9, s: "B" },
-// 		{ v: 1e12, s: "T" },
-// 		{ v: 1e15, s: "P" },
-// 		{ v: 1e18, s: "E" },
-// 	];
-// 	let index: number;
-// 	for (index = si.length - 1; index > 0; index--) {
-// 		if (num >= si[index].v) {
-// 			break;
-// 		}
-// 	}
+export function intToString(num: any, digits: number): string {
+  num = num.toString().replace(/[^0-9.]/g, '')
+  if (num < 1000) {
+    return num
+  }
+  const si = [
+    { v: 1e3, s: 'K' },
+    { v: 1e6, s: 'M' },
+    { v: 1e9, s: 'B' },
+    { v: 1e12, s: 'T' },
+    { v: 1e15, s: 'P' },
+    { v: 1e18, s: 'E' },
+  ]
+  let index: number
+  for (index = si.length - 1; index > 0; index--) {
+    if (num >= si[index].v) {
+      break
+    }
+  }
 
-// 	return (
-// 		(num / si[index].v)
-// 			.toFixed(digits)
-// 			.replace(/\.0+$|(\.[0-9]*[1-9])0+$/, "$1") + si[index].s
-// 	);
-// };
+  return (
+    (num / si[index].v)
+      .toFixed(digits)
+      .replace(/\.0+$|(\.[0-9]*[1-9])0+$/, '$1') + si[index].s
+  )
+}
 
 // export const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
