@@ -248,6 +248,7 @@ export class BuzzcastingStorageManager {
   }
 
   public hideMessage = async (query: IQuery): Promise<IResponse> => {
+    await this.sm?.hideMessage(query.id, 0)
     return await this.api.hideMessage(query)
   }
 

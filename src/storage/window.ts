@@ -103,6 +103,10 @@ export default class WindowClient {
     console.log('cleanMessages not implemented for ', this.options.storage)
   }
 
+  hideMessage = async (id: string, visible: number) => {
+    console.debug(`hideMessage ${id} ${visible} not implemented for ${this.options.storage}`)
+  }
+
   setWidget = async (query: IQuery) => {
     const key = `widget.${query.widget}`
     try {

@@ -108,6 +108,10 @@ export default class KeyvalClient {
     return await new Promise<void>((resolve) => resolve())
   }
 
+  hideMessage = async (id: string, visible: number) => {
+    console.debug(`hideMessage ${id} ${visible} not implemented for ${this.options.storage}`)
+  }
+
   /**
    * Update Cloud
    * @param query IQuery
