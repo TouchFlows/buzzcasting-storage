@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.12.1
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.12.0...v2.12.1)
+
+### 🩹 Fixes
+
+- HideMessage placeholders ([299f24b](https://github.com/TouchFlows/buzzcasting-storage/commit/299f24b))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.12.0
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.11.7...v2.12.0)
