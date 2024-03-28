@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.12.0
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.11.7...v2.12.0)
+
+### 🚀 Enhancements
+
+- HideMessage and cleanMessages for Dexie ([8e080da](https://github.com/TouchFlows/buzzcasting-storage/commit/8e080da))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.11.7
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.11.6...v2.11.7)
