@@ -10,7 +10,7 @@ export function brandLogo(channel: string, size: string): string {
       return `fa-brands fa-dailymotion fa-${size}`
 
     case 'fb':
-      return `text-facebook-blue fa-brands fa-facebook fa-${size}`
+      return `text-blue-900 fa-brands fa-facebook fa-${size}`
 
     case 'fo':
       return `fa-solid fa-messages fa-${size}`
@@ -43,7 +43,7 @@ export function brandLogo(channel: string, size: string): string {
       return `fa-brands fa-tiktok fa-${size}`
 
     case 'tw':
-      return `text-white fa-brands fa-x-twitter fa-${size}`
+      return `fa-brands fa-x-twitter fa-${size}`
 
     case 'vk':
       return `fa-brands fa-vk fa-${size}`

@@ -2,6 +2,7 @@ import { BuzzcastingStorageManager } from './manager'
 import { BuzzcastingStorageReader } from './reader'
 import {
   anonymize,
+  attachedMedia,
   attrs,
   brandLogo,
   camelCase,
@@ -266,6 +267,7 @@ export {
   STORAGE,
   Widget,
   anonymize,
+  attachedMedia,
   attrs,
   brandLogo,
   camelCase,

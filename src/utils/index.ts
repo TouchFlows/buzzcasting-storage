@@ -1,4 +1,5 @@
 export * from './attributes'
+export * from './attached-media'
 export * from './brand-logos'
 export * from './camel-case'
 export * from './hash-sum'
