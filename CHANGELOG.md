@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.12.2
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.12.1...v2.12.2)
+
+### 🩹 Fixes
+
+- Brand logo and attached media ([d48f752](https://github.com/TouchFlows/buzzcasting-storage/commit/d48f752))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.12.1
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.12.0...v2.12.1)
