@@ -262,16 +262,35 @@ export default class DexieClient {
   cleanMessages = async (retentionDuration: number) => {
     const currentDate = Date.now() / 1000
 
-    const beforeFilter = (topic: { utc: number }) =>
-      topic.utc < retentionDuration - currentDate
+    const topicFilter = (topic: { utc: number }) =>
+      topic.utc < currentDate - retentionDuration
+
+    const messagesFilter = (message: { utc: number }) =>
+      message.utc < currentDate - retentionDuration
 
     await this.db
-      .table('topics')
+      .table(API.TOPICS)
       .orderBy('utc')
-      .filter(beforeFilter)
+      .filter(topicFilter)
       .modify((_message, ref) => {
         delete ref.value
       })
+
+    await this.db
+      .table(API.MESSAGES)
+      .orderBy('utc')
+      .filter(messagesFilter)
+      .modify((_message, ref) => {
+        delete ref.value
+      })
+  }
+
+  hideMessage = async (id: string, visible: number) => {
+    await this.db
+      .table(API.TOPICS)
+      .where('message_id')
+      .equals(id)
+      .modify({ visible })
   }
 
   /**
