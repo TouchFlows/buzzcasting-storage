@@ -244,11 +244,28 @@ export class BuzzcastingStorageManager {
 
   public cleanMessages = async () => {
     const retentionDuration = this.options?.retention || 86400 * 4
-    return await this.sm?.cleanMessages(retentionDuration)
+
+    const count: number | undefined = await this.sm?.cleanMessages(retentionDuration)
+    console.info(
+      '%cstorage%c %clean',
+      CSS.STORAGE,
+      CSS.NONE,
+      CSS.MESSAGES,
+      `${count} messages deleted`,
+    )
   }
 
   public hideMessage = async (query: IQuery): Promise<IResponse> => {
-    await this.sm?.hideMessage(query.id, 0)
+    const count = await this.sm?.hideMessage(query.id, 0)
+
+    console.info(
+      '%cstorage%c %hide',
+      CSS.STORAGE,
+      CSS.NONE,
+      CSS.HIDE,
+      `${count} messages deleted`,
+    )
+
     return await this.api.hideMessage(query)
   }
 

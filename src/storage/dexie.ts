@@ -259,7 +259,7 @@ export default class DexieClient {
    * Wipe Message data after number of seconds
    * @param retentionDuration
    */
-  cleanMessages = async (retentionDuration: number) => {
+  cleanMessages = async (retentionDuration: number): Promise<number> => {
     const currentDate = Date.now() / 1000
 
     const topicFilter = (topic: { utc: number }) =>
@@ -275,13 +275,33 @@ export default class DexieClient {
       .modify((_message, ref) => {
         delete ref.value
       })
+      .catch((error) => {
+        console.error(
+          '%cstorage%c %clean',
+          CSS.STORAGE,
+          CSS.NONE,
+          CSS.MESSAGES,
+          error,
+        )
+        return 0
+      })
 
-    await this.db
+    return await this.db
       .table(API.MESSAGES)
       .orderBy('utc')
       .filter(messagesFilter)
       .modify((_message, ref) => {
         delete ref.value
+      })
+      .catch((error) => {
+        console.error(
+          '%cstorage%c %clean',
+          CSS.STORAGE,
+          CSS.NONE,
+          CSS.MESSAGES,
+          error,
+        )
+        return 0
       })
   }
 
@@ -291,6 +311,16 @@ export default class DexieClient {
       .where('message_id')
       .equals(id)
       .modify({ visible })
+      .catch((error) => {
+        console.error(
+          '%cstorage%c %chide',
+          CSS.STORAGE,
+          CSS.NONE,
+          CSS.HIDE,
+          error,
+        )
+        return 0
+      })
   }
 
   /**

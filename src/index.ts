@@ -13,7 +13,7 @@ import {
   intToString,
   numberFormatter,
   rtl,
-  // sanitize,
+  sanitize,
   shuffleMessages,
   widgetParams,
 } from './utils'
@@ -279,7 +279,7 @@ export {
   intToString,
   numberFormatter,
   rtl,
-  // sanitize,
+  sanitize,
   shuffleMessages,
   widgetParams,
 }

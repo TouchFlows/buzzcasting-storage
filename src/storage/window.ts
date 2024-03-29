@@ -99,8 +99,9 @@ export default class WindowClient {
     }
   }
 
-  cleanMessages = async (_retentionDuration: number) => {
+  cleanMessages = async (_retentionDuration: number): Promise<number> => {
     console.log('cleanMessages not implemented for ', this.options.storage)
+    return await new Promise<number>((resolve) => resolve(0))
   }
 
   hideMessage = async (id: string, visible: number) => {
