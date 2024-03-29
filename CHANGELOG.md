@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.12.6
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.12.5...v2.12.6)
+
+### 🩹 Fixes
+
+- Clean messages timer and log ([663fad7](https://github.com/TouchFlows/buzzcasting-storage/commit/663fad7))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.12.5
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.12.4...v2.12.5)
