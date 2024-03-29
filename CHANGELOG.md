@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.12.5
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.12.4...v2.12.5)
+
+### 🩹 Fixes
+
+- Add functions ([0d520eb](https://github.com/TouchFlows/buzzcasting-storage/commit/0d520eb))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.12.4
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.12.3...v2.12.4)
