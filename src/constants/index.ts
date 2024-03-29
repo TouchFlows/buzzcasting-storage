@@ -33,6 +33,7 @@ export enum EVENTS {
   API_UPDATE = 'apiUpdate',
   APPROVE_MESSAGE = 'approveMessage',
   CHANNEL = 'channel',
+  CLEAN_MESSAGES = 'cleanMessages',
   CLOSE_MODAL = 'closeModal',
   ERROR = 'error',
   GOTO_SLIDE = 'gotoSlide',

@@ -247,7 +247,7 @@ export class BuzzcastingStorageManager {
 
     const count: number | undefined = await this.sm?.cleanMessages(retentionDuration)
     console.info(
-      '%cstorage%c %clean',
+      '%cstorage%c %cstorage',
       CSS.STORAGE,
       CSS.NONE,
       CSS.MESSAGES,
@@ -259,11 +259,11 @@ export class BuzzcastingStorageManager {
     const count = await this.sm?.hideMessage(query.id, 0)
 
     console.info(
-      '%cstorage%c %hide',
+      '%cstorage%c %cstorage',
       CSS.STORAGE,
       CSS.NONE,
       CSS.HIDE,
-      `${count} messages deleted`,
+      `${count} messages hidden`,
     )
 
     return await this.api.hideMessage(query)
