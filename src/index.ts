@@ -232,6 +232,7 @@ export declare interface IIndicators {
 export declare interface IStorageOptions {
   app: string
   domain?: string
+  cdn?: string
   channel?: string
   presentation?: string
   slide?: string
