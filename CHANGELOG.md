@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.12.4
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.12.3...v2.12.4)
+
+### 🩹 Fixes
+
+- Clean and hide logging, utility functions ([e21b729](https://github.com/TouchFlows/buzzcasting-storage/commit/e21b729))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.12.3
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.12.2...v2.12.3)
