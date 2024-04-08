@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.12.7
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.12.6...v2.12.7)
+
+### 🩹 Fixes
+
+- X-www-form for labels ([d694f28](https://github.com/TouchFlows/buzzcasting-storage/commit/d694f28))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.12.6
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.12.5...v2.12.6)
