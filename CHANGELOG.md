@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.12.8
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.12.7...v2.12.8)
+
+### 🩹 Fixes
+
+- Content-type for labels ([bd7c073](https://github.com/TouchFlows/buzzcasting-storage/commit/bd7c073))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.12.7
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.12.6...v2.12.7)
