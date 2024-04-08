@@ -28,6 +28,17 @@ export default class ApiClient {
     }
   }
 
+  private formHeaders = () => {
+    const token = `Bearer ${this.options.bearer}`
+    return {
+      headers: new Headers({
+        Authorization: token,
+        Accept: 'application/x-www-form-urlencoded',
+        // 'X-Session-Key': localStorage.getItem('guid') || 'invalid',
+      }),
+    }
+  }
+
   public async get(query: IQuery): Promise<IResponse> {
     const { version }: IStorageOptions = this.options
     const headers = this.headers()
@@ -103,7 +114,7 @@ export default class ApiClient {
 
   public async hideLabels(query: IQuery): Promise<any> {
     const { version }: IStorageOptions = this.options
-    const headers = this.headers()
+    const headers = this.formHeaders()
     const body = JSON.stringify(query.labels)
     console.info(
       '%capi%c %cput',
