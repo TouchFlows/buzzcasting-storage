@@ -32,8 +32,9 @@ export default class ApiClient {
     const token = `Bearer ${this.options.bearer}`
     return {
       headers: new Headers({
-        Authorization: token,
-        Accept: 'application/x-www-form-urlencoded',
+        'Authorization': token,
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json',
         // 'X-Session-Key': localStorage.getItem('guid') || 'invalid',
       }),
     }
