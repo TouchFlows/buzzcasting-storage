@@ -1,12 +1,5 @@
-import type {
-  IQuery,
-  IResponse,
-  IStorageOptions,
-} from '..'
-import {
-  CSS,
-  EVENTS,
-} from '..'
+import type { IQuery, IResponse, IStorageOptions } from '..'
+import { CSS, EVENTS } from '..'
 
 export default class ApiClient {
   private options: IStorageOptions
@@ -116,7 +109,13 @@ export default class ApiClient {
   public async hideLabels(query: IQuery): Promise<any> {
     const { version }: IStorageOptions = this.options
     const headers = this.formHeaders()
-    const body = JSON.stringify(query.labels)
+    const urlencoded = new URLSearchParams()
+    const labels = query.labels || []
+    for (const [i, value] of labels.entries()) {
+      urlencoded.append(`custom_filters[${i}]`, value)
+    }
+    // const body = JSON.stringify(query.labels)
+
     console.info(
       '%capi%c %cput',
       CSS.API,
@@ -124,11 +123,11 @@ export default class ApiClient {
       CSS.GET_DATA,
       EVENTS.HIDE_LABELS,
       query.widget,
-      body,
+      labels,
     )
     return await fetch(
       [this.url, 'api', version, query.type, query.widget].join('/'),
-      { ...headers, body, method: 'put' },
+      { ...headers, body: urlencoded, method: 'put' },
     )
       .then((response) => {
         if (!response.ok) {
