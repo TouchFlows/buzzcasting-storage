@@ -207,7 +207,17 @@ export default class DexieClient {
     let errorCount = 0
 
     data.data.messages.forEach(async (message: IMessage) => {
-      await this.db.table(API.MESSAGES).put({ id: message.id, utc: message.utc, data: message })
+      await this.db.table(API.MESSAGES).put({ id: message.id, utc: message.utc, data: message }).catch((error: Error) => {
+        errorCount++
+        console.error(
+          '%cstorage',
+          CSS.STORAGE,
+          'set message',
+          `title: ${title}`,
+          message,
+          error,
+        )
+      })
       await this.db.table(API.TOPICS).put({
         widget_id: query.widget,
         message_id: message.id,
@@ -220,7 +230,14 @@ export default class DexieClient {
         utc: message.utc,
       }).catch((error: Error) => {
         errorCount++
-        console.error('%cstorage', CSS.STORAGE, 'set', query, error)
+        console.error(
+          '%cstorage',
+          CSS.STORAGE,
+          'set topic',
+          `title: ${title}`,
+          message,
+          error,
+        )
       })
     })
     return errorCount === 0 ? 201 : 400
