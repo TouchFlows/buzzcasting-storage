@@ -203,27 +203,27 @@ export default class DexieClient {
     if (query.type !== API.MESSAGES) {
       return 400
     }
-    const title = data.data.title
-    try {
-      data.data.messages.forEach(async (message: IMessage) => {
-        await this.db.table(API.MESSAGES).put({ id: message.id, utc: message.utc, data: message })
-        await this.db.table(API.TOPICS).put({
-          widget_id: query.widget,
-          message_id: message.id,
-          dashboard_id: query.dashboard,
-          title,
-          engagement: message.dynamics?.engagement,
-          impressions: message.dynamics?.semrush_visits,
-          reach: message.dynamics?.potential_reach,
-          sentiment: message.topics[0].sentiment,
-          utc: message.utc,
-        })
+    const title: string = data.data.title
+    let errorCount = 0
+
+    data.data.messages.forEach(async (message: IMessage) => {
+      await this.db.table(API.MESSAGES).put({ id: message.id, utc: message.utc, data: message })
+      await this.db.table(API.TOPICS).put({
+        widget_id: query.widget,
+        message_id: message.id,
+        dashboard_id: query.dashboard,
+        title,
+        engagement: message.dynamics?.engagement,
+        impressions: message.dynamics?.semrush_visits,
+        reach: message.dynamics?.potential_reach,
+        sentiment: message.topics[0].sentiment,
+        utc: message.utc,
+      }).catch((error: Error) => {
+        errorCount++
+        console.error('%cstorage', CSS.STORAGE, 'set', query, error)
       })
-      return 201
-    } catch (error) {
-      console.error('%cstorage', CSS.STORAGE, 'set', query, error)
-      return 400
-    }
+    })
+    return errorCount === 0 ? 201 : 400
   }
 
   /**
