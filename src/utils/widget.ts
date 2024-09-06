@@ -73,6 +73,6 @@ export function wrapPromise(promise: any, delay: number, reason: string) {
 }
 
 export function getParameterByName(key: string) {
-  const match = RegExp(`[?&]${key}=([^&]*)`).exec(window.location.search)
+  const match = new RegExp(`[?&]${key}=([^&]*)`).exec(window.location.search)
   return match && decodeURIComponent(match[1].replace(/\+/g, ' '))
 }

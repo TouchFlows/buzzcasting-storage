@@ -1,7 +1,7 @@
 {
   "name": "buzzcasting-storage",
   "type": "module",
-  "version": "2.12.9",
+  "version": "2.14.0",
   "private": false,
   "author": {
     "name": "Mark Tamis, TouchFlows SAS",
@@ -24,28 +24,26 @@
     "lint": "eslint . --fix",
     "test": "vitest --run",
     "test:watch": "vitest",
-    "test:coverage": "vitest --coverage",
-    "prepare": "husky install"
+    "test:coverage": "vitest --coverage"
   },
   "dependencies": {
-    "dexie": "^4.0.1",
+    "dexie": "^4.0.8",
     "idb-keyval": "^6.2.1"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^2.13.0",
-    "@commitlint/cli": "^19.2.1",
-    "@commitlint/config-conventional": "^19.1.0",
-    "@types/node": "^20.12.6",
-    "@vitest/coverage-v8": "^1.4.0",
+    "@antfu/eslint-config": "^3.2.0",
+    "@commitlint/cli": "^19.4.1",
+    "@commitlint/config-conventional": "^19.4.1",
+    "@types/node": "^22.5.4",
+    "@vitest/coverage-v8": "^2.0.5",
     "camelcase": "^8.0.0",
     "changelogen": "^0.5.5",
-    "eslint": "^8.57.0",
-    "husky": "^9.0.11",
-    "lint-staged": "^15.2.2",
-    "typescript": "^5.4.4",
-    "vite": "^5.2.8",
-    "vite-plugin-dts": "^3.8.1",
-    "vitest": "^1.4.0"
+    "eslint": "^9.9.1",
+    "lint-staged": "^15.2.10",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.3",
+    "vite-plugin-dts": "^4.1.0",
+    "vitest": "^2.0.5"
   },
   "lint-staged": {
     "*.ts": "pnpm run lint"

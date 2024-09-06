@@ -33,7 +33,7 @@ export default class SessionStorageClient {
     try {
       return sessionStorage.getObject(key)
     } catch (error) {
-      console.warn('%capi', CSS.API, API.CLOUD, query.slide, query.widget)
+      console.warn('%capi', CSS.API, API.CLOUD, query.slide, query.widget, error)
       return { data: null, message: 'Messages Data error', success: false }
     }
   }
@@ -43,7 +43,7 @@ export default class SessionStorageClient {
     try {
       return sessionStorage.getObject(key)
     } catch (error) {
-      console.warn('%capi', CSS.API, API.SERIES, query.slide, query.widget)
+      console.warn('%capi', CSS.API, API.SERIES, query.slide, query.widget, error)
       return { data: null, message: 'Messages Data error', success: false }
     }
   }
@@ -53,7 +53,7 @@ export default class SessionStorageClient {
     try {
       return sessionStorage.getObject(key)
     } catch (error) {
-      console.warn('%capi', CSS.API, API.MESSAGES, query.slide, query.widget)
+      console.warn('%capi', CSS.API, API.MESSAGES, query.slide, query.widget, error)
       return { data: null, message: 'Messages Data error', success: false }
     }
   }
@@ -163,5 +163,35 @@ export default class SessionStorageClient {
    */
   getSubscribers = async (): Promise<IQuery[]> => {
     return await new Promise<IQuery[]>((resolve) => resolve(this.subscribers))
+  }
+
+  loadSlide = async (query: IQuery): Promise<IResponse> => {
+    try {
+      return sessionStorage.getObject(`${query.type}.${query.id}`)
+    } catch (error) {
+      console.warn('%capi', CSS.API, API.SLIDE, query.id, error)
+      return { data: null, message: 'Store Load error', success: false }
+    }
+  }
+
+  /**
+   * Update Slide
+   * @param query IQuery
+   * @returns number
+   */
+  storeSlide = async (query: IQuery): Promise<number> => {
+    try {
+      sessionStorage.setObject(`${query.type}.${query.id}`, {
+        id: query.id,
+        title: query.data.title || 'Not set',
+        json: query.data.json || {},
+        html: query.data.html || '',
+        css: query.data.css || '',
+      })
+      return 200
+    } catch (error) {
+      console.error('%cstorage', CSS.STORAGE, API.SLIDE, query, error)
+      return 400
+    }
   }
 }

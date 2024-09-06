@@ -1,10 +1,5 @@
 import type { IQuery, IResponse, IStorageOptions } from '..'
-import {
-  API,
-  CSS,
-  EVENTS,
-  STORAGE,
-} from '..'
+import { API, CSS, EVENTS, STORAGE } from '..'
 import { version } from '../../package.json'
 import ApiClient from '../api/api'
 import DexieClient from '../storage/dexie'
@@ -173,7 +168,7 @@ export class BuzzcastingStorageManager {
                   CSS.NONE,
                   CSS.STORAGE,
                   'error',
-									`data type ${data.query.type} unknown`,
+                  `data type ${data.query.type} unknown`,
                 )
             }
           } else {
@@ -245,7 +240,9 @@ export class BuzzcastingStorageManager {
   public cleanMessages = async () => {
     const retentionDuration = this.options?.retention || 86400 * 4
 
-    const count: number | undefined = await this.sm?.cleanMessages(retentionDuration)
+    const count: number | undefined = await this.sm?.cleanMessages(
+      retentionDuration,
+    )
     console.info(
       '%cstorage%c %cstorage',
       CSS.STORAGE,
@@ -269,11 +266,30 @@ export class BuzzcastingStorageManager {
     return await this.api.hideMessage(query)
   }
 
-  public hideLabels = async (query: IQuery): Promise<IResponse> => {
+  public hideLabels: (query: IQuery) => Promise<IResponse> = async (
+    query: IQuery,
+  ): Promise<IResponse> => {
     return await this.api.hideLabels(query)
   }
 
   public getSubscribers = async () => {
     return await this.sm?.getSubscribers()
+  }
+
+  public loadSlide = async (query: IQuery): Promise<IResponse> => {
+    return await this.api.loadSlide(query)
+  }
+
+  public storeSlide = async (query: IQuery): Promise<IResponse | number> => {
+    console.log(query)
+    return await this.sm?.storeSlide(query).then(async () => {
+      if (query?.update && query.update) {
+        return await this.api.storeSlide(query)
+      } else {
+        return new Promise((resolve, _reject) => {
+          resolve(201)
+        })
+      }
+    })
   }
 }

@@ -9,7 +9,7 @@
     "strict": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "noUnusedParameters": false,
     "newLine": "lf",
     "noEmit": true,
     "sourceMap": true,

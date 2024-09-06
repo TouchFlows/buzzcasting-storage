@@ -20,7 +20,7 @@ Currently supported are: Local Storage, Session Storage, IDB Keyval, Dexie, Wind
 
 Example call:
 
-```js
+```ts
 import BuzzcastingStorageManager, {
   IMessages,
   IQuery,
@@ -54,7 +54,7 @@ This will initiate a call to the buzzcasting backoffice to retrieve results
 
 The Storage Manager will carry out the API call for the subscriber, and send out a BroadcastChannel on `app` to inform the subcriber that it can retrieve new data. The broadcast channel facilitates its incorporation in for example a Web Worker.
 
-```js
+```ts
 const broadcastChannel = new BroadcastChannel('my-subdomain')
 
 broadcastChannel.onmessage = (messageEvent: MessageEvent) => {

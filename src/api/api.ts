@@ -142,4 +142,89 @@ export default class ApiClient {
         return { succes: false, message, data: [] }
       })
   }
+
+  public async loadSlide(query: IQuery): Promise<any> {
+    const { version }: IStorageOptions = this.options
+    const headers = this.headers()
+
+    const search = Object.assign({}, query)
+    delete search.slide
+    delete search.type
+    delete search.hash
+    const params
+			= Object.keys(search).length > 0
+			  ? `?${new URLSearchParams(search).toString()}`
+			  : ''
+    console.debug(
+      '%capi%c %cget',
+      CSS.API,
+      CSS.NONE,
+      CSS.SLIDE,
+      EVENTS.SLIDE_LOAD,
+      query.slide,
+    )
+    return await fetch(
+      [this.url, 'api', version, query.type].join('/') + params,
+      { ...headers, method: 'get' },
+    )
+      .then(async (response: Response) => {
+        if (!response.ok) {
+          throw new Error(`${response.status}`)
+        }
+        return response
+      })
+      .then((response: Response) => {
+        return response.json()
+      })
+      .then((json: IResponse): IResponse => {
+        json.query = query
+        return json
+      })
+      .catch((code) => {
+        return { success: false, message: `${code}`, data: null }
+      })
+  }
+  /**
+   * Store slide definition
+   * ex: window.BuzzCasting.storage.storeSlide({id:'1',type:'slide', data: {json: {a:'b'},html:'<div/>',css:'abc'}, update: true}) // update: stockage sur le serveur
+   *
+   * @param query
+   * @returns
+   */
+
+  public async storeSlide(query: IQuery): Promise<any> {
+    const { version }: IStorageOptions = this.options
+    const headers = this.formHeaders()
+    /* const urlencoded = new URLSearchParams()
+    const labels = query.labels || []
+    for (const [i, value] of labels.entries()) {
+      urlencoded.append(`custom_filters[${i}]`, value)
+    } */
+    const body = JSON.stringify(query.data)
+
+    console.info(
+      '%capi%c %cput',
+      CSS.API,
+      CSS.NONE,
+      CSS.SLIDE,
+      EVENTS.SLIDE_STORE,
+      query.id,
+    )
+    return await fetch(
+      [this.url, 'api', version, query.type, query.id].join('/'),
+      { ...headers, body, method: 'put' },
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(response.statusText)
+        }
+        return response
+      })
+      .then((response) => {
+        return response.json()
+      })
+      .catch((message) => {
+        return { succes: false, message, data: [] }
+      })
+  }
 }

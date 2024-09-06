@@ -13,22 +13,21 @@ export function attachedMedia(message: IMessage): IAttachedMedia {
     backgroundImage: '',
   } // , blurredImage: { [key: string]: string }
   if (typeof message.media !== 'undefined') {
-    message.media
-    && message.media.forEach((media) => {
-			  if (media.type === 'photo' || media.type === 'image') {
-			    bgImage = {
-			      backgroundImage: `url(${media.url})`,
-			    }
-			    imageUrl = media.url
-			    // blurredImage = {
-			    // 	backdropFilter: 'blur(4px)',
-			    // 	backgroundImage: `url(${media.url})`,
-			    // }
-			  }
+    message.media.forEach((media) => {
+      if (media.type === 'photo' || media.type === 'image') {
+        bgImage = {
+          backgroundImage: `url(${media.url})`,
+        }
+        imageUrl = media.url
+        // blurredImage = {
+        // 	backdropFilter: 'blur(4px)',
+        // 	backgroundImage: `url(${media.url})`,
+        // }
+      }
 
-			  if (media.type === 'video') {
-			    videoUrl = media.url
-			  }
+      if (media.type === 'video') {
+        videoUrl = media.url
+      }
     })
   }
 

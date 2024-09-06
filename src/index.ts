@@ -175,7 +175,7 @@ export declare interface IQuery {
   labels?: string[]
   compare?: string
   period?: number
-  type?: 'cloud' | 'messages' | 'series' | 'proxy'
+  type?: 'cloud' | 'messages' | 'series' | 'proxy' | 'slide'
   order?: string
   media?: number
   dynamics?: number
@@ -187,6 +187,7 @@ export declare interface IQuery {
   before?: number
   since?: number
   hash?: string
+  data?: any
 }
 /**
  * Series Data

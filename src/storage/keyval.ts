@@ -109,7 +109,9 @@ export default class KeyvalClient {
   }
 
   hideMessage = async (id: string, visible: number) => {
-    console.debug(`hideMessage ${id} ${visible} not implemented for ${this.options.storage}`)
+    console.debug(
+      `hideMessage ${id} ${visible} not implemented for ${this.options.storage}`,
+    )
   }
 
   /**
@@ -166,5 +168,37 @@ export default class KeyvalClient {
    */
   getSubscribers = async (): Promise<IQuery[]> => {
     return await new Promise<IQuery[]>((resolve) => resolve(this.subscribers))
+  }
+
+  loadSlide = async (query: IQuery) => {
+    const key = getKey(query)
+    return await get(key)
+      .then((data) => data)
+      .catch(() => {
+        console.warn('%capi', CSS.API, API.SLIDE, query.slide)
+        return { data: null, message: 'Slide Load error', success: false }
+      })
+  }
+
+  /**
+   * Update Slide
+   * @param query IQuery
+   * @returns number
+   */
+  storeSlide = async (query: IQuery): Promise<number> => {
+    const key = getKey(query)
+    const data = {
+      id: query.id,
+      title: query.data.title || 'Not set',
+      json: query.data.json || {},
+      html: query.data.html || '',
+      css: query.data.css || '',
+    }
+    return await set(key, data)
+      .then(() => 201)
+      .catch((error: Error) => {
+        console.error('%cstorage', CSS.STORAGE, API.SLIDE, query, error)
+        return 400
+      })
   }
 }

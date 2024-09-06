@@ -21,6 +21,6 @@ export function intToString(num: any, digits: number): string {
   return (
     (num / si[index].v)
       .toFixed(digits)
-      .replace(/\.0+$|(\.[0-9]*[1-9])0+$/, '$1') + si[index].s
+      .replace(/\.0+$|(\.\d*[1-9])0+$/, '$1') + si[index].s
   )
 }
