@@ -164,7 +164,7 @@ export default class ApiClient {
       query.slide,
     )
     return await fetch(
-      [this.url, 'api', version, query.type].join('/') + params,
+      [this.url, 'api', version, 'slides'].join('/') + params,
       { ...headers, method: 'get' },
     )
       .then(async (response: Response) => {
@@ -211,7 +211,7 @@ export default class ApiClient {
       query.id,
     )
     return await fetch(
-      [this.url, 'api', version, query.type, query.id].join('/'),
+      [this.url, 'api', version, 'slides', query.id].join('/'),
       { ...headers, body, method: 'put' },
     )
       .then((response) => {
