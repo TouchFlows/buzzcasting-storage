@@ -1,6 +1,6 @@
-import type { IModal, IQuery, IResponse } from '..'
 import { API, BuzzcastingStorageReader, CSS, EVENTS, widgetParams } from '..'
 import { attrs, clearContents } from '../utils'
+import type { IModal, IQuery, IResponse } from '..'
 
 /**
  * Main class for managing widgets and data updates

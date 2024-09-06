@@ -1,13 +1,13 @@
-import type {
-  IQuery,
-  IResponse,
-  IStorageOptions,
-} from '..'
 import {
   API,
   CSS,
 } from '..'
 import { getKey, moderation, widgetParams } from '../utils/widget'
+import type {
+  IQuery,
+  IResponse,
+  IStorageOptions,
+} from '..'
 
 export default class WindowClient {
   public subscribers: Array<any> = []

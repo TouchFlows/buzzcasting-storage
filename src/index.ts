@@ -1,5 +1,10 @@
+/**
+ * Constants
+ */
+import { API, CSS, EVENTS, MODERATION, STORAGE } from './constants'
 import { BuzzcastingStorageManager } from './manager'
 import { BuzzcastingStorageReader } from './reader'
+
 import {
   anonymize,
   attachedMedia,
@@ -17,11 +22,6 @@ import {
   shuffleMessages,
   widgetParams,
 } from './utils'
-
-/**
- * Constants
- */
-import { API, CSS, EVENTS, MODERATION, STORAGE } from './constants'
 import Widget from './widget'
 
 /**
@@ -261,27 +261,27 @@ declare global {
 export type ApiData = ISeries & IMessages & ICloud
 
 export {
-  API,
-  BuzzcastingStorageManager,
-  BuzzcastingStorageReader,
-  CSS,
-  EVENTS,
-  MODERATION,
-  STORAGE,
-  Widget,
   anonymize,
+  API,
   attachedMedia,
   attrs,
   brandLogo,
+  BuzzcastingStorageManager,
+  BuzzcastingStorageReader,
   camelCase,
   camelize,
   clearContents,
+  CSS,
+  EVENTS,
   filterAttributes,
   formatContent,
   intToString,
+  MODERATION,
   numberFormatter,
   rtl,
   sanitize,
   shuffleMessages,
+  STORAGE,
+  Widget,
   widgetParams,
 }

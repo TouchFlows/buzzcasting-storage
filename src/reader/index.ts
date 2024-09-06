@@ -1,9 +1,3 @@
-import DexieClient from '../storage/dexie'
-import KeyvalClient from '../storage/keyval'
-import LocalStorageClient from '../storage/local-storage'
-import SessionStorageClient from '../storage/session-storage'
-import WindowClient from '../storage/window'
-
 import {
   API,
   CSS,
@@ -12,6 +6,12 @@ import {
   type IStorageOptions,
   STORAGE,
 } from '..'
+import DexieClient from '../storage/dexie'
+import KeyvalClient from '../storage/keyval'
+import LocalStorageClient from '../storage/local-storage'
+import SessionStorageClient from '../storage/session-storage'
+
+import WindowClient from '../storage/window'
 
 // export * from "../interfaces/IQuery";
 

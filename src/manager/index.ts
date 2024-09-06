@@ -1,4 +1,3 @@
-import type { IQuery, IResponse, IStorageOptions } from '..'
 import { API, CSS, EVENTS, STORAGE } from '..'
 import { version } from '../../package.json'
 import ApiClient from '../api/api'
@@ -8,6 +7,7 @@ import LocalStorageClient from '../storage/local-storage'
 import SessionStorageClient from '../storage/session-storage'
 import WindowClient from '../storage/window'
 import { hashSum } from '../utils'
+import type { IQuery, IResponse, IStorageOptions } from '..'
 
 export class BuzzcastingStorageManager {
   private sm:

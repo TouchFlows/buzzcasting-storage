@@ -56,7 +56,7 @@ export default class KeyvalClient {
     return await set(key, data)
       .then(() => 201)
       .catch((error: Error) => {
-        console.error('%cstorage', CSS.STORAGE, API.CLOUD, query, error)
+        console.error('%cstorage', CSS.STORAGE, API.CLOUD, query, error.message)
         return 400
       })
   }
@@ -77,7 +77,7 @@ export default class KeyvalClient {
     return await set(key, data)
       .then(() => 201)
       .catch((error: Error) => {
-        console.error('%cstorage', CSS.STORAGE, API.SERIES, query, error)
+        console.error('%cstorage', CSS.STORAGE, API.SERIES, query, error.message)
         return 400
       })
   }
@@ -98,7 +98,7 @@ export default class KeyvalClient {
     return await set(key, data)
       .then(() => 201)
       .catch((error: Error) => {
-        console.error('%cstorage', CSS.STORAGE, API.MESSAGES, query, error)
+        console.error('%cstorage', CSS.STORAGE, API.MESSAGES, query, error.message)
         return 400
       })
   }
@@ -129,7 +129,7 @@ export default class KeyvalClient {
     return await set(key, data)
       .then(() => 201)
       .catch((error: Error) => {
-        console.error('%cstorage', CSS.STORAGE, API.WIDGET, query, error)
+        console.error('%cstorage', CSS.STORAGE, API.WIDGET, query, error.message)
         return 400
       })
   }
@@ -197,7 +197,7 @@ export default class KeyvalClient {
     return await set(key, data)
       .then(() => 201)
       .catch((error: Error) => {
-        console.error('%cstorage', CSS.STORAGE, API.SLIDE, query, error)
+        console.error('%cstorage', CSS.STORAGE, API.SLIDE, query, error.message)
         return 400
       })
   }
