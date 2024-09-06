@@ -198,12 +198,12 @@ export default class DexieClient {
    */
   setMessages = async (
     query: IQuery,
-    data: { title: any, data: { messages: IMessage[] } },
+    data: { title: any, data: { messages: IMessage[], title: string } },
   ): Promise<number> => {
     if (query.type !== API.MESSAGES) {
       return 400
     }
-    const title = data.title
+    const title = data.data.title
     try {
       data.data.messages.forEach(async (message: IMessage) => {
         await this.db.table(API.MESSAGES).put({ id: message.id, utc: message.utc, data: message })
