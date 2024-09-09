@@ -1,6 +1,31 @@
 # Changelog
 
 
+## v2.16.0
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.12.9...v2.16.0)
+
+### 🚀 Enhancements
+
+- Add slide load and store ([b301140](https://github.com/TouchFlows/buzzcasting-storage/commit/b301140))
+
+### 🩹 Fixes
+
+- Message topic title ([b1abf2c](https://github.com/TouchFlows/buzzcasting-storage/commit/b1abf2c))
+- Error handling for dexie messages ([861c130](https://github.com/TouchFlows/buzzcasting-storage/commit/861c130))
+- Dexie error handling ([4cb9e7f](https://github.com/TouchFlows/buzzcasting-storage/commit/4cb9e7f))
+- Error handling messages ([b41b6e9](https://github.com/TouchFlows/buzzcasting-storage/commit/b41b6e9))
+- Slides load & stoe api path ([5dede72](https://github.com/TouchFlows/buzzcasting-storage/commit/5dede72))
+
+### 🏡 Chore
+
+- **release:** V2.12.8 ([8974e94](https://github.com/TouchFlows/buzzcasting-storage/commit/8974e94))
+- **release:** V2.12.9 ([5c21377](https://github.com/TouchFlows/buzzcasting-storage/commit/5c21377))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.12.9
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.12.8...v2.12.9)
