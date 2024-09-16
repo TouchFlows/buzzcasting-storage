@@ -1,5 +1,5 @@
-import { CSS, EVENTS } from '..'
 import type { IQuery, IResponse, IStorageOptions } from '..'
+import { CSS, EVENTS } from '..'
 
 export default class ApiClient {
   private options: IStorageOptions
@@ -151,10 +151,10 @@ export default class ApiClient {
     delete search.slide
     delete search.type
     delete search.hash
-    const params
-			= Object.keys(search).length > 0
-			  ? `?${new URLSearchParams(search).toString()}`
-			  : ''
+    // const params
+    // 	= Object.keys(search).length > 0
+    // 	  ? `?${new URLSearchParams(search).toString()}`
+    // 	  : ''
     console.debug(
       '%capi%c %cget',
       CSS.API,
@@ -164,7 +164,7 @@ export default class ApiClient {
       query.slide,
     )
     return await fetch(
-      [this.url, 'api', version, 'slides'].join('/') + params,
+      [this.url, 'api', version, 'slides', query.id].join('/'),
       { ...headers, method: 'get' },
     )
       .then(async (response: Response) => {
