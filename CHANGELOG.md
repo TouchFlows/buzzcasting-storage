@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v2.16.3
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.16.2...v2.16.3)
+
+### 🩹 Fixes
+
+- Store slide ([b0e87f0](https://github.com/TouchFlows/buzzcasting-storage/commit/b0e87f0))
+- Store & load slide ([93733a0](https://github.com/TouchFlows/buzzcasting-storage/commit/93733a0))
+
+### 🏡 Chore
+
+- **release:** V2.16.2 ([d9ec3e9](https://github.com/TouchFlows/buzzcasting-storage/commit/d9ec3e9))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.16.2
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.16.1...v2.16.2)
