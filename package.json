@@ -1,7 +1,7 @@
 {
   "name": "buzzcasting-storage",
   "type": "module",
-  "version": "2.16.0",
+  "version": "2.16.1",
   "private": false,
   "author": {
     "name": "Mark Tamis, TouchFlows SAS",
@@ -21,7 +21,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "changelog": "changelogen --release",
-    "release": "npm test && npm build && changelogen --release && npm publish && git push --follow-tags",
+    "release": "npm test && npm run build && changelogen --release && npm publish && git push --follow-tags",
     "lint": "eslint . --fix",
     "test": "vitest --run",
     "test:watch": "vitest",
@@ -32,19 +32,19 @@
     "idb-keyval": "^6.2.1"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^3.4.1",
-    "@commitlint/cli": "^19.4.1",
-    "@commitlint/config-conventional": "^19.4.1",
-    "@types/node": "^22.5.4",
-    "@vitest/coverage-v8": "^2.0.5",
+    "@antfu/eslint-config": "^3.6.2",
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
+    "@types/node": "^22.5.5",
+    "@vitest/coverage-v8": "^2.1.1",
     "camelcase": "^8.0.0",
     "changelogen": "^0.5.5",
     "eslint": "^9.10.0",
     "lint-staged": "^15.2.10",
-    "typescript": "^5.5.4",
-    "vite": "^5.4.3",
+    "typescript": "^5.6.2",
+    "vite": "^5.4.5",
     "vite-plugin-dts": "^4.2.1",
-    "vitest": "^2.0.5"
+    "vitest": "^2.1.1"
   },
   "lint-staged": {
     "*.ts": "pnpm run lint"
