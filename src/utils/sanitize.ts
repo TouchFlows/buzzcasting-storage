@@ -3,7 +3,7 @@ import type { IMessage } from '..'
 export function sanitize(messages: IMessage[]): IMessage[] {
   messages.forEach((message: IMessage) => {
     // remove all links
-    message.content = message?.content.replace(/(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)((\?.*)?)/g, '') || '' /* eslint-disable-line regexp/no-misleading-capturing-group */
+    message.content = message.content?.replace(/(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)((\?.*)?)/g, '') || '' /* eslint-disable-line regexp/no-misleading-capturing-group */
 
     if (message.sender !== null) {
       if (message.sender?.title === 'Unknown author' || message.sender?.title === null) {
