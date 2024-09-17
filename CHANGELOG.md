@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v2.16.5
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.16.4...v2.16.5)
+
+### 🩹 Fixes
+
+- StoreSlide query structure ([980cfa1](https://github.com/TouchFlows/buzzcasting-storage/commit/980cfa1))
+
+### 🏡 Chore
+
+- Deps ([40d7fbf](https://github.com/TouchFlows/buzzcasting-storage/commit/40d7fbf))
+- **release:** V2.16.4 ([4eb5637](https://github.com/TouchFlows/buzzcasting-storage/commit/4eb5637))
+- Deps ([633ea88](https://github.com/TouchFlows/buzzcasting-storage/commit/633ea88))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.16.4
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.16.3...v2.16.4)
