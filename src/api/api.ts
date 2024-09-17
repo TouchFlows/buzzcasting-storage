@@ -200,7 +200,9 @@ export default class ApiClient {
     for (const [i, value] of labels.entries()) {
       urlencoded.append(`custom_filters[${i}]`, value)
     } */
-    const body = JSON.stringify(query.data)
+    delete query.update
+    delete query.type
+    const body = JSON.stringify(query)
 
     console.info(
       '%capi%c %cput',
