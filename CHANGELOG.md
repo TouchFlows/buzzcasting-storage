@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v2.16.6
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.16.5...v2.16.6)
+
+### 🩹 Fixes
+
+- Sanitize function ([6584dd9](https://github.com/TouchFlows/buzzcasting-storage/commit/6584dd9))
+- Sanitize ([2068941](https://github.com/TouchFlows/buzzcasting-storage/commit/2068941))
+
+### 🏡 Chore
+
+- **release:** V2.16.5 ([30dd7c4](https://github.com/TouchFlows/buzzcasting-storage/commit/30dd7c4))
+- Deps ([9e61ab8](https://github.com/TouchFlows/buzzcasting-storage/commit/9e61ab8))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.16.5
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.16.4...v2.16.5)
