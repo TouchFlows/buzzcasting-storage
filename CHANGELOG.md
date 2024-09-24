@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v2.16.7
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.16.6...v2.16.7)
+
+### 🩹 Fixes
+
+- Format-contents & deps ([14f7e18](https://github.com/TouchFlows/buzzcasting-storage/commit/14f7e18))
+
+### 🏡 Chore
+
+- Deps ([7a0fc97](https://github.com/TouchFlows/buzzcasting-storage/commit/7a0fc97))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.16.6
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.16.5...v2.16.6)
