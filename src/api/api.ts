@@ -16,6 +16,7 @@ export default class ApiClient {
       headers: new Headers({
         Authorization: token,
         Accept: 'application/json',
+        // 'Cache-Control': 'no-cache',
         // 'X-Session-Key': localStorage.getItem('guid') || 'invalid',
       }),
     }
