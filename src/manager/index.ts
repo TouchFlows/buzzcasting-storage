@@ -105,8 +105,11 @@ export class BuzzcastingStorageManager {
               (query: IQuery) => query.widget === data.query.widget,
             )[0]
             let newHash: string | any[] = ''
+            let filteredMessages: any[]
             switch (data.query.type) {
               case API.MESSAGES:
+                filteredMessages = data.data.messages.filter((msg: any) => msg.id !== null)
+                data.data.messages = filteredMessages
                 newHash = hashSum(data.data.messages)
                 if (previousQuery.hash === newHash) {
                   console.debug(
