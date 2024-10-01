@@ -12,7 +12,7 @@ export default class DexieClient {
     this.options = options
 
     this.db = new Dexie(options.app)
-    this.db.version(3).stores({
+    this.db.version(4).stores({
       player: 'id,title,name,location',
       monitor:
         'id,player_id,cols,rows,order,width,height,physicalwidth,physicalheight,devicePixelRatio,screenLeft,screenTop,orientation,monitor',
@@ -21,10 +21,10 @@ export default class DexieClient {
       presentation: 'id,name,data',
       slide: 'id,title,json,html,css',
       cloud: 'id,dashboard_id,data',
-      messages: 'id,utc,visible,data',
+      messages: 'id,utc,expires,data',
       series: 'id,dashboard_id,data',
       topics:
-        '[widget_id+message_id],widget_id,dashboard_id,title,engagement,impressions,reach,sentiment,visible,utc',
+        '[widget_id+message_id],widget_id,dashboard_id,title,engagement,impressions,reach,sentiment,visible,utc,expires',
       widgets: 'id,dashboard_id,type',
     })
     this.db.open()
@@ -231,26 +231,14 @@ export default class DexieClient {
       return 400
     }
     const title: string = data.data.title
-    const topics: string = data.data.topics
+    // const topics: string = data.data.topics
     let errorCount: number = 0
 
     data.data.messages.forEach(async (message: IMessage) => {
-      if (message?.id) {
+      if (message.id !== null) {
         await this.db
           .table(API.MESSAGES)
-          .put({ id: message.id, utc: message.utc, data: message })
-          .catch((error: Error) => {
-            errorCount++
-            console.error(
-              '%cstorage',
-              CSS.STORAGE,
-              'set message',
-              title,
-              topics,
-              message,
-              error.message,
-            )
-          })
+          .put({ id: message.id, utc: message.utc, data: message, expires: message.expires })
           .catch((error: Error) => {
             errorCount++
             console.error(
@@ -275,6 +263,7 @@ export default class DexieClient {
             reach: message.dynamics?.potential_reach,
             sentiment: message.topics[0]?.sentiment || 0,
             utc: message.utc,
+            expires: message.expires,
           })
           .catch((error: Error) => {
             errorCount++
@@ -293,28 +282,28 @@ export default class DexieClient {
   }
 
   /**
-   * Wipe Message data after number of seconds
-   * @param retentionDuration
+   * Wipe Message data after expires timestamp
    */
-  cleanMessages = async (retentionDuration: number): Promise<number> => {
+  cleanMessages = async (): Promise<number> => {
     const currentDate = Date.now() / 1000
 
-    const topicFilter = (topic: { utc: number }) =>
-      topic.utc < currentDate - retentionDuration
+    const topicFilter = (topic: { expires: number }) =>
+      topic.expires < currentDate
 
-    const messagesFilter = (message: { utc: number }) =>
-      message.utc < currentDate - retentionDuration
+    const messagesFilter = (message: { expires: number }) =>
+      message.expires < currentDate
 
     await this.db
       .table(API.TOPICS)
-      .orderBy('utc')
+      .orderBy('expires')
       .filter(topicFilter)
-      .modify((_message, ref) => {
-        delete ref.value
-      })
+      .delete()
+      // .modify((_message, ref) => {
+      //   delete ref.value
+      // })
       .catch((error) => {
         console.error(
-          '%cstorage%c %clean',
+          '%cstorage%c %cclean',
           CSS.STORAGE,
           CSS.NONE,
           CSS.MESSAGES,
@@ -323,13 +312,14 @@ export default class DexieClient {
         return 0
       })
 
-    return await this.db
+    const messagesCount = await this.db
       .table(API.MESSAGES)
-      .orderBy('utc')
+      .orderBy('expires')
       .filter(messagesFilter)
-      .modify((_message, ref) => {
-        delete ref.value
-      })
+      .delete()
+      // .modify((_message, ref) => {
+      //   delete ref.value
+      // })
       .catch((error) => {
         console.error(
           '%cstorage%c %clean',
@@ -340,6 +330,7 @@ export default class DexieClient {
         )
         return 0
       })
+    return messagesCount
   }
 
   hideMessage = async (id: string, visible: number) => {
