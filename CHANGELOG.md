@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v2.16.12
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.16.10...v2.16.12)
+
+### 🩹 Fixes
+
+- Store message in dexie if not null ([6ba6142](https://github.com/TouchFlows/buzzcasting-storage/commit/6ba6142))
+- Clean messages of null values ([9e24b22](https://github.com/TouchFlows/buzzcasting-storage/commit/9e24b22))
+
+### 🏡 Chore
+
+- **release:** V2.16.10 ([5cd9e27](https://github.com/TouchFlows/buzzcasting-storage/commit/5cd9e27))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.16.11
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.16.10...v2.16.11)
