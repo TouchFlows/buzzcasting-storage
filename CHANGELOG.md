@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.16.13
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.16.12...v2.16.13)
+
+### 🩹 Fixes
+
+- HideMessage ([9d092a3](https://github.com/TouchFlows/buzzcasting-storage/commit/9d092a3))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.16.12
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.16.10...v2.16.12)
