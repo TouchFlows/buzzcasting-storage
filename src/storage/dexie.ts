@@ -12,7 +12,7 @@ export default class DexieClient {
     this.options = options
 
     this.db = new Dexie(options.app)
-    this.db.version(4).stores({
+    this.db.version(5).stores({
       player: 'id,title,name,location',
       monitor:
         'id,player_id,cols,rows,order,width,height,physicalwidth,physicalheight,devicePixelRatio,screenLeft,screenTop,orientation,monitor',
@@ -24,7 +24,7 @@ export default class DexieClient {
       messages: 'id,utc,expires,data',
       series: 'id,dashboard_id,data',
       topics:
-        '[widget_id+message_id],widget_id,dashboard_id,title,engagement,impressions,reach,sentiment,visible,utc,expires',
+        '[widget_id+message_id],message_id,widget_id,dashboard_id,title,engagement,impressions,reach,sentiment,visible,utc,expires',
       widgets: 'id,dashboard_id,type',
     })
     this.db.open()
