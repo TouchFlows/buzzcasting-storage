@@ -291,19 +291,20 @@ export default class DexieClient {
 		 * (including in other topics)
 		 */
 		data.data.topics.forEach(async (topic: ITopic) => {
+			const id = topic.messsage_id, show = topic.visible ? 1 : 0, title = topic.title, subject =topic.topic
 			await this.db
 				.table(API.TOPICS)
 				.where("message_id")
-				.equals(topic.messsage_id)
-				.modify({ visible: topic.visible ? 1 : 0 })
+				.equals(id)
+				.modify({ visible:  show})
 				.catch((error: Error) => {
 					errorCount++;
 					console.error(
 						"%cstorage",
 						CSS.STORAGE,
 						"update message visibility",
-						`title: ${topic.title}`,
-						topic.topic,
+						`title: ${title}`,
+						subject,
 						error.message
 					);
 				});
