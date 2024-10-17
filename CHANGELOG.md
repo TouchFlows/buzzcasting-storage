@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v2.16.15
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.16.14...v2.16.15)
+
+### 🩹 Fixes
+
+- Visibilty must be a number ([b70fec1](https://github.com/TouchFlows/buzzcasting-storage/commit/b70fec1))
+- Visible ([d4f3a4f](https://github.com/TouchFlows/buzzcasting-storage/commit/d4f3a4f))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.16.14
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.16.13...v2.16.14)
