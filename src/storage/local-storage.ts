@@ -114,7 +114,7 @@ export default class LocalStorageClient {
     return await new Promise<number>((resolve) => resolve(0))
   }
 
-  hideMessage = async (id: string, visible: boolean) => {
+  hideMessage = async (id: string, visible: number) => {
     console.debug(`hideMessage ${id} ${visible} not implemented for ${this.options.storage}`)
   }
 
