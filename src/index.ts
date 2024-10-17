@@ -84,7 +84,7 @@ export declare interface ISender {
 }
 
 export declare interface ITopic {
-  messsage_id: string
+  message_id: string
   dashboard_id?: string
   widget_id?: string
   topic?: string

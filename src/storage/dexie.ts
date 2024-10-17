@@ -291,7 +291,7 @@ export default class DexieClient {
 		 * (including in other topics)
 		 */
 		data.data.topics.forEach(async (topic: ITopic) => {
-			const id = topic['messsage_id'], show = topic.visible ? 1 : 0, title = topic.title, subject =topic.topic
+			const id = topic.message_id, show = topic.visible ? 1 : 0, title = topic.title, subject =topic.topic
 			await this.db
 				.table(API.TOPICS)
 				.where("message_id")
