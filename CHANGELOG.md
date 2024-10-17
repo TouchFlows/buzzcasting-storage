@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.16.18
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.16.17...v2.16.18)
+
+### 🩹 Fixes
+
+- Dexi visi ([47e1382](https://github.com/TouchFlows/buzzcasting-storage/commit/47e1382))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.16.17
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.16.16...v2.16.17)
