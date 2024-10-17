@@ -295,7 +295,7 @@ export default class DexieClient {
 				.table(API.TOPICS)
 				.where("message_id")
 				.equals(topic.messsage_id)
-				.modify({ visible: topic.visible })
+				.modify({ visible: topic.visible ? 1 : 0 })
 				.catch((error: Error) => {
 					errorCount++;
 					console.error(
@@ -364,12 +364,12 @@ export default class DexieClient {
 		return messagesCount;
 	};
 
-	hideMessage = async (id: string, visible: boolean) => {
+	hideMessage = async (id: string, visible: number) => {
 		await this.db
 			.table(API.TOPICS)
 			.where("message_id")
 			.equals(id)
-			.modify({ visible })
+			.modify({ visible: visible ? 1 : 0 })
 			.catch((error) => {
 				console.error(
 					"%cstorage%c %chide",

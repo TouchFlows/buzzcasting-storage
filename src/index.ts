@@ -95,7 +95,7 @@ export declare interface ITopic {
   title?: string
   utc?: number
   expires?: number
-  visible?: boolean
+  visible?: number
 }
 
 export declare interface IDynamics {
