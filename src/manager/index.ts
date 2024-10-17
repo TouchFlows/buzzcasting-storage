@@ -256,7 +256,7 @@ export class BuzzcastingStorageManager {
   }
 
   public hideMessage = async (query: IQuery): Promise<IResponse> => {
-    const count = await this.sm?.hideMessage(query.id, 0)
+    const count = await this.sm?.hideMessage(query.id, false)
 
     console.info(
       '%cstorage%c %cstorage',
