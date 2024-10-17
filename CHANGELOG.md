@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.16.19
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.16.18...v2.16.19)
+
+### 🩹 Fixes
+
+- Message visibility ([fcefb6b](https://github.com/TouchFlows/buzzcasting-storage/commit/fcefb6b))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.16.18
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.16.17...v2.16.18)
