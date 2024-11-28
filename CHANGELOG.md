@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.16.20
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.16.19...v2.16.20)
+
+### 🩹 Fixes
+
+- Hide message ([cd704f9](https://github.com/TouchFlows/buzzcasting-storage/commit/cd704f9))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.16.19
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.16.18...v2.16.19)
