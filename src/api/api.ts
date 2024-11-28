@@ -90,7 +90,7 @@ export default class ApiClient {
       query.id,
     )
     return await fetch(
-      [this.url, 'api', version, query.type, query.id].join('/') + params,
+      [this.url, 'api', version, 'messages', query.id].join('/') + params,
       { ...headers, method: 'put' },
     )
       .then((response) => {

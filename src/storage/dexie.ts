@@ -157,6 +157,8 @@ export default class DexieClient {
 					slide: query?.slide || "not set",
 					messages: messagesMap,
 					title,
+					dashboard: query.dashboard,
+					widget: query.widget,
 					topics: [query.dashboard, query.widget].join("-"),
 					query,
 				},
@@ -262,10 +264,10 @@ export default class DexieClient {
 				await this.db
 					.table(API.TOPICS)
 					.put({
+						title,
 						widget_id: query.widget,
 						message_id: message.id,
 						dashboard_id: query.dashboard,
-						title,
 						engagement: message.dynamics?.engagement,
 						impressions: message.dynamics?.semrush_visits,
 						reach: message.dynamics?.potential_reach,
@@ -291,12 +293,14 @@ export default class DexieClient {
 		 * (including in other topics)
 		 */
 		data.data.topics.forEach(async (topic: ITopic) => {
-			const id = topic.message_id, show = topic.visible ? 1 : 0, title = topic.title, subject =topic.topic
+			const id = topic.message_id,
+				show = topic.visible ? 1 : 0,
+				title = topic.title;
 			await this.db
 				.table(API.TOPICS)
 				.where("message_id")
 				.equals(id)
-				.modify({ visible:  show})
+				.modify({ visible: show })
 				.catch((error: Error) => {
 					errorCount++;
 					console.error(
@@ -304,7 +308,7 @@ export default class DexieClient {
 						CSS.STORAGE,
 						"update message visibility",
 						`title: ${title}`,
-						subject,
+						`widget: ${topic.widget_id}`,
 						error.message
 					);
 				});

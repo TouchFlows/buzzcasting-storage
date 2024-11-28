@@ -179,6 +179,8 @@ export declare interface IMessages {
   presentation?: string
   slide?: string
   title?: string
+  dashboard?: string
+  widget?: string
   topics?: string
   query: IQuery
 }
