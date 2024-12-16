@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v2.16.22
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.16.21...v2.16.22)
+
+### 🏡 Chore
+
+- **release:** V2.16.21 ([8c0d1d8](https://github.com/TouchFlows/buzzcasting-storage/commit/8c0d1d8))
+- Deps & event constants ([0cd2731](https://github.com/TouchFlows/buzzcasting-storage/commit/0cd2731))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.16.21
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.16.20...v2.16.21)
