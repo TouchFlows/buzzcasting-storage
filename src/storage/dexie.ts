@@ -104,11 +104,13 @@ export default class DexieClient {
 
 		const visibleFilter = (topic: { visible: number | undefined }) =>
 			topic?.visible !== 0;
+		
+		const order = query.order ?? 'utc'
 
 		try {
 			const topicMessages: any = await this.db
 				.table(API.TOPICS)
-				.orderBy("utc")
+				.orderBy(order)
 				.reverse()
 				.filter(widgetFilter)
 				.filter(sinceFilter)

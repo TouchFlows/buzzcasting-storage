@@ -197,7 +197,7 @@ export declare interface IQuery {
   compare?: string
   period?: number
   type?: 'cloud' | 'messages' | 'series' | 'proxy' | 'slide'
-  order?: string
+  order?:'utc' | 'reach' | 'engagement' | 'impressions'
   media?: number
   dynamics?: number
   geo?: number
@@ -262,7 +262,6 @@ export declare interface IStorageOptions {
   monitor?: string
   version: string
   storage: string
-
   token?: string
   bearer?: string
   csrf?: string
@@ -271,6 +270,7 @@ export declare interface IStorageOptions {
   delay?: number
   period?: number
   retention?: number
+  suspended?: boolean
 }
 
 declare global {

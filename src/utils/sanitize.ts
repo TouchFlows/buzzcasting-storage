@@ -1,9 +1,14 @@
 import type { IMessage } from '..'
 
 export function sanitize(messages: IMessage[]): IMessage[] {
+  const suspended = window['BuzzCasting'].getOptions().suspended ?? false
   messages.forEach((message: IMessage) => {
     // remove all links
-    message.content = message.content?.replace(/(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)((\?.*)?)/g, '') || '' /* eslint-disable-line regexp/no-misleading-capturing-group */
+    if(suspended) {
+      message.content = 'License suspended, please contact your Sales Representative to restore service'
+    } else {
+      message.content = message.content?.replace(/(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)((\?.*)?)/g, '') || '' /* eslint-disable-line regexp/no-misleading-capturing-group */
+    }
 
     if (message.sender !== null) {
       if (message.sender?.title === 'Unknown author' || message.sender?.title === null) {
