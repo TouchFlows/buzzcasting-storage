@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v2.16.25
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.16.24...v2.16.25)
+
+### 🩹 Fixes
+
+- Deep-merge ([39d3a40](https://github.com/TouchFlows/buzzcasting-storage/commit/39d3a40))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v2.16.24
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.16.23...v2.16.24)
