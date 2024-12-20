@@ -1,7 +1,7 @@
 {
   "name": "buzzcasting-storage",
   "type": "module",
-  "version": "2.16.25",
+  "version": "2.16.26",
   "private": false,
   "author": {
     "name": "Mark Tamis, TouchFlows SAS",
@@ -43,7 +43,7 @@
     "lint-staged": "^15.2.11",
     "typescript": "^5.7.2",
     "vite": "^5.4.11",
-    "vite-plugin-dts": "^4.3.0",
+    "vite-plugin-dts": "^4.4.0",
     "vitest": "^2.1.8"
   },
   "lint-staged": {
