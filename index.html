@@ -24,6 +24,7 @@
         delay: 0,
         period: 0,
         slide: "slide9",
+        suspended: "1"
       };
       /*const query = {
         type: "messages",
@@ -35,9 +36,9 @@
 
       const query = {
         type: "messages",
-        topics: "axa_com-articles",
-        dashboard: "axa_com",
-        widget: "articles",
+        dashboard: 'lzzzniev_1670v2kaule1j', //"axa_com",
+        widget: '859c518e_0bf6_489c_b07d_f28fe3245eec',//"articles",
+        order: 'impessions',
         slide:options.slide
       };
 
@@ -49,9 +50,8 @@
       bc.postMessage({ event: "subscribe", data: query });
       bc.postMessage({ event: "update" });
       let data = await sr.getMessages(query)
-      console.log(data)
       await bc.postMessage({ event: "update" });
-      console.log(data)
+      document.getElementById('app').innerHTML =  JSON.stringify(data)
 
     </script>
   </body>

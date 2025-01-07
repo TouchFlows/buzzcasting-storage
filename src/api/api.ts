@@ -42,17 +42,20 @@ export default class ApiClient {
     delete search.slide
     delete search.type
     delete search.hash
+    delete search.order
+    delete search.period
     const params
 			= Object.keys(search).length > 0
 			  ? `?${new URLSearchParams(search).toString()}`
 			  : ''
     console.debug(
-      '%capi%c %cget',
+      '%capi%c %cfetch',
       CSS.API,
       CSS.NONE,
       CSS.GET_DATA,
       query.slide,
       query.widget,
+      search
     )
     return await fetch(
       [this.url, 'api', version, query.type].join('/') + params,

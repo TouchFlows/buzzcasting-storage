@@ -19,6 +19,7 @@ export function widgetParams(query: IQuery): IQuery {
       query.dashboard = topics ? topics[0] : ''
       query.widget = topics ? topics[1] : ''
     } else {
+      // @ts-ignore
       query.widget = query.topics
       query.dashboard = query.slide
     }

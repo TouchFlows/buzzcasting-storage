@@ -6,7 +6,7 @@ import {
   API,
   CSS,
 } from '..'
-import { getKey, moderation, widgetParams } from '../utils/widget'
+import { getKey, moderation } from '../utils/widget'
 
 export default class LocalStorageClient {
   public subscribers: Array<any> = []
@@ -135,7 +135,7 @@ export default class LocalStorageClient {
    * @returns null
    */
   subscribe = (query: IQuery): null => {
-    query = widgetParams(query)
+    //query = widgetParams(query)
     if (query.type === API.MESSAGES) {
       query = moderation(this.options, query)
     }

@@ -3,6 +3,6 @@
  * @param array
  * @returns
  */
-export function getRandomValue(array: string | any[]): number {
+export function randomValue(array: string | any[]): number {
 	return array[Math.floor(Math.random() * array.length)]
 }

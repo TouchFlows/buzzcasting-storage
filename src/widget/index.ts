@@ -1,5 +1,5 @@
 import type { IModal, IQuery, IResponse } from '..'
-import { API, BuzzcastingStorageReader, CSS, EVENTS, widgetParams } from '..'
+import { API, BuzzcastingStorageReader, CSS, EVENTS } from '..'
 import { attrs, clearContents } from '../utils'
 
 /**
@@ -32,13 +32,14 @@ export default class Widget {
     selector = typeof selector !== 'undefined' ? selector : 'buzzcasting-slide'
 
     let query: IQuery
+    // @ts-ignore
     query = { ...element.dataset }
     delete query.hmr
 
     query.slide
 			= element.closest(selector.toUpperCase())?.id ?? `${selector} not found`
 
-    query = widgetParams(query)
+    //query = widgetParams(query)
     this.query = query
 
     clearContents(element)
@@ -168,6 +169,12 @@ export default class Widget {
         success: false,
       }
     }
+    console.debug(
+      '%cstorage%c %cwidget',
+      CSS.API,
+      CSS.NONE,
+      CSS.MESSAGES,
+      this.query    );
     return await this.storageReader.getMessages(this.query)
   }
 
@@ -203,36 +210,36 @@ export default class Widget {
    * @param modal IModal
    */
   public showModal = (modal: IModal) => {
-    const props: any[] = attrs(this.element.attributes)
-    if (Object.prototype.hasOwnProperty.call(props, 'data-topics')) {
-      // @ts-expect-error cannot get string type out of IFilteredAttributes props
-      const topic = props['data-topics'].split('-')
-      if (topic.length > 1) {
-        // @ts-expect-error cannot get string type out of IFilteredAttributes props
-        props['data-widget'] = topic[1]
-        // @ts-expect-error cannot get string type out of IFilteredAttributes props
-        props['data-dashboard'] = topic[0]
-      } else {
-        // @ts-expect-error cannot get string type out of IFilteredAttributes props
-        props['data-widget'] = topic[0]
-        // @ts-expect-error cannot get string type out of IFilteredAttributes props
-        props['data-dashboard'] = this.query.slide
-      }
-    }
-    const mergedProps = { ...modal.props, ...props }
+    // const props: any[] = attrs(this.element.attributes)
+    // if (Object.prototype.hasOwnProperty.call(props, 'data-topics')) {
+    //   // @ts-ignore
+    //   const topic = props['data-topics'].split('-')
+    //   if (topic.length > 1) {
+    //     // @ts-ignore
+    //     props['data-widget'] = topic[1]
+    //     // @ts-ignore
+    //     props['data-dashboard'] = topic[0]
+    //   } else {
+    //     // @ts-ignore
+    //     props['data-widget'] = topic[0]
+    //     // @ts-ignore
+    //     props['data-dashboard'] = this.query.slide
+    //   }
+    // }
+    // const mergedProps = { ...modal.props, ...props }
 
     console.debug(
       '%cwidget',
       CSS.WIDGET,
       EVENTS.SHOW_MODAL,
       modal.showComponent,
-      // @ts-expect-error cannot get string type out of IFilteredAttributes props
-      props['data-widget'],
+      // @ts-ignore
+      attrs(this.element.attributes)//props['data-widget'],
     )
     const ev = new CustomEvent(EVENTS.SHOW_MODAL, {
       detail: {
         component: modal.showComponent,
-        props: mergedProps,
+        props: modal.props, //mergedProps,
         timeout: modal?.timeout,
       },
       bubbles: true,

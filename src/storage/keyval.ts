@@ -1,6 +1,6 @@
 import { get, set } from 'idb-keyval'
 import { API, CSS, type IQuery, type IStorageOptions } from '..'
-import { getKey, moderation, widgetParams } from '../utils/widget'
+import { getKey, moderation } from '../utils/widget'
 
 export default class KeyvalClient {
   public subscribers: Array<any> = []
@@ -140,7 +140,7 @@ export default class KeyvalClient {
    * @returns null
    */
   subscribe = (query: IQuery): null => {
-    query = widgetParams(query)
+    //query = widgetParams(query)
     if (query.type === API.MESSAGES) {
       query = moderation(this.options, query)
     }

@@ -96,79 +96,84 @@ export default class DexieClient {
 	 * @returns IResponse
 	 */
 	getMessages = async (query: IQuery): Promise<IResponse> => {
-		const widgetFilter = (topic: { widget_id: string }) =>
-			topic.widget_id === query.widget;
+		const order = query?.order ?? "utc";
+
+		if (order !== "utc") {
+			query.since = Math.floor(Date.now() / 1000) - 60 * 60 * 24 * 7;
+		}
+
+		if (this.options.delay != 0) {
+			query.before = Math.floor(Date.now() / 1000) - (this.options.delay || 0);
+		} else {
+			query.before = Math.floor(Date.now() / 1000);
+		}
 
 		const sinceFilter = (topic: { utc: number }) =>
 			topic.utc > (query?.since || 0);
 
+		const beforeFilter = (topic: { utc: number }) =>
+			topic.utc < (query?.before || Date.now() / 1000);
+
 		const visibleFilter = (topic: { visible: number | undefined }) =>
 			topic?.visible !== 0;
-		
-		const order = query.order ?? 'utc'
 
 		try {
-			const topicMessages: any = await this.db
+			const topicMessagesCollection: any = this.db
+
 				.table(API.TOPICS)
-				.orderBy(order)
-				.reverse()
-				.filter(widgetFilter)
-				.filter(sinceFilter)
+				.where("widget_id")
+				.equals(query.widget)
+
 				.filter(visibleFilter)
+				.filter(sinceFilter)
+				.filter(beforeFilter)
+				.reverse();
+
+			const topicMessages: any = await topicMessagesCollection
 				.limit(query?.limit ?? 25)
-				.toArray()
-				.catch(() => {
-					console.warn(
-						"%capi%c %cmessages",
-						CSS.API,
-						CSS.NONE,
-						CSS.MESSAGES,
-						query.slide,
-						query.widget
-					);
-				});
+				.sortBy(order);
+
 			if (topicMessages.length === 0) {
 				return { data: null, message: "No Messages error", success: false };
 			}
 
-			const title = topicMessages[0] ? topicMessages[0].title : "No title";
+			//let messages: any[] = [];
+			let getMessages = topicMessages.map((message: any) => {
+				return this.db.table(API.MESSAGES).get({ id: message.message_id });
+			});
 
-			const messageIds = topicMessages.map(
-				(message: { message_id: any }) => message.message_id
-			);
-
-			// may not come back in order of call, so need to sort
-			const messages: any[] = await this.db
-				.table(API.MESSAGES)
-				.where("id")
-				.anyOf(messageIds)
-				.toArray()
-				.then((messages) => {
-					return messages.sort((a, b) => {
-						return b.utc - a.utc;
-					});
-				});
-
-			const messagesMap: IMessage[] = messages.map(
-				(message: any) => message.data
-			);
-
-			return {
-				data: {
-					presentation: query?.presentation || "not set",
-					slide: query?.slide || "not set",
-					messages: messagesMap,
-					title,
-					dashboard: query.dashboard,
-					widget: query.widget,
-					topics: [query.dashboard, query.widget].join("-"),
-					query,
-				},
-				message: "Messages retrieved successfully",
-				success: true,
-			};
+			// @ts-ignore
+			return Dexie.Promise.all(getMessages).then(async (messages) => {
+				const data = {
+					data: {
+						presentation: query?.presentation || "not set",
+						slide: query?.slide || "not set",
+						messages: messages,
+						dashboard: query.dashboard,
+						widget: query.widget,
+						query,
+					},
+					message: "Messages retrieved successfully",
+					success: true,
+				};
+				console.debug(
+					"%cstorage%c %cmessages",
+					CSS.STORAGE,
+					CSS.NONE,
+					CSS.MESSAGES,
+					data
+				);
+				return data;
+			});
 		} catch (error) {
-			console.error("%cstorage", CSS.STORAGE, "set", query, error);
+			console.warn(
+				"%cstorage%c %cmessages",
+				CSS.STORAGE,
+				CSS.NONE,
+				CSS.MESSAGES,
+				query,
+				error
+			);
 			return { data: null, message: "Messages Data error", success: false };
 		}
 	};
@@ -270,9 +275,18 @@ export default class DexieClient {
 						widget_id: query.widget,
 						message_id: message.id,
 						dashboard_id: query.dashboard,
-						engagement: message.dynamics?.engagement,
-						impressions: message.dynamics?.semrush_visits,
-						reach: message.dynamics?.potential_reach,
+						engagement:
+							message.topics[0]?.engagement ||
+							message.dynamics?.engagement ||
+							0,
+						impressions:
+							message.topics[0]?.impressions ||
+							message.dynamics?.semrush_visits ||
+							0,
+						reach:
+							message.topics[0]?.reach ||
+							message.dynamics?.potential_reach ||
+							0,
 						sentiment: message.topics[0]?.sentiment || 0,
 						utc: message.utc,
 						expires: message.expires,

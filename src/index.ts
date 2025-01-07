@@ -12,14 +12,21 @@ import {
   brandLogo,
   camelCase,
   camelize,
+  capitalizeFirstLetter,
   clearContents,
+  deepMerge,
   filterAttributes,
   formatContent,
+  hashSum,
   intToString,
   numberFormatter,
+  randomValue,
   rtl,
   sanitize,
+  showModal,
   shuffleMessages,
+  stringGen,
+  upDownColor,
   widgetParams,
 } from './utils'
 import Widget from './widget'
@@ -191,8 +198,8 @@ export declare interface IMessages {
 export declare interface IQuery {
   [x: string]: any
   topics?: string
-  dashboard?: string
-  widget?: string
+  dashboard: string
+  widget: string
   labels?: string[]
   compare?: string
   period?: number
@@ -291,18 +298,25 @@ export {
   BuzzcastingStorageReader,
   camelCase,
   camelize,
+  capitalizeFirstLetter,
   clearContents,
   CSS,
+  deepMerge,
   EVENTS,
   filterAttributes,
   formatContent,
+  hashSum,
   intToString,
   MODERATION,
   numberFormatter,
+  randomValue,
   rtl,
   sanitize,
+  showModal,
   shuffleMessages,
+  stringGen,
   STORAGE,
+  upDownColor,
   Widget,
   widgetParams,
 }

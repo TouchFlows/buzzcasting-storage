@@ -1,4 +1,4 @@
-export const deepMerge = (objs: any) =>
+export function deepMerge(objs: any) {
 	objs.reduce(
 		(acc: any, obj: any) =>
 			Object.keys(obj).reduce(
@@ -18,3 +18,4 @@ export const deepMerge = (objs: any) =>
 			),
 		{}
 	);
+}

@@ -16,7 +16,7 @@ export enum CSS {
   CLOUD = 'color:grey;background-color:mistyrose;padding:0 4px 0 4px;border-radius:5px;',
   GET_DATA = 'color:black;background-color:lime;padding:0 4px 0 4px;border-radius:5px;',
   HIDE = 'color:white;background-color:red;padding:0 4px 0 4px;border-radius:5px;',
-  MESSAGES = 'color:grey;background-color:tan;padding:0 4px 0 4px;border-radius:5px;',
+  MESSAGES = 'color:white;background-color:darkslateblue;padding:0 4px 0 4px;border-radius:5px;',
   NO_UPDATES = 'color:grey;border:1px solid grey;padding:0 4px 0 4px;border-radius:5px;',
   NONE = 'color:transparent;background-color:transparent;',
   PRESENTATION = 'color:white;background-color:darkred;padding:0 4px 0 4px;border-radius:5px;',
