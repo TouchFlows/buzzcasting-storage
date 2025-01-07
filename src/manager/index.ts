@@ -186,7 +186,6 @@ export class BuzzcastingStorageManager {
 
 					switch (status) {
 						case 201:
-						case 204:
 							console.info(
 								"%capp%c %cbroadcast",
 								CSS.API,
