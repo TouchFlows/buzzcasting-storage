@@ -1,6 +1,6 @@
 import type { IModal, IQuery, IResponse } from '..'
 import { API, BuzzcastingStorageReader, CSS, EVENTS } from '..'
-import { attrs, clearContents } from '../utils'
+import { attrs, clearContents, widgetParams } from '../utils'
 
 /**
  * Main class for managing widgets and data updates
@@ -39,7 +39,7 @@ export default class Widget {
     query.slide
 			= element.closest(selector.toUpperCase())?.id ?? `${selector} not found`
 
-    //query = widgetParams(query)
+    query = widgetParams(query)
     this.query = query
 
     clearContents(element)
