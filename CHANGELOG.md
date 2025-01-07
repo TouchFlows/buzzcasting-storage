@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v3.0.7
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.0.6...v3.0.7)
+
+### 🩹 Fixes
+
+- Widget setData not receiving messages due to data.data being sent ([7585a20](https://github.com/TouchFlows/buzzcasting-storage/commit/7585a20))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v3.0.6
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.0.5...v3.0.6)
