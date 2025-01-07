@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v3.0.6
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.0.5...v3.0.6)
+
+### 🩹 Fixes
+
+- Modify to read data field ([a33928d](https://github.com/TouchFlows/buzzcasting-storage/commit/a33928d))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v3.0.5
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.0.4...v3.0.5)
