@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v3.0.4
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.0.3...v3.0.4)
+
+### 🩹 Fixes
+
+- Widget update remove 204 if no update ([fbf86d0](https://github.com/TouchFlows/buzzcasting-storage/commit/fbf86d0))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v3.0.3
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.0.2...v3.0.3)
