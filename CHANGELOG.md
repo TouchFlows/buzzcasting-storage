@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v3.0.3
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.0.2...v3.0.3)
+
+### 🩹 Fixes
+
+- Widget query params ([89b6a60](https://github.com/TouchFlows/buzzcasting-storage/commit/89b6a60))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v3.0.2
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v2.16.27...v3.0.2)
