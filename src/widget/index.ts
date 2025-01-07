@@ -70,7 +70,7 @@ export default class Widget {
             && update.query.widget === query.widget
           ) {
             this.listeners.forEach((cb) => {
-              cb(messageEvent.data.data)
+              cb(messageEvent.data)
             })
           }
           break
