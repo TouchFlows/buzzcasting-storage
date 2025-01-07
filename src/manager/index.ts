@@ -194,8 +194,9 @@ export class BuzzcastingStorageManager {
 								data.query.slide,
 								data.data.title ?? data.query.widget
 							);
+
 							data = await this.sm.getMessages(data.query);
-							this.bc.postMessage({ event: EVENTS.WIDGET_UPDATE, data });
+							this.bc.postMessage({ event: EVENTS.WIDGET_UPDATE, data: data.data });
 							break;
 						case 400:
 							console.warn(

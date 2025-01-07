@@ -144,11 +144,12 @@ export default class DexieClient {
 
 			// @ts-ignore
 			return Dexie.Promise.all(getMessages).then(async (messages) => {
+				const filtered = messages.map((message:any) => {return message.data})
 				const data = {
 					data: {
 						presentation: query?.presentation || "not set",
 						slide: query?.slide || "not set",
-						messages: messages,
+						messages: filtered,
 						dashboard: query.dashboard,
 						widget: query.widget,
 						query,
