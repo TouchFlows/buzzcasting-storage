@@ -94,6 +94,7 @@ export class BuzzcastingStorageManager {
 
 		await Promise.allSettled(subscriberQuery).then((results) =>
 			results.forEach(async (res) => {
+				let data
 				let status: number | void = 400;
 				if (res.status === "fulfilled") {
 					let result = res.value;
@@ -101,6 +102,7 @@ export class BuzzcastingStorageManager {
 						return 400;
 					}
 					if (result.success === true) {
+						
 						const previousQuery = this.sm.subscribers.filter(
 							(query: IQuery) => query.widget === result.query.widget
 						)[0];
@@ -126,6 +128,7 @@ export class BuzzcastingStorageManager {
 									);
 									return 204;
 								} else {
+									data = result
 									previousQuery.hash = newHash;
 									status = await this.sm.setMessages(result.query, result);
 								}
@@ -146,7 +149,7 @@ export class BuzzcastingStorageManager {
 									status = 204;
 								} else {
 									previousQuery.hash = newHash;
-									const data = {
+									data = {
 										data: {
 											dashboard: result.query.dashboard,
 											cloud: result.data,
@@ -175,7 +178,7 @@ export class BuzzcastingStorageManager {
 									status = 204;
 								} else {
 									previousQuery.hash = newHash;
-									const data = {
+									data = {
 										data: {
 											dashboard: result.query.dashboard,
 											series: result.data,
@@ -216,18 +219,24 @@ export class BuzzcastingStorageManager {
 								result.query.slide,
 								result.data.title ?? result.query.widget
 							);
-							const query = structuredClone(result.query);
-							console.log("status", status, query);
+							console.debug(
+								"%capp%c %cbroadcast",
+								CSS.API,
+								CSS.NONE,
+								CSS.BROADCAST,
+								result
+							);
+							const query = structuredClone(data.query);
 							switch (result.query.type) {
 								case "messages":
-									result = await this.sm.getMessages(result.query);
+									result = await this.sm.getMessages(query);
 									break;
 								case "cloud":
-									result = await this.sm.getCloud(result.query);
+									result = await this.sm.getCloud(query);
 									if (result) result.query = query;
 									break;
 								case "series":
-									result = await this.sm.getSeries(result.query);
+									result = await this.sm.getSeries(query);
 									if (result) result.query = query;
 									break;
 								default:
@@ -352,7 +361,6 @@ export class BuzzcastingStorageManager {
 	};
 
 	public storeSlide = async (query: IQuery): Promise<IResponse | number> => {
-		console.log(query);
 		return await this.sm?.storeSlide(query).then(async () => {
 			if (query?.update && query.update) {
 				return await this.api.storeSlide(query);

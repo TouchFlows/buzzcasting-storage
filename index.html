@@ -26,13 +26,14 @@
         slide: "slide9",
         suspended: "1",
       };
-      /*const query = {
-        type: "messages",
-        topics: "lcjp1nuo_donwf3cnmfjq-921324a3_2858_43b5_928d_ab6278369186",
-        dashboard: "lcjp1nuo_donwf3cnmfjq",
-        widget: "921324a3_2858_43b5_928d_ab6278369186",
-        slide:options.slide
-      };*/
+
+
+      // const query = {
+      //   type: "messages",
+      //   dashboard: "lzzzniev_1670v2kaule1j",
+      //   widget: "40a93a9f_6c51_4dd7_a44e_0c206dc6df8f",
+      //   slide:options.slide
+      // };
 
       // const query = {
       //   type: "cloud",
@@ -40,6 +41,7 @@
       //   widget: "BMKPN_W4RH", //"articles",
       //   slide: options.slide,
       // };
+
       // const query = {
       //   type: "messages",
       //   dashboard: "afp", //"axa_com",
@@ -47,18 +49,18 @@
       //   slide: options.slide,
       // };
 
-      const query = {
-        type: "series",
-        dashboard: "lzzzniev_1670v2kaule1j", //"axa_com",
-        widget: "afbc329e_0e09_40b7_b7c4_6ec9dc58796c", //"articles",
-        slide: options.slide,
-      };
       // const query = {
-      //   type: "cloud",
-      //   dashboard: "rapidapi_twittertrends", //"axa_com",
-      //   widget: "worldwide", //"articles",
+      //   type: "series",
+      //   dashboard: "lzzzniev_1670v2kaule1j", //"axa_com",
+      //   widget: "afbc329e_0e09_40b7_b7c4_6ec9dc58796c", //"articles",
       //   slide: options.slide,
       // };
+      const query = {
+        type: "cloud",
+        dashboard: "rapidapi_twittertrends", //"axa_com",
+        widget: "worldwide", //"articles",
+        slide: options.slide,
+      };
       
 
       const bc = new BroadcastChannel(options.slide);

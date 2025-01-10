@@ -55,13 +55,15 @@ export default class DexieClient {
 		}
 		data.data.presentation = query?.presentation || "not set";
 		data.data.slide = query?.slide || "not set";
+		data.data.query = query
+		data.query = query
 		data.message = "Messages retrieved successfully";
 		data.success = true;
 		return data;
 	};
 
 	/**
-	 * Retrieve Cloud Data
+	 * Retrieve Series Data
 	 * @param query IQuery
 	 * @returns IResponse
 	 */
@@ -85,13 +87,15 @@ export default class DexieClient {
 		}
 		data.data.presentation = query?.presentation || "not set";
 		data.data.slide = query?.slide || "not set";
+		data.data.query = query
+		data.query = query
 		data.message = "Messages retrieved successfully";
 		data.success = true;
 		return data;
 	};
 
 	/**
-	 * Retrieve Cloud Data
+	 * Retrieve Messages Data
 	 * @param query IQuery
 	 * @returns IResponse
 	 */
@@ -449,13 +453,20 @@ export default class DexieClient {
 		if (query.type === API.MESSAGES) {
 			query = moderation(this.options, query);
 		}
-		console.debug(
+		console.info(
 			"%cstorage%c %csubscribe",
 			CSS.STORAGE,
 			CSS.NONE,
 			CSS.SUBSCRIBE,
 			query.slide,
 			query.widget
+		);
+		console.debug(
+			"%cstorage%c %csubscribe",
+			CSS.STORAGE,
+			CSS.NONE,
+			CSS.SUBSCRIBE,
+			query
 		);
 		this.subscribers.push(query);
 		return null;
