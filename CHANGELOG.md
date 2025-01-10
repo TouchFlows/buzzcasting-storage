@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v3.0.9
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.0.8...v3.0.9)
+
+### 🩹 Fixes
+
+- SetSeries, setMessages, setCloud in dexi ([fe89028](https://github.com/TouchFlows/buzzcasting-storage/commit/fe89028))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v3.0.8
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.0.7...v3.0.8)
