@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v3.0.10
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.0.9...v3.0.10)
+
+### 🩹 Fixes
+
+- Include query params in api call result ([eb48656](https://github.com/TouchFlows/buzzcasting-storage/commit/eb48656))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v3.0.9
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.0.8...v3.0.9)
