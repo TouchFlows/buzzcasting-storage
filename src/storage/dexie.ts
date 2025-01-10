@@ -50,7 +50,7 @@ export default class DexieClient {
 					query.widget
 				);
 			});
-		if (data === undefined) {
+		if (typeof data === 'undefined') {
 			return { data: null, message: "Cloud Data error", success: false };
 		}
 		data.data.presentation = query?.presentation || "not set";
@@ -192,7 +192,8 @@ export default class DexieClient {
 				.put({
 					id: query.widget,
 					dashboard_id: query.dashboard,
-					data: data.data,
+					//data: data.data,
+					data: data,
 				})
 				.then(() => 201)
 				.catch((error: Error) => {
@@ -216,7 +217,8 @@ export default class DexieClient {
 				.put({
 					id: query.widget,
 					dashboard_id: query.dashboard,
-					data: data.data,
+					//data: data.data,
+					data: data,
 				})
 				.then(() => 201)
 				.catch((error: Error) => {

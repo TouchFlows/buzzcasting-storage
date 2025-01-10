@@ -9,7 +9,7 @@
     <div id="app"></div>
     <script type="module" src="/src/index.ts"></script>
     <script type="module">
-      import { BuzzcastingStorageManager, BuzzcastingStorageReader } from '.'
+      import { BuzzcastingStorageManager, BuzzcastingStorageReader } from ".";
       let options = {
         app: import.meta.env.VITE_APP,
         domain: import.meta.env.VITE_DOMAIN,
@@ -24,7 +24,7 @@
         delay: 0,
         period: 0,
         slide: "slide9",
-        suspended: "1"
+        suspended: "1",
       };
       /*const query = {
         type: "messages",
@@ -34,25 +34,55 @@
         slide:options.slide
       };*/
 
+      // const query = {
+      //   type: "cloud",
+      //   dashboard: "01JD32_VDXWMXA_WC2D", //"axa_com",
+      //   widget: "BMKPN_W4RH", //"articles",
+      //   slide: options.slide,
+      // };
+      // const query = {
+      //   type: "messages",
+      //   dashboard: "afp", //"axa_com",
+      //   widget: "latest", //"articles",
+      //   slide: options.slide,
+      // };
+
       const query = {
-        type: "messages",
-        dashboard: 'lzzzniev_1670v2kaule1j', //"axa_com",
-        widget: '859c518e_0bf6_489c_b07d_f28fe3245eec',//"articles",
-        order: 'impessions',
-        slide:options.slide
+        type: "series",
+        dashboard: "lzzzniev_1670v2kaule1j", //"axa_com",
+        widget: "afbc329e_0e09_40b7_b7c4_6ec9dc58796c", //"articles",
+        slide: options.slide,
       };
+      // const query = {
+      //   type: "cloud",
+      //   dashboard: "rapidapi_twittertrends", //"axa_com",
+      //   widget: "worldwide", //"articles",
+      //   slide: options.slide,
+      // };
+      
 
       const bc = new BroadcastChannel(options.slide);
       const sm = new BuzzcastingStorageManager(options);
       const sr = new BuzzcastingStorageReader(options);
-      bc.onmessage = (ev) => console.log(ev)
-      window.BuzzCasting = {storage: sm, reader: sr}
+      bc.onmessage = (ev) => console.log(ev);
+      window.BuzzCasting = { storage: sm, reader: sr };
       bc.postMessage({ event: "subscribe", data: query });
       //bc.postMessage({ event: "update" });
-      let data = await sr.getMessages(query)
-      await bc.postMessage({ event: "update" });
-      document.getElementById('app').innerHTML =  JSON.stringify(data)
+      let data;
+      switch (query.type) {
+        case "messages":
+          data = await sr.getMessages(query);
+          break;
+        case "cloud":
+          data = await sr.getCloud(query);
+          break;
+        case "series":
+          data = await sr.getSeries(query);
+          break;
+      }
 
+      await bc.postMessage({ event: "update" });
+      document.getElementById("app").innerHTML = JSON.stringify(data);
     </script>
   </body>
 </html>

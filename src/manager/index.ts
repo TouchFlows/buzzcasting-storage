@@ -96,24 +96,24 @@ export class BuzzcastingStorageManager {
 			results.forEach(async (res) => {
 				let status: number | void = 400;
 				if (res.status === "fulfilled") {
-					let data = res.value;
+					let result = res.value;
 					if (this.sm === null) {
 						return 400;
 					}
-					if (data.success === true) {
+					if (result.success === true) {
 						const previousQuery = this.sm.subscribers.filter(
-							(query: IQuery) => query.widget === data.query.widget
+							(query: IQuery) => query.widget === result.query.widget
 						)[0];
 						let newHash: string | any[] = "";
 						let filteredMessages: any[];
-						switch (data.query.type) {
+						switch (result.query.type) {
 							case API.MESSAGES:
-								filteredMessages = data.data.messages.filter(
+								filteredMessages = result.data.messages.filter(
 									(msg: any) => msg.id !== null
 								);
-								data.data.messages = filteredMessages;
+								result.data.messages = filteredMessages;
 								// check if any topic dynamics have changed
-								newHash = hashSum(data.data.messages);
+								newHash = hashSum(result.data.messages);
 								if (previousQuery.hash === newHash) {
 									console.debug(
 										"%capi%c %cno updates",
@@ -121,18 +121,18 @@ export class BuzzcastingStorageManager {
 										CSS.NONE,
 										CSS.NO_UPDATES,
 										API.MESSAGES,
-										data.query.slide,
-										data.query.widget
+										result.query.slide,
+										result.query.widget
 									);
 									return 204;
 								} else {
 									previousQuery.hash = newHash;
-									status = await this.sm.setMessages(data.query, data);
+									status = await this.sm.setMessages(result.query, result);
 								}
 
 								break;
 							case API.CLOUD:
-								newHash = hashSum(data.data);
+								newHash = hashSum(result.data);
 								if (previousQuery.hash === newHash) {
 									console.debug(
 										"%capi%c %cno updates",
@@ -140,17 +140,28 @@ export class BuzzcastingStorageManager {
 										CSS.NONE,
 										CSS.NO_UPDATES,
 										API.CLOUD,
-										data.query.slide,
-										data.query.widget
+										result.query.slide,
+										result.query.widget
 									);
 									status = 204;
 								} else {
 									previousQuery.hash = newHash;
-									status = await this.sm.setCloud(data.query, data);
+									const data = {
+										data: {
+											dashboard: result.query.dashboard,
+											cloud: result.data,
+											query: result.query,
+											slide: result.query.slide,
+										},
+										query: result.query,
+										message: result.message,
+										success: result.success,
+									};
+									status = await this.sm.setCloud(result.query, data.data.cloud);
 								}
 								break;
 							case API.SERIES:
-								newHash = hashSum(data.data);
+								newHash = hashSum(result.data);
 								if (previousQuery.hash === newHash) {
 									console.debug(
 										"%capi%c %cno updates",
@@ -158,13 +169,24 @@ export class BuzzcastingStorageManager {
 										CSS.NONE,
 										CSS.NO_UPDATES,
 										API.SERIES,
-										data.query.slide,
-										data.query.widget
+										result.query.slide,
+										result.query.widget
 									);
 									status = 204;
 								} else {
 									previousQuery.hash = newHash;
-									status = await this.sm.setSeries(data.query, data);
+									const data = {
+										data: {
+											dashboard: result.query.dashboard,
+											series: result.data,
+											query: result.query,
+											slide: result.query.slide,
+										},
+										query: result.query,
+										message: result.message,
+										success: result.success,
+									};
+									status = await this.sm.setSeries(result.query, data.data.series);
 								}
 								break;
 							default:
@@ -174,7 +196,7 @@ export class BuzzcastingStorageManager {
 									CSS.NONE,
 									CSS.STORAGE,
 									"error",
-									`data type ${data.query.type} unknown`
+									`data type ${result.query.type} unknown`
 								);
 						}
 					} else {
@@ -191,24 +213,50 @@ export class BuzzcastingStorageManager {
 								CSS.API,
 								CSS.NONE,
 								CSS.BROADCAST,
-								data.query.slide,
-								data.data.title ?? data.query.widget
+								result.query.slide,
+								result.data.title ?? result.query.widget
 							);
-
-							data = await this.sm.getMessages(data.query);
-							this.bc.postMessage({ event: EVENTS.WIDGET_UPDATE, data: data.data });
+							const query = structuredClone(result.query);
+							console.log("status", status, query);
+							switch (result.query.type) {
+								case "messages":
+									result = await this.sm.getMessages(result.query);
+									break;
+								case "cloud":
+									result = await this.sm.getCloud(result.query);
+									if (result) result.query = query;
+									break;
+								case "series":
+									result = await this.sm.getSeries(result.query);
+									if (result) result.query = query;
+									break;
+								default:
+									console.warn(
+										"%capp%c %cbroadcast",
+										CSS.API,
+										CSS.NONE,
+										CSS.BROADCAST,
+										"Unhandled data type",
+										result.query
+									);
+							}
+							result &&
+								this.bc.postMessage({
+									event: EVENTS.WIDGET_UPDATE,
+									data: result.data,
+								});
 							break;
-						case 400:
+						default:
 							console.warn(
 								"%capp%c %cbroadcast",
 								CSS.API,
 								CSS.NONE,
 								CSS.BROADCAST,
-								data.query.slide,
-								data.data.title ?? data.query.widget
+								"Fetch error",
+								result.query.slide,
+								result.data.title ?? result.query.widget
 							);
 							break;
-						default:
 					}
 					return status;
 				} else {

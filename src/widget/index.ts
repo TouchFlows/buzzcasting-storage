@@ -63,6 +63,7 @@ export default class Widget {
 
     this.broadcastChannel.onmessage = async (messageEvent: MessageEvent) => {
       const update: IQuery = messageEvent.data.data
+      console.debug(messageEvent.data.event, messageEvent.data)
       switch (messageEvent.data.event) {
         case EVENTS.WIDGET_UPDATE:
           if (
@@ -87,13 +88,20 @@ export default class Widget {
    * This takes place when the container indicates it has finished loading (ready)
    */
   subscribe() {
-    console.debug(
+    console.info(
       '%cwidget%c %csubscribe',
       CSS.WIDGET,
       CSS.NONE,
       CSS.SUBSCRIBE,
       this.query.slide,
       this.query.widget,
+    )
+    console.debug(
+      '%cwidget%c %csubscribe',
+      CSS.WIDGET,
+      CSS.NONE,
+      CSS.SUBSCRIBE,
+      this.query
     )
     this.broadcastChannel.postMessage({
       event: EVENTS.SUBSCRIBE,
