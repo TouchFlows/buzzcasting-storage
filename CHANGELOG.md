@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.0.17
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.0.16...v3.0.17)
+
+### 🩹 Fixes
+
+- Update not firing due to compiler error ([003b157](https://github.com/TouchFlows/buzzcasting-storage/commit/003b157))
+
+### 🏡 Chore
+
+- **release:** V3.0.16 ([79ac8a0](https://github.com/TouchFlows/buzzcasting-storage/commit/79ac8a0))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v3.0.16
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.0.15...v3.0.16)
