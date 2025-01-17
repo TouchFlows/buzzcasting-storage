@@ -117,7 +117,7 @@ export class BuzzcastingStorageManager {
 								// check if any topic dynamics have changed
 								newHash = hashSum(result.data.messages);
 								if (previousQuery.hash === newHash) {
-									console.debug(
+									console.info(
 										"%capi%c %cno updates",
 										CSS.API,
 										CSS.NONE,
@@ -125,6 +125,14 @@ export class BuzzcastingStorageManager {
 										API.MESSAGES,
 										result.query.slide,
 										result.query.widget
+									);
+									console.debug(
+										"%capi%c %cno updates",
+										CSS.API,
+										CSS.NONE,
+										CSS.NO_UPDATES,
+										API.MESSAGES,
+										result
 									);
 									return 204;
 								} else {
@@ -137,7 +145,7 @@ export class BuzzcastingStorageManager {
 							case API.CLOUD:
 								newHash = hashSum(result.data);
 								if (previousQuery.hash === newHash) {
-									console.debug(
+									console.info(
 										"%capi%c %cno updates",
 										CSS.API,
 										CSS.NONE,
@@ -145,6 +153,14 @@ export class BuzzcastingStorageManager {
 										API.CLOUD,
 										result.query.slide,
 										result.query.widget
+									);
+									console.debug(
+										"%capi%c %cno updates",
+										CSS.API,
+										CSS.NONE,
+										CSS.NO_UPDATES,
+										API.CLOUD,
+										result
 									);
 									status = 204;
 								} else {
@@ -166,7 +182,7 @@ export class BuzzcastingStorageManager {
 							case API.SERIES:
 								newHash = hashSum(result.data);
 								if (previousQuery.hash === newHash) {
-									console.debug(
+									console.info(
 										"%capi%c %cno updates",
 										CSS.API,
 										CSS.NONE,
@@ -174,6 +190,14 @@ export class BuzzcastingStorageManager {
 										API.SERIES,
 										result.query.slide,
 										result.query.widget
+									);
+									console.debug(
+										"%capi%c %cno updates",
+										CSS.API,
+										CSS.NONE,
+										CSS.NO_UPDATES,
+										API.SERIES,
+										result
 									);
 									status = 204;
 								} else {
@@ -274,7 +298,8 @@ export class BuzzcastingStorageManager {
 						CSS.API,
 						CSS.NONE,
 						CSS.STORAGE,
-						EVENTS.ERROR
+						EVENTS.ERROR,
+						res.status
 					);
 					return 400;
 				}

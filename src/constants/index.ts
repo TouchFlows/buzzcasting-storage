@@ -40,6 +40,7 @@ export enum EVENTS {
   ERROR = 'error',
   HIDE_MESSAGE = 'hideMessage',
   HIDE_LABELS = 'hideLabels',
+  MAUPPUT_UPDATE = 'layoutUpdate',
   PAUSE_PRESENTATION = 'pausePresentation',
   PRESENTATION_READY = 'presentationReady',
   PREV_SLIDE = 'prevSlide',

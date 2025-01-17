@@ -63,7 +63,7 @@ export default class Widget {
 
     this.broadcastChannel.onmessage = async (messageEvent: MessageEvent) => {
       const update: IQuery = messageEvent.data.data
-      console.debug(messageEvent.data.event, messageEvent.data)
+
       switch (messageEvent.data.event) {
         case EVENTS.WIDGET_UPDATE:
           if (
