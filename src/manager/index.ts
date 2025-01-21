@@ -37,6 +37,7 @@ export class BuzzcastingStorageManager {
 
 		const broadcast = options?.slide || options.app;
 		this.bc = new BroadcastChannel(broadcast);
+
 		console.info(
 			"%capi%c %cbroadcast",
 			CSS.API,
@@ -94,7 +95,7 @@ export class BuzzcastingStorageManager {
 
 		await Promise.allSettled(subscriberQuery).then((results) =>
 			results.forEach(async (res) => {
-				let data
+				let data;
 				let status: number | void = 400;
 				if (res.status === "fulfilled") {
 					let result = res.value;
@@ -102,7 +103,6 @@ export class BuzzcastingStorageManager {
 						return 400;
 					}
 					if (result.success === true) {
-						
 						const previousQuery = this.sm.subscribers.filter(
 							(query: IQuery) => query.widget === result.query.widget
 						)[0];
@@ -126,6 +126,7 @@ export class BuzzcastingStorageManager {
 										result.query.slide,
 										result.query.widget
 									);
+
 									console.debug(
 										"%capi%c %cno updates",
 										CSS.API,
@@ -136,7 +137,7 @@ export class BuzzcastingStorageManager {
 									);
 									return 204;
 								} else {
-									data = result
+									data = result;
 									previousQuery.hash = newHash;
 									status = await this.sm.setMessages(result.query, result);
 								}
@@ -154,6 +155,7 @@ export class BuzzcastingStorageManager {
 										result.query.slide,
 										result.query.widget
 									);
+
 									console.debug(
 										"%capi%c %cno updates",
 										CSS.API,
@@ -176,7 +178,10 @@ export class BuzzcastingStorageManager {
 										message: result.message,
 										success: result.success,
 									};
-									status = await this.sm.setCloud(result.query, data.data.cloud);
+									status = await this.sm.setCloud(
+										result.query,
+										data.data.cloud
+									);
 								}
 								break;
 							case API.SERIES:
@@ -213,7 +218,10 @@ export class BuzzcastingStorageManager {
 										message: result.message,
 										success: result.success,
 									};
-									status = await this.sm.setSeries(result.query, data.data.series);
+									status = await this.sm.setSeries(
+										result.query,
+										data.data.series
+									);
 								}
 								break;
 							default:
@@ -278,6 +286,9 @@ export class BuzzcastingStorageManager {
 									event: EVENTS.WIDGET_UPDATE,
 									data: result.data,
 								});
+							break;
+						case 204:
+							// Not modified
 							break;
 						default:
 							console.warn(
@@ -348,6 +359,7 @@ export class BuzzcastingStorageManager {
 		const count: number | undefined = await this.sm?.cleanMessages(
 			retentionDuration
 		);
+
 		console.info(
 			"%cstorage%c %cstorage",
 			CSS.STORAGE,
