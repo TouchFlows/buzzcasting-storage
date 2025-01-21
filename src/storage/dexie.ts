@@ -50,13 +50,13 @@ export default class DexieClient {
 					query.widget
 				);
 			});
-		if (typeof data === "undefined") {
+		if (typeof data === 'undefined') {
 			return { data: null, message: "Cloud Data error", success: false };
 		}
 		data.data.presentation = query?.presentation || "not set";
 		data.data.slide = query?.slide || "not set";
-		data.data.query = query;
-		data.query = query;
+		data.data.query = query
+		data.query = query
 		data.message = "Messages retrieved successfully";
 		data.success = true;
 		return data;
@@ -87,8 +87,8 @@ export default class DexieClient {
 		}
 		data.data.presentation = query?.presentation || "not set";
 		data.data.slide = query?.slide || "not set";
-		data.data.query = query;
-		data.query = query;
+		data.data.query = query
+		data.query = query
 		data.message = "Messages retrieved successfully";
 		data.success = true;
 		return data;
@@ -148,9 +148,7 @@ export default class DexieClient {
 
 			// @ts-ignore
 			return Dexie.Promise.all(getMessages).then(async (messages) => {
-				const filtered = messages.map((message: any) => {
-					return message.data;
-				});
+				const filtered = messages.map((message:any) => {return message.data})
 				const data = {
 					data: {
 						presentation: query?.presentation || "not set",
@@ -163,7 +161,6 @@ export default class DexieClient {
 					message: "Messages retrieved successfully",
 					success: true,
 				};
-
 				console.debug(
 					"%cstorage%c %cmessages",
 					CSS.STORAGE,
@@ -456,7 +453,6 @@ export default class DexieClient {
 		if (query.type === API.MESSAGES) {
 			query = moderation(this.options, query);
 		}
-
 		console.info(
 			"%cstorage%c %csubscribe",
 			CSS.STORAGE,
@@ -465,7 +461,6 @@ export default class DexieClient {
 			query.slide,
 			query.widget
 		);
-
 		console.debug(
 			"%cstorage%c %csubscribe",
 			CSS.STORAGE,

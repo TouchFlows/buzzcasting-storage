@@ -1,33 +1,9 @@
 # Changelog
 
 
-## v3.1.3
+## v3.2.1
 
-[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.0.24...v3.1.3)
-
-## v3.0.24
-
-[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.0.21...v3.0.24)
-
-### 🏡 Chore
-
-- **release:** V3.0.23 ([4254f9d](https://github.com/TouchFlows/buzzcasting-storage/commit/4254f9d))
-
-### ❤️ Contributors
-
-- Mark Tamis ([@marktamis](http://github.com/marktamis))
-
-## v3.0.23
-
-[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.0.20...v3.0.23)
-
-## v3.0.22
-
-[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.0.21...v3.0.22)
-
-## v3.0.21
-
-[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.0.20...v3.0.21)
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.1.3...v3.2.1)
 
 ## v3.0.20
 
