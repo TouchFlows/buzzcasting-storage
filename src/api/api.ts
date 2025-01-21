@@ -92,6 +92,14 @@ export default class ApiClient {
 			query.widget,
 			query.id
 		);
+		console.debug(
+			"%capi%c %cput",
+			CSS.API,
+			CSS.NONE,
+			CSS.GET_DATA,
+			EVENTS.HIDE_MESSAGE,
+			query
+		);
 		return await fetch(
 			[this.url, "api", version, "messages", query.id].join("/") + params,
 			{ ...headers, method: "put" }
@@ -155,11 +163,8 @@ export default class ApiClient {
 		delete search.slide;
 		delete search.type;
 		delete search.hash;
-		// const params
-		// 	= Object.keys(search).length > 0
-		// 	  ? `?${new URLSearchParams(search).toString()}`
-		// 	  : ''
-		console.debug(
+
+		console.info(
 			"%capi%c %cloadSlide",
 			CSS.API,
 			CSS.NONE,
@@ -199,11 +204,6 @@ export default class ApiClient {
 	public async storeSlide(query: IQuery): Promise<any> {
 		const { version }: IStorageOptions = this.options;
 		const headers = this.formHeaders();
-		/* const urlencoded = new URLSearchParams()
-    const labels = query.labels || []
-    for (const [i, value] of labels.entries()) {
-      urlencoded.append(`custom_filters[${i}]`, value)
-    } */
 		delete query.update;
 		delete query.type;
 		const body = JSON.stringify(query);
@@ -215,6 +215,15 @@ export default class ApiClient {
 			CSS.SLIDE,
 			EVENTS.SLIDE_STORE,
 			query.id
+		);
+
+		console.debug(
+			"%capi%c %cput",
+			CSS.API,
+			CSS.NONE,
+			CSS.SLIDE,
+			EVENTS.SLIDE_STORE,
+			query
 		);
 		return await fetch(
 			[this.url, "api", version, "slides", query.id].join("/"),
