@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v3.2.5
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.2.4...v3.2.5)
+
+### 🩹 Fixes
+
+- Sender title & name handling ([71af5b1](https://github.com/TouchFlows/buzzcasting-storage/commit/71af5b1))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v3.2.4
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.2.3...v3.2.4)
