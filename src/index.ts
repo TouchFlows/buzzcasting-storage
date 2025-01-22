@@ -278,6 +278,7 @@ export declare interface IStorageOptions {
   period?: number
   retention?: number
   suspended?: boolean
+  loglevel?: number
 }
 
 declare global {

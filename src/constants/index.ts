@@ -11,7 +11,7 @@ export enum API {
 export enum CSS {
   API = 'color:white;background-color:grey;padding:0 4px 0 4px;border-radius:5px;',
   APP = 'color:white;background-color:navy;padding:0 4px 0 4px;border-radius:5px;',
-  BROADCAST = 'color:white;background-color:orange;padding:0 4px 0 4px;border-radius:5px;',
+  BROADCAST = 'color:navy;background-color:orange;padding:0 4px 0 4px;border-radius:5px;',
   DATA = 'color:grey;background-color:lightskyblue;padding:0 4px 0 4px;border-radius:5px;',
   CLOUD = 'color:grey;background-color:mistyrose;padding:0 4px 0 4px;border-radius:5px;',
   GET_DATA = 'color:black;background-color:lime;padding:0 4px 0 4px;border-radius:5px;',
@@ -32,6 +32,9 @@ export enum EVENTS {
   ADD_SLIDE = 'addSlide',
   APP_READY = 'appReady',
   API_UPDATE = 'apiUpdate',
+  WS_API_REQUEST = 'wsApiRequest',
+  WS_API_RESPONSE = 'wsApiResponse',
+  WS_API_UPDATE = 'wsApiRUpdate',
   APPROVE_MESSAGE = 'approveMessage',
   CHANNEL = 'channel',
   CLEAN_MESSAGES = 'cleanMessages',
