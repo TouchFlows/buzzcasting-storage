@@ -1,5 +1,5 @@
 import type { IPreference, IQuery, IResponse, IStorageOptions } from "..";
-import { API, CSS, EVENTS } from "..";
+import { CSS, EVENTS } from "..";
 
 export default class ApiClient {
 	private options: IStorageOptions;
