@@ -50,6 +50,7 @@ export declare interface ICloud {
   total: number
   current_total: number
   previous_total: number
+  query?: IQuery
 }
 
 export declare interface ILabel {
@@ -171,6 +172,11 @@ export declare interface IMessage {
   media?: IMedium[]
 }
 
+export declare interface IPreference {
+  id: string
+  value?: string
+}
+
 /**
  * API Response
  */
@@ -203,7 +209,7 @@ export declare interface IQuery {
   labels?: string[]
   compare?: string
   period?: number
-  type?: 'cloud' | 'messages' | 'series' | 'proxy' | 'slide'
+  type?: 'cloud' | 'messages' | 'series' | 'preference' | 'proxy' | 'slide'
   order?:'utc' | 'reach' | 'engagement' | 'impressions'
   media?: number
   dynamics?: number
@@ -228,6 +234,7 @@ export declare interface ISeries {
   metrics?: IMetrics
   indicators?: IIndicators
   timestamp?: number
+  query?: IQuery
 }
 
 export declare interface ISeriesData {

@@ -27,13 +27,12 @@
         suspended: "1",
       };
 
-
-      // const query = {
-      //   type: "messages",
-      //   dashboard: "lzzzniev_1670v2kaule1j",
-      //   widget: "40a93a9f_6c51_4dd7_a44e_0c206dc6df8f",
-      //   slide:options.slide
-      // };
+      const query = {
+        type: "messages",
+        dashboard: "lzzzniev_1670v2kaule1j",
+        widget: "40a93a9f_6c51_4dd7_a44e_0c206dc6df8f",
+        slide:options.slide
+      };
 
       // const query = {
       //   type: "cloud",
@@ -55,13 +54,19 @@
       //   widget: "afbc329e_0e09_40b7_b7c4_6ec9dc58796c", //"articles",
       //   slide: options.slide,
       // };
-      const query = {
-        type: "cloud",
-        dashboard: "rapidapi_twittertrends", //"axa_com",
-        widget: "worldwide", //"articles",
-        slide: options.slide,
-      };
-      
+      // const query = {
+      //   type: "cloud",
+      //   dashboard: "rapidapi_twittertrends", //"axa_com",
+      //   widget: "worldwide", //"articles",
+      //   slide: options.slide,
+      // };
+
+      // const query = {
+      //   type: "messages",
+      //   dashboard: "lm4ljt8l_donwf3ne9p86",
+      //   widget: "714722c5_cf13_4368_910d_5881d92f08da",
+      //   slide: options.slide,
+      // };
 
       const bc = new BroadcastChannel(options.slide);
       const sm = new BuzzcastingStorageManager(options);

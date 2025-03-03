@@ -1,4 +1,4 @@
-import type { IQuery, IResponse, IStorageOptions } from "..";
+import type { IPreference, IQuery, IResponse, IStorageOptions } from "..";
 import { API, CSS, EVENTS, STORAGE } from "..";
 import { version } from "../../package.json";
 import ApiClient from "../api/api";
@@ -393,19 +393,27 @@ export class BuzzcastingStorageManager {
 		return await this.sm?.getSubscribers();
 	};
 
-	public loadSlide = async (query: IQuery): Promise<IResponse> => {
+	public getSlide = async (query: IQuery): Promise<IResponse | undefined> => {
+		return await this.sm?.getSlide(query);
+	};
+
+	public setSlide = async (query: IQuery): Promise<IResponse | undefined> => {
+		return await this.sm?.setSlide(query);
+	};
+
+	public loadSlide = async (query: IQuery): Promise<Number> => {
 		return await this.api.loadSlide(query);
 	};
 
 	public storeSlide = async (query: IQuery): Promise<IResponse | number> => {
-		return await this.sm?.storeSlide(query).then(async () => {
-			if (query?.update && query.update) {
-				return await this.api.storeSlide(query);
-			} else {
-				return new Promise((resolve, _reject) => {
-					resolve(201);
-				});
-			}
-		});
+		return await this.api.storeSlide(query);
+	};
+
+	public getPreference = async (preference: IPreference): Promise<IResponse | undefined> => {
+		return await this.sm?.getPreference(preference);
+	};
+
+	public setPreference = async (preference: IPreference): Promise<IResponse | undefined> => {
+		return await this.sm?.setPreference(preference);
 	};
 }

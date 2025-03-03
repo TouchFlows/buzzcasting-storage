@@ -6,6 +6,7 @@ export enum API {
   WIDGET = 'widget',
   WIDGETS = 'widgets',
   SLIDE = 'slide',
+  PREFERENCE = 'preference'
 }
 
 export enum CSS {
@@ -52,6 +53,8 @@ export enum EVENTS {
   STAR_MESSAGE = 'starMessage',
   GOTO_SLIDE = 'gotoSlide',
   NEXT_SLIDE = 'nextSlide',
+  PREFERENCE_LOAD ='loadPreference',
+  PREFERENCE_SAVE ='savePreference',
   SHOW_BUILDER_MODAL = 'showBuilderModal',
   SLIDE_DID_LOAD = 'slideDidLoad',
   SLIDE_GOTO = 'slideGoto',
@@ -63,6 +66,7 @@ export enum EVENTS {
   STORAGE_INIT = 'storageInit',
   SUBSCRIBE = 'subscribe',
   SUSPEND_ACCOUNT = 'suspendAccount',
+  SWITCH_PRESENTATION = 'switch_presentation',
   REMOVE_CLOUD = 'removeCloud',
   UPDATE = 'update',
   VERSION = 'version',

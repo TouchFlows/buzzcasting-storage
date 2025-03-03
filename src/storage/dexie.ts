@@ -1,4 +1,11 @@
-import type { IMessage, IQuery, IResponse, IStorageOptions, ITopic } from "..";
+import type {
+	IMessage,
+	IPreference,
+	IQuery,
+	IResponse,
+	IStorageOptions,
+	ITopic,
+} from "..";
 import Dexie from "dexie";
 import { API, CSS, EVENTS } from "..";
 import { moderation, widgetParams } from "../utils/widget";
@@ -12,17 +19,18 @@ export default class DexieClient {
 		this.options = options;
 
 		this.db = new Dexie(options.app);
-		this.db.version(6).stores({
-			player: "id,title,name,location",
+		this.db.version(8).stores({
+			channel: "id,slide_index",
+			cloud: "id,dashboard_id,data",
+			display: "id,monitor_id,presentation_id,colstart,colend,rowstart,rowend",
+			messages: "id,utc,expires,data",
 			monitor:
 				"id,player_id,cols,rows,order,width,height,physicalwidth,physicalheight,devicePixelRatio,screenLeft,screenTop,orientation,monitor",
-			display: "id,monitor_id,presentation_id,colstart,colend,rowstart,rowend",
-			channel: "id,slide_index",
+			player: "id,title,name,location",
+			preference: "id,value",
 			presentation: "id,name,data",
-			slide: "id,title,json,html,css",
-			cloud: "id,dashboard_id,data",
-			messages: "id,utc,expires,data",
 			series: "id,dashboard_id,data",
+			slide: "id,title,json,html",
 			topics:
 				"[widget_id+message_id],message_id,widget_id,dashboard_id,title,engagement,impressions,reach,sentiment,visible,utc,expires",
 			widgets: "id,dashboard_id,type",
@@ -50,13 +58,13 @@ export default class DexieClient {
 					query.widget
 				);
 			});
-		if (typeof data === 'undefined') {
+		if (typeof data === "undefined") {
 			return { data: null, message: "Cloud Data error", success: false };
 		}
 		data.data.presentation = query?.presentation || "not set";
 		data.data.slide = query?.slide || "not set";
-		data.data.query = query
-		data.query = query
+		data.data.query = query;
+		data.query = query;
 		data.message = "Messages retrieved successfully";
 		data.success = true;
 		return data;
@@ -87,8 +95,8 @@ export default class DexieClient {
 		}
 		data.data.presentation = query?.presentation || "not set";
 		data.data.slide = query?.slide || "not set";
-		data.data.query = query
-		data.query = query
+		data.data.query = query;
+		data.query = query;
 		data.message = "Messages retrieved successfully";
 		data.success = true;
 		return data;
@@ -148,7 +156,9 @@ export default class DexieClient {
 
 			// @ts-ignore
 			return Dexie.Promise.all(getMessages).then(async (messages) => {
-				const filtered = messages.map((message:any) => {return message.data})
+				const filtered = messages.map((message: any) => {
+					return message.data;
+				});
 				const data = {
 					data: {
 						presentation: query?.presentation || "not set",
@@ -481,11 +491,11 @@ export default class DexieClient {
 	};
 
 	/**
-	 * Retrieve Cloud Data
+	 * Retrieve Slide from Storage
 	 * @param query IQuery
 	 * @returns IResponse
 	 */
-	loadSlide = async (query: IQuery): Promise<IResponse> => {
+	getSlide = async (query: IQuery): Promise<IResponse> => {
 		const data = await this.db
 			.table(API.SLIDE)
 			.where({ id: query.id })
@@ -500,42 +510,115 @@ export default class DexieClient {
 				);
 			});
 		if (data === undefined) {
-			return { data: null, message: "Slide Load error", success: false };
+			return {
+				data: null,
+				message: `Slide ${query.id} Load error`,
+				success: false,
+			};
 		}
-		data.data.id = query?.id || "not set";
-		data.message = "Slide retrieved successfully";
+		data.message = `Slide ${query.id} retrieved from storage`;
 		data.success = true;
 		return data;
 	};
 
 	/**
-	 * Update Slide
+	 * Update Slide in Storage
 	 * @param query IQuery
 	 * @returns number
 	 */
-	storeSlide = async (query: IQuery): Promise<number> => {
-		if (query.type === API.SLIDE && query.data !== "") {
-			return await this.db
-				.table(API.SLIDE)
-				.put({
-					id: query.id,
-					title: query.data.title || "Not set",
-					json: query.data.json || {},
-					html: query.data.html || "",
-					css: query.data.css || "",
-				})
-				.then(() => 200)
-				.catch((error: Error) => {
-					console.error(
-						"%cstorage",
-						CSS.STORAGE,
-						EVENTS.SLIDE_STORE,
-						query,
-						error.message
-					);
-					return 422;
-				});
+	setSlide = async (query: IQuery): Promise<IResponse> => {
+		return await this.db
+			.table(API.SLIDE)
+			.put({
+				id: query.data.id,
+				title: query.data.title || "Not set",
+				json: query.data.json || {},
+				html: query.data.html || "",
+			})
+			.then(() => {
+				return {
+					data: null,
+					message: `Slide ${query.data.id} saved to storage`,
+					success: true,
+				};
+			})
+			.catch((error: Error) => {
+				console.error(
+					"%cstorage",
+					CSS.STORAGE,
+					EVENTS.SLIDE_STORE,
+					query,
+					error.message
+				);
+				return {
+					data: null,
+					message: `Slide ${query.data.id} save error: ${error.message}`,
+					success: false,
+				};
+			});
+	};
+
+	/**
+	 * Retrieve Preference from Storage
+	 * @param preference IPreference
+	 * @returns IResponse
+	 */
+	getPreference = async (preference: IPreference): Promise<IResponse> => {
+		const data = await this.db
+			.table(API.PREFERENCE)
+			.where({ id: preference.id })
+			.last()
+			.catch(() => {
+				console.warn(
+					"%capi%c %cseries",
+					CSS.API,
+					CSS.NONE,
+					CSS.SERIES,
+					preference.id
+				);
+			});
+		if (data === undefined) {
+			return {
+				data: null,
+				message: `Preference ${preference.id} Load error`,
+				success: false,
+			};
 		}
-		return 422;
+		return data.value;
+	};
+
+	/**
+	 * Update Slide in Storage
+	 * @param preference IPreference
+	 * @returns number
+	 */
+	setPreference = async (preference: IPreference): Promise<IResponse> => {
+		return await this.db
+			.table(API.PREFERENCE)
+			.put({
+				id: preference.id,
+				value: preference.value,
+			})
+			.then(() => {
+				return {
+					data: null,
+					message: `Preference ${preference.id} saved to storage`,
+					success: true,
+				};
+			})
+			.catch((error: Error) => {
+				console.error(
+					"%cstorage",
+					CSS.STORAGE,
+					EVENTS.SLIDE_STORE,
+					preference,
+					error.message
+				);
+				return {
+					data: null,
+					message: `Preference ${preference.id} save error: ${error.message}`,
+					success: false,
+				};
+			});
 	};
 }

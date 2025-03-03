@@ -1,5 +1,5 @@
-import type { IQuery, IResponse, IStorageOptions } from "..";
-import { CSS, EVENTS } from "..";
+import type { IPreference, IQuery, IResponse, IStorageOptions } from "..";
+import { API, CSS, EVENTS } from "..";
 
 export default class ApiClient {
 	private options: IStorageOptions;
@@ -72,6 +72,8 @@ export default class ApiClient {
 			})
 			.then((json: IResponse): IResponse => {
 				json.query = query;
+				json.query = query;
+				if(json.data) json.data.query = query
 				return json;
 			})
 			.catch((code) => {
@@ -218,6 +220,79 @@ export default class ApiClient {
 		);
 		return await fetch(
 			[this.url, "api", version, "slides", query.id].join("/"),
+			{ ...headers, body, method: "put" }
+		)
+			.then((response) => {
+				if (!response.ok) {
+					throw new Error(response.statusText);
+				}
+				return response;
+			})
+			.then((response) => {
+				return response.json();
+			})
+			.catch((message) => {
+				return { succes: false, message, data: [] };
+			});
+	}
+
+	public async loadPreference(preference: IPreference): Promise<any> {
+		const { version }: IStorageOptions = this.options;
+		const headers = this.headers();
+
+		// const params
+		// 	= Object.keys(search).length > 0
+		// 	  ? `?${new URLSearchParams(search).toString()}`
+		// 	  : ''
+		console.debug(
+			"%capi%c %cloadSlide",
+			CSS.API,
+			CSS.NONE,
+			CSS.SLIDE,
+			EVENTS.SLIDE_LOAD,
+			preference.id
+		);
+		return await fetch(
+			[this.url, "api", version, "preferences", preference.id].join("/"),
+			{ ...headers, method: "get" }
+		)
+			.then(async (response: Response) => {
+				if (!response.ok) {
+					throw new Error(`${response.status}`);
+				}
+				return response;
+			})
+			.then((response: Response) => {
+				return response.json();
+			})
+			.then((json: IResponse): IResponse => {
+				return json;
+			})
+			.catch((code) => {
+				return { success: false, message: `${code}`, data: null };
+			});
+	}
+
+	public async storePreference(preference: IPreference): Promise<any> {
+		const { version }: IStorageOptions = this.options;
+		const headers = this.formHeaders();
+		/* const urlencoded = new URLSearchParams()
+    const labels = query.labels || []
+    for (const [i, value] of labels.entries()) {
+      urlencoded.append(`custom_filters[${i}]`, value)
+    } */
+		const body = JSON.stringify({data:preference});
+
+		console.info(
+			"%capi%c %cput",
+			CSS.API,
+			CSS.NONE,
+			CSS.SLIDE,
+			EVENTS.SLIDE_STORE,
+			preference.id
+		);
+		return await fetch(
+			[this.url, "api", version, "preferences", preference.id].join("/"),
 			{ ...headers, body, method: "put" }
 		)
 			.then((response) => {
