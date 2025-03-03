@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.3.0
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.2.6...v3.3.0)
+
+### 🚀 Enhancements
+
+- Load/sore slide ([48bb30d](https://github.com/TouchFlows/buzzcasting-storage/commit/48bb30d))
+
+### 🩹 Fixes
+
+- Remove API constant from api.ts ([ace3cd1](https://github.com/TouchFlows/buzzcasting-storage/commit/ace3cd1))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v3.2.6
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.2.5...v3.2.6)
