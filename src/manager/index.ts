@@ -409,11 +409,35 @@ export class BuzzcastingStorageManager {
 		return await this.api.storeSlide(query);
 	};
 
+	public getPresentation = async (query: IQuery): Promise<IResponse | undefined> => {
+		return await this.sm?.getPresentation(query);
+	};
+
+	public setPresentation = async (query: IQuery): Promise<IResponse | undefined> => {
+		return await this.sm?.setPresentation(query);
+	};
+
+	public loadPresentation = async (query: IQuery): Promise<Number> => {
+		return await this.api.loadPresentation(query);
+	};
+
+	public storePresentation = async (query: IQuery): Promise<IResponse | number> => {
+		return await this.api.storePresentation(query);
+	};
+
 	public getPreference = async (preference: IPreference): Promise<IResponse | undefined> => {
 		return await this.sm?.getPreference(preference);
 	};
 
 	public setPreference = async (preference: IPreference): Promise<IResponse | undefined> => {
 		return await this.sm?.setPreference(preference);
+	};
+
+	public loadPreference = async (preference: IPreference): Promise<Number> => {
+		return await this.api.loadPreference(preference);
+	};
+
+	public storePreference = async (preference: IPreference): Promise<IResponse | number> => {
+		return await this.api.storePreference(preference);
 	};
 }

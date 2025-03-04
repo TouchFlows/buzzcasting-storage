@@ -1,5 +1,5 @@
 import type { IPreference, IQuery, IResponse, IStorageOptions } from "..";
-import { CSS, EVENTS } from "..";
+import { API, CSS, EVENTS } from "..";
 
 export default class ApiClient {
 	private options: IStorageOptions;
@@ -236,6 +236,94 @@ export default class ApiClient {
 			});
 	}
 
+	public async loadPresentation(query: IQuery): Promise<any> {
+		const { version }: IStorageOptions = this.options;
+		const headers = this.headers();
+
+		const search = Object.assign({}, query);
+		delete search.slide;
+		delete search.type;
+		delete search.hash;
+		// const params
+		// 	= Object.keys(search).length > 0
+		// 	  ? `?${new URLSearchParams(search).toString()}`
+		// 	  : ''
+		console.debug(
+			"%capi%c %cloadPresentation",
+			CSS.API,
+			CSS.NONE,
+			CSS.SLIDE,
+			EVENTS.SLIDE_LOAD,
+			query.slide
+		);
+		return await fetch(
+			[this.url, "api", version, API.PRESENTATIONS, query.id].join("/"),
+			{ ...headers, method: "get" }
+		)
+			.then(async (response: Response) => {
+				if (!response.ok) {
+					throw new Error(`${response.status}`);
+				}
+				return response;
+			})
+			.then((response: Response) => {
+				return response.json();
+			})
+			.then((json: IResponse): IResponse => {
+				json.query = query;
+				return json;
+			})
+			.catch((code) => {
+				return { success: false, message: `${code}`, data: null };
+			});
+	}
+	/**
+	 * Store slide definition
+	 * ex: window.BuzzCasting.storage.storeSlide({id:'1',type:'slide', data: {json: {a:'b'},html:'<div/>',css:'abc'}, update: true}) // update: stockage sur le serveur
+	 *
+	 * @param query
+	 * @returns
+	 */
+
+	public async storePresentation(query: IQuery): Promise<any> {
+		const { version }: IStorageOptions = this.options;
+		const headers = this.formHeaders();
+		/* const urlencoded = new URLSearchParams()
+    const labels = query.labels || []
+    for (const [i, value] of labels.entries()) {
+      urlencoded.append(`custom_filters[${i}]`, value)
+    } */
+		delete query.update;
+		delete query.type;
+		const body = JSON.stringify(query);
+
+		console.info(
+			"%capi%c %cput",
+			CSS.API,
+			CSS.NONE,
+			CSS.SLIDE,
+			EVENTS.PRESENTATION_STORE,
+			query.id
+		);
+		return await fetch(
+			[this.url, "api", version, API.PRESENTATIONS, query.id].join("/"),
+			{ ...headers, body, method: "put" }
+		)
+			.then((response) => {
+				if (!response.ok) {
+					throw new Error(response.statusText);
+				}
+				return response;
+			})
+			.then((response) => {
+				return response.json();
+			})
+			.catch((message) => {
+				return { succes: false, message, data: [] };
+			});
+	}
+
+
 	public async loadPreference(preference: IPreference): Promise<any> {
 		const { version }: IStorageOptions = this.options;
 		const headers = this.headers();
@@ -245,15 +333,15 @@ export default class ApiClient {
 		// 	  ? `?${new URLSearchParams(search).toString()}`
 		// 	  : ''
 		console.debug(
-			"%capi%c %cloadSlide",
+			"%capi%c %cloadPreference",
 			CSS.API,
 			CSS.NONE,
 			CSS.SLIDE,
-			EVENTS.SLIDE_LOAD,
+			EVENTS.PREFERENCE_LOAD,
 			preference.id
 		);
 		return await fetch(
-			[this.url, "api", version, "preferences", preference.id].join("/"),
+			[this.url, "api", version, API.PREFERENCES, preference.id].join("/"),
 			{ ...headers, method: "get" }
 		)
 			.then(async (response: Response) => {
@@ -284,15 +372,15 @@ export default class ApiClient {
 		const body = JSON.stringify({data:preference});
 
 		console.info(
-			"%capi%c %cput",
+			"%capi%c %cstorePreference",
 			CSS.API,
 			CSS.NONE,
 			CSS.SLIDE,
-			EVENTS.SLIDE_STORE,
+			EVENTS.PREFERENCE_SAVE,
 			preference.id
 		);
 		return await fetch(
-			[this.url, "api", version, "preferences", preference.id].join("/"),
+			[this.url, "api", version, API.PREFERENCES, preference.id].join("/"),
 			{ ...headers, body, method: "put" }
 		)
 			.then((response) => {

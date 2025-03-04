@@ -6,7 +6,11 @@ export enum API {
   WIDGET = 'widget',
   WIDGETS = 'widgets',
   SLIDE = 'slide',
-  PREFERENCE = 'preference'
+  SLIDES = 'slides',
+  PRESENTATION = 'presentation',
+  PRESENTATIONS = 'presentations',
+  PREFERENCE = 'preference',
+  PREFERENCES = 'preferences'
 }
 
 export enum CSS {
@@ -55,6 +59,8 @@ export enum EVENTS {
   NEXT_SLIDE = 'nextSlide',
   PREFERENCE_LOAD ='loadPreference',
   PREFERENCE_SAVE ='savePreference',
+  PRESENTATION_LOAD = 'loadPresentation',
+  PRESENTATION_STORE = 'storePresentation',
   SHOW_BUILDER_MODAL = 'showBuilderModal',
   SLIDE_DID_LOAD = 'slideDidLoad',
   SLIDE_GOTO = 'slideGoto',

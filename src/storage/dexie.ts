@@ -28,9 +28,9 @@ export default class DexieClient {
 				"id,player_id,cols,rows,order,width,height,physicalwidth,physicalheight,devicePixelRatio,screenLeft,screenTop,orientation,monitor",
 			player: "id,title,name,location",
 			preference: "id,value",
-			presentation: "id,name,data",
+			presentation: "id,name,data,update",
 			series: "id,dashboard_id,data",
-			slide: "id,title,json,html",
+			slide: "id,name,presentation_id,order_index,json,html,update",
 			topics:
 				"[widget_id+message_id],message_id,widget_id,dashboard_id,title,engagement,impressions,reach,sentiment,visible,utc,expires",
 			widgets: "id,dashboard_id,type",
@@ -502,10 +502,9 @@ export default class DexieClient {
 			.last()
 			.catch(() => {
 				console.warn(
-					"%capi%c %cseries",
-					CSS.API,
-					CSS.NONE,
-					CSS.SERIES,
+					"%cstorage",
+					CSS.STORAGE,
+					EVENTS.SLIDE_LOAD,
 					query.id
 				);
 			});
@@ -531,9 +530,12 @@ export default class DexieClient {
 			.table(API.SLIDE)
 			.put({
 				id: query.data.id,
-				title: query.data.title || "Not set",
+				presentation_id: query.data.presentation_id,
+				order_index: query.data.order_index,
+				name: query.data.name || "Not set",
 				json: query.data.json || {},
 				html: query.data.html || "",
+				update: query.data.update,
 			})
 			.then(() => {
 				return {
@@ -559,6 +561,73 @@ export default class DexieClient {
 	};
 
 	/**
+	 * Retrieve Presentation from Storage
+	 * @param query IQuery
+	 * @returns IResponse
+	 */
+	getPresentation = async (query: IQuery): Promise<IResponse> => {
+		const data = await this.db
+			.table(API.PRESENTATIONS)
+			.where({ id: query.id })
+			.last()
+			.catch(() => {
+				console.warn(
+					"%cstorage ",
+					CSS.STORAGE,
+					EVENTS.PRESENTATION_LOAD,
+					query.id
+				);
+			});
+		if (data === undefined) {
+			return {
+				data: null,
+				message: `Presentation ${query.id} Load error`,
+				success: false,
+			};
+		}
+		data.message = `Presentation ${query.id} retrieved from storage`;
+		data.success = true;
+		return data;
+	};
+
+	/**
+	 * Update Presentation in Storage
+	 * @param query IQuery
+	 * @returns number
+	 */
+	setPresentation = async (query: IQuery): Promise<IResponse> => {
+		return await this.db
+			.table(API.PRESENTATIONS)
+			.put({
+				id: query.data.id,
+				name: query.data.name || "Not set",
+				data: query.data,
+				update: query.update,
+			})
+			.then(() => {
+				return {
+					data: null,
+					message: `Presentation ${query.data.id} saved to storage`,
+					success: true,
+				};
+			})
+			.catch((error: Error) => {
+				console.error(
+					"%cstorage",
+					CSS.STORAGE,
+					EVENTS.PRESENTATION_STORE,
+					query,
+					error.message
+				);
+				return {
+					data: null,
+					message: `Presentation ${query.data.id} save error: ${error.message}`,
+					success: false,
+				};
+			});
+	};
+
+	/**
 	 * Retrieve Preference from Storage
 	 * @param preference IPreference
 	 * @returns IResponse
@@ -570,10 +639,9 @@ export default class DexieClient {
 			.last()
 			.catch(() => {
 				console.warn(
-					"%capi%c %cseries",
-					CSS.API,
-					CSS.NONE,
-					CSS.SERIES,
+					"%cstorage",
+					CSS.STORAGE,
+					EVENTS.PREFERENCE_LOAD,
 					preference.id
 				);
 			});
@@ -610,7 +678,7 @@ export default class DexieClient {
 				console.error(
 					"%cstorage",
 					CSS.STORAGE,
-					EVENTS.SLIDE_STORE,
+					EVENTS.PREFERENCE_SAVE,
 					preference,
 					error.message
 				);

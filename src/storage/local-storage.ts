@@ -218,6 +218,37 @@ export default class LocalStorageClient {
 		}
 	};
 
+	getPresentation = async (query: IQuery): Promise<IResponse> => {
+		try {
+			return localStorage.getObject(`${API.PRESENTATION}.${query.id}`);
+		} catch (error: any) {
+			console.warn("%capi", CSS.API, API.PRESENTATION, query.id, error);
+			return {
+				data: null,
+				message: `Slide ${query.id} load error: ${error.message}`,
+				success: false,
+			};
+		}
+	};
+
+	setPresentation = async (query: IQuery): Promise<IResponse> => {
+		try {
+			localStorage.setObject(`${API.PRESENTATION}.${query.data.id}`, query.data);
+			return {
+				data: null,
+				message: `Presentation ${query.data.id} saved to storage`,
+				success: true,
+			};
+		} catch (error: any) {
+			console.error("%cstorage", CSS.STORAGE, API.PRESENTATION, query, error);
+			return {
+				data: null,
+				message: `Presentation ${query.data.id} save error: ${error.message}`,
+				success: false,
+			};
+		}
+	};
+
 	getPreference = async (preference: IPreference): Promise<IResponse> => {
 		try {
 			return localStorage.getObject(`${API.PREFERENCE}.${preference.id}`);

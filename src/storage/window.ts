@@ -207,6 +207,37 @@ export default class WindowClient {
 		}
 	};
 
+	getPresentation = async (query: IQuery): Promise<IResponse> => {
+		try {
+			return window.BuzzCasting.PresentationData[query.id];
+		} catch (error: any) {
+			console.warn("%capi", CSS.API, API.PRESENTATION, query.id, error);
+      return {
+				data: null,
+				message: `Presentation ${query.id} load error: ${error.message}`,
+				success: false,
+			};
+		}
+	};
+
+	setPresentation = async (query: IQuery): Promise<IResponse> => {
+		try {
+			window.BuzzCasting.PresentationData[query.id] = query.data;
+			return {
+				data: null,
+				message: `Presentation ${query.data.id} saved to storage`,
+				success: true,
+			};
+		} catch (error: any) {
+			console.error("%cstorage", CSS.STORAGE, API.PRESENTATION, query, error);
+			return {
+				data: null,
+				message: `Presentation ${query.data.id} save error: ${error.message}`,
+				success: false,
+			};
+		}
+	};
+
   getPreference = async (preference: IPreference): Promise<IResponse> => {
 		try {
 			return window.BuzzCasting.Preferences[preference.id];

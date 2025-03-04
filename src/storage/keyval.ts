@@ -245,6 +245,52 @@ export default class KeyvalClient {
 			});
 	};
 
+	getPresentation = async (query: IQuery): Promise<IResponse> => {
+		const key = getKey(query);
+		return await get(key)
+			.then((data) => data)
+			.catch((error) => {
+				console.warn("%capi", CSS.API, API.PRESENTATION, query.id);
+				return {
+					data: null,
+					message: `Slide ${query.data.id} load error: ${error.message}`,
+					success: false,
+				};
+			});
+	};
+
+	/**
+	 * Update Presentation
+	 * @param query IQuery
+	 * @returns number
+	 */
+	setPresentation = async (query: IQuery): Promise<IResponse> => {
+		const key = getKey(query);
+		const data = query.data;
+		return await set(key, data)
+			.then(() => {
+				return {
+					data: null,
+					message: `Presentation ${query.data.id} saved to storage`,
+					success: true,
+				};
+			})
+			.catch((error: Error) => {
+				console.error(
+					"%cstorage",
+					CSS.STORAGE,
+					API.PRESENTATION,
+					query,
+					error.message
+				);
+				return {
+					data: null,
+					message: `Presentation ${query.data.id} save error: ${error.message}`,
+					success: false,
+				};
+			});
+	};
+
 
   getPreference = async (preference: IPreference): Promise<IResponse> => {
 		return await get(`${API.PREFERENCE}.${preference.id}`)
