@@ -22,6 +22,7 @@ export default class DexieClient {
 		this.db.version(8).stores({
 			channel: "id,slide_index",
 			cloud: "id,dashboard_id,data",
+			dashboard: "id,name,data,update",
 			display: "id,monitor_id,presentation_id,colstart,colend,rowstart,rowend",
 			messages: "id,utc,expires,data",
 			monitor:
@@ -33,7 +34,7 @@ export default class DexieClient {
 			slide: "id,name,presentation_id,order_index,json,html,update",
 			topics:
 				"[widget_id+message_id],message_id,widget_id,dashboard_id,title,engagement,impressions,reach,sentiment,visible,utc,expires",
-			widgets: "id,dashboard_id,type",
+			widget: "id,name,dashboard_id,type,update",
 		});
 		this.db.open();
 	}
@@ -427,9 +428,10 @@ export default class DexieClient {
 	 */
 	setWidget = async (query: IQuery): Promise<number> => {
 		return await this.db
-			.table(API.WIDGETS)
+			.table(API.WIDGET)
 			.put({
 				id: query.widget,
+				name: query.name,
 				dashboard_id: query.dashboard,
 				type: query.type,
 			})
@@ -567,7 +569,7 @@ export default class DexieClient {
 	 */
 	getPresentation = async (query: IQuery): Promise<IResponse> => {
 		const data = await this.db
-			.table(API.PRESENTATIONS)
+			.table(API.PRESENTATION)
 			.where({ id: query.id })
 			.last()
 			.catch(() => {
@@ -597,7 +599,7 @@ export default class DexieClient {
 	 */
 	setPresentation = async (query: IQuery): Promise<IResponse> => {
 		return await this.db
-			.table(API.PRESENTATIONS)
+			.table(API.PRESENTATION)
 			.put({
 				id: query.data.id,
 				name: query.data.name || "Not set",
@@ -678,7 +680,7 @@ export default class DexieClient {
 				console.error(
 					"%cstorage",
 					CSS.STORAGE,
-					EVENTS.PREFERENCE_SAVE,
+					EVENTS.PREFERENCE_STORE,
 					preference,
 					error.message
 				);
@@ -689,4 +691,5 @@ export default class DexieClient {
 				};
 			});
 	};
+	
 }

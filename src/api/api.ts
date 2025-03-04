@@ -73,7 +73,7 @@ export default class ApiClient {
 			.then((json: IResponse): IResponse => {
 				json.query = query;
 				json.query = query;
-				if(json.data) json.data.query = query
+				if (json.data) json.data.query = query;
 				return json;
 			})
 			.catch((code) => {
@@ -166,8 +166,7 @@ export default class ApiClient {
 			CSS.API,
 			CSS.NONE,
 			CSS.SLIDE,
-			EVENTS.SLIDE_LOAD,
-			query.slide
+			query.id
 		);
 		return await fetch(
 			[this.url, "api", version, "slides", query.id].join("/"),
@@ -239,22 +238,14 @@ export default class ApiClient {
 	public async loadPresentation(query: IQuery): Promise<any> {
 		const { version }: IStorageOptions = this.options;
 		const headers = this.headers();
+		delete query.update;
 
-		const search = Object.assign({}, query);
-		delete search.slide;
-		delete search.type;
-		delete search.hash;
-		// const params
-		// 	= Object.keys(search).length > 0
-		// 	  ? `?${new URLSearchParams(search).toString()}`
-		// 	  : ''
 		console.debug(
 			"%capi%c %cloadPresentation",
 			CSS.API,
 			CSS.NONE,
 			CSS.SLIDE,
-			EVENTS.SLIDE_LOAD,
-			query.slide
+			query.id
 		);
 		return await fetch(
 			[this.url, "api", version, API.PRESENTATIONS, query.id].join("/"),
@@ -288,23 +279,11 @@ export default class ApiClient {
 	public async storePresentation(query: IQuery): Promise<any> {
 		const { version }: IStorageOptions = this.options;
 		const headers = this.formHeaders();
-		/* const urlencoded = new URLSearchParams()
-    const labels = query.labels || []
-    for (const [i, value] of labels.entries()) {
-      urlencoded.append(`custom_filters[${i}]`, value)
-    } */
+
 		delete query.update;
-		delete query.type;
 		const body = JSON.stringify(query);
 
-		console.info(
-			"%capi%c %cput",
-			CSS.API,
-			CSS.NONE,
-			CSS.SLIDE,
-			EVENTS.PRESENTATION_STORE,
-			query.id
-		);
+		console.info("%capi%c %cput", CSS.API, CSS.NONE, CSS.SLIDE, query.name);
 		return await fetch(
 			[this.url, "api", version, API.PRESENTATIONS, query.id].join("/"),
 			{ ...headers, body, method: "put" }
@@ -323,10 +302,9 @@ export default class ApiClient {
 			});
 	}
 
-
 	public async loadPreference(preference: IPreference): Promise<any> {
 		const { version }: IStorageOptions = this.options;
-		const headers = this.headers();
+		const headers: { headers: Headers } = this.headers();
 
 		// const params
 		// 	= Object.keys(search).length > 0
@@ -337,7 +315,6 @@ export default class ApiClient {
 			CSS.API,
 			CSS.NONE,
 			CSS.SLIDE,
-			EVENTS.PREFERENCE_LOAD,
 			preference.id
 		);
 		return await fetch(
@@ -364,19 +341,15 @@ export default class ApiClient {
 	public async storePreference(preference: IPreference): Promise<any> {
 		const { version }: IStorageOptions = this.options;
 		const headers = this.formHeaders();
-		/* const urlencoded = new URLSearchParams()
-    const labels = query.labels || []
-    for (const [i, value] of labels.entries()) {
-      urlencoded.append(`custom_filters[${i}]`, value)
-    } */
-		const body = JSON.stringify({data:preference});
+
+		delete preference.update;
+		const body = JSON.stringify({ data: preference });
 
 		console.info(
 			"%capi%c %cstorePreference",
 			CSS.API,
 			CSS.NONE,
 			CSS.SLIDE,
-			EVENTS.PREFERENCE_SAVE,
 			preference.id
 		);
 		return await fetch(
@@ -394,6 +367,39 @@ export default class ApiClient {
 			})
 			.catch((message) => {
 				return { succes: false, message, data: [] };
+			});
+	}
+
+	public async loadWidget(query: IQuery): Promise<any> {
+		const { version }: IStorageOptions = this.options;
+		const headers = this.headers();
+
+		console.debug(
+			"%capi%c %cloadWidget",
+			CSS.API,
+			CSS.NONE,
+			CSS.SLIDE,
+			query.id
+		);
+		return await fetch(
+			[this.url, "api", version, API.WIDGET, query.id].join("/"),
+			{ ...headers, method: "get" }
+		)
+			.then(async (response: Response) => {
+				if (!response.ok) {
+					throw new Error(`${response.status}`);
+				}
+				return response;
+			})
+			.then((response: Response) => {
+				return response.json();
+			})
+			.then((json: IResponse): IResponse => {
+				json.query = query;
+				return json;
+			})
+			.catch((code) => {
+				return { success: false, message: `${code}`, data: null };
 			});
 	}
 }

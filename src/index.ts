@@ -175,6 +175,7 @@ export declare interface IMessage {
 export declare interface IPreference {
   id: string
   value?: string
+  update?: number
 }
 
 /**

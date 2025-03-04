@@ -58,7 +58,7 @@ export enum EVENTS {
   GOTO_SLIDE = 'gotoSlide',
   NEXT_SLIDE = 'nextSlide',
   PREFERENCE_LOAD ='loadPreference',
-  PREFERENCE_SAVE ='savePreference',
+  PREFERENCE_STORE ='storePreference',
   PRESENTATION_LOAD = 'loadPresentation',
   PRESENTATION_STORE = 'storePresentation',
   SHOW_BUILDER_MODAL = 'showBuilderModal',
@@ -76,6 +76,8 @@ export enum EVENTS {
   REMOVE_CLOUD = 'removeCloud',
   UPDATE = 'update',
   VERSION = 'version',
+  WIDGET_LOAD = 'widgetLoad',
+  WIDGET_STORE = 'widgetStore',
   WIDGET_UPDATE = 'widgetUpdate',
 }
 
