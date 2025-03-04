@@ -382,7 +382,7 @@ export default class ApiClient {
 			query.id
 		);
 		return await fetch(
-			[this.url, "api", version, API.WIDGET, query.id].join("/"),
+			[this.url, "api", version, API.WIDGETS, query.id].join("/"),
 			{ ...headers, method: "get" }
 		)
 			.then(async (response: Response) => {
