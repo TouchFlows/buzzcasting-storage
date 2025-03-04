@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v3.4.0
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.3.0...v3.4.0)
+
+### 🚀 Enhancements
+
+- Preferences, slides, presentations ([13d4d66](https://github.com/TouchFlows/buzzcasting-storage/commit/13d4d66))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v3.3.0
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.2.6...v3.3.0)
