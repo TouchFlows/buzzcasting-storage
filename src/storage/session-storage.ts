@@ -135,14 +135,67 @@ export default class SessionStorageClient {
 		);
 	};
 
+	getDashboard = async (query: IQuery): Promise<IResponse> => {
+		try {
+			return sessionStorage.getObject(`${API.DASHBOARD}.${query.id}`);
+		} catch (error: any) {
+			console.warn("%capi", CSS.API, API.SLIDE, query.id, error);
+			return {
+				data: null,
+				message: `Dashboard ${query.id} load error: ${error.message}`,
+				success: false,
+			};
+		}
+	};
+
+	setDashboard = async (query: IQuery) => {
+		const key = `${API.DASHBOARD}.${query.dashboard}`;
+		try {
+			sessionStorage.setObject(key, query);
+			return {
+				data: null,
+				message: `Dashboard ${query.data.id} saved to storage`,
+				success: true,
+			};
+		} catch (error:any) {
+			console.error("%cstorage", CSS.STORAGE, API.WIDGET, query, error);
+			return {
+				data: null,
+				message: `Dashboard ${query.data.id} save error: ${error.message}`,
+				success: false,
+			};
+		}
+	};
+
+	getWidget = async (query: IQuery): Promise<IResponse> => {
+		try {
+			return sessionStorage.getObject(`${API.WIDGET}.${query.id}`);
+		} catch (error: any) {
+			console.warn("%capi", CSS.API, API.SLIDE, query.id, error);
+			return {
+				data: null,
+				message: `Widget ${query.id} load error: ${error.message}`,
+				success: false,
+			};
+		}
+	};
+
 	setWidget = async (query: IQuery) => {
 		const key = `widget.${query.widget}`;
 		try {
 			sessionStorage.setObject(key, query);
-			return 201;
-		} catch (error) {
+			return {
+				data: null,
+				message: `Widget ${query.data.id} saved to storage`,
+				success: true,
+			};
+		} catch (error:any) {
 			console.error("%cstorage", CSS.STORAGE, API.WIDGET, query, error);
-			return 400;
+			return {
+				data: null,
+				message: `Slide ${query.data.id} save error: ${error.message}`,
+				success: false,
+			};
 		}
 	};
 

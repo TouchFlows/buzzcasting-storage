@@ -132,20 +132,39 @@ export default class KeyvalClient {
 		);
 	};
 
+	getDashboard = async (query: IQuery): Promise<IResponse> => {
+		const key = getKey(query);
+		return await get(key)
+			.then((data) => data)
+			.catch((error) => {
+				console.warn("%capi", CSS.API, API.SLIDE, query.id);
+				return {
+					data: null,
+					message: `Widget ${query.data.id} load error: ${error.message}`,
+					success: false,
+				};
+			});
+	};
+
 	/**
 	 * Update Cloud
 	 * @param query IQuery
 	 * @returns number
 	 */
-	setWidget = async (query: IQuery): Promise<number> => {
+	setDashboard = async (query: IQuery): Promise<IResponse> => {
 		const key = getKey(query);
 		const data = {
-			id: query.widget,
-			dashboard_id: query.dashboard,
-			type: query.type,
+			id: query.dashboard,
+			name: query.name,
 		};
 		return await set(key, data)
-			.then(() => 201)
+			.then(() => {
+				return {
+					data: null,
+					message: `Dashboard ${query.data.id} saved to storage`,
+					success: true,
+				};
+			})
 			.catch((error: Error) => {
 				console.error(
 					"%cstorage",
@@ -154,7 +173,62 @@ export default class KeyvalClient {
 					query,
 					error.message
 				);
-				return 400;
+				return {
+					data: null,
+					message: `Slide ${query.data.id} save error: ${error.message}`,
+					success: false,
+				};
+			});
+	};
+
+	getWidget = async (query: IQuery): Promise<IResponse> => {
+		const key = getKey(query);
+		return await get(key)
+			.then((data) => data)
+			.catch((error) => {
+				console.warn("%capi", CSS.API, API.SLIDE, query.id);
+				return {
+					data: null,
+					message: `Widget ${query.data.id} load error: ${error.message}`,
+					success: false,
+				};
+			});
+	};
+
+	/**
+	 * Update Cloud
+	 * @param query IQuery
+	 * @returns number
+	 */
+	setWidget = async (query: IQuery): Promise<IResponse> => {
+		const key = getKey(query);
+		const data = {
+			id: query.widget,
+			name: query.name,
+			dashboard_id: query.dashboard,
+			type: query.type,
+		};
+		return await set(key, data)
+			.then(() => {
+				return {
+					data: null,
+					message: `Widget ${query.data.id} saved to storage`,
+					success: true,
+				};
+			})
+			.catch((error: Error) => {
+				console.error(
+					"%cstorage",
+					CSS.STORAGE,
+					API.WIDGET,
+					query,
+					error.message
+				);
+				return {
+					data: null,
+					message: `Slide ${query.data.id} save error: ${error.message}`,
+					success: false,
+				};
 			});
 	};
 

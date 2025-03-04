@@ -440,4 +440,24 @@ export class BuzzcastingStorageManager {
 	public storePreference = async (preference: IPreference): Promise<IResponse | number> => {
 		return await this.api.storePreference(preference);
 	};
+
+	public loadWidget = async (query: IQuery): Promise<Number> => {
+		return await this.api.loadWidget(query);
+	};
+
+	public getWidget = async (query: IQuery): Promise<IResponse | undefined> => {
+		return await this.sm?.getWidget(query);
+	};
+
+	public setWidget = async (query: IQuery): Promise<IResponse | undefined> => {
+		return await this.sm?.setWidget(query);
+	};
+
+	public getDashboard = async (query: IQuery): Promise<IResponse | undefined> => {
+		return await this.sm?.getDashboard(query);
+	};
+
+	public setDashboard = async (query: IQuery): Promise<IResponse | undefined> => {
+		return await this.sm?.setDashboard(query);
+	};
 }

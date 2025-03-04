@@ -421,21 +421,45 @@ export default class DexieClient {
 			});
 	};
 
+	getDashboard = async (query: IQuery): Promise<IResponse> => {
+		const data = await this.db
+			.table(API.DASHBOARD)
+			.where({ id: query.id })
+			.last()
+			.catch(() => {
+				console.warn("%cstorage", CSS.STORAGE, EVENTS.DASHBOARD_LOAD, query.id);
+			});
+		if (data === undefined) {
+			return {
+				data: null,
+				message: `Widget ${query.id} Load error`,
+				success: false,
+			};
+		}
+		data.message = `Slide ${query.id} retrieved from storage`;
+		data.success = true;
+		return data;
+	};
+
 	/**
 	 * Update Cloud
 	 * @param query IQuery
 	 * @returns number
 	 */
-	setWidget = async (query: IQuery): Promise<number> => {
+	setDashboard = async (query: IQuery): Promise<IResponse> => {
 		return await this.db
-			.table(API.WIDGET)
+			.table(API.DASHBOARD)
 			.put({
-				id: query.widget,
+				id: query.id,
 				name: query.name,
-				dashboard_id: query.dashboard,
-				type: query.type,
 			})
-			.then(() => 201)
+			.then(() => {
+				return {
+					data: null,
+					message: `Dashboard ${query.data.id} saved to storage`,
+					success: true,
+				};
+			})
 			.catch((error: Error) => {
 				console.error(
 					"%cstorage",
@@ -444,7 +468,68 @@ export default class DexieClient {
 					query,
 					error.message
 				);
-				return 400;
+				return {
+					data: null,
+					message: `Dashboard ${query.data.id} save error: ${error.message}`,
+					success: false,
+				};
+			});
+	};
+
+	getWidget = async (query: IQuery): Promise<IResponse> => {
+		const data = await this.db
+			.table(API.WIDGET)
+			.where({ id: query.id })
+			.last()
+			.catch(() => {
+				console.warn("%cstorage", CSS.STORAGE, EVENTS.SLIDE_LOAD, query.id);
+			});
+		if (data === undefined) {
+			return {
+				data: null,
+				message: `Widget ${query.id} Load error`,
+				success: false,
+			};
+		}
+		data.message = `Slide ${query.id} retrieved from storage`;
+		data.success = true;
+		return data;
+	};
+
+	/**
+	 * Update Cloud
+	 * @param query IQuery
+	 * @returns number
+	 */
+	setWidget = async (query: IQuery): Promise<IResponse> => {
+		return await this.db
+			.table(API.WIDGET)
+			.put({
+				id: query.widget,
+				name: query.name,
+				dashboard_id: query.dashboard,
+				type: query.type,
+			})
+			.then(() => {
+				return {
+					data: null,
+					message: `Widget ${query.data.id} saved to storage`,
+					success: true,
+				};
+			})
+			.catch((error: Error) => {
+				console.error(
+					"%cstorage",
+					CSS.STORAGE,
+					API.WIDGET,
+					query,
+					error.message
+				);
+				return {
+					data: null,
+					message: `Widget ${query.data.id} save error: ${error.message}`,
+					success: false,
+				};
 			});
 	};
 
@@ -503,12 +588,7 @@ export default class DexieClient {
 			.where({ id: query.id })
 			.last()
 			.catch(() => {
-				console.warn(
-					"%cstorage",
-					CSS.STORAGE,
-					EVENTS.SLIDE_LOAD,
-					query.id
-				);
+				console.warn("%cstorage", CSS.STORAGE, EVENTS.SLIDE_LOAD, query.id);
 			});
 		if (data === undefined) {
 			return {
@@ -691,5 +771,4 @@ export default class DexieClient {
 				};
 			});
 	};
-	
 }
