@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v3.5.1
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.5.0...v3.5.1)
+
+### 🩹 Fixes
+
+- Api loadWidgets ([f67d33f](https://github.com/TouchFlows/buzzcasting-storage/commit/f67d33f))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v3.5.0
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.4.1...v3.5.0)
