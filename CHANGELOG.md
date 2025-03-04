@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v3.5.0
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.4.1...v3.5.0)
+
+### 🚀 Enhancements
+
+- Dashoarb & widget api/sm ([dffde3c](https://github.com/TouchFlows/buzzcasting-storage/commit/dffde3c))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v3.4.1
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.4.0...v3.4.1)
