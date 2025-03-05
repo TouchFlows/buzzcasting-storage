@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v3.5.2
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.5.1...v3.5.2)
+
+### 🩹 Fixes
+
+- IStorageOptions ([7bf793b](https://github.com/TouchFlows/buzzcasting-storage/commit/7bf793b))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v3.5.1
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.5.0...v3.5.1)
