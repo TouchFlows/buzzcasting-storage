@@ -210,7 +210,7 @@ export declare interface IQuery {
   labels?: string[]
   compare?: string
   period?: number
-  type?: 'cloud' | 'messages' | 'series' | 'preference' | 'proxy' | 'slide'
+  type?: 'cloud' | 'messages' | 'series' | 'preference' | 'proxy' | 'slide' | 'dashboard' | 'widget'
   order?:'utc' | 'reach' | 'engagement' | 'impressions'
   media?: number
   dynamics?: number
@@ -273,6 +273,7 @@ export declare interface IStorageOptions {
   channel?: string
   presentation?: string
   slide?: string
+  slides?: string[]
   display?: string
   monitor?: string
   version: string
