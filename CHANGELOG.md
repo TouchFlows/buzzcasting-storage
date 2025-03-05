@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v3.5.3
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.5.2...v3.5.3)
+
+### 🩹 Fixes
+
+- SwitchPresentation event const ([39af238](https://github.com/TouchFlows/buzzcasting-storage/commit/39af238))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](http://github.com/marktamis))
+
 ## v3.5.2
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.5.1...v3.5.2)
