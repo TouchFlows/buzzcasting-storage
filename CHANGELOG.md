@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v3.5.4
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.5.3...v3.5.4)
+
+### 🩹 Fixes
+
+- Return query in api error ([23734be](https://github.com/TouchFlows/buzzcasting-storage/commit/23734be))
+- Config settings vite ([5dfe214](https://github.com/TouchFlows/buzzcasting-storage/commit/5dfe214))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.5.3
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.5.2...v3.5.3)
