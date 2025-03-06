@@ -62,11 +62,18 @@ export default class DexieClient {
 		if (typeof data === "undefined") {
 			return { data: null, message: "Cloud Data error", success: false };
 		}
+		console.debug(
+			"%cstorage%c %ccloud",
+			CSS.STORAGE,
+			CSS.NONE,
+			CSS.CLOUD,
+			data
+		);
 		data.data.presentation = query?.presentation || "not set";
 		data.data.slide = query?.slide || "not set";
 		data.data.query = query;
 		data.query = query;
-		data.message = "Messages retrieved successfully";
+		data.message = "Cloud retrieved successfully";
 		data.success = true;
 		return data;
 	};
@@ -94,11 +101,18 @@ export default class DexieClient {
 		if (data === undefined) {
 			return { data: null, message: "Series Data error", success: false };
 		}
+		console.debug(
+			"%cstorage%c %cseries",
+			CSS.STORAGE,
+			CSS.NONE,
+			CSS.SERIES,
+			data
+		);
 		data.data.presentation = query?.presentation || "not set";
 		data.data.slide = query?.slide || "not set";
 		data.data.query = query;
 		data.query = query;
-		data.message = "Messages retrieved successfully";
+		data.message = "Series retrieved successfully";
 		data.success = true;
 		return data;
 	};
