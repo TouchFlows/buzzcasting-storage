@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v3.6.0
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.5.8...v3.6.0)
+
+### 🚀 Enhancements
+
+- Better debug messages ([57891a7](https://github.com/TouchFlows/buzzcasting-storage/commit/57891a7))
+
+### ❤️ Contributors
+
+- Mark Tamis <mark.tamis@gmail.com>
+
 ## v3.5.8
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.5.7...v3.5.8)
