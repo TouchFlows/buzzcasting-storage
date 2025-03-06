@@ -15,4 +15,9 @@ export default antfu({
     'curly': ['error', 'all'],
     'antfu/consistent-list-newline': 'off',
   },
+  languageOptions: {
+    parserOptions: {
+      warnOnUnsupportedTypeScriptVersion: false,
+    },
+  }
 })

@@ -19,7 +19,7 @@ export default class DexieClient {
 		this.options = options;
 
 		this.db = new Dexie(options.app);
-		this.db.version(8).stores({
+		this.db.version(9).stores({
 			channel: "id,slide_index",
 			cloud: "id,dashboard_id,data",
 			dashboard: "id,name,data,update",
