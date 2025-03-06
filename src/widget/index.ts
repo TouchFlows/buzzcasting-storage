@@ -147,6 +147,13 @@ export default class Widget {
 				"Wrong method call for getCloud, expected type is",
 				this.query.type
 			);
+			console.debug(
+				"%cstorage%c %cwidget",
+				CSS.API,
+				CSS.NONE,
+				CSS.CLOUD,
+				this.query
+			);
 			return {
 				data: null,
 				message: `wrong method call for getCloud, expected type is '${this.query.type}'`,
@@ -204,6 +211,13 @@ export default class Widget {
 				this.query.widget,
 				"Wrong method call for getSeries, expected type is",
 				this.query.type
+			);
+			console.debug(
+				"%cstorage%c %cwidget",
+				CSS.API,
+				CSS.NONE,
+				CSS.MESSAGES,
+				this.query
 			);
 			return {
 				data: null,

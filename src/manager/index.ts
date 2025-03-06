@@ -238,77 +238,76 @@ export class BuzzcastingStorageManager {
 						status = 401;
 					}
 
-					
 					// Data has been updated now get results from storage
 					// Broadcast only from the worker scope
-					if (
-						// @ts-ignore
-						typeof WorkerGlobalScope !== "undefined" &&
-						// @ts-ignore
-						self instanceof WorkerGlobalScope
-					) {
-						switch (status) {
-							case 201:
-								console.info(
-									"%capp%c %cbroadcast",
-									CSS.API,
-									CSS.NONE,
-									CSS.BROADCAST,
-									result.query.slide,
-									result.data.title ?? result.query.widget
-								);
-								console.debug(
-									"%capp%c %cbroadcast",
-									CSS.API,
-									CSS.NONE,
-									CSS.BROADCAST,
-									result
-								);
-								const query = structuredClone(data.query);
-								switch (result.query.type) {
-									case "messages":
-										result = await this.sm.getMessages(query);
-										break;
-									case "cloud":
-										result = await this.sm.getCloud(query);
-										if (result) result.query = query;
-										break;
-									case "series":
-										result = await this.sm.getSeries(query);
-										if (result) result.query = query;
-										break;
-									default:
-										console.warn(
-											"%capp%c %cbroadcast",
-											CSS.API,
-											CSS.NONE,
-											CSS.BROADCAST,
-											"Unhandled data type",
-											result.query
-										);
-								}
-								result &&
-									this.bc.postMessage({
-										event: EVENTS.WIDGET_UPDATE,
-										data: result.data,
-									});
-								break;
-							case 204:
-								// Not modified
-								break;
-							default:
-								console.warn(
-									"%capp%c %cbroadcast",
-									CSS.API,
-									CSS.NONE,
-									CSS.BROADCAST,
-									"Fetch error",
-									result.query.slide,
-									result.data.title ?? result.query.widget
-								);
-								break;
-						}
+					// if (
+					// 	// @ts-ignore
+					// 	typeof WorkerGlobalScope !== "undefined" &&
+					// 	// @ts-ignore
+					// 	self instanceof WorkerGlobalScope
+					// ) {
+					switch (status) {
+						case 201:
+							console.info(
+								"%capp%c %cbroadcast",
+								CSS.API,
+								CSS.NONE,
+								CSS.BROADCAST,
+								result.query.slide,
+								result.data.title ?? result.query.widget
+							);
+							console.debug(
+								"%capp%c %cbroadcast",
+								CSS.API,
+								CSS.NONE,
+								CSS.BROADCAST,
+								result
+							);
+							const query = structuredClone(data.query);
+							switch (result.query.type) {
+								case "messages":
+									result = await this.sm.getMessages(query);
+									break;
+								case "cloud":
+									result = await this.sm.getCloud(query);
+									if (result) result.query = query;
+									break;
+								case "series":
+									result = await this.sm.getSeries(query);
+									if (result) result.query = query;
+									break;
+								default:
+									console.warn(
+										"%capp%c %cbroadcast",
+										CSS.API,
+										CSS.NONE,
+										CSS.BROADCAST,
+										"Unhandled data type",
+										result.query
+									);
+							}
+							result &&
+								this.bc.postMessage({
+									event: EVENTS.WIDGET_UPDATE,
+									data: result.data,
+								});
+							break;
+						case 204:
+							// Not modified
+							break;
+						default:
+							console.warn(
+								"%capp%c %cbroadcast",
+								CSS.API,
+								CSS.NONE,
+								CSS.BROADCAST,
+								"Fetch error",
+								result.query.slide,
+								result.data.title ?? result.query.widget
+							);
+							break;
 					}
+					//}
 					return status;
 				} else {
 					console.warn(

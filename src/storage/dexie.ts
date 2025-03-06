@@ -505,7 +505,7 @@ export default class DexieClient {
 				success: false,
 			};
 		}
-		data.message = `Slide ${query.id} retrieved from storage`;
+		data.message = `Widget ${query.id} retrieved from storage`;
 		data.success = true;
 		return data;
 	};
