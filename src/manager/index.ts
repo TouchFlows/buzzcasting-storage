@@ -239,68 +239,75 @@ export class BuzzcastingStorageManager {
 					}
 
 					// Data has been updated now get results from storage
-					// @ts-ignore
-
-					switch (status) {
-						case 201:
-							console.info(
-								"%capp%c %cbroadcast",
-								CSS.API,
-								CSS.NONE,
-								CSS.BROADCAST,
-								result.query.slide,
-								result.data.title ?? result.query.widget
-							);
-							console.debug(
-								"%capp%c %cbroadcast",
-								CSS.API,
-								CSS.NONE,
-								CSS.BROADCAST,
-								result
-							);
-							const query = structuredClone(data.query);
-							switch (result.query.type) {
-								case "messages":
-									result = await this.sm.getMessages(query);
-									break;
-								case "cloud":
-									result = await this.sm.getCloud(query);
-									if (result) result.query = query;
-									break;
-								case "series":
-									result = await this.sm.getSeries(query);
-									if (result) result.query = query;
-									break;
-								default:
-									console.warn(
-										"%capp%c %cbroadcast",
-										CSS.API,
-										CSS.NONE,
-										CSS.BROADCAST,
-										"Unhandled data type",
-										result.query
-									);
-							}
-							result &&
-								this.bc.postMessage({
-									event: EVENTS.WIDGET_UPDATE,
-									data: result.data,
-								});
-							break;
-						case 204:
-							// Not modified
-							break;
-						default:
-							console.warn(
-								"%capp%c %cbroadcast",
-								CSS.API,
-								CSS.NONE,
-								CSS.BROADCAST,
-								"Fetch error",
-								result.query.slide,
-								result.data.title ?? result.query.widget
-							);
-							break;
+					// Broadcast only from the worker scope
+					
+					if (
+						// @ts-ignore
+						typeof WorkerGlobalScope !== "undefined" &&
+						// @ts-ignore
+						self instanceof WorkerGlobalScope
+					) {
+						switch (status) {
+							case 201:
+								console.info(
+									"%capp%c %cbroadcast",
+									CSS.API,
+									CSS.NONE,
+									CSS.BROADCAST,
+									result.query.slide,
+									result.data.title ?? result.query.widget
+								);
+								console.debug(
+									"%capp%c %cbroadcast",
+									CSS.API,
+									CSS.NONE,
+									CSS.BROADCAST,
+									result
+								);
+								const query = structuredClone(data.query);
+								switch (result.query.type) {
+									case "messages":
+										result = await this.sm.getMessages(query);
+										break;
+									case "cloud":
+										result = await this.sm.getCloud(query);
+										if (result) result.query = query;
+										break;
+									case "series":
+										result = await this.sm.getSeries(query);
+										if (result) result.query = query;
+										break;
+									default:
+										console.warn(
+											"%capp%c %cbroadcast",
+											CSS.API,
+											CSS.NONE,
+											CSS.BROADCAST,
+											"Unhandled data type",
+											result.query
+										);
+								}
+								result &&
+									this.bc.postMessage({
+										event: EVENTS.WIDGET_UPDATE,
+										data: result.data,
+									});
+								break;
+							case 204:
+								// Not modified
+								break;
+							default:
+								console.warn(
+									"%capp%c %cbroadcast",
+									CSS.API,
+									CSS.NONE,
+									CSS.BROADCAST,
+									"Fetch error",
+									result.query.slide,
+									result.data.title ?? result.query.widget
+								);
+								break;
+						}
 					}
 					return status;
 				} else {
@@ -409,11 +416,15 @@ export class BuzzcastingStorageManager {
 		return await this.api.storeSlide(query);
 	};
 
-	public getPresentation = async (query: IQuery): Promise<IResponse | undefined> => {
+	public getPresentation = async (
+		query: IQuery
+	): Promise<IResponse | undefined> => {
 		return await this.sm?.getPresentation(query);
 	};
 
-	public setPresentation = async (query: IQuery): Promise<IResponse | undefined> => {
+	public setPresentation = async (
+		query: IQuery
+	): Promise<IResponse | undefined> => {
 		return await this.sm?.setPresentation(query);
 	};
 
@@ -421,15 +432,21 @@ export class BuzzcastingStorageManager {
 		return await this.api.loadPresentation(query);
 	};
 
-	public storePresentation = async (query: IQuery): Promise<IResponse | number> => {
+	public storePresentation = async (
+		query: IQuery
+	): Promise<IResponse | number> => {
 		return await this.api.storePresentation(query);
 	};
 
-	public getPreference = async (preference: IPreference): Promise<IResponse | undefined> => {
+	public getPreference = async (
+		preference: IPreference
+	): Promise<IResponse | undefined> => {
 		return await this.sm?.getPreference(preference);
 	};
 
-	public setPreference = async (preference: IPreference): Promise<IResponse | undefined> => {
+	public setPreference = async (
+		preference: IPreference
+	): Promise<IResponse | undefined> => {
 		return await this.sm?.setPreference(preference);
 	};
 
@@ -437,7 +454,9 @@ export class BuzzcastingStorageManager {
 		return await this.api.loadPreference(preference);
 	};
 
-	public storePreference = async (preference: IPreference): Promise<IResponse | number> => {
+	public storePreference = async (
+		preference: IPreference
+	): Promise<IResponse | number> => {
 		return await this.api.storePreference(preference);
 	};
 
@@ -453,11 +472,15 @@ export class BuzzcastingStorageManager {
 		return await this.sm?.setWidget(query);
 	};
 
-	public getDashboard = async (query: IQuery): Promise<IResponse | undefined> => {
+	public getDashboard = async (
+		query: IQuery
+	): Promise<IResponse | undefined> => {
 		return await this.sm?.getDashboard(query);
 	};
 
-	public setDashboard = async (query: IQuery): Promise<IResponse | undefined> => {
+	public setDashboard = async (
+		query: IQuery
+	): Promise<IResponse | undefined> => {
 		return await this.sm?.setDashboard(query);
 	};
 }
