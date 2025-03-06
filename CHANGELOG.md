@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v3.5.6
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.5.5...v3.5.6)
+
+### 🩹 Fixes
+
+- Rollback WorkerGlobaScope ([4a59218](https://github.com/TouchFlows/buzzcasting-storage/commit/4a59218))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.5.5
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.5.4...v3.5.5)
