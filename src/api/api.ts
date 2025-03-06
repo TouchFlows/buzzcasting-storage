@@ -77,7 +77,7 @@ export default class ApiClient {
 				return json;
 			})
 			.catch((code) => {
-				return { success: false, message: `${code}`, data: null };
+				return { success: false, message: `${code}`, data: null, query: query };
 			});
 	}
 
@@ -399,7 +399,7 @@ export default class ApiClient {
 				return json;
 			})
 			.catch((code) => {
-				return { success: false, message: `${code}`, data: null };
+				return { success: false, message: `${code}`, data: null, query: query };
 			});
 	}
 }

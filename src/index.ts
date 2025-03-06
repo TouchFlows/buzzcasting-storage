@@ -268,6 +268,7 @@ export declare interface IIndicators {
  */
 export declare interface IStorageOptions {
   app: string
+  builder?: boolean
   domain?: string
   cdn?: string
   channel?: string
