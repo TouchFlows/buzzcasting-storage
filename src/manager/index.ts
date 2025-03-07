@@ -77,7 +77,7 @@ export class BuzzcastingStorageManager {
 		if (this.sm === null) {
 			return;
 		}
-		const subscribers = await this.sm.getSubscribers();
+		const subscribers: IQuery[] = await this.sm.getSubscribers();
 		if (subscribers.length === 0) {
 			return;
 		}
@@ -237,15 +237,6 @@ export class BuzzcastingStorageManager {
 					} else {
 						status = 401;
 					}
-
-					// Data has been updated now get results from storage
-					// Broadcast only from the worker scope
-					// if (
-					// 	// @ts-ignore
-					// 	typeof WorkerGlobalScope !== "undefined" &&
-					// 	// @ts-ignore
-					// 	self instanceof WorkerGlobalScope
-					// ) {
 					switch (status) {
 						case 201:
 							console.info(
@@ -307,7 +298,6 @@ export class BuzzcastingStorageManager {
 							);
 							break;
 					}
-					//}
 					return status;
 				} else {
 					console.warn(
