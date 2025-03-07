@@ -100,8 +100,6 @@ export class BuzzcastingStorageManager {
 			this.addSubscriber(query)
 			subscriberQuery.push(this.api.get(query));
 		}
-		let s = await this.getSubscribers()
-		console.log(s)
 
 		await Promise.allSettled(subscriberQuery).then((results) =>
 			results.forEach(async (res) => {
