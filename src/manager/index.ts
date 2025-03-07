@@ -1,5 +1,5 @@
 import type { IPreference, IQuery, IResponse, IStorageOptions } from "..";
-import { API, CSS, EVENTS, STORAGE } from "..";
+import { API, CSS, EVENTS, hashSum, STORAGE } from "..";
 import { version } from "../../package.json";
 import ApiClient from "../api/api";
 import DexieClient from "../storage/dexie";
@@ -7,7 +7,7 @@ import KeyvalClient from "../storage/keyval";
 import LocalStorageClient from "../storage/local-storage";
 import SessionStorageClient from "../storage/session-storage";
 import WindowClient from "../storage/window";
-import { hashSum } from "../utils";
+//import { hashSum } from "../utils";
 
 export class BuzzcastingStorageManager {
 	private sm:
@@ -21,6 +21,7 @@ export class BuzzcastingStorageManager {
 	private api: ApiClient;
 	private bc: BroadcastChannel;
 	private options: IStorageOptions;
+	private subscribers: any = [];
 
 	constructor(options: IStorageOptions) {
 		console.info(
@@ -73,25 +74,34 @@ export class BuzzcastingStorageManager {
 		}
 	}
 
-	public update = async (query?: IQuery) => {
+	public addSubscriber(query:IQuery){
+		if(this.subscribers[query.widget] === undefined) this.subscribers[query.widget] = query
+	}
+
+	public update = async (query: IQuery) => {
 		if (this.sm === null) {
 			return;
 		}
-		const subscribers: IQuery[] = await this.sm.getSubscribers();
-		if (subscribers.length === 0) {
-			return;
-		}
+		// const subscribers: IQuery[] = await this.sm.getSubscribers();
+		// if (subscribers.length === 0) {
+		// 	return;
+		// }
+
 		const subscriberQuery: any[] = [];
 
 		// single update for initial load
-		if (query) {
-			subscriberQuery.push(this.api.get(query));
-		} else {
-			// Paralelize calls
-			subscribers?.forEach((query: IQuery) => {
-				subscriberQuery.push(this.api.get(query));
+		if (query?.subscribers) {
+			query.subscribers.forEach((apiQuery: IQuery) => {
+				// Paralelize calls
+				this.addSubscriber(apiQuery)
+				subscriberQuery.push(this.api.get(apiQuery));
 			});
+		} else {			
+			this.addSubscriber(query)
+			subscriberQuery.push(this.api.get(query));
 		}
+		let s = await this.getSubscribers()
+		console.log(s)
 
 		await Promise.allSettled(subscriberQuery).then((results) =>
 			results.forEach(async (res) => {
@@ -103,9 +113,11 @@ export class BuzzcastingStorageManager {
 						return 400;
 					}
 					if (result.success === true) {
-						const previousQuery = this.sm.subscribers.filter(
-							(query: IQuery) => query.widget === result.query.widget
-						)[0];
+						const previousQuery = this.subscribers[result.query.widget]
+
+						// const previousQuery = this.subscribers.filter(
+						// 	(query: IQuery) => query.widget === result.query.widget
+						// )[0];
 						let newHash: string | any[] = "";
 						let filteredMessages: any[];
 						switch (result.query.type) {
@@ -116,7 +128,7 @@ export class BuzzcastingStorageManager {
 								result.data.messages = filteredMessages;
 								// check if any topic dynamics have changed
 								newHash = hashSum(result.data.messages);
-								if (previousQuery.hash === newHash) {
+								if (previousQuery?.hash && previousQuery.hash === newHash) {
 									console.info(
 										"%capi%c %cno updates",
 										CSS.API,
@@ -141,11 +153,10 @@ export class BuzzcastingStorageManager {
 									previousQuery.hash = newHash;
 									status = await this.sm.setMessages(result.query, result);
 								}
-
 								break;
 							case API.CLOUD:
 								newHash = hashSum(result.data);
-								if (previousQuery.hash === newHash) {
+								if (previousQuery?.hash && previousQuery.hash === newHash) {
 									console.info(
 										"%capi%c %cno updates",
 										CSS.API,
@@ -186,7 +197,7 @@ export class BuzzcastingStorageManager {
 								break;
 							case API.SERIES:
 								newHash = hashSum(result.data);
-								if (previousQuery.hash === newHash) {
+								if (previousQuery?.hash && previousQuery.hash === newHash) {
 									console.info(
 										"%capi%c %cno updates",
 										CSS.API,
@@ -332,7 +343,7 @@ export class BuzzcastingStorageManager {
 					EVENTS.UPDATE,
 					messageEvent.data
 				);
-				await this.update();
+				await this.update(messageEvent.data.data);
 				break;
 			default:
 		}
@@ -386,7 +397,8 @@ export class BuzzcastingStorageManager {
 	};
 
 	public getSubscribers = async () => {
-		return await this.sm?.getSubscribers();
+		return await new Promise<any[]>(resolve => resolve(this.subscribers))
+		//return await this.sm?.getSubscribers();
 	};
 
 	public getSlide = async (query: IQuery): Promise<IResponse | undefined> => {

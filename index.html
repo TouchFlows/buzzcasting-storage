@@ -31,15 +31,15 @@
         type: "messages",
         dashboard: "lzzzniev_1670v2kaule1j",
         widget: "40a93a9f_6c51_4dd7_a44e_0c206dc6df8f",
-        slide:options.slide
+        slide: options.slide,
       };
 
-      // const query = {
-      //   type: "cloud",
-      //   dashboard: "01JD32_VDXWMXA_WC2D", //"axa_com",
-      //   widget: "BMKPN_W4RH", //"articles",
-      //   slide: options.slide,
-      // };
+      const query2 = {
+        type: "cloud",
+        dashboard: "01JD32_VDXWMXA_WC2D", //"axa_com",
+        widget: "BMKPN_W4RH", //"articles",
+        slide: options.slide,
+      };
 
       // const query = {
       //   type: "messages",
@@ -68,6 +68,78 @@
       //   slide: options.slide,
       // };
 
+      const bigcall = {
+        event: "update",
+        data: {
+          slide: "01jc6ajqr0cbpjrrvab714f3sq",
+          subscribers: [
+            {
+              type: "series",
+              dashboard: "lzzzniev_1670v2kaule1j",
+              widget: "476f07e9_3bf4_4f93_9c4b_d7f50a91c1a4",
+              topics:
+                "lzzzniev_1670v2kaule1j-476f07e9_3bf4_4f93_9c4b_d7f50a91c1a4",
+              slide: "01jc6ajqr0cbpjrrvab714f3sq",
+            },
+            {
+              type: "series",
+              dashboard: "lzzzniev_1670v2kaule1j",
+              widget: "afbc329e_0e09_40b7_b7c4_6ec9dc58796c",
+              topics:
+                "lzzzniev_1670v2kaule1j-afbc329e_0e09_40b7_b7c4_6ec9dc58796c",
+              slide: "01jc6ajqr0cbpjrrvab714f3sq",
+            },
+            {
+              type: "series",
+              dashboard: "lzzzniev_1670v2kaule1j",
+              widget: "75848543_58e8_4d44_82e2_7eb01239349a",
+              topics:
+                "lzzzniev_1670v2kaule1j-75848543_58e8_4d44_82e2_7eb01239349a",
+              slide: "01jc6ajqr0cbpjrrvab714f3sq",
+            },
+            {
+              type: "cloud",
+              dashboard: "01JD32_VDXWMXA_WC2D",
+              widget: "BMKPN_W4RH",
+              topics: "01JD32_VDXWMXA_WC2D-BMKPN_W4RH",
+              slide: "01jc6ajqr0cbpjrrvab714f3sq",
+            },
+            {
+              dashboard: "axa_com",
+              widget: "articles",
+              type: "messages",
+              topics: "axa_com-articles",
+              slide: "01jc6ajqr0cbpjrrvab714f3sq",
+            },
+            {
+              type: "messages",
+              dashboard: "lzzzniev_1670v2kaule1j",
+              widget: "859c518e_0bf6_489c_b07d_f28fe3245eec",
+              topics:
+                "lzzzniev_1670v2kaule1j-859c518e_0bf6_489c_b07d_f28fe3245eec",
+              slide: "01jc6ajqr0cbpjrrvab714f3sq",
+            },
+            {
+              type: "messages",
+              dashboard: "m014oqj0_1670v2kanscab",
+              widget: "32fce388_f870_4858_8539_ec1e1da48733",
+              topics:
+                "m014oqj0_1670v2kanscab-32fce388_f870_4858_8539_ec1e1da48733",
+              slide: "01jc6ajqr0cbpjrrvab714f3sq",
+            },
+            {
+              type: "messages",
+              order: "engagement",
+              dashboard: "lzzzniev_1670v2kaule1j",
+              widget: "40a93a9f_6c51_4dd7_a44e_0c206dc6df8f",
+              topics:
+                "lzzzniev_1670v2kaule1j-40a93a9f_6c51_4dd7_a44e_0c206dc6df8f",
+              slide: "01jc6ajqr0cbpjrrvab714f3sq",
+            },
+          ],
+        },
+      }
+
       const bc = new BroadcastChannel(options.slide);
       const sm = new BuzzcastingStorageManager(options);
       const sr = new BuzzcastingStorageReader(options);
@@ -88,8 +160,22 @@
           break;
       }
 
-      await bc.postMessage({ event: "update" });
+      await bc.postMessage({
+        event: "update",
+        data: { slide: query.slide, subscribers: [query] },
+      });
+
+      await bc.postMessage({ event: "update", data: query2 });
+      await bc.postMessage({
+        event: "update",
+        data: { slide: query.slide, subscribers: [query] },
+      });
+
+      await bc.postMessage(bigcall);
       document.getElementById("app").innerHTML = JSON.stringify(data);
+      await bc.postMessage(bigcall)
+
+      
     </script>
   </body>
 </html>
