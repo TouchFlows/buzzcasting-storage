@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v3.6.1
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.6.0...v3.6.1)
+
+### 🩹 Fixes
+
+- Revert to no check on globalworker instance ([e5a0619](https://github.com/TouchFlows/buzzcasting-storage/commit/e5a0619))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.6.0
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.5.8...v3.6.0)
