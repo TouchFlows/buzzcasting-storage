@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v3.6.2
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.6.1...v3.6.2)
+
+### 🩹 Fixes
+
+- Revert to no check on globalworker instance ([e5a0619](https://github.com/TouchFlows/buzzcasting-storage/commit/e5a0619))
+- Subscribers array not populating => now in update ([2d3cbbd](https://github.com/TouchFlows/buzzcasting-storage/commit/2d3cbbd))
+- Remove debug logging ([0dd3247](https://github.com/TouchFlows/buzzcasting-storage/commit/0dd3247))
+
+### 🏡 Chore
+
+- **release:** V3.6.1 ([fbb5cc3](https://github.com/TouchFlows/buzzcasting-storage/commit/fbb5cc3))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.6.1
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.6.0...v3.6.1)
