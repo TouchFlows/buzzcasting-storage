@@ -1,6 +1,6 @@
 import type { IModal, IQuery, IResponse } from "..";
 import { API, BuzzcastingStorageReader, CSS, EVENTS } from "..";
-import { attrs, clearContents, widgetParams } from "../utils";
+import { attrs, clearContents, log, widgetParams } from "../utils";
 
 /**
  * Main class for managing widgets and data updates
@@ -66,14 +66,19 @@ export default class Widget {
 
 			switch (messageEvent.data.event) {
 				case EVENTS.WIDGET_UPDATE:
-					if (
-						update.query.slide === query.slide &&
-						update.query.widget === query.widget
-					) {
-						this.listeners.forEach((cb) => {
-							cb(messageEvent.data);
-						});
+					try{
+						if (
+							update.query.slide === query.slide &&
+							update.query.widget === query.widget
+						) {
+							this.listeners.forEach((cb) => {
+								cb(messageEvent.data);
+							});
+						}
+					} catch(e){
+						log(4,[EVENTS.WIDGET_UPDATE, update])
 					}
+
 					break;
 				case EVENTS.SLIDE_READY:
 					this.subscribe();
@@ -88,22 +93,22 @@ export default class Widget {
 	 * This takes place when the container indicates it has finished loading (ready)
 	 */
 	subscribe() {
-		console.info(
+		log(2,[
 			"%cwidget%c %csubscribe",
 			CSS.WIDGET,
 			CSS.NONE,
 			CSS.SUBSCRIBE,
 			this.query.slide,
 			this.query.widget
-		);
+		]);
 
-		console.debug(
+		log(3,[
 			"%cwidget%c %csubscribe",
 			CSS.WIDGET,
 			CSS.NONE,
 			CSS.SUBSCRIBE,
 			this.query
-		);
+		]);
 		this.broadcastChannel.postMessage({
 			event: EVENTS.SUBSCRIBE,
 			data: this.query,
@@ -147,13 +152,13 @@ export default class Widget {
 				"Wrong method call for getCloud, expected type is",
 				this.query.type
 			);
-			console.debug(
+			log(3,[
 				"%cstorage%c %cwidget",
 				CSS.API,
 				CSS.NONE,
 				CSS.CLOUD,
 				this.query
-			);
+			]);
 			return {
 				data: null,
 				message: `wrong method call for getCloud, expected type is '${this.query.type}'`,
@@ -186,13 +191,13 @@ export default class Widget {
 			};
 		}
 
-		console.debug(
+		log(3,[
 			"%cstorage%c %cwidget",
 			CSS.API,
 			CSS.NONE,
 			CSS.MESSAGES,
 			this.query
-		);
+		]);
 		return await this.storageReader.getMessages(this.query);
 	};
 
@@ -212,13 +217,13 @@ export default class Widget {
 				"Wrong method call for getSeries, expected type is",
 				this.query.type
 			);
-			console.debug(
+			log(3,[
 				"%cstorage%c %cwidget",
 				CSS.API,
 				CSS.NONE,
 				CSS.MESSAGES,
 				this.query
-			);
+			]);
 			return {
 				data: null,
 				message: `wrong method call for getSeries, expected type is '${this.query.type}'`,
@@ -235,14 +240,14 @@ export default class Widget {
 	 * @param modal IModal
 	 */
 	public showModal = (modal: IModal) => {
-		console.debug(
+		log(3,[
 			"%cwidget",
 			CSS.WIDGET,
 			EVENTS.SHOW_MODAL,
 			modal.showComponent,
 			// @ts-ignore
 			attrs(this.element.attributes) //props['data-widget'],
-		);
+		]);
 		const ev = new CustomEvent(EVENTS.SHOW_MODAL, {
 			detail: {
 				component: modal.showComponent,
