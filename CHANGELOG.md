@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.7.0
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.6.2...v3.7.0)
+
+### 🚀 Enhancements
+
+- Load & get pres, slides, widgets ([97282d6](https://github.com/TouchFlows/buzzcasting-storage/commit/97282d6))
+
+### 🏡 Chore
+
+- **release:** V3.6.2 ([c97cc27](https://github.com/TouchFlows/buzzcasting-storage/commit/c97cc27))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.6.2
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.6.1...v3.6.2)
