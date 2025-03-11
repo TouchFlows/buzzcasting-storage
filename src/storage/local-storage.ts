@@ -148,6 +148,20 @@ export default class LocalStorageClient {
 		}
 	};
 
+	getDashboards = async (): Promise<IResponse> => {
+		//const key = getKey(query);
+		// return await get(key)
+		// 	.then((data) => data)
+		// 	.catch((error) => {
+		// 		console.warn("%capi", CSS.API, API.PRESENTATION);
+				return {
+					data: null,
+					message: `Dashboards get error: `,
+					success: false,
+				};
+			// });
+	};
+
 	setDashboard = async (query: IQuery) => {
 		const key = `${API.DASHBOARD}.${query.dashboard}`;
 		try {
@@ -178,6 +192,20 @@ export default class LocalStorageClient {
 				success: false,
 			};
 		}
+	};
+
+	getWidgets = async (): Promise<IResponse> => {
+		//const key = getKey(query);
+		// return await get(key)
+		// 	.then((data) => data)
+		// 	.catch((error) => {
+		// 		console.warn("%capi", CSS.API, API.PRESENTATION);
+				return {
+					data: null,
+					message: `Widgets get error: `,
+					success: false,
+				};
+			// });
 	};
 
 	setWidget = async (query: IQuery) => {
@@ -248,6 +276,19 @@ export default class LocalStorageClient {
 		}
 	};
 
+	getSlides = async (query: IQuery): Promise<IResponse> => {
+		try {
+			return localStorage.getObject(`${API.SLIDE}.${query.id}`);
+		} catch (error: any) {
+			console.warn("%capi", CSS.API, API.SLIDE, query.id, error);
+			return {
+				data: null,
+				message: `Slide ${query.id} load error: ${error.message}`,
+				success: false,
+			};
+		}
+	};
+
 	setSlide = async (query: IQuery): Promise<IResponse> => {
 		try {
 			localStorage.setObject(`${API.SLIDE}.${query.data.id}`, {
@@ -273,12 +314,25 @@ export default class LocalStorageClient {
 
 	getPresentation = async (query: IQuery): Promise<IResponse> => {
 		try {
-			return localStorage.getObject(`${API.PRESENTATION}.${query.id}`);
+			return localStorage.getObject(`${API.PRESENTATION}.${query.presentation}`);
 		} catch (error: any) {
-			console.warn("%capi", CSS.API, API.PRESENTATION, query.id, error);
+			console.warn("%capi", CSS.API, API.PRESENTATION, query.presentation, error);
 			return {
 				data: null,
-				message: `Slide ${query.id} load error: ${error.message}`,
+				message: `Presentations ${query.id} load error: ${error.message}`,
+				success: false,
+			};
+		}
+	};
+
+	getPresentations = async (): Promise<IResponse> => {
+		try {
+			return localStorage.getObject(`${API.PRESENTATION}.`);
+		} catch (error: any) {
+			console.warn("%capi", CSS.API, API.PRESENTATION, error);
+			return {
+				data: null,
+				message: `Presentations get error: ${error.message}`,
 				success: false,
 			};
 		}
@@ -310,6 +364,19 @@ export default class LocalStorageClient {
 			return {
 				data: null,
 				message: `Preference ${preference.id} load error: ${error.message}`,
+				success: false,
+			};
+		}
+	};
+
+	getPreferences = async (): Promise<IResponse> => {
+		try {
+			return localStorage.getObject(`${API.PREFERENCE}.`);
+		} catch (error: any) {
+			console.warn("%capi", CSS.API, API.PREFERENCE, error);
+			return {
+				data: null,
+				message: `Preference get error: ${error.message}`,
 				success: false,
 			};
 		}

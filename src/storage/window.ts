@@ -137,6 +137,20 @@ export default class WindowClient {
 		}
 	};
 
+	getDashboards = async (): Promise<IResponse> => {
+		//const key = getKey(query);
+		// return await get(key)
+		// 	.then((data) => data)
+		// 	.catch((error) => {
+		// 		console.warn("%capi", CSS.API, API.PRESENTATION);
+				return {
+					data: null,
+					message: `Dashboards get error: `,
+					success: false,
+				};
+			// });
+	};
+
 	setDashboard = async (query: IQuery) => {
 		const key = `widget.${query.widget}`;
 		try {
@@ -167,6 +181,20 @@ export default class WindowClient {
 				success: false,
 			};
 		}
+	};
+
+	getWidgets = async (): Promise<IResponse> => {
+		//const key = getKey(query);
+		// return await get(key)
+		// 	.then((data) => data)
+		// 	.catch((error) => {
+		// 		console.warn("%capi", CSS.API, API.PRESENTATION);
+				return {
+					data: null,
+					message: `Widgets get error: `,
+					success: false,
+				};
+			// });
 	};
 
 	setWidget = async (query: IQuery) => {
@@ -237,6 +265,20 @@ export default class WindowClient {
 		}
 	};
 
+	getSlides = async (query: IQuery): Promise<IResponse> => {
+		try {
+
+			return window.BuzzCasting.SlideData.filter((slide:any) => slide.presentation_id === query.presentation);
+		} catch (error: any) {
+			console.warn("%capi", CSS.API, API.PRESENTATION, query.presentation_id, error);
+			return {
+				data: null,
+				message: `Slides for presentation ${query.presentation} load error: ${error.message}`,
+				success: false,
+			};
+		}
+	};
+
 	setSlide = async (query: IQuery): Promise<IResponse> => {
 		try {
 			window.BuzzCasting.SlideData[query.id] = {
@@ -262,12 +304,26 @@ export default class WindowClient {
 
 	getPresentation = async (query: IQuery): Promise<IResponse> => {
 		try {
-			return window.BuzzCasting.PresentationData[query.id];
+			const id = query.presentation || 'none'
+			return window.BuzzCasting.PresentationData[id];
 		} catch (error: any) {
-			console.warn("%capi", CSS.API, API.PRESENTATION, query.id, error);
+			console.warn("%capi", CSS.API, API.PRESENTATION, query.presentation, error);
 			return {
 				data: null,
-				message: `Presentation ${query.id} load error: ${error.message}`,
+				message: `Presentation ${query.presentation} load error: ${error.message}`,
+				success: false,
+			};
+		}
+	};
+
+	getPresentations = async (): Promise<IResponse> => {
+		try {
+			return window.BuzzCasting.PresentationData;
+		} catch (error: any) {
+			console.warn("%capi", CSS.API, API.PRESENTATION, error);
+			return {
+				data: null,
+				message: `Presentations get error: ${error.message}`,
 				success: false,
 			};
 		}
@@ -299,6 +355,19 @@ export default class WindowClient {
 			return {
 				data: null,
 				message: `Preference ${preference.id} load error: ${error.message}`,
+				success: false,
+			};
+		}
+	};
+
+	getPreferences = async (): Promise<IResponse> => {
+		try {
+			return window.BuzzCasting.Preferences;
+		} catch (error: any) {
+			console.warn("%capi", CSS.API, API.PREFERENCE, error);
+			return {
+				data: null,
+				message: `Preferences get error: ${error.message}`,
 				success: false,
 			};
 		}

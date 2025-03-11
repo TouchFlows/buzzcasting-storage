@@ -74,8 +74,9 @@ export class BuzzcastingStorageManager {
 		}
 	}
 
-	public addSubscriber(query:IQuery){
-		if(this.subscribers[query.widget] === undefined) this.subscribers[query.widget] = query
+	public addSubscriber(query: IQuery) {
+		if (this.subscribers[query.widget] === undefined)
+			this.subscribers[query.widget] = query;
 	}
 
 	public update = async (query: IQuery) => {
@@ -93,11 +94,11 @@ export class BuzzcastingStorageManager {
 		if (query?.subscribers) {
 			query.subscribers.forEach((apiQuery: IQuery) => {
 				// Paralelize calls
-				this.addSubscriber(apiQuery)
+				this.addSubscriber(apiQuery);
 				subscriberQuery.push(this.api.get(apiQuery));
 			});
-		} else {			
-			this.addSubscriber(query)
+		} else {
+			this.addSubscriber(query);
 			subscriberQuery.push(this.api.get(query));
 		}
 
@@ -111,7 +112,7 @@ export class BuzzcastingStorageManager {
 						return 400;
 					}
 					if (result.success === true) {
-						const previousQuery = this.subscribers[result.query.widget]
+						const previousQuery = this.subscribers[result.query.widget];
 
 						// const previousQuery = this.subscribers.filter(
 						// 	(query: IQuery) => query.widget === result.query.widget
@@ -395,12 +396,16 @@ export class BuzzcastingStorageManager {
 	};
 
 	public getSubscribers = async () => {
-		return await new Promise<any[]>(resolve => resolve(this.subscribers))
+		return await new Promise<any[]>((resolve) => resolve(this.subscribers));
 		//return await this.sm?.getSubscribers();
 	};
 
 	public getSlide = async (query: IQuery): Promise<IResponse | undefined> => {
 		return await this.sm?.getSlide(query);
+	};
+
+	public getSlides = async (query: IQuery): Promise<IResponse | undefined> => {
+		return await this.sm?.getSlides(query);
 	};
 
 	public setSlide = async (query: IQuery): Promise<IResponse | undefined> => {
@@ -419,6 +424,10 @@ export class BuzzcastingStorageManager {
 		query: IQuery
 	): Promise<IResponse | undefined> => {
 		return await this.sm?.getPresentation(query);
+	};
+
+	public getPresentations = async (query?: IQuery): Promise<IResponse | undefined> => {
+		return await this.sm?.getPresentations(query);
 	};
 
 	public setPresentation = async (
@@ -443,13 +452,17 @@ export class BuzzcastingStorageManager {
 		return await this.sm?.getPreference(preference);
 	};
 
+	public getPreferences = async (query?:IQuery): Promise<IResponse | undefined> => {
+		return await this.sm?.getPreferences(query);
+	};
+
 	public setPreference = async (
 		preference: IPreference
 	): Promise<IResponse | undefined> => {
 		return await this.sm?.setPreference(preference);
 	};
 
-	public loadPreference = async (preference: IPreference): Promise<Number> => {
+	public loadPreference = async (preference: IPreference): Promise<IResponse | undefined> => {
 		return await this.api.loadPreference(preference);
 	};
 
@@ -459,12 +472,20 @@ export class BuzzcastingStorageManager {
 		return await this.api.storePreference(preference);
 	};
 
-	public loadWidget = async (query: IQuery): Promise<Number> => {
-		return await this.api.loadWidget(query);
+	/*public loadDashboardWidgets = async (query: IQuery): Promise<Number> => {
+		return await this.api.loadDashboardWidgets(query);
+	};*/
+
+	public loadDashboards = async (query?: IQuery): Promise<IResponse | undefined> => {
+		return await this.api.loadDashboards(query);
 	};
 
 	public getWidget = async (query: IQuery): Promise<IResponse | undefined> => {
 		return await this.sm?.getWidget(query);
+	};
+
+	public getWidgets = async (query?:IQuery): Promise<IResponse | undefined> => {
+		return await this.sm?.getWidgets(query);
 	};
 
 	public setWidget = async (query: IQuery): Promise<IResponse | undefined> => {
@@ -475,6 +496,12 @@ export class BuzzcastingStorageManager {
 		query: IQuery
 	): Promise<IResponse | undefined> => {
 		return await this.sm?.getDashboard(query);
+	};
+
+	public getDashboards = async (
+		query: IQuery
+	): Promise<IResponse | undefined> => {
+		return await this.sm?.getDashboards();
 	};
 
 	public setDashboard = async (

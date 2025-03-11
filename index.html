@@ -138,7 +138,7 @@
             },
           ],
         },
-      }
+      };
 
       const bc = new BroadcastChannel(options.slide);
       const sm = new BuzzcastingStorageManager(options);
@@ -159,23 +159,97 @@
           data = await sr.getSeries(query);
           break;
       }
-
-      await bc.postMessage({
-        event: "update",
-        data: { slide: query.slide, subscribers: [query] },
-      });
-
-      await bc.postMessage({ event: "update", data: query2 });
-      await bc.postMessage({
-        event: "update",
-        data: { slide: query.slide, subscribers: [query] },
-      });
-
-      await bc.postMessage(bigcall);
       document.getElementById("app").innerHTML = JSON.stringify(data);
-      await bc.postMessage(bigcall)
 
-      
+      // await bc.postMessage({
+      //   event: "update",
+      //   data: { slide: query.slide, subscribers: [query] },
+      // });
+
+      // await bc.postMessage({ event: "update", data: query2 });
+      // await bc.postMessage({
+      //   event: "update",
+      //   data: { slide: query.slide, subscribers: [query] },
+      // });
+
+      //await bc.postMessage(bigcall);
+      //const db = await sm.getDashboard({id: 'lzzzniev_1670v2kaule1j'})
+
+      const db_wd = await sm.loadDashboards();
+      db_wd.data.dashboards.forEach(async (dashboard) => {
+        const upd = structuredClone(dashboard)
+        delete upd.widgets
+        await sm.setDashboard({
+          id: dashboard.id,
+          name: dashboard.title,
+          data: upd,
+          update: Date.now(),
+        });
+        dashboard.widgets.forEach(async (widget) => {
+          //"id,name,dashboard_id,type,update",
+          await sm.setWidget({
+            id: widget.id,
+            dashboard_id: dashboard.id,
+            title: widget.title,
+            type: widget.type,
+            data: widget,
+            update: Date.now(),
+          });
+        });
+      });
+
+      console.log(
+        await sm.getWidgets({
+          dashboard: "m014uvvd_1670v2kans4xs",
+          type: "cloud",
+        })
+      );
+
+      const d = await sm.loadDashboards();
+      //const d = await sm.getDashboards();
+      console.log(d);
+      if (d.success) {
+        d.data.dashboards.forEach(async (dashboard) => {
+          //console.warn(dashboard.title)
+          await sm.setDashboard({
+            id: dashboard.id,
+            name: dashboard.title,
+            data: dashboard,
+            update: Date.now(),
+          });
+
+          const db = await sm.getDashboard({ id: dashboard.id });
+          console.log(db);
+          //sm.setSlide({ id: widget.id, data: slide, name: slide.title });
+        });
+      }
+
+      // const slides = await sm.loadSlide({ id: "" });
+      // slides.data.forEach((slide) => {
+      //   sm.setSlide({ id: slide.id, data: slide, name: slide.title });
+      // });
+
+      //       const prefs = await sm.loadPreference({ id: "" });
+      // console.log(prefs)
+      //       Object.entries(prefs).forEach(([key,val],idx) => {
+      //         console.log(key,val,idx)
+      //         sm.setPreference({id: key, value: val});
+      //       });
+
+      // console.log(
+      //   await sm.getSlides({ presentation: "01jc6ajqqv7ra88785zct853mm" })
+      // );
+      //console.log(await sm.getPreferences());
+
+      // const pres = await sm.loadPresentation({ id: "" });
+
+      // pres.data.forEach((p) => {
+      //   sm.setPresentation({ id: p.id, data: p, name: p.title });
+      // });
+      const p = { name: "a" };
+      console.log("p", p);
+      console.log(await sm.getPresentations(p));
+      //console.log(await sm.getPreference({id:'tailwindConfig'}));
     </script>
   </body>
 </html>

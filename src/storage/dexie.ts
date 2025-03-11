@@ -9,6 +9,7 @@ import type {
 import Dexie from "dexie";
 import { API, CSS, EVENTS } from "..";
 import { moderation, widgetParams } from "../utils/widget";
+import { log } from "../utils";
 
 export default class DexieClient {
 	private db: Dexie;
@@ -19,18 +20,18 @@ export default class DexieClient {
 		this.options = options;
 
 		this.db = new Dexie(options.app);
-		this.db.version(9).stores({
+		this.db.version(11).stores({
 			channel: "id,slide_index",
-			cloud: "id,dashboard_id,data",
-			dashboard: "id,name,data,update",
+			cloud: "id,dashboard_id",
+			dashboard: "id,name,update",
 			display: "id,monitor_id,presentation_id,colstart,colend,rowstart,rowend",
-			messages: "id,utc,expires,data",
+			messages: "id,utc,expires",
 			monitor:
 				"id,player_id,cols,rows,order,width,height,physicalwidth,physicalheight,devicePixelRatio,screenLeft,screenTop,orientation,monitor",
 			player: "id,title,name,location",
 			preference: "id,value",
-			presentation: "id,name,data,update",
-			series: "id,dashboard_id,data",
+			presentation: "id,name,update",
+			series: "id,dashboard_id",
 			slide: "id,name,presentation_id,order_index,json,html,update",
 			topics:
 				"[widget_id+message_id],message_id,widget_id,dashboard_id,title,engagement,impressions,reach,sentiment,visible,utc,expires",
@@ -79,44 +80,184 @@ export default class DexieClient {
 	};
 
 	/**
-	 * Retrieve Series Data
+	 * Update Cloud
 	 * @param query IQuery
-	 * @returns IResponse
+	 * @param data
+	 * @returns number
 	 */
-	getSeries = async (query: IQuery): Promise<IResponse> => {
+	setCloud = async (query: IQuery, data: any): Promise<number> => {
+		if (query.type === API.CLOUD && data !== "") {
+			return await this.db
+				.table(API.CLOUD)
+				.put({
+					id: query.widget,
+					dashboard_id: query.dashboard,
+					//data: data.data,
+					data: data,
+				})
+				.then(() => 201)
+				.catch((error: Error) => {
+					console.error("%cstorage", CSS.STORAGE, "set", query, error.message);
+					return 400;
+				});
+		}
+		return 400;
+	};
+
+	getDashboard = async (query: IQuery): Promise<IResponse> => {
 		const data = await this.db
-			.table(API.SERIES)
-			.where({ id: query.widget })
+			.table(API.DASHBOARD)
+			.where({ id: query.id })
 			.last()
 			.catch(() => {
-				console.warn(
-					"%capi%c %cseries",
-					CSS.API,
-					CSS.NONE,
-					CSS.SERIES,
-					query.slide,
-					query.widget
-				);
+				console.warn("%cstorage", CSS.STORAGE, EVENTS.DASHBOARD_LOAD, query.id);
 			});
 		if (data === undefined) {
-			return { data: null, message: "Series Data error", success: false };
+			return {
+				data: null,
+				message: `Dashboard ${query.id} Load error`,
+				success: false,
+			};
 		}
-		console.debug(
-			"%cstorage%c %cseries",
-			CSS.STORAGE,
-			CSS.NONE,
-			CSS.SERIES,
-			data
-		);
-		data.data.presentation = query?.presentation || "not set";
-		data.data.slide = query?.slide || "not set";
-		data.data.query = query;
-		data.query = query;
-		data.message = "Series retrieved successfully";
+		data.message = `Dashboard ${query.id} retrieved from storage`;
 		data.success = true;
 		return data;
 	};
 
+	getDashboards = async (query?: IQuery): Promise<any> => {
+		const idFilter = (dashboard: { id: string }) => {
+			return query?.id === dashboard.id;
+		};
+
+		const nameFilter = (dashboard: { name: string }) => {
+			return query?.name ? dashboard.name.includes(query?.name) : false;
+		};
+
+		//let data = []
+
+		let data = await this.db
+			.table(API.DASHBOARD)
+			.toArray()
+			.then((res) => {
+				return query?.id ? res.filter(idFilter) : res;
+			})
+			.then((res) => {
+				return query?.name ? res.filter(nameFilter) : res;
+			})
+			.catch(() => {
+				log(2, ["%cstorage", CSS.STORAGE, EVENTS.DASHBOARD_LOAD, query]);
+			});
+
+		data !== undefined &&
+			log(3, [
+				"%cstorage%c %cdashboards",
+				CSS.STORAGE,
+				CSS.NONE,
+				CSS.WIDGET,
+				query,
+			]);
+
+		return {
+			// @ts-ignore
+			data: data !== undefined ? { dashboards: data, query: query } : null,
+			message:
+				data !== undefined
+					? `Dashboards loaded from storage`
+					: `Dashboards load error`,
+			success: data !== undefined,
+		};
+	};
+
+	/**
+	 * Update Cloud
+	 * @param query IQuery
+	 * @returns number
+	 */
+	setDashboard = async (query: IQuery): Promise<IResponse> => {
+		const q = structuredClone(query)
+		delete q.data.widgets
+		return await this.db
+			.table(API.DASHBOARD)
+			.put({
+				id: q.id,
+				name: q.name,
+				dashboard: q.data,
+				update: q.update,
+			})
+			.then(() => {
+				return {
+					data: null,
+					message: `Dashboard ${q.data.id} saved to storage`,
+					success: true,
+				};
+			})
+			.catch((error: Error) => {
+				console.error(
+					"%cstorage",
+					CSS.STORAGE,
+					API.WIDGET,
+					query,
+					error.message
+				);
+				return {
+					data: null,
+					message: `Dashboard ${q.data.id} save error: ${error.message}`,
+					success: false,
+				};
+			});
+	};
+
+	/**
+	 * Wipe Message data after expires timestamp
+	 */
+	cleanMessages = async (): Promise<number> => {
+		const currentDate = Date.now() / 1000;
+
+		const topicFilter = (topic: { expires: number }) =>
+			topic.expires < currentDate;
+
+		const messagesFilter = (message: { expires: number }) =>
+			message.expires < currentDate;
+
+		await this.db
+			.table(API.TOPICS)
+			.orderBy("expires")
+			.filter(topicFilter)
+			.delete()
+			// .modify((_message, ref) => {
+			//   delete ref.value
+			// })
+			.catch((error) => {
+				console.error(
+					"%cstorage%c %cclean",
+					CSS.STORAGE,
+					CSS.NONE,
+					CSS.MESSAGES,
+					error.message
+				);
+				return 0;
+			});
+
+		const messagesCount = await this.db
+			.table(API.MESSAGES)
+			.orderBy("expires")
+			.filter(messagesFilter)
+			.delete()
+			// .modify((_message, ref) => {
+			//   delete ref.value
+			// })
+			.catch((error) => {
+				console.error(
+					"%cstorage%c %clean",
+					CSS.STORAGE,
+					CSS.NONE,
+					CSS.MESSAGES,
+					error.message
+				);
+				return 0;
+			});
+		return messagesCount;
+	};
 	/**
 	 * Retrieve Messages Data
 	 * @param query IQuery
@@ -208,54 +349,22 @@ export default class DexieClient {
 		}
 	};
 
-	/**
-	 * Update Cloud
-	 * @param query IQuery
-	 * @param data
-	 * @returns number
-	 */
-	setCloud = async (query: IQuery, data: any): Promise<number> => {
-		if (query.type === API.CLOUD && data !== "") {
-			return await this.db
-				.table(API.CLOUD)
-				.put({
-					id: query.widget,
-					dashboard_id: query.dashboard,
-					//data: data.data,
-					data: data,
-				})
-				.then(() => 201)
-				.catch((error: Error) => {
-					console.error("%cstorage", CSS.STORAGE, "set", query, error.message);
-					return 400;
-				});
-		}
-		return 400;
-	};
-
-	/**
-	 * Update Series
-	 * @param query IQuery
-	 * @param data
-	 * @returns number
-	 */
-	setSeries = async (query: IQuery, data: any): Promise<number> => {
-		if (query.type === API.SERIES && data !== "") {
-			return await this.db
-				.table(API.SERIES)
-				.put({
-					id: query.widget,
-					dashboard_id: query.dashboard,
-					//data: data.data,
-					data: data,
-				})
-				.then(() => 201)
-				.catch((error: Error) => {
-					console.error("%cstorage", CSS.STORAGE, "set", query, error.message);
-					return 400;
-				});
-		}
-		return 400;
+	hideMessage = async (id: string, visible: number) => {
+		await this.db
+			.table(API.TOPICS)
+			.where("message_id")
+			.equals(id)
+			.modify({ visible: visible ? 1 : 0 })
+			.catch((error) => {
+				console.error(
+					"%cstorage%c %chide",
+					CSS.STORAGE,
+					CSS.NONE,
+					CSS.HIDE,
+					error.message
+				);
+				return 0;
+			});
 	};
 
 	/**
@@ -366,130 +475,74 @@ export default class DexieClient {
 	};
 
 	/**
-	 * Wipe Message data after expires timestamp
+	 * Retrieve Series Data
+	 * @param query IQuery
+	 * @returns IResponse
 	 */
-	cleanMessages = async (): Promise<number> => {
-		const currentDate = Date.now() / 1000;
-
-		const topicFilter = (topic: { expires: number }) =>
-			topic.expires < currentDate;
-
-		const messagesFilter = (message: { expires: number }) =>
-			message.expires < currentDate;
-
-		await this.db
-			.table(API.TOPICS)
-			.orderBy("expires")
-			.filter(topicFilter)
-			.delete()
-			// .modify((_message, ref) => {
-			//   delete ref.value
-			// })
-			.catch((error) => {
-				console.error(
-					"%cstorage%c %cclean",
-					CSS.STORAGE,
-					CSS.NONE,
-					CSS.MESSAGES,
-					error.message
-				);
-				return 0;
-			});
-
-		const messagesCount = await this.db
-			.table(API.MESSAGES)
-			.orderBy("expires")
-			.filter(messagesFilter)
-			.delete()
-			// .modify((_message, ref) => {
-			//   delete ref.value
-			// })
-			.catch((error) => {
-				console.error(
-					"%cstorage%c %clean",
-					CSS.STORAGE,
-					CSS.NONE,
-					CSS.MESSAGES,
-					error.message
-				);
-				return 0;
-			});
-		return messagesCount;
-	};
-
-	hideMessage = async (id: string, visible: number) => {
-		await this.db
-			.table(API.TOPICS)
-			.where("message_id")
-			.equals(id)
-			.modify({ visible: visible ? 1 : 0 })
-			.catch((error) => {
-				console.error(
-					"%cstorage%c %chide",
-					CSS.STORAGE,
-					CSS.NONE,
-					CSS.HIDE,
-					error.message
-				);
-				return 0;
-			});
-	};
-
-	getDashboard = async (query: IQuery): Promise<IResponse> => {
+	getSeries = async (query: IQuery): Promise<IResponse> => {
 		const data = await this.db
-			.table(API.DASHBOARD)
-			.where({ id: query.id })
+			.table(API.SERIES)
+			.where({ id: query.widget })
 			.last()
 			.catch(() => {
-				console.warn("%cstorage", CSS.STORAGE, EVENTS.DASHBOARD_LOAD, query.id);
+				console.warn(
+					"%capi%c %cseries",
+					CSS.API,
+					CSS.NONE,
+					CSS.SERIES,
+					query.slide,
+					query.widget
+				);
 			});
 		if (data === undefined) {
-			return {
-				data: null,
-				message: `Widget ${query.id} Load error`,
-				success: false,
-			};
+			return { data: null, message: "Series Data error", success: false };
 		}
-		data.message = `Slide ${query.id} retrieved from storage`;
+		console.debug(
+			"%cstorage%c %cseries",
+			CSS.STORAGE,
+			CSS.NONE,
+			CSS.SERIES,
+			data
+		);
+		data.data.presentation = query?.presentation || "not set";
+		data.data.slide = query?.slide || "not set";
+		data.data.query = query;
+		data.query = query;
+		data.message = "Series retrieved successfully";
 		data.success = true;
 		return data;
 	};
 
 	/**
-	 * Update Cloud
+	 * Update Series
 	 * @param query IQuery
+	 * @param data
 	 * @returns number
 	 */
-	setDashboard = async (query: IQuery): Promise<IResponse> => {
-		return await this.db
-			.table(API.DASHBOARD)
-			.put({
-				id: query.id,
-				name: query.name,
-			})
-			.then(() => {
-				return {
-					data: null,
-					message: `Dashboard ${query.data.id} saved to storage`,
-					success: true,
-				};
-			})
-			.catch((error: Error) => {
-				console.error(
-					"%cstorage",
-					CSS.STORAGE,
-					API.WIDGET,
-					query,
-					error.message
-				);
-				return {
-					data: null,
-					message: `Dashboard ${query.data.id} save error: ${error.message}`,
-					success: false,
-				};
-			});
+	setSeries = async (query: IQuery, data: any): Promise<number> => {
+		if (query.type === API.SERIES && data !== "") {
+			return await this.db
+				.table(API.SERIES)
+				.put({
+					id: query.widget,
+					dashboard_id: query.dashboard,
+					//data: data.data,
+					data: data,
+				})
+				.then(() => 201)
+				.catch((error: Error) => {
+					console.error("%cstorage", CSS.STORAGE, "set", query, error.message);
+					return 400;
+				});
+		}
+		return 400;
 	};
 
+	/**
+	 * Retrieve Widget from Storage
+	 * @param query IQuery
+	 * @returns IResponse
+	 */
 	getWidget = async (query: IQuery): Promise<IResponse> => {
 		const data = await this.db
 			.table(API.WIDGET)
@@ -510,26 +563,61 @@ export default class DexieClient {
 		return data;
 	};
 
-	// getWidgets = async (query: IQuery): Promise<IResponse> => {
-	// 	const data = await this.db
-	// 		.table(API.WIDGET)
-	// 		.where('dashboard_id')
-	// 		.equals(query.dashboard)
-	// 		.modify({type: query.type})
-	// 		.catch(() => {
-	// 			console.warn("%cstorage", CSS.STORAGE, EVENTS.WIDGET_LOAD, query.id);
-	// 		});
-	// 	if (data === undefined) {
-	// 		return {
-	// 			data: null,
-	// 			message: `Widget ${query.id} Load error`,
-	// 			success: false,
-	// 		};
-	// 	}
-	// 	data.message = `Slide ${query.id} retrieved from storage`;
-	// 	data.success = true;
-	// 	return data;
-	// };
+	/**
+	 * Retrieve Widgets from Storage
+	 * @param query IQuery
+	 * @returns IResponse
+	 */
+	getWidgets = async (query?: IQuery): Promise<IResponse> => {
+		const dashboardFilter = (widget: { dashboard_id: string }) => {
+			return query?.dashboard === widget.dashboard_id;
+		};
+
+		const typeFilter = (widget: { type: string }) => {
+			return query?.type === widget.type;
+		};
+
+		const nameFilter = (slide: { name: string }) => {
+			return query?.name ? slide.name.includes(query?.name) : false;
+		};
+
+		//let data = []
+
+		let data = await this.db
+			.table(API.WIDGET)
+			.toArray()
+			.then((res) => {
+				return query?.dashboard ? res.filter(dashboardFilter) : res;
+			})
+			.then((res) => {
+				return query?.type ? res.filter(typeFilter) : res;
+			})
+			.then((res) => {
+				return query?.name ? res.filter(nameFilter) : res;
+			})
+			.catch(() => {
+				log(2, ["%cstorage", CSS.STORAGE, EVENTS.WIDGET_LOAD, query]);
+			});
+
+		data !== undefined &&
+			log(3, [
+				"%cstorage%c %cwidgets",
+				CSS.STORAGE,
+				CSS.NONE,
+				CSS.MESSAGES,
+				query,
+			]);
+
+		return {
+			// @ts-ignore
+			data: data !== undefined ? { data, query: query } : null,
+			message:
+				data !== undefined
+					? `Widgets loaded from storage`
+					: `Widgets load error`,
+			success: data !== undefined,
+		};
+	};
 
 	/**
 	 * Update Cloud
@@ -540,10 +628,11 @@ export default class DexieClient {
 		return await this.db
 			.table(API.WIDGET)
 			.put({
-				id: query.widget,
-				name: query.name,
-				dashboard_id: query.dashboard,
+				id: query.id,
+				name: query.title,
+				dashboard_id: query.dashboard_id,
 				type: query.type,
+				update: query.update,
 			})
 			.then(() => {
 				return {
@@ -623,18 +712,52 @@ export default class DexieClient {
 			.where({ id: query.id })
 			.last()
 			.catch(() => {
-				console.warn("%cstorage", CSS.STORAGE, EVENTS.SLIDE_LOAD, query.id);
+				log(2, ["%cstorage", CSS.STORAGE, EVENTS.SLIDE_LOAD, query.id]);
 			});
-		if (data === undefined) {
-			return {
-				data: null,
-				message: `Slide ${query.id} Load error`,
-				success: false,
-			};
-		}
-		data.message = `Slide ${query.id} retrieved from storage`;
-		data.success = true;
-		return data;
+
+		return {
+			// @ts-ignore
+			data: data !== undefined ? { slides: data, query: query } : null,
+			message:
+				data !== undefined ? `Slide loaded from storage` : `Slide load error`,
+			success: data !== undefined,
+		};
+	};
+
+	/**
+	 * Retrieve Slides from Storage
+	 * @param query IQuery
+	 * @returns IResponse
+	 */
+	getSlides = async (query: IQuery): Promise<IResponse> => {
+		const idFilter = (slide: { id: string }) => {
+			return query?.id ? (query.id = slide.id) : false;
+		};
+		const nameFilter = (slide: { name: string }) => {
+			return query?.name ? slide.name.includes(query?.name) : false;
+		};
+
+		const slidesCollection: any = this.db.table(API.SLIDE);
+
+		const data: any = await slidesCollection
+			.toArray()
+			.then((res: any) => {
+				return query?.id ? res.filter(idFilter) : res;
+			})
+			.then((res: any) => {
+				return query?.name ? res.filter(nameFilter) : res;
+			});
+
+		data !== undefined &&
+			log(3, ["%cstorage%c %cslides", CSS.STORAGE, CSS.NONE, CSS.SLIDE, query]);
+
+		return {
+			// @ts-ignore
+			data: data !== undefined ? { slides: data, query: query } : null,
+			message:
+				data !== undefined ? `Slides loaded from storage` : `Slides load error`,
+			success: data !== undefined,
+		};
 	};
 
 	/**
@@ -708,6 +831,44 @@ export default class DexieClient {
 	};
 
 	/**
+	 * Retrieve Presentations from Storage
+	 * @param query IQuery
+	 * @returns IResponse
+	 */
+	getPresentations = async (query?: IQuery): Promise<IResponse> => {
+		const nameFilter = (presentation: { name: string }) => {
+			return query?.name ? presentation.name.includes(query?.name) : false;
+		};
+
+		const presentationsCollection: any = this.db.table(API.PRESENTATION);
+
+		const data: any = await presentationsCollection
+			.toArray()
+			.then((res: any) => {
+				return query?.name ? res.filter(nameFilter) : res;
+			});
+
+		data !== undefined &&
+			log(3, [
+				"%cstorage%c %cpresentations",
+				CSS.STORAGE,
+				CSS.NONE,
+				CSS.PRESENTATION,
+				query,
+			]);
+
+		return {
+			// @ts-ignore
+			data: data !== undefined ? { presentations: data, query: query } : null,
+			message:
+				data !== undefined
+					? `Presentations loaded from storage`
+					: `Presentations load error`,
+			success: data !== undefined,
+		};
+	};
+
+	/**
 	 * Update Presentation in Storage
 	 * @param query IQuery
 	 * @returns number
@@ -755,25 +916,63 @@ export default class DexieClient {
 			.where({ id: preference.id })
 			.last()
 			.catch(() => {
-				console.warn(
+				log(2, [
 					"%cstorage",
 					CSS.STORAGE,
 					EVENTS.PREFERENCE_LOAD,
-					preference.id
-				);
+					preference.id,
+				]);
 			});
-		if (data === undefined) {
-			return {
-				data: null,
-				message: `Preference ${preference.id} Load error`,
-				success: false,
-			};
-		}
-		return data.value;
+
+		return {
+			// @ts-ignore
+			data: data !== undefined ? { preferences: data, query: query } : null,
+			message:
+				data !== undefined
+					? `Preference loaded from storage`
+					: `Preference load error`,
+			success: data !== undefined,
+		};
 	};
 
 	/**
-	 * Update Slide in Storage
+	 * Retrieve Preferences from Storage
+	 * @param query IQuery
+	 * @returns IResponse
+	 */
+	getPreferences = async (query?: IQuery): Promise<IResponse> => {
+		const idFilter = (preference: { id: string }) => {
+			return query?.id ? (query.id = preference.id) : false;
+		};
+
+		const preferencesCollection: any = this.db.table(API.SLIDE);
+
+		const data: any = await preferencesCollection.toArray().then((res: any) => {
+			return query?.id ? res.filter(idFilter) : res;
+		});
+
+		data !== undefined &&
+			log(3, [
+				"%cstorage%c %cpreferences",
+				CSS.STORAGE,
+				CSS.NONE,
+				CSS.PRESENTATION,
+				query,
+			]);
+
+		return {
+			// @ts-ignore
+			data: data !== undefined ? { prefrences: data, query: query } : null,
+			message:
+				data !== undefined
+					? `Preferences loaded from storage`
+					: `Preferences load error`,
+			success: data !== undefined,
+		};
+	};
+
+	/**
+	 * Update Preference in Storage
 	 * @param preference IPreference
 	 * @returns number
 	 */

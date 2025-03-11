@@ -1,4 +1,4 @@
-import type { IPreference, IQuery, IResponse, IStorageOptions } from "..";
+import type { IDashboard, IPreference, IQuery, IResponse, IStorageOptions } from "..";
 import { API, CSS, EVENTS } from "..";
 
 export default class ApiClient {
@@ -71,7 +71,6 @@ export default class ApiClient {
 				return response.json();
 			})
 			.then((json: IResponse): IResponse => {
-				json.query = query;
 				json.query = query;
 				if (json.data) json.data.query = query;
 				return json;
@@ -370,19 +369,21 @@ export default class ApiClient {
 			});
 	}
 
-	public async loadWidget(query: IQuery): Promise<any> {
+	/*public async loadDashboardWidgets(query: IQuery): Promise<any> {
+		if (query?.dashboard === undefined)
+			return { success: false, message: `Dashboard ID not defines`, data: null };
 		const { version }: IStorageOptions = this.options;
 		const headers = this.headers();
 
 		console.debug(
-			"%capi%c %cloadWidget",
+			"%capi%c %cloadDashboardWidget",
 			CSS.API,
 			CSS.NONE,
-			CSS.SLIDE,
+			CSS.WIDGET,
 			query.id
 		);
 		return await fetch(
-			[this.url, "api", version, API.WIDGETS, query.id].join("/"),
+			[this.url, "api", version, API.WIDGETS, query.dashboard].join("/"),
 			{ ...headers, method: "get" }
 		)
 			.then(async (response: Response) => {
@@ -394,12 +395,45 @@ export default class ApiClient {
 			.then((response: Response) => {
 				return response.json();
 			})
-			.then((json: IResponse): IResponse => {
-				json.query = query;
-				return json;
+			.then((json: IWidget[]): IResponse => {
+				return {
+					data: { widgets: json},
+					message: "Dashboard Widgets loaded from api",
+					success: true
+				};
 			})
 			.catch((code) => {
 				return { success: false, message: `${code}`, data: null, query: query };
+			});
+	}*/
+
+	public async loadDashboards(query?: IQuery): Promise<any> {
+		const { version }: IStorageOptions = this.options;
+		const headers = this.headers();
+
+		console.debug("%capi%c %dashboards", CSS.API, CSS.NONE, CSS.WIDGET);
+		return await fetch([this.url, "api", version, API.WIDGETS, query?.id || ''].join("/"), {
+			...headers,
+			method: "get",
+		})
+			.then(async (response: Response) => {
+				if (!response.ok) {
+					throw new Error(`${response.status}`);
+				}
+				return response;
+			})
+			.then((response: Response) => {
+				return response.json();
+			})
+			.then((json: IDashboard[]): IResponse => {
+				return {
+					data: { dashboards: json },
+					message: "Dashboard Widgets loaded from api",
+					success: true,
+				};
+			})
+			.catch((code) => {
+				return { success: false, message: `${code}`, data: null };
 			});
 	}
 }

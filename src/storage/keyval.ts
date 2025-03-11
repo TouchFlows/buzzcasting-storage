@@ -1,5 +1,12 @@
 import { get, set } from "idb-keyval";
-import { API, CSS, IPreference, IResponse, type IQuery, type IStorageOptions } from "..";
+import {
+	API,
+	CSS,
+	IPreference,
+	IResponse,
+	type IQuery,
+	type IStorageOptions,
+} from "..";
 import { getKey, moderation } from "../utils/widget";
 
 export default class KeyvalClient {
@@ -145,6 +152,20 @@ export default class KeyvalClient {
 				};
 			});
 	};
+	
+	getDashboards = async (): Promise<IResponse> => {
+		//const key = getKey(query);
+		// return await get(key)
+		// 	.then((data) => data)
+		// 	.catch((error) => {
+		// 		console.warn("%capi", CSS.API, API.PRESENTATION);
+		return {
+			data: null,
+			message: `Dashboards get error: `,
+			success: false,
+		};
+		// });
+	};
 
 	/**
 	 * Update Cloud
@@ -193,6 +214,15 @@ export default class KeyvalClient {
 					success: false,
 				};
 			});
+	};
+
+	getWidgets = async (query?: IQuery): Promise<IResponse> => {
+		console.warn("%capi", CSS.API, API.SLIDE, query?.presentation);
+		return {
+			data: null,
+			message: `Widgets load error: `,
+			success: false,
+		};
 	};
 
 	/**
@@ -282,6 +312,15 @@ export default class KeyvalClient {
 			});
 	};
 
+	getSlides = async (query: IQuery): Promise<IResponse> => {
+		console.warn("%capi", CSS.API, API.SLIDE, query.presentation);
+		return {
+			data: null,
+			message: `Slided ${query.presentation} load error: `,
+			success: false,
+		};
+	};
+
 	/**
 	 * Update Slide
 	 * @param query IQuery
@@ -333,6 +372,20 @@ export default class KeyvalClient {
 			});
 	};
 
+	getPresentations = async (): Promise<IResponse> => {
+		//const key = getKey(query);
+		// return await get(key)
+		// 	.then((data) => data)
+		// 	.catch((error) => {
+		// 		console.warn("%capi", CSS.API, API.PRESENTATION);
+		return {
+			data: null,
+			message: `Presentations get error: `,
+			success: false,
+		};
+		// });
+	};
+
 	/**
 	 * Update Presentation
 	 * @param query IQuery
@@ -365,15 +418,27 @@ export default class KeyvalClient {
 			});
 	};
 
-
-  getPreference = async (preference: IPreference): Promise<IResponse> => {
+	getPreference = async (preference: IPreference): Promise<IResponse> => {
 		return await get(`${API.PREFERENCE}.${preference.id}`)
 			.then((data) => data)
 			.catch((error) => {
 				console.warn("%capi", CSS.API, API.PREFERENCE, preference.id);
 				return {
 					data: null,
-					message: `Preference ${preference.id} save error: ${error.message}`,
+					message: `Preference ${preference.id} get error: ${error.message}`,
+					success: false,
+				};
+			});
+	};
+
+	getPreferences = async (): Promise<IResponse> => {
+		return await get(`${API.PREFERENCE}`)
+			.then((data) => data)
+			.catch((error) => {
+				console.warn("%capi", CSS.API, API.PREFERENCE);
+				return {
+					data: null,
+					message: `Preferences get error: ${error.message}`,
 					success: false,
 				};
 			});
