@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.7.2
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.7.1...v3.7.2)
+
+### 🩹 Fixes
+
+- SetMessages timing ([39b6423](https://github.com/TouchFlows/buzzcasting-storage/commit/39b6423))
+
+### 🏡 Chore
+
+- **release:** V3.7.1 ([b7e7096](https://github.com/TouchFlows/buzzcasting-storage/commit/b7e7096))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.7.1
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.7.0...v3.7.1)
