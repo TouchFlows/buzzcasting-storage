@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.7.5
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.7.4...v3.7.5)
+
+### 🩹 Fixes
+
+- Add topcs to api query ([3d752a0](https://github.com/TouchFlows/buzzcasting-storage/commit/3d752a0))
+
+### 🏡 Chore
+
+- **release:** V3.7.4 ([67d772d](https://github.com/TouchFlows/buzzcasting-storage/commit/67d772d))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.7.4
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.7.3...v3.7.4)
