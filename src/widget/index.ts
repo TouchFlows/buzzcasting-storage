@@ -1,6 +1,6 @@
 import type { IModal, IQuery, IResponse } from "..";
 import { API, BuzzcastingStorageReader, CSS, EVENTS } from "..";
-import { attrs, clearContents, log, widgetParams } from "../utils";
+import { attrs, clearContents, log } from "../utils";
 
 /**
  * Main class for managing widgets and data updates
@@ -11,14 +11,14 @@ export default class Widget {
 	private element: HTMLElement;
 	private query: IQuery;
 
-	private listeners: Array<(arg: IResponse) => void>;
+	private callbacks: Array<(arg: IResponse) => void>;
 
 	/**
 	 * Main container for managing widgets and data updates
 	 *
 	 * @param element widget web component
 	 * @param callbacks functions in the widget that will receive the update
-	 * @param selector container for the element - by default buzzcasting-slide (optional)
+	 * @param selector container for the element - by default buzzcasting-presentation (optional)
 	 */
 	constructor(
 		element: HTMLElement,
@@ -27,60 +27,67 @@ export default class Widget {
 	) {
 		this.element = element;
 
-		this.listeners = callbacks;
+		this.callbacks = callbacks;
 
-		selector = typeof selector !== "undefined" ? selector : "buzzcasting-slide";
+		selector =
+			typeof selector !== "undefined" ? selector : "buzzcasting-presentation";
 
 		let query: IQuery;
 		// @ts-ignore
 		query = { ...element.dataset };
 		delete query.hmr;
 
-		query.slide =
+		query.presentation =
 			element.closest(selector.toUpperCase())?.id ?? `${selector} not found`;
 
-		query = widgetParams(query);
+		//query = widgetParams(query);
 		this.query = query;
 
 		clearContents(element);
 
 		const options = window.BuzzCasting.getOptions();
 		this.storageReader = new BuzzcastingStorageReader(options);
-
-		this.broadcastChannel = new BroadcastChannel(query.slide);
-		this.startListener();
+		// @ts-ignore
+		this.broadcastChannel = new BroadcastChannel(query.presentation);
+		this.broadcastListener();
 	}
 
-	public addListener(cb: (arg: IResponse) => void): void {
-		this.listeners.push(cb);
+	public addCallbackListener(cb: (arg: IResponse) => void): void {
+		this.callbacks.push(cb);
 	}
 
 	/**
 	 * Data received from BroadcastChannel
+	 * data that is broadcast needs to be a IMessage[] |ICloud or ISeries structure
 	 */
-	public startListener() {
+	public broadcastListener() {
 		const query: IQuery = this.query;
 
 		this.broadcastChannel.onmessage = async (messageEvent: MessageEvent) => {
 			const update: IQuery = messageEvent.data.data;
-
 			switch (messageEvent.data.event) {
 				case EVENTS.WIDGET_UPDATE:
-					try{
-						if (
-							update.query.slide === query.slide &&
-							update.query.widget === query.widget
-						) {
-							this.listeners.forEach((cb) => {
-								cb(messageEvent.data);
+					log(4, [
+						"%cwidget%c %cupdate",
+						CSS.WIDGET,
+						CSS.NONE,
+						CSS.GET_DATA,
+						this.query.type,
+						{ id: this.query.widget, element: this.element },
+					]);
+					try {
+						if (update.widget === query.widget) {
+							this.callbacks.forEach(async (cb) => {
+								const data = await this.getData();
+								cb(data);
 							});
 						}
-					} catch(e){
-						log(4,[EVENTS.WIDGET_UPDATE, update])
+					} catch (e) {
+						log(4, [EVENTS.WIDGET_UPDATE, update]);
 					}
 
 					break;
-				case EVENTS.SLIDE_READY:
+				case EVENTS.APP_READY:
 					this.subscribe();
 					break;
 				default:
@@ -93,21 +100,21 @@ export default class Widget {
 	 * This takes place when the container indicates it has finished loading (ready)
 	 */
 	subscribe() {
-		log(2,[
+		log(3, [
 			"%cwidget%c %csubscribe",
 			CSS.WIDGET,
 			CSS.NONE,
 			CSS.SUBSCRIBE,
-			this.query.slide,
-			this.query.widget
+			this.query.presentation,
+			this.query.widget,
 		]);
 
-		log(3,[
+		log(4, [
 			"%cwidget%c %csubscribe",
 			CSS.WIDGET,
 			CSS.NONE,
 			CSS.SUBSCRIBE,
-			this.query
+			this.query,
 		]);
 		this.broadcastChannel.postMessage({
 			event: EVENTS.SUBSCRIBE,
@@ -143,21 +150,21 @@ export default class Widget {
 	 */
 	public getCloud = async (): Promise<IResponse> => {
 		if (this.query.type !== API.CLOUD) {
-			console.warn(
+			log(4, [
 				"%cstorage%c %cwidget",
 				CSS.STORAGE,
 				CSS.NONE,
 				CSS.WIDGET,
 				this.query.widget,
 				"Wrong method call for getCloud, expected type is",
-				this.query.type
-			);
-			log(3,[
+				this.query.type,
+			]);
+			log(3, [
 				"%cstorage%c %cwidget",
 				CSS.API,
 				CSS.NONE,
 				CSS.CLOUD,
-				this.query
+				this.query,
 			]);
 			return {
 				data: null,
@@ -175,15 +182,15 @@ export default class Widget {
 	 */
 	public getMessages = async (): Promise<IResponse> => {
 		if (this.query.type !== API.MESSAGES) {
-			console.warn(
+			log(4, [
 				"%cstorage%c %cwidget",
 				CSS.STORAGE,
 				CSS.NONE,
 				CSS.WIDGET,
 				this.query.widget,
 				"Wrong method call for getMessages, expected type is",
-				this.query.type
-			);
+				this.query.type,
+			]);
 			return {
 				data: null,
 				message: `wrong method call for getMessages, expected type is '${this.query.type}'`,
@@ -191,12 +198,12 @@ export default class Widget {
 			};
 		}
 
-		log(3,[
+		log(3, [
 			"%cstorage%c %cwidget",
 			CSS.API,
 			CSS.NONE,
 			CSS.MESSAGES,
-			this.query
+			this.query,
 		]);
 		return await this.storageReader.getMessages(this.query);
 	};
@@ -208,21 +215,21 @@ export default class Widget {
 	 */
 	public getSeries = async (): Promise<IResponse> => {
 		if (this.query.type !== API.SERIES) {
-			console.warn(
+			log(3, [
 				"%cstorage%c %cwidget",
 				CSS.STORAGE,
 				CSS.NONE,
 				CSS.WIDGET,
 				this.query.widget,
 				"Wrong method call for getSeries, expected type is",
-				this.query.type
-			);
-			log(3,[
+				this.query.type,
+			]);
+			log(2, [
 				"%cstorage%c %cwidget",
-				CSS.API,
+				CSS.STORAGE,
 				CSS.NONE,
 				CSS.MESSAGES,
-				this.query
+				this.query,
 			]);
 			return {
 				data: null,
@@ -240,13 +247,13 @@ export default class Widget {
 	 * @param modal IModal
 	 */
 	public showModal = (modal: IModal) => {
-		log(3,[
+		log(3, [
 			"%cwidget",
 			CSS.WIDGET,
 			EVENTS.SHOW_MODAL,
 			modal.showComponent,
 			// @ts-ignore
-			attrs(this.element.attributes) //props['data-widget'],
+			attrs(this.element.attributes), //props['data-widget'],
 		]);
 		const ev = new CustomEvent(EVENTS.SHOW_MODAL, {
 			detail: {

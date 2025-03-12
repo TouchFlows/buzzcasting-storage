@@ -50,7 +50,6 @@ export declare interface ICloud {
 	total: number;
 	current_total: number;
 	previous_total: number;
-	query?: IQuery;
 }
 
 export declare interface ILabel {
@@ -108,7 +107,6 @@ export declare interface ITopic {
 
 export declare interface IDashboards {
 	dashboards: IDashboard[];
-  query?: IQuery
 }
 
 export declare interface IDashboard {
@@ -195,7 +193,6 @@ export declare interface IPreference {
 }
 
 export declare interface IPresentations {
-	query?: IQuery;
 	presentations: IPresentation[];
 }
 
@@ -211,7 +208,6 @@ export declare interface IPresentation {
 }
 
 export declare interface IWidgets {
-	query?: IQuery;
 	widgets: IWidget[];
 }
 
@@ -252,17 +248,14 @@ export declare interface IMessages {
 	dashboard?: string;
 	widget?: string;
 	topics?: string;
-	query: IQuery;
 }
 
 export declare interface ISlides {
-	query?: IQuery;
 	presentation: string;
 	slides: any;
 }
 
 export declare interface IPreferences {
-	query?: IQuery;
 	preferences: IPreference[];
 }
 
@@ -312,7 +305,6 @@ export declare interface ISeries {
 	metrics?: IMetrics;
 	indicators?: IIndicators;
 	timestamp?: number;
-	query?: IQuery;
 }
 
 export declare interface ISeriesData {
@@ -349,7 +341,7 @@ export declare interface IStorageOptions {
 	domain?: string;
 	cdn?: string;
 	channel?: string;
-	presentation?: string;
+	presentation: string;
 	slide?: string;
 	slides?: string[];
 	display?: string;

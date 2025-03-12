@@ -7,6 +7,7 @@ import KeyvalClient from "../storage/keyval";
 import LocalStorageClient from "../storage/local-storage";
 import SessionStorageClient from "../storage/session-storage";
 import WindowClient from "../storage/window";
+import { log } from "../utils";
 //import { hashSum } from "../utils";
 
 export class BuzzcastingStorageManager {
@@ -22,31 +23,32 @@ export class BuzzcastingStorageManager {
 	private bc: BroadcastChannel;
 	private options: IStorageOptions;
 	private subscribers: any = [];
+	//private temp: {[x:string]:any} = []
 
 	constructor(options: IStorageOptions) {
-		console.info(
-			"%cstorage%c %cslide",
+		log(3, [
+			"%cstorage%c %cpresentation",
 			CSS.STORAGE,
 			CSS.NONE,
-			CSS.SLIDE,
-			options.slide,
+			CSS.PRESENTATION,
+			options.presentation,
 			EVENTS.VERSION,
-			version
-		);
+			version,
+		]);
 		this.options = options;
 		this.sm = null;
 
-		const broadcast = options?.slide || options.app;
+		const broadcast = options.presentation;
 		this.bc = new BroadcastChannel(broadcast);
 
-		console.info(
+		log(3, [
 			"%capi%c %cbroadcast",
 			CSS.API,
 			CSS.NONE,
 			CSS.BROADCAST,
 			EVENTS.CHANNEL,
-			broadcast
-		);
+			broadcast,
+		]);
 		this.bc.onmessage = (messageEvent: MessageEvent) => {
 			this.actions(messageEvent);
 		};
@@ -75,253 +77,209 @@ export class BuzzcastingStorageManager {
 	}
 
 	public addSubscriber(query: IQuery) {
-		if (this.subscribers[query.widget] === undefined)
-			this.subscribers[query.widget] = query;
+		this.subscribers[query.widget] = query;
 	}
 
 	public update = async (query: IQuery) => {
-		if (this.sm === null) {
+		if (this.sm === null || Object.keys(this.subscribers).length === 0) {
 			return;
 		}
-		// const subscribers: IQuery[] = await this.sm.getSubscribers();
-		// if (subscribers.length === 0) {
-		// 	return;
-		// }
 
-		const subscriberQuery: any[] = [];
+		const subscriberQueries: any[] = [];
 
-		// single update for initial load
-		if (query?.subscribers) {
-			query.subscribers.forEach((apiQuery: IQuery) => {
-				// Paralelize calls
-				this.addSubscriber(apiQuery);
-				subscriberQuery.push(this.api.get(apiQuery));
-			});
-		} else {
-			this.addSubscriber(query);
-			subscriberQuery.push(this.api.get(query));
-		}
+		Object.values(this.subscribers).forEach((apiQuery: any) => {
+			// Paralelize calls
+			subscriberQueries.push(this.api.get(apiQuery));
+		});
 
-		await Promise.allSettled(subscriberQuery).then((results) =>
-			results.forEach(async (res) => {
+		await Promise.allSettled(subscriberQueries).then((results) =>
+			results.forEach(async (response) => {
 				let data;
 				let status: number | void = 400;
-				if (res.status === "fulfilled") {
-					let result = res.value;
-					if (this.sm === null) {
-						return 400;
-					}
-					if (result.success === true) {
-						const previousQuery = this.subscribers[result.query.widget];
-
-						// const previousQuery = this.subscribers.filter(
-						// 	(query: IQuery) => query.widget === result.query.widget
-						// )[0];
+				if (response.status === "fulfilled") {
+					let resp = response.value;
+					if (resp.success === true) {
+						const previousHash = this.subscribers[resp.query.widget];
 						let newHash: string | any[] = "";
-						let filteredMessages: any[];
-						switch (result.query.type) {
+
+						switch (resp.query.type) {
 							case API.MESSAGES:
-								filteredMessages = result.data.messages.filter(
+								// check that message has an ID
+								let filteredMessages: any[];
+								filteredMessages = resp.data.messages.filter(
 									(msg: any) => msg.id !== null
 								);
-								result.data.messages = filteredMessages;
+								resp.data.messages = filteredMessages;
 								// check if any topic dynamics have changed
-								newHash = hashSum(result.data.messages);
-								if (previousQuery?.hash && previousQuery.hash === newHash) {
-									console.info(
+								newHash = hashSum(resp.data.messages);
+								if (previousHash?.hash && previousHash.hash === newHash) {
+									log(3, [
 										"%capi%c %cno updates",
 										CSS.API,
 										CSS.NONE,
 										CSS.NO_UPDATES,
 										API.MESSAGES,
-										result.query.slide,
-										result.query.widget
-									);
+										resp.query.widget,
+									]);
 
-									console.debug(
+									log(4, [
 										"%capi%c %cno updates",
 										CSS.API,
 										CSS.NONE,
 										CSS.NO_UPDATES,
 										API.MESSAGES,
-										result
-									);
-									return 204;
+										resp,
+									]);
+									status = 204;
 								} else {
-									data = result;
-									previousQuery.hash = newHash;
-									status = await this.sm.setMessages(result.query, result);
+									data = resp;
+									previousHash.hash = newHash;
+									status = await this.sm?.setMessages(resp.query, resp)
+										.then((code) => {
+											setTimeout(() => {
+												code = 201
+												this.broadcastUpdate(code, resp);
+												return code
+											}, 500); // MTM allow tuning thru options
+										});
 								}
 								break;
 							case API.CLOUD:
-								newHash = hashSum(result.data);
-								if (previousQuery?.hash && previousQuery.hash === newHash) {
-									console.info(
+								newHash = hashSum(resp.data.cloud);
+								if (previousHash?.hash && previousHash.hash === newHash) {
+									log(3, [
 										"%capi%c %cno updates",
 										CSS.API,
 										CSS.NONE,
 										CSS.NO_UPDATES,
 										API.CLOUD,
-										result.query.slide,
-										result.query.widget
-									);
+										resp.query.widget,
+									]);
 
-									console.debug(
+									log(4, [
 										"%capi%c %cno updates",
 										CSS.API,
 										CSS.NONE,
 										CSS.NO_UPDATES,
 										API.CLOUD,
-										result
-									);
+										resp,
+									]);
 									status = 204;
 								} else {
-									previousQuery.hash = newHash;
+									previousHash.hash = newHash;
 									data = {
 										data: {
-											dashboard: result.query.dashboard,
-											cloud: result.data,
-											query: result.query,
-											slide: result.query.slide,
+											cloud: resp.data,
 										},
-										query: result.query,
-										message: result.message,
-										success: result.success,
+										message: resp.message,
+										success: resp.success,
+										query: resp.query,
 									};
-									status = await this.sm.setCloud(
-										result.query,
-										data.data.cloud
-									);
+									status = await this.sm
+										?.setCloud(resp.query, data.data)
+										.then((code) => {
+											return this.broadcastUpdate(code, resp);
+										});
 								}
 								break;
 							case API.SERIES:
-								newHash = hashSum(result.data);
-								if (previousQuery?.hash && previousQuery.hash === newHash) {
-									console.info(
+								newHash = hashSum(resp.data.series);
+								if (previousHash?.hash && previousHash.hash === newHash) {
+									log(3, [
 										"%capi%c %cno updates",
 										CSS.API,
 										CSS.NONE,
 										CSS.NO_UPDATES,
 										API.SERIES,
-										result.query.slide,
-										result.query.widget
-									);
-									console.debug(
+										resp.query.widget,
+									]);
+									log(4, [
 										"%capi%c %cno updates",
 										CSS.API,
 										CSS.NONE,
 										CSS.NO_UPDATES,
 										API.SERIES,
-										result
-									);
+										resp,
+									]);
 									status = 204;
 								} else {
-									previousQuery.hash = newHash;
+									previousHash.hash = newHash;
 									data = {
-										data: {
-											dashboard: result.query.dashboard,
-											series: result.data,
-											query: result.query,
-											slide: result.query.slide,
-										},
-										query: result.query,
-										message: result.message,
-										success: result.success,
+										data: resp.data,
+										message: resp.message,
+										success: resp.success,
+										query: resp.query,
 									};
-									status = await this.sm.setSeries(
-										result.query,
-										data.data.series
-									);
+									status = await this.sm
+										?.setSeries(resp.query, resp.data)
+										.then((code) => {
+											return this.broadcastUpdate(code, resp);
+										});
 								}
 								break;
 							default:
-								console.warn(
+								log(4, [
 									"%capi%c %cstorage",
 									CSS.API,
 									CSS.NONE,
 									CSS.STORAGE,
 									"error",
-									`data type ${result.query.type} unknown`
-								);
+									`Bad request: type ${resp.query.type} unknown`,
+								]);
+								status = 400;
 						}
 					} else {
 						status = 401;
 					}
-					switch (status) {
-						case 201:
-							console.info(
-								"%capp%c %cbroadcast",
-								CSS.API,
-								CSS.NONE,
-								CSS.BROADCAST,
-								result.query.slide,
-								result.data.title ?? result.query.widget
-							);
-							console.debug(
-								"%capp%c %cbroadcast",
-								CSS.API,
-								CSS.NONE,
-								CSS.BROADCAST,
-								result
-							);
-							const query = structuredClone(data.query);
-							switch (result.query.type) {
-								case "messages":
-									result = await this.sm.getMessages(query);
-									break;
-								case "cloud":
-									result = await this.sm.getCloud(query);
-									if (result) result.query = query;
-									break;
-								case "series":
-									result = await this.sm.getSeries(query);
-									if (result) result.query = query;
-									break;
-								default:
-									console.warn(
-										"%capp%c %cbroadcast",
-										CSS.API,
-										CSS.NONE,
-										CSS.BROADCAST,
-										"Unhandled data type",
-										result.query
-									);
-							}
-							result &&
-								this.bc.postMessage({
-									event: EVENTS.WIDGET_UPDATE,
-									data: result.data,
-								});
-							break;
-						case 204:
-							// Not modified
-							break;
-						default:
-							console.warn(
-								"%capp%c %cbroadcast",
-								CSS.API,
-								CSS.NONE,
-								CSS.BROADCAST,
-								"Fetch error",
-								result.query.slide,
-								result.data.title ?? result.query.widget
-							);
-							break;
-					}
 					return status;
 				} else {
-					console.warn(
-						"%capi%c %cstorage",
-						CSS.API,
+					log(2, [
+						"%capp%c %cstorage",
+						CSS.APP,
 						CSS.NONE,
 						CSS.STORAGE,
 						EVENTS.ERROR,
-						res.status
-					);
+						response.status,
+					]);
 					return 400;
 				}
 			})
 		);
+	};
+
+	private broadcastUpdate = (status: number, resp: IResponse) => {
+		switch (status) {
+			case 201:
+				log(3, [
+					"%capp%c %cbroadcast",
+					CSS.APP,
+					CSS.NONE,
+					CSS.BROADCAST,
+					//@ts-ignore
+					resp.data?.title ?? resp.query.widget,
+				]);
+				log(4, ["%capp%c %cbroadcast", CSS.APP, CSS.NONE, CSS.BROADCAST, resp]);
+				this.bc.postMessage({
+					event: EVENTS.WIDGET_UPDATE,
+					data: resp.query,
+				});
+				break;
+			case 204:
+				// Not modified
+				break;
+			default:
+				log(2, [
+					"%capp%c %cbroadcast",
+					CSS.APP,
+					CSS.NONE,
+					CSS.BROADCAST,
+					"Fetch error",
+					// @ts-ignore
+					resp.data.title ?? resp.query.widget,
+				]);
+				break;
+		}
+		return status;
 	};
 
 	public hide = (query: IQuery) => {
@@ -331,17 +289,18 @@ export class BuzzcastingStorageManager {
 	private actions = async (messageEvent: MessageEvent) => {
 		switch (messageEvent.data.event) {
 			case EVENTS.SUBSCRIBE:
-				this.sm?.subscribe(messageEvent.data.data);
+				this.addSubscriber(messageEvent.data.data);
+
 				break;
 			case EVENTS.UPDATE:
-				console.debug(
+				log(3, [
 					"%capi%c %cstorage",
 					CSS.API,
 					CSS.NONE,
 					CSS.STORAGE,
 					EVENTS.UPDATE,
-					messageEvent.data
-				);
+					messageEvent.data,
+				]);
 				await this.update(messageEvent.data.data);
 				break;
 			default:
@@ -350,13 +309,13 @@ export class BuzzcastingStorageManager {
 
 	public cleanMessages = async () => {
 		if (this.options?.suspended) {
-			console.info(
+			log(2, [
 				"%cstorage%c %cstorage",
 				CSS.STORAGE,
 				CSS.NONE,
 				CSS.MESSAGES,
-				`Account suspended`
-			);
+				`Account suspended`,
+			]);
 			return;
 		}
 
@@ -366,25 +325,25 @@ export class BuzzcastingStorageManager {
 			retentionDuration
 		);
 
-		console.info(
+		log(2, [
 			"%cstorage%c %cstorage",
 			CSS.STORAGE,
 			CSS.NONE,
 			CSS.MESSAGES,
-			`${count} messages deleted`
-		);
+			`${count} messages deleted`,
+		]);
 	};
 
 	public hideMessage = async (query: IQuery): Promise<IResponse> => {
 		const count = await this.sm?.hideMessage(query.id, 0);
 
-		console.info(
+		log(2, [
 			"%cstorage%c %cstorage",
 			CSS.STORAGE,
 			CSS.NONE,
 			CSS.HIDE,
-			`${count} messages hidden`
-		);
+			`${count} messages hidden`,
+		]);
 
 		return await this.api.hideMessage(query);
 	};
@@ -426,7 +385,9 @@ export class BuzzcastingStorageManager {
 		return await this.sm?.getPresentation(query);
 	};
 
-	public getPresentations = async (query?: IQuery): Promise<IResponse | undefined> => {
+	public getPresentations = async (
+		query?: IQuery
+	): Promise<IResponse | undefined> => {
 		return await this.sm?.getPresentations(query);
 	};
 
@@ -452,7 +413,9 @@ export class BuzzcastingStorageManager {
 		return await this.sm?.getPreference(preference);
 	};
 
-	public getPreferences = async (query?:IQuery): Promise<IResponse | undefined> => {
+	public getPreferences = async (
+		query?: IQuery
+	): Promise<IResponse | undefined> => {
 		return await this.sm?.getPreferences(query);
 	};
 
@@ -462,7 +425,9 @@ export class BuzzcastingStorageManager {
 		return await this.sm?.setPreference(preference);
 	};
 
-	public loadPreference = async (preference: IPreference): Promise<IResponse | undefined> => {
+	public loadPreference = async (
+		preference: IPreference
+	): Promise<IResponse | undefined> => {
 		return await this.api.loadPreference(preference);
 	};
 
@@ -476,7 +441,9 @@ export class BuzzcastingStorageManager {
 		return await this.api.loadDashboardWidgets(query);
 	};*/
 
-	public loadDashboards = async (query?: IQuery): Promise<IResponse | undefined> => {
+	public loadDashboards = async (
+		query?: IQuery
+	): Promise<IResponse | undefined> => {
 		return await this.api.loadDashboards(query);
 	};
 
@@ -484,7 +451,9 @@ export class BuzzcastingStorageManager {
 		return await this.sm?.getWidget(query);
 	};
 
-	public getWidgets = async (query?:IQuery): Promise<IResponse | undefined> => {
+	public getWidgets = async (
+		query?: IQuery
+	): Promise<IResponse | undefined> => {
 		return await this.sm?.getWidgets(query);
 	};
 

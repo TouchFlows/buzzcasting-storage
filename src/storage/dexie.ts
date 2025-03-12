@@ -51,32 +51,29 @@ export default class DexieClient {
 			.where({ id: query.widget })
 			.last()
 			.catch(() => {
-				console.warn(
-					"%capi%C %ccloud",
-					CSS.API,
-					CSS.NONE,
-					CSS.CLOUD,
-					query.slide,
-					query.widget
-				);
+				log(2, ["%capi%C %ccloud", CSS.API, CSS.NONE, CSS.CLOUD, query.widget]);
 			});
 		if (typeof data === "undefined") {
-			return { data: null, message: "Cloud Data error", success: false };
+			return { data: null, message: "Cloud Data error", success: false, query };
 		}
-		console.debug(
+		const resp = {
+			data: data.data,
+			message:
+				data !== undefined
+					? "Series retrieved successfully"
+					: "Series Data error",
+			success: data !== undefined,
+			query,
+		};
+		log(3, [
 			"%cstorage%c %ccloud",
 			CSS.STORAGE,
 			CSS.NONE,
 			CSS.CLOUD,
-			data
-		);
-		data.data.presentation = query?.presentation || "not set";
-		data.data.slide = query?.slide || "not set";
-		data.data.query = query;
-		data.query = query;
-		data.message = "Cloud retrieved successfully";
-		data.success = true;
-		return data;
+			"get",
+			resp,
+		]);
+		return resp;
 	};
 
 	/**
@@ -110,7 +107,7 @@ export default class DexieClient {
 			.where({ id: query.id })
 			.last()
 			.catch(() => {
-				console.warn("%cstorage", CSS.STORAGE, EVENTS.DASHBOARD_LOAD, query.id);
+				log(2, ["%cstorage", CSS.STORAGE, EVENTS.DASHBOARD_LOAD, query.id]);
 			});
 		if (data === undefined) {
 			return {
@@ -174,8 +171,8 @@ export default class DexieClient {
 	 * @returns number
 	 */
 	setDashboard = async (query: IQuery): Promise<IResponse> => {
-		const q = structuredClone(query)
-		delete q.data.widgets
+		const q = structuredClone(query);
+		delete q.data.widgets;
 		return await this.db
 			.table(API.DASHBOARD)
 			.put({
@@ -302,7 +299,12 @@ export default class DexieClient {
 				.sortBy(order);
 
 			if (topicMessages.length === 0) {
-				return { data: null, message: "No Messages error", success: false };
+				return {
+					data: null,
+					message: "No Messages error",
+					success: false,
+					query,
+				};
 			}
 
 			//let messages: any[] = [];
@@ -317,23 +319,20 @@ export default class DexieClient {
 				});
 				const data = {
 					data: {
-						presentation: query?.presentation || "not set",
-						slide: query?.slide || "not set",
 						messages: filtered,
-						dashboard: query.dashboard,
-						widget: query.widget,
-						query,
 					},
+					query,
 					message: "Messages retrieved successfully",
 					success: true,
 				};
-				console.debug(
+				log(4, [
 					"%cstorage%c %cmessages",
 					CSS.STORAGE,
 					CSS.NONE,
 					CSS.MESSAGES,
-					data
-				);
+					"get",
+					data,
+				]);
 				return data;
 			});
 		} catch (error) {
@@ -384,7 +383,7 @@ export default class DexieClient {
 		// const topics: string = data.data.topics
 		let errorCount: number = 0;
 
-		data.data.messages.forEach(async (message: IMessage) => {
+		return await data.data.messages.forEach(async (message: IMessage) => {
 			if (message.id !== null) {
 				await this.db
 					.table(API.MESSAGES)
@@ -404,74 +403,79 @@ export default class DexieClient {
 							message,
 							error.message
 						);
-					});
-				/**
-				 * Update topics table with new engagement stats
-				 * using put to replace the whole entry
-				 */
-				await this.db
-					.table(API.TOPICS)
-					.put({
-						title,
-						widget_id: query.widget,
-						message_id: message.id,
-						dashboard_id: query.dashboard,
-						engagement:
-							message.topics[0]?.engagement ||
-							message.dynamics?.engagement ||
-							0,
-						impressions:
-							message.topics[0]?.impressions ||
-							message.dynamics?.semrush_visits ||
-							0,
-						reach:
-							message.topics[0]?.reach ||
-							message.dynamics?.potential_reach ||
-							0,
-						sentiment: message.topics[0]?.sentiment || 0,
-						utc: message.utc,
-						expires: message.expires,
 					})
-					.catch((error: Error) => {
-						errorCount++;
-						console.error(
-							"%cstorage",
-							CSS.STORAGE,
-							"set topic",
-							`title: ${title}`,
-							message,
-							error.message
-						);
+					.then(async () => {
+						/**
+						 * Update topics table with new engagement stats
+						 * using put to replace the whole entry
+						 */
+						await this.db
+							.table(API.TOPICS)
+							.put({
+								title,
+								widget_id: query.widget,
+								message_id: message.id,
+								dashboard_id: query.dashboard,
+								engagement:
+									message.topics[0]?.engagement ||
+									message.dynamics?.engagement ||
+									0,
+								impressions:
+									message.topics[0]?.impressions ||
+									message.dynamics?.semrush_visits ||
+									0,
+								reach:
+									message.topics[0]?.reach ||
+									message.dynamics?.potential_reach ||
+									0,
+								sentiment: message.topics[0]?.sentiment || 0,
+								utc: message.utc,
+								expires: message.expires,
+							})
+							.catch((error: Error) => {
+								errorCount++;
+								console.error(
+									"%cstorage",
+									CSS.STORAGE,
+									"set topic",
+									`title: ${title}`,
+									message,
+									error.message
+								);
+							});
+					})
+					.then(async () => {
+						/**
+						 * Update topics table with messages that have become invisible
+						 * (including in other topics)
+						 */
+						await data.data.topics.forEach(async (topic: ITopic) => {
+							const id = topic.message_id,
+								show = topic.visible ? 1 : 0,
+								title = topic.title;
+							await this.db
+								.table(API.TOPICS)
+								.where("message_id")
+								.equals(id)
+								.modify({ visible: show })
+								.catch((error: Error) => {
+									errorCount++;
+									console.error(
+										"%cstorage",
+										CSS.STORAGE,
+										"update message visibility",
+										`title: ${title}`,
+										`widget: ${topic.widget_id}`,
+										error.message
+									);
+								});
+						});
+					})
+					.then(() => {
+						return errorCount === 0 ? 201 : 400;
 					});
 			}
 		});
-		/**
-		 * Update topics table with messages that have become invisible
-		 * (including in other topics)
-		 */
-		data.data.topics.forEach(async (topic: ITopic) => {
-			const id = topic.message_id,
-				show = topic.visible ? 1 : 0,
-				title = topic.title;
-			await this.db
-				.table(API.TOPICS)
-				.where("message_id")
-				.equals(id)
-				.modify({ visible: show })
-				.catch((error: Error) => {
-					errorCount++;
-					console.error(
-						"%cstorage",
-						CSS.STORAGE,
-						"update message visibility",
-						`title: ${title}`,
-						`widget: ${topic.widget_id}`,
-						error.message
-					);
-				});
-		});
-
-		return errorCount === 0 ? 201 : 400;
 	};
 
 	/**
@@ -486,31 +490,26 @@ export default class DexieClient {
 			.last()
 			.catch(() => {
 				console.warn(
-					"%capi%c %cseries",
-					CSS.API,
+					"%storage%c %cseries",
+					CSS.STORAGE,
 					CSS.NONE,
 					CSS.SERIES,
-					query.slide,
 					query.widget
 				);
 			});
-		if (data === undefined) {
-			return { data: null, message: "Series Data error", success: false };
-		}
-		console.debug(
-			"%cstorage%c %cseries",
-			CSS.STORAGE,
-			CSS.NONE,
-			CSS.SERIES,
-			data
-		);
-		data.data.presentation = query?.presentation || "not set";
-		data.data.slide = query?.slide || "not set";
-		data.data.query = query;
-		data.query = query;
-		data.message = "Series retrieved successfully";
-		data.success = true;
-		return data;
+
+		const resp = {
+			data: data.data,
+			message:
+				data !== undefined
+					? "Series retrieved successfully"
+					: "Series Data error",
+			success: data !== undefined,
+			query,
+		};
+		log(3, ["%cstorage%c %cseries", CSS.STORAGE, CSS.NONE, CSS.SERIES, resp]);
+
+		return resp;
 	};
 
 	/**
@@ -520,6 +519,7 @@ export default class DexieClient {
 	 * @returns number
 	 */
 	setSeries = async (query: IQuery, data: any): Promise<number> => {
+		delete data?.query;
 		if (query.type === API.SERIES && data !== "") {
 			return await this.db
 				.table(API.SERIES)

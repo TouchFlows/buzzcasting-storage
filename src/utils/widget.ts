@@ -24,9 +24,9 @@ export function widgetParams(query: IQuery): IQuery {
       query.dashboard = query.slide
     }
   }
-  if (query.topics === undefined) {
-    query.topics = `${query.dashboard}-${query.widget}`
-  }
+  // if (query.topics === undefined) {
+  //   query.topics = `${query.dashboard}-${query.widget}`
+  // }
   return query
 }
 

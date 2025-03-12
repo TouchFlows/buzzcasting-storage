@@ -7,9 +7,98 @@
   </head>
   <body>
     <div id="app"></div>
+    <buzzcasting-presentation id="01j7h4f0y32njz7bthhqrtyq5s">
+      <buzzcasting-slide id="un">
+        <cards-widget
+          id="cards"
+          layout="base"
+          component="card-image-top"
+          data-type="messages"
+          data-order="engagement"
+          data-dashboard="lzzzniev_1670v2kaule1j"
+          data-widget="40a93a9f_6c51_4dd7_a44e_0c206dc6df8f"
+          show-kpi="false"
+          css-date="text-base text-white"
+          show-brand="false"
+          show-sender="false"
+          css-card="gap-4 h-[430px]"
+          css-body="overflow-clip text-xl text-white break-words h-[136px]"
+          css-brand="h-6 w-6 text-white bg-white/50 rounded-full text-shadow-none"
+          css-handle="text-white text-base"
+          css-name="font-bold text-white text-xl"
+          date-format="long"
+          animation="0"
+          interval="8000"
+        ></cards-widget>
+        <series-widget
+          id="series"
+          component="kpi-evolution"
+          data-type="series"
+          data-dashboard="lzzzniev_1670v2kaule1j"
+          data-widget="75848543_58e8_4d44_82e2_7eb01239349a"
+          css-arrow-down="bg-arrow-down-red rounded-full h-6 w-6 bg-white bg-arrow-up-green,rounded-full,h-6,w-6,bg-white"
+          css-body="px-4 text-40 font-publico-light gap-x-3"
+          css-brand="h-6 w-6 bg-linkedin-logo"
+          css-change="font-serif-regular text-3xl text-center self-center"
+          css-count="text-white font-serif-regular text-4xl self-center"
+          css-down="text-white self-end"
+          css-up="text-white self-end"
+          class="hydrated"
+        ></series-widget>
+        <cloud-axagroup-ambassadors
+          id="cloud"
+          data-type="cloud"
+          data-dashboard="01JD32_VDXWMXA_WC2D"
+          data-widget="BMKPN_W4RH"
+          c-host=""
+          class="grid grid-cols-[1fr_1px_1fr]"
+        />
+      </buzzcasting-slide>
+      <buzzcasting-slide id="deux">
+        <cards-widget
+          id="cards-2"
+          layout="base"
+          component="card-image-top"
+          data-type="messages"
+          data-order="engagement"
+          data-dashboard="lzzzniev_1670v2kaule1j"
+          data-widget="40a93a9f_6c51_4dd7_a44e_0c206dc6df8f"
+          show-kpi="false"
+          css-date="text-base text-white"
+          show-brand="false"
+          show-sender="false"
+          css-card="gap-4 h-[430px]"
+          css-body="overflow-clip text-xl text-white break-words h-[136px]"
+          css-brand="h-6 w-6 text-white bg-white/50 rounded-full text-shadow-none"
+          css-handle="text-white text-base"
+          css-name="font-bold text-white text-xl"
+          date-format="long"
+          animation="0"
+          interval="8000"
+        ></cards-widget>
+        <series-widget
+          id="series-2"
+          component="kpi-evolution"
+          data-type="series"
+          data-dashboard="lzzzniev_1670v2kaule1j"
+          data-widget="75848543_58e8_4d44_82e2_7eb01239349a"
+          css-arrow-down="bg-arrow-down-red rounded-full h-6 w-6 bg-white bg-arrow-up-green,rounded-full,h-6,w-6,bg-white"
+          css-body="px-4 text-40 font-publico-light gap-x-3"
+          css-brand="h-6 w-6 bg-linkedin-logo"
+          css-change="font-serif-regular text-3xl text-center self-center"
+          css-count="text-white font-serif-regular text-4xl self-center"
+          css-down="text-white self-end"
+          css-up="text-white self-end"
+        ></series-widget>
+      </buzzcasting-slide>
+    </buzzcasting-presentation>
     <script type="module" src="/src/index.ts"></script>
     <script type="module">
-      import { BuzzcastingStorageManager, BuzzcastingStorageReader } from ".";
+      import {
+        BuzzcastingStorageManager,
+        BuzzcastingStorageReader,
+        Widget,
+      } from ".";
       let options = {
         app: import.meta.env.VITE_APP,
         domain: import.meta.env.VITE_DOMAIN,
@@ -23,23 +112,23 @@
         beforeTime: "00:00:00",
         delay: 0,
         period: 0,
-        slide: "slide9",
+        presentation: "01j7h4f0y32njz7bthhqrtyq5s",
         suspended: "1",
       };
 
-      const query = {
-        type: "messages",
-        dashboard: "lzzzniev_1670v2kaule1j",
-        widget: "40a93a9f_6c51_4dd7_a44e_0c206dc6df8f",
-        slide: options.slide,
-      };
+      // let query = {
+      //   type: "messages",
+      //   dashboard: "lzzzniev_1670v2kaule1j",
+      //   widget: "40a93a9f_6c51_4dd7_a44e_0c206dc6df8f",
+      //   slide: options.slide,
+      // };
 
-      const query2 = {
-        type: "cloud",
-        dashboard: "01JD32_VDXWMXA_WC2D", //"axa_com",
-        widget: "BMKPN_W4RH", //"articles",
-        slide: options.slide,
-      };
+      // let query2 = {
+      //   type: "cloud",
+      //   dashboard: "01JD32_VDXWMXA_WC2D", //"axa_com",
+      //   widget: "BMKPN_W4RH", //"articles",
+      //   slide: options.slide,
+      // };
 
       // const query = {
       //   type: "messages",
@@ -140,26 +229,44 @@
         },
       };
 
-      const bc = new BroadcastChannel(options.slide);
+      const bc = new BroadcastChannel(options.presentation);
       const sm = new BuzzcastingStorageManager(options);
       const sr = new BuzzcastingStorageReader(options);
-      bc.onmessage = (ev) => console.log(ev);
-      window.BuzzCasting = { storage: sm, reader: sr };
-      bc.postMessage({ event: "subscribe", data: query });
+
+      //bc.onmessage = (ev) => console.log(options.presentation, ev.data);
+
+      const setData = (data) => {
+        const el = document.querySelector(
+          `[data-widget='${data.query.widget}']`
+        );
+        if (data.data) {
+          el.innerHTML = JSON.stringify(data.data[data.query.type]);
+        }
+      };
+
+      //document.getElementById("app").innerHTML = JSON.stringify(data)
+
+      window.BuzzCasting = {
+        storage: sm,
+        reader: sr,
+        getOptions: () => options,
+      };
+
+      //bc.postMessage({ event: "subscribe", data: query });
       //bc.postMessage({ event: "update" });
-      let data;
-      switch (query.type) {
-        case "messages":
-          data = await sr.getMessages(query);
-          break;
-        case "cloud":
-          data = await sr.getCloud(query);
-          break;
-        case "series":
-          data = await sr.getSeries(query);
-          break;
-      }
-      document.getElementById("app").innerHTML = JSON.stringify(data);
+      // let data;
+      // switch (query.type) {
+      //   case "messages":
+      //     data = await sr.getMessages(query);
+      //     break;
+      //   case "cloud":
+      //     data = await sr.getCloud(query);
+      //     break;
+      //   case "series":
+      //     data = await sr.getSeries(query);
+      //     break;
+      // }
+      // document.getElementById("app").innerHTML = JSON.stringify(data);
 
       // await bc.postMessage({
       //   event: "update",
@@ -167,62 +274,84 @@
       // });
 
       // await bc.postMessage({ event: "update", data: query2 });
-      // await bc.postMessage({
-      //   event: "update",
-      //   data: { slide: query.slide, subscribers: [query] },
-      // });
+      //console.debug({ slide: query.slide, subscribers: [query] });
+
+      const cards = new Widget(document.getElementById("cards"), [setData]);
+
+      const series = new Widget(document.getElementById("series"), [setData]);
+
+      const cloud = new Widget(document.getElementById("cloud"), [setData]);
+
+      const cards2 = new Widget(document.getElementById("cards-2"), [setData]);
+
+      const series2 = new Widget(document.getElementById("series-2"), [
+        setData,
+      ]);
+
+      await bc.postMessage({
+        event: "appReady",
+        data: { presentation: options.presentation },
+      });
+
+      //console.log(widget);
+      setTimeout(async () => {
+        await bc.postMessage({
+          event: "update",
+          data: { presentation: options.presentation },
+        });
+      }, 2000);
 
       //await bc.postMessage(bigcall);
       //const db = await sm.getDashboard({id: 'lzzzniev_1670v2kaule1j'})
 
-      const db_wd = await sm.loadDashboards();
-      db_wd.data.dashboards.forEach(async (dashboard) => {
-        const upd = structuredClone(dashboard)
-        delete upd.widgets
-        await sm.setDashboard({
-          id: dashboard.id,
-          name: dashboard.title,
-          data: upd,
-          update: Date.now(),
-        });
-        dashboard.widgets.forEach(async (widget) => {
-          //"id,name,dashboard_id,type,update",
-          await sm.setWidget({
-            id: widget.id,
-            dashboard_id: dashboard.id,
-            title: widget.title,
-            type: widget.type,
-            data: widget,
-            update: Date.now(),
-          });
-        });
-      });
+      // const db_wd = await sm.loadDashboards();
+      // db_wd.data.dashboards.forEach(async (dashboard) => {
+      //   const upd = structuredClone(dashboard)
+      //   delete upd.widgets
+      //   await sm.setDashboard({
+      //     id: dashboard.id,
+      //     name: dashboard.title,
+      //     data: upd,
+      //     update: Date.now(),
+      //   });
+      //   dashboard.widgets.forEach(async (widget) => {
+      //     //"id,name,dashboard_id,type,update",
+      //     await sm.setWidget({
+      //       id: widget.id,
+      //       dashboard_id: dashboard.id,
+      //       title: widget.title,
+      //       type: widget.type,
+      //       data: widget,
+      //       update: Date.now(),
+      //     });
+      //   });
+      // });
 
-      console.log(
-        await sm.getWidgets({
-          dashboard: "m014uvvd_1670v2kans4xs",
-          type: "cloud",
-        })
-      );
+      // console.log(
+      //   await sm.getWidgets({
+      //     dashboard: "m014uvvd_1670v2kans4xs",
+      //     type: "cloud",
+      //   })
+      // );
 
-      const d = await sm.loadDashboards();
-      //const d = await sm.getDashboards();
-      console.log(d);
-      if (d.success) {
-        d.data.dashboards.forEach(async (dashboard) => {
-          //console.warn(dashboard.title)
-          await sm.setDashboard({
-            id: dashboard.id,
-            name: dashboard.title,
-            data: dashboard,
-            update: Date.now(),
-          });
+      // const d = await sm.loadDashboards();
+      // //const d = await sm.getDashboards();
+      // console.log(d);
+      // if (d.success) {
+      //   d.data.dashboards.forEach(async (dashboard) => {
+      //     //console.warn(dashboard.title)
+      //     await sm.setDashboard({
+      //       id: dashboard.id,
+      //       name: dashboard.title,
+      //       data: dashboard,
+      //       update: Date.now(),
+      //     });
 
-          const db = await sm.getDashboard({ id: dashboard.id });
-          console.log(db);
-          //sm.setSlide({ id: widget.id, data: slide, name: slide.title });
-        });
-      }
+      //     const db = await sm.getDashboard({ id: dashboard.id });
+      //     console.log(db);
+      //     //sm.setSlide({ id: widget.id, data: slide, name: slide.title });
+      //   });
+      // }
 
       // const slides = await sm.loadSlide({ id: "" });
       // slides.data.forEach((slide) => {
@@ -246,10 +375,15 @@
       // pres.data.forEach((p) => {
       //   sm.setPresentation({ id: p.id, data: p, name: p.title });
       // });
-      const p = { name: "a" };
-      console.log("p", p);
-      console.log(await sm.getPresentations(p));
-      //console.log(await sm.getPreference({id:'tailwindConfig'}));
+      // const p = { name: "a" };
+      // // console.log("p", p);
+      // console.log(await sm.getPresentations(p));
+      // console.log(await sm.getSubscribers());
+      // //console.log(await sm.getPreference({id:'tailwindConfig'}));
+      // await bc.postMessage({
+      //   event: "update",
+      //   data: { slide: query.slide, subscribers: [query] },
+      // });
     </script>
   </body>
 </html>

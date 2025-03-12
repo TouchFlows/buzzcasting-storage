@@ -1,5 +1,12 @@
-import type { IDashboard, IPreference, IQuery, IResponse, IStorageOptions } from "..";
+import type {
+	IDashboard,
+	IPreference,
+	IQuery,
+	IResponse,
+	IStorageOptions,
+} from "..";
 import { API, CSS, EVENTS } from "..";
+import { log } from "../utils";
 
 export default class ApiClient {
 	private options: IStorageOptions;
@@ -38,24 +45,32 @@ export default class ApiClient {
 		const { version }: IStorageOptions = this.options;
 		const headers = this.headers();
 
-		const search = Object.assign({}, query);
-		delete search.slide;
+		const search: IQuery = Object.assign({}, query);
 		delete search.type;
 		delete search.hash;
 		delete search.order;
-		delete search.period;
+		//delete search.period;
+		delete search.presentation
 		const params =
 			Object.keys(search).length > 0
 				? `?${new URLSearchParams(search).toString()}`
 				: "";
-		console.info(
+		log(3, [
 			"%capi%c %cfetch",
 			CSS.API,
 			CSS.NONE,
 			CSS.GET_DATA,
-			query.widget
-		);
-		console.debug("%capi%c %cfetch", CSS.API, CSS.NONE, CSS.GET_DATA, search);
+			query.type,
+			query.widget,
+		]);
+		log(4, [
+			"%capi%c %cfetch",
+			CSS.API,
+			CSS.NONE,
+			CSS.GET_DATA,
+			query.type,
+			search,
+		]);
 
 		return await fetch(
 			[this.url, "api", version, query.type].join("/") + params,
@@ -72,7 +87,6 @@ export default class ApiClient {
 			})
 			.then((json: IResponse): IResponse => {
 				json.query = query;
-				if (json.data) json.data.query = query;
 				return json;
 			})
 			.catch((code) => {
@@ -153,20 +167,13 @@ export default class ApiClient {
 		const headers = this.headers();
 
 		const search = Object.assign({}, query);
-		delete search.slide;
 		delete search.type;
 		delete search.hash;
 		// const params
 		// 	= Object.keys(search).length > 0
 		// 	  ? `?${new URLSearchParams(search).toString()}`
 		// 	  : ''
-		console.debug(
-			"%capi%c %cloadSlide",
-			CSS.API,
-			CSS.NONE,
-			CSS.SLIDE,
-			query.id
-		);
+		log(3, ["%capi%c %cloadSlide", CSS.API, CSS.NONE, CSS.SLIDE, query.id]);
 		return await fetch(
 			[this.url, "api", version, "slides", query.id].join("/"),
 			{ ...headers, method: "get" }
@@ -239,13 +246,13 @@ export default class ApiClient {
 		const headers = this.headers();
 		delete query.update;
 
-		console.debug(
+		log(3, [
 			"%capi%c %cloadPresentation",
 			CSS.API,
 			CSS.NONE,
-			CSS.SLIDE,
-			query.id
-		);
+			CSS.PRESENTATION,
+			query.id,
+		]);
 		return await fetch(
 			[this.url, "api", version, API.PRESENTATIONS, query.id].join("/"),
 			{ ...headers, method: "get" }
@@ -282,7 +289,7 @@ export default class ApiClient {
 		delete query.update;
 		const body = JSON.stringify(query);
 
-		console.info("%capi%c %cput", CSS.API, CSS.NONE, CSS.SLIDE, query.name);
+		log(2, ["%capi%c %cput", CSS.API, CSS.NONE, CSS.PRESENTATION, query.name]);
 		return await fetch(
 			[this.url, "api", version, API.PRESENTATIONS, query.id].join("/"),
 			{ ...headers, body, method: "put" }
@@ -309,13 +316,13 @@ export default class ApiClient {
 		// 	= Object.keys(search).length > 0
 		// 	  ? `?${new URLSearchParams(search).toString()}`
 		// 	  : ''
-		console.debug(
+		log(3, [
 			"%capi%c %cloadPreference",
 			CSS.API,
 			CSS.NONE,
-			CSS.SLIDE,
-			preference.id
-		);
+			CSS.APP,
+			preference.id,
+		]);
 		return await fetch(
 			[this.url, "api", version, API.PREFERENCES, preference.id].join("/"),
 			{ ...headers, method: "get" }
@@ -348,7 +355,7 @@ export default class ApiClient {
 			"%capi%c %cstorePreference",
 			CSS.API,
 			CSS.NONE,
-			CSS.SLIDE,
+			CSS.APP,
 			preference.id
 		);
 		return await fetch(
@@ -375,7 +382,7 @@ export default class ApiClient {
 		const { version }: IStorageOptions = this.options;
 		const headers = this.headers();
 
-		console.debug(
+		log(3,[
 			"%capi%c %cloadDashboardWidget",
 			CSS.API,
 			CSS.NONE,
@@ -411,11 +418,14 @@ export default class ApiClient {
 		const { version }: IStorageOptions = this.options;
 		const headers = this.headers();
 
-		console.debug("%capi%c %dashboards", CSS.API, CSS.NONE, CSS.WIDGET);
-		return await fetch([this.url, "api", version, API.WIDGETS, query?.id || ''].join("/"), {
-			...headers,
-			method: "get",
-		})
+		log(3, ["%capi%c %dashboards", CSS.API, CSS.NONE, CSS.WIDGET]);
+		return await fetch(
+			[this.url, "api", version, API.WIDGETS, query?.id || ""].join("/"),
+			{
+				...headers,
+				method: "get",
+			}
+		)
 			.then(async (response: Response) => {
 				if (!response.ok) {
 					throw new Error(`${response.status}`);
