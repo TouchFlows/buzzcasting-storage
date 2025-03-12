@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.7.6
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.7.5...v3.7.6)
+
+### 🩹 Fixes
+
+- Widgets uodate logging ([1a9c9c2](https://github.com/TouchFlows/buzzcasting-storage/commit/1a9c9c2))
+
+### 🏡 Chore
+
+- **release:** V3.7.5 ([aca6de7](https://github.com/TouchFlows/buzzcasting-storage/commit/aca6de7))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.7.5
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.7.4...v3.7.5)
