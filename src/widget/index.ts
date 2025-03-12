@@ -30,7 +30,7 @@ export default class Widget {
 		this.callbacks = callbacks;
 
 		selector =
-			typeof selector !== "undefined" ? selector : "buzzcasting-presentation";
+			typeof selector !== "undefined" ? selector : "buzzcasting-app";
 
 		let query: IQuery;
 		// @ts-ignore
@@ -38,7 +38,7 @@ export default class Widget {
 		delete query.hmr;
 
 		query.presentation =
-			element.closest(selector.toUpperCase())?.id ?? `${selector} not found`;
+			element.closest<any>(selector.toUpperCase())?.presentation ?? `${selector} not found`;
 
 		//query = widgetParams(query);
 		this.query = query;
