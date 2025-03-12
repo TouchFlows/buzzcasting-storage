@@ -67,16 +67,16 @@ export default class Widget {
 			const update: IQuery = messageEvent.data.data;
 			switch (messageEvent.data.event) {
 				case EVENTS.WIDGET_UPDATE:
-					log(4, [
-						"%cwidget%c %cupdate",
-						CSS.WIDGET,
-						CSS.NONE,
-						CSS.GET_DATA,
-						this.query.type,
-						{ id: this.query.widget, element: this.element },
-					]);
 					try {
-						if (update.widget === query.widget) {
+						if (update.dashboard === query.dashboard && update.widget === query.widget) {
+							log(4, [
+								"%cwidget%c %csetData",
+								CSS.WIDGET,
+								CSS.NONE,
+								CSS.GET_DATA,
+								this.query.type,
+								{ id: this.query.widget, element: this.element },
+							]);
 							this.callbacks.forEach(async (cb) => {
 								const data = await this.getData();
 								cb(data);
