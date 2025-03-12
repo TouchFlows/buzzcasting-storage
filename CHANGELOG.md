@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.7.4
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.7.3...v3.7.4)
+
+### 🩹 Fixes
+
+- Add topic array to message ([9dd0cd8](https://github.com/TouchFlows/buzzcasting-storage/commit/9dd0cd8))
+
+### 🏡 Chore
+
+- **release:** V3.7.3 ([f7ab6c4](https://github.com/TouchFlows/buzzcasting-storage/commit/f7ab6c4))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.7.3
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.7.2...v3.7.3)
