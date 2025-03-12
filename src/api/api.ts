@@ -49,6 +49,7 @@ export default class ApiClient {
 		delete search.type;
 		delete search.hash;
 		delete search.order;
+		search.topics=`${search.dashboard}-${search.widget}`
 		//delete search.period;
 		delete search.presentation
 		const params =
