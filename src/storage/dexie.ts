@@ -383,8 +383,20 @@ export default class DexieClient {
 		// const topics: string = data.data.topics
 		let errorCount: number = 0;
 
-		return await data.data.messages.forEach(async (message: IMessage) => {
+		await data.data.messages.forEach(async (message: IMessage) => {
 			if (message.id !== null) {
+				message.topics[0] = {
+					message_id: message.id,
+					engagement:
+						message.topics[0]?.engagement || message.dynamics?.engagement || 0,
+					impressions:
+						message.topics[0]?.impressions ||
+						message.dynamics?.semrush_visits ||
+						0,
+					reach:
+						message.topics[0]?.reach || message.dynamics?.potential_reach || 0,
+					sentiment: message.topics[0]?.sentiment || 0,
+				};
 				await this.db
 					.table(API.MESSAGES)
 					.put({
@@ -403,79 +415,73 @@ export default class DexieClient {
 							message,
 							error.message
 						);
-					})
-					.then(async () => {
-						/**
-						 * Update topics table with new engagement stats
-						 * using put to replace the whole entry
-						 */
-						await this.db
-							.table(API.TOPICS)
-							.put({
-								title,
-								widget_id: query.widget,
-								message_id: message.id,
-								dashboard_id: query.dashboard,
-								engagement:
-									message.topics[0]?.engagement ||
-									message.dynamics?.engagement ||
-									0,
-								impressions:
-									message.topics[0]?.impressions ||
-									message.dynamics?.semrush_visits ||
-									0,
-								reach:
-									message.topics[0]?.reach ||
-									message.dynamics?.potential_reach ||
-									0,
-								sentiment: message.topics[0]?.sentiment || 0,
-								utc: message.utc,
-								expires: message.expires,
-							})
-							.catch((error: Error) => {
-								errorCount++;
-								console.error(
-									"%cstorage",
-									CSS.STORAGE,
-									"set topic",
-									`title: ${title}`,
-									message,
-									error.message
-								);
-							});
-					})
-					.then(async () => {
-						/**
-						 * Update topics table with messages that have become invisible
-						 * (including in other topics)
-						 */
-						await data.data.topics.forEach(async (topic: ITopic) => {
-							const id = topic.message_id,
-								show = topic.visible ? 1 : 0,
-								title = topic.title;
-							await this.db
-								.table(API.TOPICS)
-								.where("message_id")
-								.equals(id)
-								.modify({ visible: show })
-								.catch((error: Error) => {
-									errorCount++;
-									console.error(
-										"%cstorage",
-										CSS.STORAGE,
-										"update message visibility",
-										`title: ${title}`,
-										`widget: ${topic.widget_id}`,
-										error.message
-									);
-								});
-						});
-					})
-					.then(() => {
-						return errorCount === 0 ? 201 : 400;
 					});
+				/**
+				 * Update topics table with new engagement stats
+				 * using put to replace the whole entry
+				 */
+				await this.db
+					.table(API.TOPICS)
+					.put({
+						title,
+						widget_id: query.widget,
+						message_id: message.id,
+						dashboard_id: query.dashboard,
+						engagement:
+							message.topics[0]?.engagement ||
+							message.dynamics?.engagement ||
+							0,
+						impressions:
+							message.topics[0]?.impressions ||
+							message.dynamics?.semrush_visits ||
+							0,
+						reach:
+							message.topics[0]?.reach ||
+							message.dynamics?.potential_reach ||
+							0,
+						sentiment: message.topics[0]?.sentiment || 0,
+						utc: message.utc,
+						expires: message.expires,
+					})
+					.catch((error: Error) => {
+						errorCount++;
+						console.error(
+							"%cstorage",
+							CSS.STORAGE,
+							"set topic",
+							`title: ${title}`,
+							message,
+							error.message
+						);
+					});
+				/**
+				 * Update topics table with messages that have become invisible
+				 * (including in other topics)
+				 */
+				await data.data.topics.forEach(async (topic: ITopic) => {
+					const id = topic.message_id,
+						show = topic.visible ? 1 : 0,
+						title = topic.title;
+					await this.db
+						.table(API.TOPICS)
+						.where("message_id")
+						.equals(id)
+						.modify({ visible: show })
+						.catch((error: Error) => {
+							errorCount++;
+							console.error(
+								"%cstorage",
+								CSS.STORAGE,
+								"update message visibility",
+								`title: ${title}`,
+								`widget: ${topic.widget_id}`,
+								error.message
+							);
+						});
+				});
 			}
 		});
+		return errorCount === 0 ? 201 : 400;
 	};
 
 	/**

@@ -236,6 +236,7 @@
       //bc.onmessage = (ev) => console.log(options.presentation, ev.data);
 
       const setData = (data) => {
+        console.log(data)
         const el = document.querySelector(
           `[data-widget='${data.query.widget}']`
         );
@@ -287,11 +288,12 @@
       const series2 = new Widget(document.getElementById("series-2"), [
         setData,
       ]);
-
-      await bc.postMessage({
+      setTimeout(async () => {
+      bc.postMessage({
         event: "appReady",
         data: { presentation: options.presentation },
       });
+    },1000);
 
       //console.log(widget);
       setTimeout(async () => {
@@ -299,7 +301,7 @@
           event: "update",
           data: { presentation: options.presentation },
         });
-      }, 2000);
+      }, 3000);
 
       //await bc.postMessage(bigcall);
       //const db = await sm.getDashboard({id: 'lzzzniev_1670v2kaule1j'})

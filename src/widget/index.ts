@@ -18,7 +18,7 @@ export default class Widget {
 	 *
 	 * @param element widget web component
 	 * @param callbacks functions in the widget that will receive the update
-	 * @param selector container for the element - by default buzzcasting-presentation (optional)
+	 * @param selector container for the element - by default buzzcasting-app (optional)
 	 */
 	constructor(
 		element: HTMLElement,
