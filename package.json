@@ -1,7 +1,7 @@
 {
   "name": "buzzcasting-storage",
   "type": "module",
-  "version": "3.7.7",
+  "version": "3.7.8",
   "private": false,
   "author": {
     "name": "Mark Tamis, TouchFlows SAS",

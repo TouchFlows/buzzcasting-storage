@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.7.8
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.7.7...v3.7.8)
+
+### 🩹 Fixes
+
+- Logging cleanup ([799e399](https://github.com/TouchFlows/buzzcasting-storage/commit/799e399))
+
+### 🏡 Chore
+
+- **release:** V3.7.7 ([4e2bb36](https://github.com/TouchFlows/buzzcasting-storage/commit/4e2bb36))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.7.7
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.7.6...v3.7.7)
