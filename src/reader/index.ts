@@ -13,12 +13,6 @@ import SessionStorageClient from '../storage/session-storage'
 
 import WindowClient from '../storage/window'
 
-// export * from "../interfaces/IQuery";
-
-// export * from "../interfaces/IStorageOptions";
-
-// export * from "../constants";
-
 export class BuzzcastingStorageReader {
   private sm:
     | WindowClient

@@ -75,7 +75,7 @@ export default class Widget {
 							const response = await this.getData();
 							if (response?.success) {
 								log(4, [
-									"%cwidget%c %broadcast%c %cset",
+									"%cwidget%c %cbroadcast%c %cset",
 									CSS.BROADCAST,
 									CSS.NONE,
 									CSS.WIDGET,
