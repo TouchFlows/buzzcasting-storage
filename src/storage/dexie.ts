@@ -66,11 +66,12 @@ export default class DexieClient {
 			query,
 		};
 		log(3, [
-			"%cstorage%c %ccloud",
+			"%cstorage%c %ccloud%c %cget",
 			CSS.STORAGE,
 			CSS.NONE,
 			CSS.CLOUD,
-			"get",
+			CSS.NONE,
+			CSS.GET_DATA,
 			resp,
 		]);
 		return resp;
@@ -94,6 +95,7 @@ export default class DexieClient {
 				})
 				.then(() => 201)
 				.catch((error: Error) => {
+					log(2,["%cstorage%c %ccloud%c %cset", CSS.STORAGE, CSS.NONE, CSS.CLOUD, CSS.NONE, CSS.NO_UPDATES, query, error.message]);
 					console.error("%cstorage", CSS.STORAGE, "set", query, error.message);
 					return 400;
 				});
@@ -325,25 +327,28 @@ export default class DexieClient {
 					message: "Messages retrieved successfully",
 					success: true,
 				};
-				log(4, [
-					"%cstorage%c %cmessages",
+				log(3, [
+					"%cstorage%c %cmessages%c %cget",
 					CSS.STORAGE,
 					CSS.NONE,
 					CSS.MESSAGES,
-					"get",
+					CSS.NONE,
+					CSS.GET_DATA,
 					data,
 				]);
 				return data;
 			});
-		} catch (error) {
-			console.warn(
-				"%cstorage%c %cmessages",
+		} catch (error: any) {
+			log(2, [
+				"%cstorage%c %cmessages%c %cget",
 				CSS.STORAGE,
 				CSS.NONE,
 				CSS.MESSAGES,
+				CSS.NONE,
+				CSS.NO_UPDATES,
 				query,
-				error
-			);
+				error.message,
+			]);
 			return { data: null, message: "Messages Data error", success: false };
 		}
 	};
@@ -506,14 +511,19 @@ export default class DexieClient {
 
 		const resp = {
 			data: data.data,
-			message:
-				data !== undefined
-					? "Series retrieved successfully"
-					: "Series Data error",
+			message: data !== undefined ? "Get Series success" : "Get Series error",
 			success: data !== undefined,
 			query,
 		};
-		log(3, ["%cstorage%c %cseries", CSS.STORAGE, CSS.NONE, CSS.SERIES, resp]);
+		log(3, [
+			"%cstorage%c %cseries%c %cget",
+			CSS.STORAGE,
+			CSS.NONE,
+			CSS.SERIES,
+			CSS.NONE,
+			CSS.GET_DATA,
+			resp,
+		]);
 
 		return resp;
 	};
@@ -537,7 +547,16 @@ export default class DexieClient {
 				})
 				.then(() => 201)
 				.catch((error: Error) => {
-					console.error("%cstorage", CSS.STORAGE, "set", query, error.message);
+					log(2, [
+						"%cstorage%c %cseries%c %cset",
+						CSS.STORAGE,
+						CSS.NONE,
+						CSS.SERIES,
+						CSS.NONE,
+						CSS.NO_UPDATES,
+						query,
+						error.message,
+					]);
 					return 400;
 				});
 		}

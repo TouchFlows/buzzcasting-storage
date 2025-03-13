@@ -134,12 +134,13 @@ export class BuzzcastingStorageManager {
 								} else {
 									data = resp;
 									previousHash.hash = newHash;
-									status = await this.sm?.setMessages(resp.query, resp)
+									status = await this.sm
+										?.setMessages(resp.query, resp)
 										.then((code) => {
 											setTimeout(() => {
-												code = 201
+												code = 201;
 												this.broadcastUpdate(code, resp);
-												return code
+												return code;
 											}, 500); // MTM allow tuning thru options
 										});
 								}
@@ -441,12 +442,6 @@ export class BuzzcastingStorageManager {
 		return await this.api.loadDashboardWidgets(query);
 	};*/
 
-	public loadDashboards = async (
-		query?: IQuery
-	): Promise<IResponse | undefined> => {
-		return await this.api.loadDashboards(query);
-	};
-
 	public getWidget = async (query: IQuery): Promise<IResponse | undefined> => {
 		return await this.sm?.getWidget(query);
 	};
@@ -459,6 +454,12 @@ export class BuzzcastingStorageManager {
 
 	public setWidget = async (query: IQuery): Promise<IResponse | undefined> => {
 		return await this.sm?.setWidget(query);
+	};
+
+	public loadDashboards = async (
+		query?: IQuery
+	): Promise<IResponse | undefined> => {
+		return await this.api.loadDashboards(query);
 	};
 
 	public getDashboard = async (

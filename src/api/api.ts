@@ -57,7 +57,7 @@ export default class ApiClient {
 				? `?${new URLSearchParams(search).toString()}`
 				: "";
 		log(3, [
-			"%capi%c %cfetch",
+			"%capi%c %cload",
 			CSS.API,
 			CSS.NONE,
 			CSS.GET_DATA,
@@ -65,7 +65,7 @@ export default class ApiClient {
 			query.widget,
 		]);
 		log(4, [
-			"%capi%c %cfetch",
+			"%capi%c %cload",
 			CSS.API,
 			CSS.NONE,
 			CSS.GET_DATA,

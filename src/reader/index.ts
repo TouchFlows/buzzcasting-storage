@@ -85,8 +85,10 @@ export class BuzzcastingStorageReader {
   public getMessages = async (query: IQuery): Promise<IResponse> => {
     if (query.type !== API.MESSAGES) {
       console.warn(
-        '%capp%c %get',
+        '%capp%c %cmessages%c %cget',
         CSS.APP,
+        CSS.NONE,
+        CSS.MESSAGES,
         CSS.NONE,
         CSS.GET_DATA,
         query.widget,

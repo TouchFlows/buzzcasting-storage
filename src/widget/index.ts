@@ -29,8 +29,7 @@ export default class Widget {
 
 		this.callbacks = callbacks;
 
-		selector =
-			typeof selector !== "undefined" ? selector : "buzzcasting-app";
+		selector = typeof selector !== "undefined" ? selector : "buzzcasting-app";
 
 		let query: IQuery;
 		// @ts-ignore
@@ -38,7 +37,8 @@ export default class Widget {
 		delete query.hmr;
 
 		query.presentation =
-			element.closest<any>(selector.toUpperCase())?.presentation ?? `${selector} not found`;
+			element.closest<any>(selector.toUpperCase())?.presentation ??
+			`${selector} not found`;
 
 		//query = widgetParams(query);
 		this.query = query;
@@ -68,24 +68,29 @@ export default class Widget {
 			switch (messageEvent.data.event) {
 				case EVENTS.WIDGET_UPDATE:
 					try {
-						if (update.dashboard === query.dashboard && update.widget === query.widget) {
-							log(4, [
-								"%cwidget%c %csetData",
-								CSS.WIDGET,
-								CSS.NONE,
-								CSS.GET_DATA,
-								this.query.type,
-								{ id: this.query.widget, element: this.element },
-							]);
-							this.callbacks.forEach(async (cb) => {
-								const data = await this.getData();
-								cb(data);
-							});
+						if (
+							update.dashboard === query.dashboard &&
+							update.widget === query.widget
+						) {
+							const response = await this.getData();
+							if (response?.success) {
+								log(4, [
+									"%cwidget%c %broadcast%c %cset",
+									CSS.BROADCAST,
+									CSS.NONE,
+									CSS.WIDGET,
+									CSS.NONE,
+									CSS.GET_DATA,
+									this.query,
+								]);
+								this.callbacks.forEach(async (cb) => {
+									cb(response);
+								});
+							}
 						}
 					} catch (e) {
 						log(4, [EVENTS.WIDGET_UPDATE, update]);
 					}
-
 					break;
 				case EVENTS.APP_READY:
 					this.subscribe();
@@ -140,6 +145,7 @@ export default class Widget {
 			data: null,
 			message: `wrong method call, '${this.query.type}' is unknown`,
 			success: false,
+			query: this.query,
 		};
 	};
 
@@ -170,6 +176,7 @@ export default class Widget {
 				data: null,
 				message: `wrong method call for getCloud, expected type is '${this.query.type}'`,
 				success: false,
+				query: this.query,
 			};
 		}
 		return await this.storageReader.getCloud(this.query);
@@ -235,6 +242,7 @@ export default class Widget {
 				data: null,
 				message: `wrong method call for getSeries, expected type is '${this.query.type}'`,
 				success: false,
+				query: this.query,
 			};
 		}
 		return await this.storageReader.getSeries(this.query);
