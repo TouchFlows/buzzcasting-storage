@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.7.7
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.7.6...v3.7.7)
+
+### 🩹 Fixes
+
+- Logging, only do widget callback if success ([77ed626](https://github.com/TouchFlows/buzzcasting-storage/commit/77ed626))
+
+### 🏡 Chore
+
+- **release:** V3.7.6 ([250bcb5](https://github.com/TouchFlows/buzzcasting-storage/commit/250bcb5))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.7.6
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.7.5...v3.7.6)
