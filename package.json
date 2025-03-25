@@ -29,7 +29,8 @@
   },
   "dependencies": {
     "dexie": "^4.0.11",
-    "idb-keyval": "^6.2.1"
+    "idb-keyval": "^6.2.1",
+    "tailwindcss": "^4.0.15"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^4.10.1",

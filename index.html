@@ -2,97 +2,117 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
+    />
+    <meta
+      name="bearer"
+      content="1|s5IyTY0wOLPfIPg9my4pIAc81LkBHVd0RNJY2KVc959b01b1"
+    />
+    <title>Buzzcasting Common</title>
   </head>
+
   <body>
     <div id="app"></div>
-    <buzzcasting-presentation id="01j7h4f0y32njz7bthhqrtyq5s">
-      <buzzcasting-slide id="un">
-        <cards-widget
-          id="cards"
-          layout="base"
-          component="card-image-top"
-          data-type="messages"
-          data-order="engagement"
-          data-dashboard="lzzzniev_1670v2kaule1j"
-          data-widget="40a93a9f_6c51_4dd7_a44e_0c206dc6df8f"
-          show-kpi="false"
-          css-date="text-base text-white"
-          show-brand="false"
-          show-sender="false"
-          css-card="gap-4 h-[430px]"
-          css-body="overflow-clip text-xl text-white break-words h-[136px]"
-          css-brand="h-6 w-6 text-white bg-white/50 rounded-full text-shadow-none"
-          css-handle="text-white text-base"
-          css-name="font-bold text-white text-xl"
-          date-format="long"
-          animation="0"
-          interval="8000"
-        ></cards-widget>
-        <series-widget
-          id="series"
-          component="kpi-evolution"
-          data-type="series"
-          data-dashboard="lzzzniev_1670v2kaule1j"
-          data-widget="75848543_58e8_4d44_82e2_7eb01239349a"
-          css-arrow-down="bg-arrow-down-red rounded-full h-6 w-6 bg-white bg-arrow-up-green,rounded-full,h-6,w-6,bg-white"
-          css-body="px-4 text-40 font-publico-light gap-x-3"
-          css-brand="h-6 w-6 bg-linkedin-logo"
-          css-change="font-serif-regular text-3xl text-center self-center"
-          css-count="text-white font-serif-regular text-4xl self-center"
-          css-down="text-white self-end"
-          css-up="text-white self-end"
-          class="hydrated"
-        ></series-widget>
-        <cloud-axagroup-ambassadors
-          id="cloud"
-          data-type="cloud"
-          data-dashboard="01JD32_VDXWMXA_WC2D"
-          data-widget="BMKPN_W4RH"
-          c-host=""
-          class="grid grid-cols-[1fr_1px_1fr]"
-        />
-      </buzzcasting-slide>
-      <buzzcasting-slide id="deux">
-        <cards-widget
-          id="cards-2"
-          layout="base"
-          component="card-image-top"
-          data-type="messages"
-          data-order="engagement"
-          data-dashboard="lzzzniev_1670v2kaule1j"
-          data-widget="40a93a9f_6c51_4dd7_a44e_0c206dc6df8f"
-          show-kpi="false"
-          css-date="text-base text-white"
-          show-brand="false"
-          show-sender="false"
-          css-card="gap-4 h-[430px]"
-          css-body="overflow-clip text-xl text-white break-words h-[136px]"
-          css-brand="h-6 w-6 text-white bg-white/50 rounded-full text-shadow-none"
-          css-handle="text-white text-base"
-          css-name="font-bold text-white text-xl"
-          date-format="long"
-          animation="0"
-          interval="8000"
-        ></cards-widget>
-        <series-widget
-          id="series-2"
-          component="kpi-evolution"
-          data-type="series"
-          data-dashboard="lzzzniev_1670v2kaule1j"
-          data-widget="75848543_58e8_4d44_82e2_7eb01239349a"
-          css-arrow-down="bg-arrow-down-red rounded-full h-6 w-6 bg-white bg-arrow-up-green,rounded-full,h-6,w-6,bg-white"
-          css-body="px-4 text-40 font-publico-light gap-x-3"
-          css-brand="h-6 w-6 bg-linkedin-logo"
-          css-change="font-serif-regular text-3xl text-center self-center"
-          css-count="text-white font-serif-regular text-4xl self-center"
-          css-down="text-white self-end"
-          css-up="text-white self-end"
-        ></series-widget>
-      </buzzcasting-slide>
-    </buzzcasting-presentation>
+    <buzzcasting-app
+      domain="axagroup.buzzcasting.net"
+      delay="0"
+      moderation="realtime"
+      interval="120000"
+      presentation="01j7h4f0y32njz7bthhqrtyq5s"
+      before-time="00:00:00"
+      storage="dexie"
+    >
+      <buzzcasting-presentation>
+        <buzzcasting-slide id="un" class="w-[1920px] h-[1080px]">
+          <cards-widget
+            id="cards"
+            layout="base"
+            component="card-image-top"
+            data-type="messages"
+            data-order="engagement"
+            data-dashboard="lzzzniev_1670v2kaule1j"
+            data-widget="40a93a9f_6c51_4dd7_a44e_0c206dc6df8f"
+            show-kpi="false"
+            css-date="text-base text-white"
+            show-brand="false"
+            show-sender="false"
+            css-card="gap-4 h-[430px]"
+            css-body="overflow-clip text-xl text-white break-words h-[136px]"
+            css-brand="h-6 w-6 text-white bg-white/50 rounded-full text-shadow-none"
+            css-handle="text-white text-base"
+            css-name="font-bold text-white text-xl"
+            date-format="long"
+            animation="0"
+            interval="8000"
+            debug="true"
+          ></cards-widget>
+          <series-widget
+            id="series"
+            component="kpi-evolution"
+            data-type="series"
+            data-dashboard="lzzzniev_1670v2kaule1j"
+            data-widget="75848543_58e8_4d44_82e2_7eb01239349a"
+            css-arrow-down="bg-arrow-down-red rounded-full h-6 w-6 bg-white bg-arrow-up-green,rounded-full,h-6,w-6,bg-white"
+            css-body="px-4 text-40 font-publico-light gap-x-3"
+            css-brand="h-6 w-6 bg-linkedin-logo"
+            css-change="font-serif-regular text-3xl text-center self-center"
+            css-count="text-white font-serif-regular text-4xl self-center"
+            css-down="text-white self-end"
+            css-up="text-white self-end"
+            class="hydrated"
+          ></series-widget>
+          <cloud-axagroup-ambassadors
+            id="cloud"
+            data-type="cloud"
+            data-dashboard="01JD32_VDXWMXA_WC2D"
+            data-widget="BMKPN_W4RH"
+            c-host=""
+            class="grid grid-cols-[1fr_1px_1fr]"
+          />
+        </buzzcasting-slide>
+        <buzzcasting-slide id="deux">
+          <cards-widget
+            id="cards-2"
+            layout="base"
+            component="card-image-top"
+            data-type="messages"
+            data-order="engagement"
+            data-dashboard="lzzzniev_1670v2kaule1j"
+            data-widget="40a93a9f_6c51_4dd7_a44e_0c206dc6df8f"
+            show-kpi="false"
+            css-date="text-base text-white"
+            show-brand="false"
+            show-sender="false"
+            css-card="gap-4 h-[430px]"
+            css-body="overflow-clip text-xl text-white break-words h-[136px]"
+            css-brand="h-6 w-6 text-white bg-white/50 rounded-full text-shadow-none"
+            css-handle="text-white text-base"
+            css-name="font-bold text-white text-xl"
+            date-format="long"
+            animation="0"
+            interval="8000"
+          ></cards-widget>
+          <series-widget
+            id="series-2"
+            component="kpi-evolution"
+            data-type="series"
+            data-dashboard="lzzzniev_1670v2kaule1j"
+            data-widget="75848543_58e8_4d44_82e2_7eb01239349a"
+            css-arrow-down="bg-arrow-down-red rounded-full h-6 w-6 bg-white bg-arrow-up-green,rounded-full,h-6,w-6,bg-white"
+            css-body="px-4 text-40 font-publico-light gap-x-3"
+            css-brand="h-6 w-6 bg-linkedin-logo"
+            css-change="font-serif-regular text-3xl text-center self-center"
+            css-count="text-white font-serif-regular text-4xl self-center"
+            css-down="text-white self-end"
+            css-up="text-white self-end"
+          ></series-widget>
+        </buzzcasting-slide>
+      </buzzcasting-presentation>
+    </buzzcasting-app>
     <script type="module" src="/src/index.ts"></script>
+
     <script type="module">
       import {
         BuzzcastingStorageManager,
@@ -115,119 +135,7 @@
         presentation: "01j7h4f0y32njz7bthhqrtyq5s",
         suspended: "1",
       };
-
-      // let query = {
-      //   type: "messages",
-      //   dashboard: "lzzzniev_1670v2kaule1j",
-      //   widget: "40a93a9f_6c51_4dd7_a44e_0c206dc6df8f",
-      //   slide: options.slide,
-      // };
-
-      // let query2 = {
-      //   type: "cloud",
-      //   dashboard: "01JD32_VDXWMXA_WC2D", //"axa_com",
-      //   widget: "BMKPN_W4RH", //"articles",
-      //   slide: options.slide,
-      // };
-
-      // const query = {
-      //   type: "messages",
-      //   dashboard: "afp", //"axa_com",
-      //   widget: "latest", //"articles",
-      //   slide: options.slide,
-      // };
-
-      // const query = {
-      //   type: "series",
-      //   dashboard: "lzzzniev_1670v2kaule1j", //"axa_com",
-      //   widget: "afbc329e_0e09_40b7_b7c4_6ec9dc58796c", //"articles",
-      //   slide: options.slide,
-      // };
-      // const query = {
-      //   type: "cloud",
-      //   dashboard: "rapidapi_twittertrends", //"axa_com",
-      //   widget: "worldwide", //"articles",
-      //   slide: options.slide,
-      // };
-
-      // const query = {
-      //   type: "messages",
-      //   dashboard: "lm4ljt8l_donwf3ne9p86",
-      //   widget: "714722c5_cf13_4368_910d_5881d92f08da",
-      //   slide: options.slide,
-      // };
-
-      const bigcall = {
-        event: "update",
-        data: {
-          slide: "01jc6ajqr0cbpjrrvab714f3sq",
-          subscribers: [
-            {
-              type: "series",
-              dashboard: "lzzzniev_1670v2kaule1j",
-              widget: "476f07e9_3bf4_4f93_9c4b_d7f50a91c1a4",
-              topics:
-                "lzzzniev_1670v2kaule1j-476f07e9_3bf4_4f93_9c4b_d7f50a91c1a4",
-              slide: "01jc6ajqr0cbpjrrvab714f3sq",
-            },
-            {
-              type: "series",
-              dashboard: "lzzzniev_1670v2kaule1j",
-              widget: "afbc329e_0e09_40b7_b7c4_6ec9dc58796c",
-              topics:
-                "lzzzniev_1670v2kaule1j-afbc329e_0e09_40b7_b7c4_6ec9dc58796c",
-              slide: "01jc6ajqr0cbpjrrvab714f3sq",
-            },
-            {
-              type: "series",
-              dashboard: "lzzzniev_1670v2kaule1j",
-              widget: "75848543_58e8_4d44_82e2_7eb01239349a",
-              topics:
-                "lzzzniev_1670v2kaule1j-75848543_58e8_4d44_82e2_7eb01239349a",
-              slide: "01jc6ajqr0cbpjrrvab714f3sq",
-            },
-            {
-              type: "cloud",
-              dashboard: "01JD32_VDXWMXA_WC2D",
-              widget: "BMKPN_W4RH",
-              topics: "01JD32_VDXWMXA_WC2D-BMKPN_W4RH",
-              slide: "01jc6ajqr0cbpjrrvab714f3sq",
-            },
-            {
-              dashboard: "axa_com",
-              widget: "articles",
-              type: "messages",
-              topics: "axa_com-articles",
-              slide: "01jc6ajqr0cbpjrrvab714f3sq",
-            },
-            {
-              type: "messages",
-              dashboard: "lzzzniev_1670v2kaule1j",
-              widget: "859c518e_0bf6_489c_b07d_f28fe3245eec",
-              topics:
-                "lzzzniev_1670v2kaule1j-859c518e_0bf6_489c_b07d_f28fe3245eec",
-              slide: "01jc6ajqr0cbpjrrvab714f3sq",
-            },
-            {
-              type: "messages",
-              dashboard: "m014oqj0_1670v2kanscab",
-              widget: "32fce388_f870_4858_8539_ec1e1da48733",
-              topics:
-                "m014oqj0_1670v2kanscab-32fce388_f870_4858_8539_ec1e1da48733",
-              slide: "01jc6ajqr0cbpjrrvab714f3sq",
-            },
-            {
-              type: "messages",
-              order: "engagement",
-              dashboard: "lzzzniev_1670v2kaule1j",
-              widget: "40a93a9f_6c51_4dd7_a44e_0c206dc6df8f",
-              topics:
-                "lzzzniev_1670v2kaule1j-40a93a9f_6c51_4dd7_a44e_0c206dc6df8f",
-              slide: "01jc6ajqr0cbpjrrvab714f3sq",
-            },
-          ],
-        },
-      };
+      console.log(options);
 
       const bc = new BroadcastChannel(options.presentation);
       const sm = new BuzzcastingStorageManager(options);
@@ -236,7 +144,6 @@
       //bc.onmessage = (ev) => console.log(options.presentation, ev.data);
 
       const setData = (data) => {
-        console.log(data)
         const el = document.querySelector(
           `[data-widget='${data.query.widget}']`
         );
@@ -245,37 +152,11 @@
         }
       };
 
-      //document.getElementById("app").innerHTML = JSON.stringify(data)
-
       window.BuzzCasting = {
         storage: sm,
         reader: sr,
         getOptions: () => options,
       };
-
-      //bc.postMessage({ event: "subscribe", data: query });
-      //bc.postMessage({ event: "update" });
-      // let data;
-      // switch (query.type) {
-      //   case "messages":
-      //     data = await sr.getMessages(query);
-      //     break;
-      //   case "cloud":
-      //     data = await sr.getCloud(query);
-      //     break;
-      //   case "series":
-      //     data = await sr.getSeries(query);
-      //     break;
-      // }
-      // document.getElementById("app").innerHTML = JSON.stringify(data);
-
-      // await bc.postMessage({
-      //   event: "update",
-      //   data: { slide: query.slide, subscribers: [query] },
-      // });
-
-      // await bc.postMessage({ event: "update", data: query2 });
-      //console.debug({ slide: query.slide, subscribers: [query] });
 
       const cards = new Widget(document.getElementById("cards"), [setData]);
 
@@ -288,12 +169,13 @@
       const series2 = new Widget(document.getElementById("series-2"), [
         setData,
       ]);
+
       setTimeout(async () => {
-      bc.postMessage({
-        event: "appReady",
-        data: { presentation: options.presentation },
-      });
-    },1000);
+        bc.postMessage({
+          event: "appReady",
+          data: { presentation: options.presentation },
+        });
+      }, 10);
 
       //console.log(widget);
       setTimeout(async () => {
@@ -301,91 +183,7 @@
           event: "update",
           data: { presentation: options.presentation },
         });
-      }, 3000);
-
-      //await bc.postMessage(bigcall);
-      //const db = await sm.getDashboard({id: 'lzzzniev_1670v2kaule1j'})
-
-      // const db_wd = await sm.loadDashboards();
-      // db_wd.data.dashboards.forEach(async (dashboard) => {
-      //   const upd = structuredClone(dashboard)
-      //   delete upd.widgets
-      //   await sm.setDashboard({
-      //     id: dashboard.id,
-      //     name: dashboard.title,
-      //     data: upd,
-      //     update: Date.now(),
-      //   });
-      //   dashboard.widgets.forEach(async (widget) => {
-      //     //"id,name,dashboard_id,type,update",
-      //     await sm.setWidget({
-      //       id: widget.id,
-      //       dashboard_id: dashboard.id,
-      //       title: widget.title,
-      //       type: widget.type,
-      //       data: widget,
-      //       update: Date.now(),
-      //     });
-      //   });
-      // });
-
-      // console.log(
-      //   await sm.getWidgets({
-      //     dashboard: "m014uvvd_1670v2kans4xs",
-      //     type: "cloud",
-      //   })
-      // );
-
-      // const d = await sm.loadDashboards();
-      // //const d = await sm.getDashboards();
-      // console.log(d);
-      // if (d.success) {
-      //   d.data.dashboards.forEach(async (dashboard) => {
-      //     //console.warn(dashboard.title)
-      //     await sm.setDashboard({
-      //       id: dashboard.id,
-      //       name: dashboard.title,
-      //       data: dashboard,
-      //       update: Date.now(),
-      //     });
-
-      //     const db = await sm.getDashboard({ id: dashboard.id });
-      //     console.log(db);
-      //     //sm.setSlide({ id: widget.id, data: slide, name: slide.title });
-      //   });
-      // }
-
-      // const slides = await sm.loadSlide({ id: "" });
-      // slides.data.forEach((slide) => {
-      //   sm.setSlide({ id: slide.id, data: slide, name: slide.title });
-      // });
-
-      //       const prefs = await sm.loadPreference({ id: "" });
-      // console.log(prefs)
-      //       Object.entries(prefs).forEach(([key,val],idx) => {
-      //         console.log(key,val,idx)
-      //         sm.setPreference({id: key, value: val});
-      //       });
-
-      // console.log(
-      //   await sm.getSlides({ presentation: "01jc6ajqqv7ra88785zct853mm" })
-      // );
-      //console.log(await sm.getPreferences());
-
-      // const pres = await sm.loadPresentation({ id: "" });
-
-      // pres.data.forEach((p) => {
-      //   sm.setPresentation({ id: p.id, data: p, name: p.title });
-      // });
-      // const p = { name: "a" };
-      // // console.log("p", p);
-      // console.log(await sm.getPresentations(p));
-      // console.log(await sm.getSubscribers());
-      // //console.log(await sm.getPreference({id:'tailwindConfig'}));
-      // await bc.postMessage({
-      //   event: "update",
-      //   data: { slide: query.slide, subscribers: [query] },
-      // });
+      }, 50);
     </script>
   </body>
 </html>

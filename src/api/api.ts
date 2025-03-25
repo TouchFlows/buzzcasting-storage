@@ -49,29 +49,35 @@ export default class ApiClient {
 		delete search.type;
 		delete search.hash;
 		delete search.order;
-		search.topics=`${search.dashboard}-${search.widget}`
+		search.topics = `${search.dashboard}-${search.widget}`;
 		//delete search.period;
-		delete search.presentation
+		delete search.presentation;
 		const params =
 			Object.keys(search).length > 0
 				? `?${new URLSearchParams(search).toString()}`
 				: "";
+		let color: string = "";
+		switch (query.type) {
+			case API.MESSAGES:
+				color = CSS.MESSAGES;
+				break;
+			case API.SERIES:
+				color = CSS.SERIES;
+				break;
+			case API.CLOUD:
+				color = CSS.CLOUD;
+				break;
+		}
 		log(3, [
-			"%capi%c %cload",
+			`%cfetch%c %capi%c %c${query.type}`,
+			CSS.OK,
+			CSS.NONE,
 			CSS.API,
 			CSS.NONE,
-			CSS.GET_DATA,
-			query.type,
+			color,
 			query.widget,
 		]);
-		log(4, [
-			"%capi%c %cload",
-			CSS.API,
-			CSS.NONE,
-			CSS.GET_DATA,
-			query.type,
-			search,
-		]);
+		log(4, [query.type, search]);
 
 		return await fetch(
 			[this.url, "api", version, query.type].join("/") + params,
@@ -216,14 +222,16 @@ export default class ApiClient {
 		delete query.type;
 		const body = JSON.stringify(query);
 
-		console.info(
-			"%capi%c %cput",
+		log(3, [
+			"%cput%c %capi%c %cslide",
+			CSS.OK,
+			CSS.NONE,
 			CSS.API,
 			CSS.NONE,
 			CSS.SLIDE,
 			EVENTS.SLIDE_STORE,
-			query.id
-		);
+			query.id,
+		]);
 		return await fetch(
 			[this.url, "api", version, "slides", query.id].join("/"),
 			{ ...headers, body, method: "put" }
@@ -248,7 +256,9 @@ export default class ApiClient {
 		delete query.update;
 
 		log(3, [
-			"%capi%c %cloadPresentation",
+			"%cload%c %capi%c %cloadPresentation",
+			CSS.OK,
+			CSS.NONE,
 			CSS.API,
 			CSS.NONE,
 			CSS.PRESENTATION,

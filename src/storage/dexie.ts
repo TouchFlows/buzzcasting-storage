@@ -66,12 +66,12 @@ export default class DexieClient {
 			query,
 		};
 		log(3, [
-			"%cstorage%c %ccloud%c %cget",
+			"%cget%c %cstorage%c %ccloud",
+			CSS.OK,
+			CSS.NONE,
 			CSS.STORAGE,
 			CSS.NONE,
 			CSS.CLOUD,
-			CSS.NONE,
-			CSS.GET_DATA,
 			resp,
 		]);
 		return resp;
@@ -95,8 +95,16 @@ export default class DexieClient {
 				})
 				.then(() => 201)
 				.catch((error: Error) => {
-					log(2,["%cstorage%c %ccloud%c %cset", CSS.STORAGE, CSS.NONE, CSS.CLOUD, CSS.NONE, CSS.NO_UPDATES, query, error.message]);
-					console.error("%cstorage", CSS.STORAGE, "set", query, error.message);
+					log(2, [
+						"%cset%c %cstorage%c %ccloud",
+						CSS.KO,
+						CSS.NONE,
+						CSS.STORAGE,
+						CSS.NONE,
+						CSS.CLOUD,
+						query,
+						error.message,
+					]);
 					return 400;
 				});
 		}
@@ -247,7 +255,9 @@ export default class DexieClient {
 			// })
 			.catch((error) => {
 				console.error(
-					"%cstorage%c %clean",
+					"%clean%c %cstorage%c %cmessages",
+					CSS.OK,
+					CSS.NONE,
 					CSS.STORAGE,
 					CSS.NONE,
 					CSS.MESSAGES,
@@ -286,11 +296,9 @@ export default class DexieClient {
 
 		try {
 			const topicMessagesCollection: any = this.db
-
 				.table(API.TOPICS)
 				.where("widget_id")
 				.equals(query.widget)
-
 				.filter(visibleFilter)
 				.filter(sinceFilter)
 				.filter(beforeFilter)
@@ -328,22 +336,22 @@ export default class DexieClient {
 					success: true,
 				};
 				log(3, [
-					"%cstorage%c %cmessages%c %cget",
+					"%cget%c %cstorage%c %cmessages",
+					CSS.OK,
+					CSS.NONE,
 					CSS.STORAGE,
 					CSS.NONE,
 					CSS.MESSAGES,
-					CSS.NONE,
-					CSS.GET_DATA,
 					data,
 				]);
 				return data;
 			});
 		} catch (error: any) {
 			log(2, [
-				"%cstorage%c %cmessages%c %cget",
-				CSS.STORAGE,
+				"%cget%c %cstorage%c %cmessages",
+				CSS.OK,
 				CSS.NONE,
-				CSS.MESSAGES,
+				CSS.STORAGE,
 				CSS.NONE,
 				CSS.NO_UPDATES,
 				query,
@@ -361,7 +369,9 @@ export default class DexieClient {
 			.modify({ visible: visible ? 1 : 0 })
 			.catch((error) => {
 				console.error(
-					"%cstorage%c %chide",
+					"%chide%c %cstorage%c %cmessage",
+					CSS.KO,
+					CSS.NONE,
 					CSS.STORAGE,
 					CSS.NONE,
 					CSS.HIDE,
@@ -412,14 +422,16 @@ export default class DexieClient {
 					})
 					.catch((error: Error) => {
 						errorCount++;
-						console.error(
-							"%cstorage",
+						log(4, [
+							"%cset%c %cstorage",
+							CSS.KO,
+							CSS.NONE,
 							CSS.STORAGE,
 							"set message",
 							`title: ${title}`,
 							message,
-							error.message
-						);
+							error.message,
+						]);
 					});
 				/**
 				 * Update topics table with new engagement stats
@@ -450,14 +462,16 @@ export default class DexieClient {
 					})
 					.catch((error: Error) => {
 						errorCount++;
-						console.error(
-							"%cstorage",
+						log(4, [
+							"%cset%c %cstorage",
+							CSS.KO,
+							CSS.NONE,
 							CSS.STORAGE,
 							"set topic",
 							`title: ${title}`,
 							message,
-							error.message
-						);
+							error.message,
+						]);
 					});
 				/**
 				 * Update topics table with messages that have become invisible
@@ -474,14 +488,16 @@ export default class DexieClient {
 						.modify({ visible: show })
 						.catch((error: Error) => {
 							errorCount++;
-							console.error(
-								"%cstorage",
+							log(4, [
+								"%cset%c %cstorage",
+								CSS.KO,
+								CSS.NONE,
 								CSS.STORAGE,
 								"update message visibility",
 								`title: ${title}`,
 								`widget: ${topic.widget_id}`,
-								error.message
-							);
+								error.message,
+							]);
 						});
 				});
 			}
@@ -500,13 +516,15 @@ export default class DexieClient {
 			.where({ id: query.widget })
 			.last()
 			.catch(() => {
-				console.warn(
-					"%storage%c %cseries",
+				log(2, [
+					"%cget%c %cstorage%c %cseries",
+					CSS.KO,
+					CSS.NONE,
 					CSS.STORAGE,
 					CSS.NONE,
 					CSS.SERIES,
-					query.widget
-				);
+					query.widget,
+				]);
 			});
 
 		const resp = {
@@ -516,12 +534,12 @@ export default class DexieClient {
 			query,
 		};
 		log(3, [
-			"%cstorage%c %cseries%c %cget",
+			"%cget%c %cstorage%c %cseries",
+			CSS.OK,
+			CSS.NONE,
 			CSS.STORAGE,
 			CSS.NONE,
 			CSS.SERIES,
-			CSS.NONE,
-			CSS.GET_DATA,
 			resp,
 		]);
 
@@ -548,12 +566,12 @@ export default class DexieClient {
 				.then(() => 201)
 				.catch((error: Error) => {
 					log(2, [
-						"%cstorage%c %cseries%c %cset",
+						"%cset%c %cstorage%c %cseries",
+						CSS.KO,
+						CSS.NONE,
 						CSS.STORAGE,
 						CSS.NONE,
 						CSS.SERIES,
-						CSS.NONE,
-						CSS.NO_UPDATES,
 						query,
 						error.message,
 					]);

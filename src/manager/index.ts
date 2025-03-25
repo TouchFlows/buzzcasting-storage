@@ -7,7 +7,7 @@ import KeyvalClient from "../storage/keyval";
 import LocalStorageClient from "../storage/local-storage";
 import SessionStorageClient from "../storage/session-storage";
 import WindowClient from "../storage/window";
-import { log } from "../utils";
+import { log, typeCss } from "../utils";
 //import { hashSum } from "../utils";
 
 export class BuzzcastingStorageManager {
@@ -27,10 +27,8 @@ export class BuzzcastingStorageManager {
 
 	constructor(options: IStorageOptions) {
 		log(3, [
-			"%cstorage%c %cpresentation",
-			CSS.STORAGE,
-			CSS.NONE,
-			CSS.PRESENTATION,
+			"%cpresentation",
+			CSS.PRESENTATION,			
 			options.presentation,
 			EVENTS.VERSION,
 			version,
@@ -42,11 +40,10 @@ export class BuzzcastingStorageManager {
 		this.bc = new BroadcastChannel(broadcast);
 
 		log(3, [
-			"%capi%c %cbroadcast",
-			CSS.API,
-			CSS.NONE,
+			"%cchannel%c %capi",
 			CSS.BROADCAST,
-			EVENTS.CHANNEL,
+			CSS.NONE,
+			CSS.API,
 			broadcast,
 		]);
 		this.bc.onmessage = (messageEvent: MessageEvent) => {
@@ -92,174 +89,345 @@ export class BuzzcastingStorageManager {
 			subscriberQueries.push(this.api.get(apiQuery));
 		});
 
-		await Promise.allSettled(subscriberQueries).then((results) =>
-			results.forEach(async (response) => {
-				let data;
-				let status: number | void = 400;
-				if (response.status === "fulfilled") {
-					let resp = response.value;
-					if (resp.success === true) {
-						const previousHash = this.subscribers[resp.query.widget];
-						let newHash: string | any[] = "";
+		subscriberQueries.forEach(async (apiCall) => {
+			await apiCall.then(
+				async (apiResp: any) => await this.processResponse(apiResp)
+			);
+		});
+		// await Promise.allSettled(subscriberQueries).then((results) =>
+		// 	results.forEach(async (response) => {
+		// 		let data;
+		// 		let status: number | void = 400;
+		// 		if (response.status === "fulfilled") {
+		// 			let resp = response.value;
+		// 			if (resp.success === true) {
+		// 				const previousHash = this.subscribers[resp.query.widget];
+		// 				let newHash: string | any[] = "";
 
-						switch (resp.query.type) {
-							case API.MESSAGES:
-								// check that message has an ID
-								let filteredMessages: any[];
-								filteredMessages = resp.data.messages.filter(
-									(msg: any) => msg.id !== null
-								);
-								resp.data.messages = filteredMessages;
-								// check if any topic dynamics have changed
-								newHash = hashSum(resp.data.messages);
-								if (previousHash?.hash && previousHash.hash === newHash) {
-									log(3, [
-										"%capi%c %cno updates",
-										CSS.API,
-										CSS.NONE,
-										CSS.NO_UPDATES,
-										API.MESSAGES,
-										resp.query.widget,
-									]);
+		// 				switch (resp.query.type) {
+		// 					case API.MESSAGES:
+		// 						// check that message has an ID
+		// 						let filteredMessages: any[];
+		// 						filteredMessages = resp.data.messages.filter(
+		// 							(msg: any) => msg.id !== null
+		// 						);
+		// 						resp.data.messages = filteredMessages;
+		// 						// check if any topic dynamics have changed
+		// 						newHash = hashSum(resp.data.messages);
+		// 						if (previousHash?.hash && previousHash.hash === newHash) {
+		// 							log(3, [
+		// 								"%capi%c %cno updates",
+		// 								CSS.API,
+		// 								CSS.NONE,
+		// 								CSS.NO_UPDATES,
+		// 								API.MESSAGES,
+		// 								resp.query.widget,
+		// 							]);
 
-									log(4, [
-										"%capi%c %cno updates",
-										CSS.API,
-										CSS.NONE,
-										CSS.NO_UPDATES,
-										API.MESSAGES,
-										resp,
-									]);
-									status = 204;
-								} else {
-									data = resp;
-									previousHash.hash = newHash;
-									status = await this.sm
-										?.setMessages(resp.query, resp)
-										.then((code) => {
-											setTimeout(() => {
-												code = 201;
-												this.broadcastUpdate(code, resp);
-												return code;
-											}, 500); // MTM allow tuning thru options
-										});
-								}
-								break;
-							case API.CLOUD:
-								newHash = hashSum(resp.data.cloud);
-								if (previousHash?.hash && previousHash.hash === newHash) {
-									log(3, [
-										"%capi%c %cno updates",
-										CSS.API,
-										CSS.NONE,
-										CSS.NO_UPDATES,
-										API.CLOUD,
-										resp.query.widget,
-									]);
+		// 							log(4, [
+		// 								"%capi%c %cno updates",
+		// 								CSS.API,
+		// 								CSS.NONE,
+		// 								CSS.NO_UPDATES,
+		// 								API.MESSAGES,
+		// 								resp,
+		// 							]);
+		// 							status = 204;
+		// 						} else {
+		// 							data = resp;
+		// 							previousHash.hash = newHash;
+		// 							status = await this.sm
+		// 								?.setMessages(resp.query, resp)
+		// 								.then((code) => {
+		// 									setTimeout(() => {
+		// 										code = 201;
+		// 										this.broadcastUpdate(code, resp);
+		// 										return code;
+		// 									}, 500); // MTM allow tuning thru options
+		// 								});
+		// 						}
+		// 						break;
+		// 					case API.CLOUD:
+		// 						newHash = hashSum(resp.data.cloud);
+		// 						if (previousHash?.hash && previousHash.hash === newHash) {
+		// 							log(3, [
+		// 								"%capi%c %cno updates",
+		// 								CSS.API,
+		// 								CSS.NONE,
+		// 								CSS.NO_UPDATES,
+		// 								API.CLOUD,
+		// 								resp.query.widget,
+		// 							]);
 
-									log(4, [
-										"%capi%c %cno updates",
-										CSS.API,
-										CSS.NONE,
-										CSS.NO_UPDATES,
-										API.CLOUD,
-										resp,
-									]);
-									status = 204;
-								} else {
-									previousHash.hash = newHash;
-									data = {
-										data: {
-											cloud: resp.data,
-										},
-										message: resp.message,
-										success: resp.success,
-										query: resp.query,
-									};
-									status = await this.sm
-										?.setCloud(resp.query, data.data)
-										.then((code) => {
-											return this.broadcastUpdate(code, resp);
-										});
-								}
-								break;
-							case API.SERIES:
-								newHash = hashSum(resp.data.series);
-								if (previousHash?.hash && previousHash.hash === newHash) {
-									log(3, [
-										"%capi%c %cno updates",
-										CSS.API,
-										CSS.NONE,
-										CSS.NO_UPDATES,
-										API.SERIES,
-										resp.query.widget,
-									]);
-									log(4, [
-										"%capi%c %cno updates",
-										CSS.API,
-										CSS.NONE,
-										CSS.NO_UPDATES,
-										API.SERIES,
-										resp,
-									]);
-									status = 204;
-								} else {
-									previousHash.hash = newHash;
-									data = {
-										data: resp.data,
-										message: resp.message,
-										success: resp.success,
-										query: resp.query,
-									};
-									status = await this.sm
-										?.setSeries(resp.query, resp.data)
-										.then((code) => {
-											return this.broadcastUpdate(code, resp);
-										});
-								}
-								break;
-							default:
-								log(4, [
-									"%capi%c %cstorage",
-									CSS.API,
-									CSS.NONE,
-									CSS.STORAGE,
-									"error",
-									`Bad request: type ${resp.query.type} unknown`,
-								]);
-								status = 400;
-						}
+		// 							log(4, [
+		// 								"%capi%c %cno updates",
+		// 								CSS.API,
+		// 								CSS.NONE,
+		// 								CSS.NO_UPDATES,
+		// 								API.CLOUD,
+		// 								resp,
+		// 							]);
+		// 							status = 204;
+		// 						} else {
+		// 							previousHash.hash = newHash;
+		// 							data = {
+		// 								data: {
+		// 									cloud: resp.data,
+		// 								},
+		// 								message: resp.message,
+		// 								success: resp.success,
+		// 								query: resp.query,
+		// 							};
+		// 							status = await this.sm
+		// 								?.setCloud(resp.query, data.data)
+		// 								.then((code) => {
+		// 									return this.broadcastUpdate(code, resp);
+		// 								});
+		// 						}
+		// 						break;
+		// 					case API.SERIES:
+		// 						newHash = hashSum(resp.data.series);
+		// 						if (previousHash?.hash && previousHash.hash === newHash) {
+		// 							log(3, [
+		// 								"%capi%c %cno updates",
+		// 								CSS.API,
+		// 								CSS.NONE,
+		// 								CSS.NO_UPDATES,
+		// 								API.SERIES,
+		// 								resp.query.widget,
+		// 							]);
+		// 							log(4, [
+		// 								"%capi%c %cno updates",
+		// 								CSS.API,
+		// 								CSS.NONE,
+		// 								CSS.NO_UPDATES,
+		// 								API.SERIES,
+		// 								resp,
+		// 							]);
+		// 							status = 204;
+		// 						} else {
+		// 							previousHash.hash = newHash;
+		// 							data = {
+		// 								data: resp.data,
+		// 								message: resp.message,
+		// 								success: resp.success,
+		// 								query: resp.query,
+		// 							};
+		// 							status = await this.sm
+		// 								?.setSeries(resp.query, resp.data)
+		// 								.then((code) => {
+		// 									return this.broadcastUpdate(code, resp);
+		// 								});
+		// 						}
+		// 						break;
+		// 					default:
+		// 						log(4, [
+		// 							"%capi%c %cstorage",
+		// 							CSS.API,
+		// 							CSS.NONE,
+		// 							CSS.STORAGE,
+		// 							"error",
+		// 							`Bad request: type ${resp.query.type} unknown`,
+		// 						]);
+		// 						status = 400;
+		// 				}
+		// 			} else {
+		// 				status = 401;
+		// 			}
+		// 			return status;
+		// 		} else {
+		// 			log(2, [
+		// 				"%capp%c %cstorage",
+		// 				CSS.APP,
+		// 				CSS.NONE,
+		// 				CSS.STORAGE,
+		// 				EVENTS.ERROR,
+		// 				response.status,
+		// 			]);
+		// 			return 400;
+		// 		}
+		// 	})
+		// );
+	};
+
+	private processResponse = async (resp: any) => {
+		let data;
+		let status: number | void = 400;
+		if (resp.success === true) {
+			const previousHash = this.subscribers[resp.query.widget];
+			let newHash: string | any[] = "";
+
+			switch (resp.query.type) {
+				case API.MESSAGES:
+					// check that message has an ID
+					let filteredMessages: any[];
+					filteredMessages = resp.data.messages.filter(
+						(msg: any) => msg.id !== null
+					);
+					resp.data.messages = filteredMessages;
+					// check if any topic dynamics have changed
+					newHash = hashSum(resp.data.messages);
+					if (previousHash?.hash && previousHash.hash === newHash) {
+						log(3, [
+							"%cload%c %cmessages%c %cno updates",
+							CSS.OK,
+							CSS.NONE,
+							CSS.MESSAGES,
+							CSS.NONE,
+							CSS.NO_UPDATES,
+							resp.query.widget,
+						]);
+
+						log(4, ["%cmessages", CSS.MESSAGES, resp]);
+						status = 204;
 					} else {
-						status = 401;
+						data = resp;
+						previousHash.hash = newHash;
+						status = await this.sm
+							?.setMessages(resp.query, resp)
+							.then(async (code) => {
+								// setTimeout(() => {
+								code = 201;
+								return this.broadcastUpdate(code, resp);
+								// }, 500); // MTM allow tuning thru options
+							});
 					}
-					return status;
-				} else {
-					log(2, [
-						"%capp%c %cstorage",
-						CSS.APP,
+					break;
+				case API.CLOUD:
+					newHash = hashSum(resp.data.cloud);
+					if (previousHash?.hash && previousHash.hash === newHash) {
+						log(3, [
+							"%cload%c %ccloud%c %cno updates",
+							CSS.OK,
+							CSS.NONE,
+							CSS.CLOUD,
+							CSS.NONE,
+							CSS.NO_UPDATES,
+							resp.query.widget,
+						]);
+
+						log(4, ["%ccloud", CSS.CLOUD, resp.query]);
+						status = 204;
+					} else {
+						previousHash.hash = newHash;
+						data = {
+							data: {
+								cloud: resp.data,
+							},
+							message: resp.message,
+							success: resp.success,
+							query: resp.query,
+						};
+						status = await this.sm
+							?.setCloud(resp.query, data.data)
+							.then((code) => {
+								return this.broadcastUpdate(code, resp);
+							});
+					}
+					break;
+				case API.SERIES:
+					newHash = hashSum(resp.data.series);
+					if (previousHash?.hash && previousHash.hash === newHash) {
+						log(3, [
+							"%cload%c %cseries%c %cno updates",
+							CSS.OK,
+							CSS.NONE,
+							CSS.SERIES,
+							CSS.NONE,
+							CSS.NO_UPDATES,
+							resp.query.widget,
+						]);
+						log(4, ["%cseries", CSS.SERIES, resp]);
+						status = 204;
+					} else {
+						previousHash.hash = newHash;
+						data = {
+							data: resp.data,
+							message: resp.message,
+							success: resp.success,
+							query: resp.query,
+						};
+						status = await this.sm
+							?.setSeries(resp.query, resp.data)
+							.then((code) => {
+								return this.broadcastUpdate(code, resp);
+							});
+					}
+					break;
+				default:
+					log(4, [
+						"%cload%c %cunknown%c %cno updates",
+						CSS.KO,
 						CSS.NONE,
 						CSS.STORAGE,
-						EVENTS.ERROR,
-						response.status,
+						CSS.NONE,
+						CSS.NO_UPDATES,
+						`Bad request: type ${resp.query.type} unknown`,
 					]);
-					return 400;
-				}
-			})
-		);
+					status = 204;
+			}
+		} else {
+			//status = 401;
+			log(2, [
+				"%cload%c %cunknown%c %cno updates",
+				CSS.KO,
+				CSS.NONE,
+				CSS.STORAGE,
+				CSS.NONE,
+				CSS.NO_UPDATES,
+				resp.status,
+			]);
+			switch (resp.query.type) {
+				case API.MESSAGES:
+					return await this.sm?.getMessages(resp.query).then((response) => {
+						this.broadcastUpdate(201, response);
+					});
+
+				case API.CLOUD:
+					return await this.sm?.getCloud(resp.query).then((response) => {
+						this.broadcastUpdate(201, response);
+					});
+
+				case API.SERIES:
+					return await this.sm?.getSeries(resp.query).then((response) => {
+						this.broadcastUpdate(201, response);
+					});
+			}
+		}
+		return status;
+		// } else {
+		// 	log(2, [
+		// 		"%capp%c %cstorage",
+		// 		CSS.APP,
+		// 		CSS.NONE,
+		// 		CSS.STORAGE,
+		// 		EVENTS.ERROR,
+		// 		response.status,
+		// 	]);
+		// 	return 400;
+		// }
 	};
 
 	private broadcastUpdate = (status: number, resp: IResponse) => {
+
 		switch (status) {
 			case 201:
 				log(3, [
-					"%capp%c %cbroadcast",
-					CSS.APP,
+					`%cupdate%c %cwidget%c %c${resp.query?.type}`,
+					CSS.BROADCAST,
 					CSS.NONE,
+					CSS.WIDGET,
+					CSS.NONE,
+					typeCss(resp.query),
+					//@ts-ignore
+					`${resp.data?.title ?? ''} ${resp.query.widget}`,
+				]);
+				log(4, [
+					"%cevent",
 					CSS.BROADCAST,
 					//@ts-ignore
-					resp.data?.title ?? resp.query.widget,
+					resp,
 				]);
-				log(4, ["%capp%c %cbroadcast", CSS.APP, CSS.NONE, CSS.BROADCAST, resp]);
 				this.bc.postMessage({
 					event: EVENTS.WIDGET_UPDATE,
 					data: resp.query,
@@ -270,13 +438,14 @@ export class BuzzcastingStorageManager {
 				break;
 			default:
 				log(2, [
-					"%capp%c %cbroadcast",
-					CSS.APP,
+					`%cupdate%c %cwidget%c %c${resp.query?.type}`,
+					CSS.KO,
 					CSS.NONE,
-					CSS.BROADCAST,
+					CSS.WIDGET,
+					CSS.NONE,
+					typeCss(resp.query),
 					"Fetch error",
-					// @ts-ignore
-					resp.data.title ?? resp.query.widget,
+					resp.query,
 				]);
 				break;
 		}
@@ -295,11 +464,12 @@ export class BuzzcastingStorageManager {
 				break;
 			case EVENTS.UPDATE:
 				log(3, [
-					"%capi%c %cstorage",
+					"%cupdate%c %capi%c %cstorage",
+					CSS.BROADCAST,
+					CSS.NONE,
 					CSS.API,
 					CSS.NONE,
 					CSS.STORAGE,
-					EVENTS.UPDATE,
 					messageEvent.data,
 				]);
 				await this.update(messageEvent.data.data);
@@ -311,7 +481,9 @@ export class BuzzcastingStorageManager {
 	public cleanMessages = async () => {
 		if (this.options?.suspended) {
 			log(2, [
-				"%cstorage%c %cstorage",
+				"%cclean%c %cstorage%c %cmessages",
+				CSS.KO,
+				CSS.NONE,
 				CSS.STORAGE,
 				CSS.NONE,
 				CSS.MESSAGES,
@@ -326,8 +498,10 @@ export class BuzzcastingStorageManager {
 			retentionDuration
 		);
 
-		log(2, [
-			"%cstorage%c %cstorage",
+		log(3, [
+			"%cclean%c %cstorage%c %cmessages",
+			CSS.OK,
+			CSS.NONE,
 			CSS.STORAGE,
 			CSS.NONE,
 			CSS.MESSAGES,
@@ -336,16 +510,18 @@ export class BuzzcastingStorageManager {
 	};
 
 	public hideMessage = async (query: IQuery): Promise<IResponse> => {
+		// Clear from local storage
 		const count = await this.sm?.hideMessage(query.id, 0);
-
-		log(2, [
-			"%cstorage%c %cstorage",
+		log(3, [
+			"%chide%c %cstorage%c %cmessages",
+			CSS.OK,
+			CSS.NONE,
 			CSS.STORAGE,
 			CSS.NONE,
-			CSS.HIDE,
+			CSS.MESSAGES,
 			`${count} messages hidden`,
 		]);
-
+		// Clear from api server
 		return await this.api.hideMessage(query);
 	};
 

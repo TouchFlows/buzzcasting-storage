@@ -37,7 +37,7 @@ export default class Widget {
 		delete query.hmr;
 
 		query.presentation =
-			element.closest<any>(selector.toUpperCase())?.presentation ??
+			element.closest<any>(selector)?.getAttribute("presentation") ??
 			`${selector} not found`;
 
 		//query = widgetParams(query);
@@ -75,12 +75,12 @@ export default class Widget {
 							const response = await this.getData();
 							if (response?.success) {
 								log(4, [
-									"%cwidget%c %cbroadcast%c %cset",
+									"%cset%c %cbroadcast%c %cwidget",
+									CSS.OK,
+									CSS.NONE,
 									CSS.BROADCAST,
 									CSS.NONE,
 									CSS.WIDGET,
-									CSS.NONE,
-									CSS.GET_DATA,
 									this.query,
 								]);
 								this.callbacks.forEach(async (cb) => {
@@ -106,21 +106,15 @@ export default class Widget {
 	 */
 	subscribe() {
 		log(3, [
-			"%cwidget%c %csubscribe",
-			CSS.WIDGET,
-			CSS.NONE,
+			"%csubscribe%c %cwidget",
 			CSS.SUBSCRIBE,
+			CSS.NONE,
+			CSS.WIDGET,
 			this.query.presentation,
 			this.query.widget,
 		]);
 
-		log(4, [
-			"%cwidget%c %csubscribe",
-			CSS.WIDGET,
-			CSS.NONE,
-			CSS.SUBSCRIBE,
-			this.query,
-		]);
+		log(4, ["%cwidget", CSS.WIDGET, this.query]);
 		this.broadcastChannel.postMessage({
 			event: EVENTS.SUBSCRIBE,
 			data: this.query,
@@ -156,8 +150,10 @@ export default class Widget {
 	 */
 	public getCloud = async (): Promise<IResponse> => {
 		if (this.query.type !== API.CLOUD) {
-			log(4, [
-				"%cstorage%c %cwidget",
+			log(3, [
+				"%cget%c %cstorage%c %cwidget",
+				CSS.KO,
+				CSS.NONE,
 				CSS.STORAGE,
 				CSS.NONE,
 				CSS.WIDGET,
@@ -165,10 +161,8 @@ export default class Widget {
 				"Wrong method call for getCloud, expected type is",
 				this.query.type,
 			]);
-			log(3, [
-				"%cstorage%c %cwidget",
-				CSS.API,
-				CSS.NONE,
+			log(4, [
+				"%ccloud",
 				CSS.CLOUD,
 				this.query,
 			]);
@@ -189,14 +183,21 @@ export default class Widget {
 	 */
 	public getMessages = async (): Promise<IResponse> => {
 		if (this.query.type !== API.MESSAGES) {
-			log(4, [
-				"%cstorage%c %cwidget",
+			log(3, [
+				"%cget%c %cstorage%c %cwidget",
+				CSS.KO,
+				CSS.NONE,
 				CSS.STORAGE,
 				CSS.NONE,
 				CSS.WIDGET,
 				this.query.widget,
 				"Wrong method call for getMessages, expected type is",
 				this.query.type,
+			]);
+			log(4, [
+				"%cmessages",
+				CSS.MESSAGES,
+				this.query,
 			]);
 			return {
 				data: null,
@@ -205,13 +206,6 @@ export default class Widget {
 			};
 		}
 
-		log(3, [
-			"%cstorage%c %cwidget",
-			CSS.API,
-			CSS.NONE,
-			CSS.MESSAGES,
-			this.query,
-		]);
 		return await this.storageReader.getMessages(this.query);
 	};
 
@@ -223,7 +217,9 @@ export default class Widget {
 	public getSeries = async (): Promise<IResponse> => {
 		if (this.query.type !== API.SERIES) {
 			log(3, [
-				"%cstorage%c %cwidget",
+				"%cget%c %cstorage%c %cwidget",
+				CSS.KO,
+				CSS.NONE,
 				CSS.STORAGE,
 				CSS.NONE,
 				CSS.WIDGET,
@@ -231,11 +227,8 @@ export default class Widget {
 				"Wrong method call for getSeries, expected type is",
 				this.query.type,
 			]);
-			log(2, [
-				"%cstorage%c %cwidget",
-				CSS.STORAGE,
-				CSS.NONE,
-				CSS.MESSAGES,
+			log(4, [
+				"%cseries",
 				this.query,
 			]);
 			return {
