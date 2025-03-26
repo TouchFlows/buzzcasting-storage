@@ -1,7 +1,7 @@
 {
   "name": "buzzcasting-storage",
   "type": "module",
-  "version": "3.8.0",
+  "version": "3.9.0",
   "private": false,
   "author": {
     "name": "Mark Tamis, TouchFlows SAS",
@@ -31,7 +31,6 @@
     "buzzcasting-utils": "^1.2.0",
     "dexie": "^4.0.11",
     "idb-keyval": "^6.2.1"
-    
   },
   "devDependencies": {
     "@antfu/eslint-config": "^4.11.0",
