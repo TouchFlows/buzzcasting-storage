@@ -1,13 +1,13 @@
 import { describe, expect, it } from 'vitest'
-import { STORAGE } from '../src/constants'
+import { STORAGE } from 'buzzcasting-utils'
 
-describe('sTORAGE_DEXIE', () => {
+describe('STORAGE_DEXIE', () => {
   it('the constant STORAGE_DEXIE should equal "dexie"', () => {
     expect(STORAGE.DEXIE).toEqual('dexie')
   })
 })
 
-describe('sTORAGE_KEYVAL', () => {
+describe('STORAGE_KEYVAL', () => {
   it('the constant STORAGE_KEYVAL should equal "keyval"', () => {
     expect(STORAGE.KEYVAL).toEqual('keyval')
   })

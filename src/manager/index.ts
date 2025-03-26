@@ -1,5 +1,18 @@
-import type { IPreference, IQuery, IResponse, IStorageOptions } from "..";
-import { API, CSS, EVENTS, hashSum, STORAGE } from "..";
+import type {
+	IPreference,
+	IQuery,
+	IResponse,
+	IStorageOptions,
+} from "buzzcasting-utils";
+import {
+	API,
+	CSS,
+	EVENTS,
+	hashSum,
+	STORAGE,
+	log,
+	typeCss,
+} from "buzzcasting-utils";
 import { version } from "../../package.json";
 import ApiClient from "../api/api";
 import DexieClient from "../storage/dexie";
@@ -7,8 +20,6 @@ import KeyvalClient from "../storage/keyval";
 import LocalStorageClient from "../storage/local-storage";
 import SessionStorageClient from "../storage/session-storage";
 import WindowClient from "../storage/window";
-import { log, typeCss } from "../utils";
-//import { hashSum } from "../utils";
 
 export class BuzzcastingStorageManager {
 	private sm:
@@ -28,7 +39,7 @@ export class BuzzcastingStorageManager {
 	constructor(options: IStorageOptions) {
 		log(3, [
 			"%cpresentation",
-			CSS.PRESENTATION,			
+			CSS.PRESENTATION,
 			options.presentation,
 			EVENTS.VERSION,
 			version,
@@ -39,13 +50,7 @@ export class BuzzcastingStorageManager {
 		const broadcast = options.presentation;
 		this.bc = new BroadcastChannel(broadcast);
 
-		log(3, [
-			"%cchannel%c %capi",
-			CSS.BROADCAST,
-			CSS.NONE,
-			CSS.API,
-			broadcast,
-		]);
+		log(3, ["%cchannel%c %capi", CSS.BROADCAST, CSS.NONE, CSS.API, broadcast]);
 		this.bc.onmessage = (messageEvent: MessageEvent) => {
 			this.actions(messageEvent);
 		};
@@ -409,7 +414,6 @@ export class BuzzcastingStorageManager {
 	};
 
 	private broadcastUpdate = (status: number, resp: IResponse) => {
-
 		switch (status) {
 			case 201:
 				log(3, [
@@ -420,7 +424,7 @@ export class BuzzcastingStorageManager {
 					CSS.NONE,
 					typeCss(resp.query),
 					//@ts-ignore
-					`${resp.data?.title ?? ''} ${resp.query.widget}`,
+					`${resp.data?.title ?? ""} ${resp.query.widget}`,
 				]);
 				log(4, [
 					"%cevent",

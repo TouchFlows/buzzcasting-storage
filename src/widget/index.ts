@@ -1,6 +1,17 @@
-import type { IModal, IQuery, IResponse } from "..";
-import { API, BuzzcastingStorageReader, CSS, EVENTS } from "..";
-import { attrs, clearContents, log } from "../utils";
+import type{
+	IModal,
+	IQuery,
+	IResponse,
+} from "buzzcasting-utils";
+import {
+	API,
+	CSS,
+	EVENTS,
+	clearContents,
+	attrs,
+	log
+} from "buzzcasting-utils";
+import { BuzzcastingStorageReader } from "..";
 
 /**
  * Main class for managing widgets and data updates
@@ -161,11 +172,7 @@ export default class Widget {
 				"Wrong method call for getCloud, expected type is",
 				this.query.type,
 			]);
-			log(4, [
-				"%ccloud",
-				CSS.CLOUD,
-				this.query,
-			]);
+			log(4, ["%ccloud", CSS.CLOUD, this.query]);
 			return {
 				data: null,
 				message: `wrong method call for getCloud, expected type is '${this.query.type}'`,
@@ -194,11 +201,7 @@ export default class Widget {
 				"Wrong method call for getMessages, expected type is",
 				this.query.type,
 			]);
-			log(4, [
-				"%cmessages",
-				CSS.MESSAGES,
-				this.query,
-			]);
+			log(4, ["%cmessages", CSS.MESSAGES, this.query]);
 			return {
 				data: null,
 				message: `wrong method call for getMessages, expected type is '${this.query.type}'`,
@@ -227,10 +230,7 @@ export default class Widget {
 				"Wrong method call for getSeries, expected type is",
 				this.query.type,
 			]);
-			log(4, [
-				"%cseries",
-				this.query,
-			]);
+			log(4, ["%cseries", this.query]);
 			return {
 				data: null,
 				message: `wrong method call for getSeries, expected type is '${this.query.type}'`,

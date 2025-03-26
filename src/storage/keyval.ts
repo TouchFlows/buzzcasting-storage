@@ -1,13 +1,11 @@
 import { get, set } from "idb-keyval";
-import {
-	API,
-	CSS,
+import type {
 	IPreference,
 	IResponse,
-	type IQuery,
-	type IStorageOptions,
-} from "..";
-import { getKey, moderation } from "../utils/widget";
+	IQuery,
+	IStorageOptions,
+} from "buzzcasting-utils";
+import { API, CSS,moderation, getKey } from "buzzcasting-utils";
 
 export default class KeyvalClient {
 	public subscribers: Array<any> = [];
@@ -152,7 +150,7 @@ export default class KeyvalClient {
 				};
 			});
 	};
-	
+
 	getDashboards = async (): Promise<IResponse> => {
 		//const key = getKey(query);
 		// return await get(key)

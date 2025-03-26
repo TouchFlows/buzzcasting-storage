@@ -4,9 +4,8 @@ import type {
 	IQuery,
 	IResponse,
 	IStorageOptions,
-} from "..";
-import { API, CSS, EVENTS } from "..";
-import { log } from "../utils";
+} from "buzzcasting-utils";
+import { API, CSS, EVENTS, log } from "buzzcasting-utils";
 
 export default class ApiClient {
 	private options: IStorageOptions;

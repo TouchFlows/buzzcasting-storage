@@ -5,11 +5,9 @@ import type {
 	IResponse,
 	IStorageOptions,
 	ITopic,
-} from "..";
+} from "buzzcasting-utils";
 import Dexie from "dexie";
-import { API, CSS, EVENTS } from "..";
-import { moderation, widgetParams } from "../utils/widget";
-import { log } from "../utils";
+import { API, CSS, EVENTS, log, moderation, widgetParams } from "buzzcasting-utils";
 
 export default class DexieClient {
 	private db: Dexie;

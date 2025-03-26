@@ -1,6 +1,10 @@
-import type { IPreference, IQuery, IResponse, IStorageOptions } from "..";
-import { API, CSS } from "..";
-import { getKey, moderation } from "../utils/widget";
+import type {
+	IPreference,
+	IResponse,
+	IQuery,
+	IStorageOptions,
+} from "buzzcasting-utils";
+import { API, CSS, getKey, moderation } from "buzzcasting-utils";
 
 export default class LocalStorageClient {
 	public subscribers: Array<any> = [];

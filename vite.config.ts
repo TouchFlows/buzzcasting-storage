@@ -8,7 +8,9 @@ import packageJson from "./package.json";
 const packageName = packageJson.name.split("/").pop() || packageJson.name;
 
 export default defineConfig({
+	
 	build: {
+		target: 'esnext',
 		lib: {
 			entry: resolve(__dirname, "src/index.ts"),
 			formats: ["es"],
@@ -23,7 +25,7 @@ export default defineConfig({
 				return name;
 			},
 		},
-		minify: "esbuild",
+		//minify: "esbuild",
 	},
 	plugins: [dts({ rollupTypes: true })],
 	test: {},
