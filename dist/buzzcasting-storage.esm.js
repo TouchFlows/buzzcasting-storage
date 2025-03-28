@@ -136,7 +136,7 @@ function wt(g, n) {
   }
   return n;
 }
-const xa = "3.8.0";
+const xa = "3.9.0";
 class ka {
   options;
   url;

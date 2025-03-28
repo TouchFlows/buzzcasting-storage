@@ -186,7 +186,7 @@ export default class DexieClient {
 			.put({
 				id: q.id,
 				name: q.name,
-				dashboard: q.data,
+				data: q.data,
 				update: q.update,
 			})
 			.then(() => {
@@ -197,13 +197,13 @@ export default class DexieClient {
 				};
 			})
 			.catch((error: Error) => {
-				console.error(
+				log(4,[
 					"%cstorage",
 					CSS.STORAGE,
 					API.WIDGET,
 					query,
 					error.message
-				);
+				]);
 				return {
 					data: null,
 					message: `Dashboard ${q.data.id} save error: ${error.message}`,
