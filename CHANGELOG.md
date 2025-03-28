@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.9.2
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.9.1...v3.9.2)
+
+### 🩹 Fixes
+
+- Dexie set dashboard ([2a31798](https://github.com/TouchFlows/buzzcasting-storage/commit/2a31798))
+
+### 🏡 Chore
+
+- **release:** V3.9.1 ([4e88b62](https://github.com/TouchFlows/buzzcasting-storage/commit/4e88b62))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.9.1
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.9.0...v3.9.1)
