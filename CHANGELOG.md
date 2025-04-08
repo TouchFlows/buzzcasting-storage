@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.9.4
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.9.3...v3.9.4)
+
+### 🩹 Fixes
+
+- Check for empty widget id ([e5177be](https://github.com/TouchFlows/buzzcasting-storage/commit/e5177be))
+
+### 🏡 Chore
+
+- **release:** V3.9.3 ([3d56e79](https://github.com/TouchFlows/buzzcasting-storage/commit/3d56e79))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.9.3
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.9.2...v3.9.3)
