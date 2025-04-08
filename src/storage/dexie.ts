@@ -289,7 +289,7 @@ export default class DexieClient {
 	 * @returns IResponse
 	 */
 	getMessages = async (query: IQuery): Promise<IResponse> => {
-		if(query.widget='') {
+		if(query.widget==='') {
 			log(3, [
 				"%cget%c %cstorage%c %cmessages",
 				CSS.KO,
@@ -545,7 +545,7 @@ export default class DexieClient {
 	 * @returns IResponse
 	 */
 	getSeries = async (query: IQuery): Promise<IResponse> => {
-		if(query.widget='') {
+		if(query.widget==='') {
 			log(3, [
 				"%cget%c %cstorage%c %cseries",
 				CSS.KO,
@@ -638,7 +638,7 @@ export default class DexieClient {
 	 * @returns IResponse
 	 */
 	getWidget = async (query: IQuery): Promise<IResponse> => {
-		if(query.id='') {
+		if(query.id==='') {
 			log(3, [
 				"%cget%c %cstorage%c %cwidget",
 				CSS.KO,
