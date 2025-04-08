@@ -99,160 +99,6 @@ export class BuzzcastingStorageManager {
 				async (apiResp: any) => await this.processResponse(apiResp)
 			);
 		});
-		// await Promise.allSettled(subscriberQueries).then((results) =>
-		// 	results.forEach(async (response) => {
-		// 		let data;
-		// 		let status: number | void = 400;
-		// 		if (response.status === "fulfilled") {
-		// 			let resp = response.value;
-		// 			if (resp.success === true) {
-		// 				const previousHash = this.subscribers[resp.query.widget];
-		// 				let newHash: string | any[] = "";
-
-		// 				switch (resp.query.type) {
-		// 					case API.MESSAGES:
-		// 						// check that message has an ID
-		// 						let filteredMessages: any[];
-		// 						filteredMessages = resp.data.messages.filter(
-		// 							(msg: any) => msg.id !== null
-		// 						);
-		// 						resp.data.messages = filteredMessages;
-		// 						// check if any topic dynamics have changed
-		// 						newHash = hashSum(resp.data.messages);
-		// 						if (previousHash?.hash && previousHash.hash === newHash) {
-		// 							log(3, [
-		// 								"%capi%c %cno updates",
-		// 								CSS.API,
-		// 								CSS.NONE,
-		// 								CSS.NO_UPDATES,
-		// 								API.MESSAGES,
-		// 								resp.query.widget,
-		// 							]);
-
-		// 							log(4, [
-		// 								"%capi%c %cno updates",
-		// 								CSS.API,
-		// 								CSS.NONE,
-		// 								CSS.NO_UPDATES,
-		// 								API.MESSAGES,
-		// 								resp,
-		// 							]);
-		// 							status = 204;
-		// 						} else {
-		// 							data = resp;
-		// 							previousHash.hash = newHash;
-		// 							status = await this.sm
-		// 								?.setMessages(resp.query, resp)
-		// 								.then((code) => {
-		// 									setTimeout(() => {
-		// 										code = 201;
-		// 										this.broadcastUpdate(code, resp);
-		// 										return code;
-		// 									}, 500); // MTM allow tuning thru options
-		// 								});
-		// 						}
-		// 						break;
-		// 					case API.CLOUD:
-		// 						newHash = hashSum(resp.data.cloud);
-		// 						if (previousHash?.hash && previousHash.hash === newHash) {
-		// 							log(3, [
-		// 								"%capi%c %cno updates",
-		// 								CSS.API,
-		// 								CSS.NONE,
-		// 								CSS.NO_UPDATES,
-		// 								API.CLOUD,
-		// 								resp.query.widget,
-		// 							]);
-
-		// 							log(4, [
-		// 								"%capi%c %cno updates",
-		// 								CSS.API,
-		// 								CSS.NONE,
-		// 								CSS.NO_UPDATES,
-		// 								API.CLOUD,
-		// 								resp,
-		// 							]);
-		// 							status = 204;
-		// 						} else {
-		// 							previousHash.hash = newHash;
-		// 							data = {
-		// 								data: {
-		// 									cloud: resp.data,
-		// 								},
-		// 								message: resp.message,
-		// 								success: resp.success,
-		// 								query: resp.query,
-		// 							};
-		// 							status = await this.sm
-		// 								?.setCloud(resp.query, data.data)
-		// 								.then((code) => {
-		// 									return this.broadcastUpdate(code, resp);
-		// 								});
-		// 						}
-		// 						break;
-		// 					case API.SERIES:
-		// 						newHash = hashSum(resp.data.series);
-		// 						if (previousHash?.hash && previousHash.hash === newHash) {
-		// 							log(3, [
-		// 								"%capi%c %cno updates",
-		// 								CSS.API,
-		// 								CSS.NONE,
-		// 								CSS.NO_UPDATES,
-		// 								API.SERIES,
-		// 								resp.query.widget,
-		// 							]);
-		// 							log(4, [
-		// 								"%capi%c %cno updates",
-		// 								CSS.API,
-		// 								CSS.NONE,
-		// 								CSS.NO_UPDATES,
-		// 								API.SERIES,
-		// 								resp,
-		// 							]);
-		// 							status = 204;
-		// 						} else {
-		// 							previousHash.hash = newHash;
-		// 							data = {
-		// 								data: resp.data,
-		// 								message: resp.message,
-		// 								success: resp.success,
-		// 								query: resp.query,
-		// 							};
-		// 							status = await this.sm
-		// 								?.setSeries(resp.query, resp.data)
-		// 								.then((code) => {
-		// 									return this.broadcastUpdate(code, resp);
-		// 								});
-		// 						}
-		// 						break;
-		// 					default:
-		// 						log(4, [
-		// 							"%capi%c %cstorage",
-		// 							CSS.API,
-		// 							CSS.NONE,
-		// 							CSS.STORAGE,
-		// 							"error",
-		// 							`Bad request: type ${resp.query.type} unknown`,
-		// 						]);
-		// 						status = 400;
-		// 				}
-		// 			} else {
-		// 				status = 401;
-		// 			}
-		// 			return status;
-		// 		} else {
-		// 			log(2, [
-		// 				"%capp%c %cstorage",
-		// 				CSS.APP,
-		// 				CSS.NONE,
-		// 				CSS.STORAGE,
-		// 				EVENTS.ERROR,
-		// 				response.status,
-		// 			]);
-		// 			return 400;
-		// 		}
-		// 	})
-		// );
 	};
 
 	private processResponse = async (resp: any) => {
@@ -271,7 +117,7 @@ export class BuzzcastingStorageManager {
 					);
 					resp.data.messages = filteredMessages;
 					// check if any topic dynamics have changed
-					newHash = hashSum(resp.data.messages);
+					newHash = hashSum(resp.data.messages[0].utc);
 					if (previousHash?.hash && previousHash.hash === newHash) {
 						log(3, [
 							"%cload%c %cmessages%c %cno updates",
@@ -361,27 +207,31 @@ export class BuzzcastingStorageManager {
 					break;
 				default:
 					log(4, [
-						"%cload%c %cunknown%c %cno updates",
+						`%cfetch%c %capi%c %cno updates`,
 						CSS.KO,
 						CSS.NONE,
-						CSS.STORAGE,
+						CSS.API,
 						CSS.NONE,
 						CSS.NO_UPDATES,
 						`Bad request: type ${resp.query.type} unknown`,
 					]);
+					return resp;
 					status = 204;
 			}
 		} else {
 			//status = 401;
-			log(2, [
-				"%cload%c %cunknown%c %cno updates",
+			log(4, [
+				`%cload%c %c${resp.query}%c %bad request`,
 				CSS.KO,
 				CSS.NONE,
 				CSS.STORAGE,
 				CSS.NONE,
 				CSS.NO_UPDATES,
-				resp.status,
+				resp.query,
 			]);
+			/**
+			 * Send back data from the local storage instead
+			 */
 			switch (resp.query.type) {
 				case API.MESSAGES:
 					return await this.sm?.getMessages(resp.query).then((response) => {

@@ -51,7 +51,7 @@ export default class DexieClient {
 	 * @returns IResponse
 	 */
 	getCloud = async (query: IQuery): Promise<IResponse> => {
-		if(query.widget='') {
+		if (query.widget === "") {
 			log(3, [
 				"%cget%c %cstorage%c %ccloud",
 				CSS.KO,
@@ -289,7 +289,7 @@ export default class DexieClient {
 	 * @returns IResponse
 	 */
 	getMessages = async (query: IQuery): Promise<IResponse> => {
-		if(query.widget==='') {
+		if (query.widget === "") {
 			log(3, [
 				"%cget%c %cstorage%c %cmessages",
 				CSS.KO,
@@ -310,7 +310,7 @@ export default class DexieClient {
 		const now: number = Math.floor(Date.now() / 1000);
 
 		if (order !== "utc") {
-				query.since = now - 60 * 60 * 24 * 30;
+			query.since = now - 60 * 60 * 24 * 30;
 		}
 
 		if (this.options.delay != 0) {
@@ -545,7 +545,7 @@ export default class DexieClient {
 	 * @returns IResponse
 	 */
 	getSeries = async (query: IQuery): Promise<IResponse> => {
-		if(query.widget==='') {
+		if (query.widget === "") {
 			log(3, [
 				"%cget%c %cstorage%c %cseries",
 				CSS.KO,
@@ -638,7 +638,7 @@ export default class DexieClient {
 	 * @returns IResponse
 	 */
 	getWidget = async (query: IQuery): Promise<IResponse> => {
-		if(query.id==='') {
+		if (query.id === "") {
 			log(3, [
 				"%cget%c %cstorage%c %cwidget",
 				CSS.KO,

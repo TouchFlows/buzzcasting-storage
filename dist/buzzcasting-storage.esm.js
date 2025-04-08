@@ -133,7 +133,7 @@ function St(p, n) {
   }
   return n;
 }
-const xa = "3.9.2";
+const xa = "3.9.3";
 class ka {
   options;
   url;
@@ -3586,7 +3586,7 @@ class Mr {
    * @returns IResponse
    */
   getMessages = async (n) => {
-    if (n.widget = "")
+    if (n.widget === "")
       return K(3, [
         "%cget%c %cstorage%c %cmessages",
         c.KO,
@@ -3736,7 +3736,7 @@ class Mr {
    * @returns IResponse
    */
   getSeries = async (n) => {
-    if (n.widget = "")
+    if (n.widget === "")
       return K(3, [
         "%cget%c %cstorage%c %cseries",
         c.KO,
@@ -3804,7 +3804,7 @@ class Mr {
    * @returns IResponse
    */
   getWidget = async (n) => {
-    if (n.id = "")
+    if (n.id === "")
       return K(3, [
         "%cget%c %cstorage%c %cwidget",
         c.KO,
