@@ -136,7 +136,7 @@ function wt(g, n) {
   }
   return n;
 }
-const xa = "3.9.0";
+const xa = "3.9.1";
 class ka {
   options;
   url;
@@ -3535,19 +3535,19 @@ class Mr {
     return delete i.data.widgets, await this.db.table(O.DASHBOARD).put({
       id: i.id,
       name: i.name,
-      dashboard: i.data,
+      data: i.data,
       update: i.update
     }).then(() => ({
       data: null,
       message: `Dashboard ${i.data.id} saved to storage`,
       success: !0
-    })).catch((l) => (console.error(
+    })).catch((l) => (B(4, [
       "%cstorage",
       c.STORAGE,
       O.WIDGET,
       n,
       l.message
-    ), {
+    ]), {
       data: null,
       message: `Dashboard ${i.data.id} save error: ${l.message}`,
       success: !1

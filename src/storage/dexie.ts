@@ -7,7 +7,14 @@ import type {
 	ITopic,
 } from "buzzcasting-utils";
 import Dexie from "dexie";
-import { API, CSS, EVENTS, log, moderation, widgetParams } from "buzzcasting-utils";
+import {
+	API,
+	CSS,
+	EVENTS,
+	log,
+	moderation,
+	widgetParams,
+} from "buzzcasting-utils";
 
 export default class DexieClient {
 	private db: Dexie;
@@ -44,6 +51,23 @@ export default class DexieClient {
 	 * @returns IResponse
 	 */
 	getCloud = async (query: IQuery): Promise<IResponse> => {
+		if(query.widget='') {
+			log(3, [
+				"%cget%c %cstorage%c %ccloud",
+				CSS.KO,
+				CSS.NONE,
+				CSS.STORAGE,
+				CSS.NONE,
+				CSS.CLOUD,
+				query,
+			]);
+			return {
+				data: null,
+				message: "Series Data error",
+				success: false,
+				query,
+			};
+		}
 		const data = await this.db
 			.table(API.CLOUD)
 			.where({ id: query.widget })
@@ -58,8 +82,8 @@ export default class DexieClient {
 			data: data.data,
 			message:
 				data !== undefined
-					? "Series retrieved successfully"
-					: "Series Data error",
+					? "Cloud retrieved successfully"
+					: "Cloud Data error",
 			success: data !== undefined,
 			query,
 		};
@@ -197,13 +221,7 @@ export default class DexieClient {
 				};
 			})
 			.catch((error: Error) => {
-				log(4,[
-					"%cstorage",
-					CSS.STORAGE,
-					API.WIDGET,
-					query,
-					error.message
-				]);
+				log(4, ["%cstorage", CSS.STORAGE, API.WIDGET, query, error.message]);
 				return {
 					data: null,
 					message: `Dashboard ${q.data.id} save error: ${error.message}`,
@@ -271,23 +289,41 @@ export default class DexieClient {
 	 * @returns IResponse
 	 */
 	getMessages = async (query: IQuery): Promise<IResponse> => {
+		if(query.widget='') {
+			log(3, [
+				"%cget%c %cstorage%c %cmessages",
+				CSS.KO,
+				CSS.NONE,
+				CSS.STORAGE,
+				CSS.NONE,
+				CSS.MESSAGES,
+				query,
+			]);
+			return {
+				data: null,
+				message: "Messages Data error",
+				success: false,
+				query,
+			};
+		}
 		const order = query?.order ?? "utc";
+		const now: number = Math.floor(Date.now() / 1000);
 
 		if (order !== "utc") {
-			query.since = Math.floor(Date.now() / 1000) - 60 * 60 * 24 * 7;
+				query.since = now - 60 * 60 * 24 * 30;
 		}
 
 		if (this.options.delay != 0) {
-			query.before = Math.floor(Date.now() / 1000) - (this.options.delay || 0);
+			query.before = now - (this.options.delay || 0);
 		} else {
-			query.before = Math.floor(Date.now() / 1000);
+			query.before = now;
 		}
 
 		const sinceFilter = (topic: { utc: number }) =>
 			topic.utc > (query?.since || 0);
 
 		const beforeFilter = (topic: { utc: number }) =>
-			topic.utc < (query?.before || Date.now() / 1000);
+			topic.utc < (query?.before || now);
 
 		const visibleFilter = (topic: { visible: number | undefined }) =>
 			topic?.visible !== 0;
@@ -509,6 +545,23 @@ export default class DexieClient {
 	 * @returns IResponse
 	 */
 	getSeries = async (query: IQuery): Promise<IResponse> => {
+		if(query.widget='') {
+			log(3, [
+				"%cget%c %cstorage%c %cseries",
+				CSS.KO,
+				CSS.NONE,
+				CSS.STORAGE,
+				CSS.NONE,
+				CSS.CLOUD,
+				query,
+			]);
+			return {
+				data: null,
+				message: "Series Data error",
+				success: false,
+				query,
+			};
+		}
 		const data = await this.db
 			.table(API.SERIES)
 			.where({ id: query.widget })
@@ -585,6 +638,23 @@ export default class DexieClient {
 	 * @returns IResponse
 	 */
 	getWidget = async (query: IQuery): Promise<IResponse> => {
+		if(query.id='') {
+			log(3, [
+				"%cget%c %cstorage%c %cwidget",
+				CSS.KO,
+				CSS.NONE,
+				CSS.STORAGE,
+				CSS.NONE,
+				CSS.WIDGET,
+				query,
+			]);
+			return {
+				data: null,
+				message: "Widget Data error",
+				success: false,
+				query,
+			};
+		}
 		const data = await this.db
 			.table(API.WIDGET)
 			.where({ id: query.id })

@@ -48,10 +48,12 @@ export class BuzzcastingStorageReader {
 	public getCloud = async (query: IQuery): Promise<IResponse> => {
 		if (query.type !== API.CLOUD) {
 			console.warn(
-				"%capp%c %get",
-				CSS.APP,
+				"%cget%c %cstorage%c %ccloud",
+				CSS.KO,
 				CSS.NONE,
-				CSS.GET_DATA,
+				CSS.STORAGE,
+				CSS.NONE,
+				CSS.CLOUD,
 				query.widget,
 				"wrong method call for getMessages, type used is",
 				query.type
@@ -73,12 +75,12 @@ export class BuzzcastingStorageReader {
 	public getMessages = async (query: IQuery): Promise<IResponse> => {
 		if (query.type !== API.MESSAGES) {
 			console.warn(
-				"%capp%c %cmessages%c %cget",
-				CSS.APP,
+				"%cget%c %cstorage%c %cmessages",
+				CSS.KO,
+				CSS.NONE,
+				CSS.STORAGE,
 				CSS.NONE,
 				CSS.MESSAGES,
-				CSS.NONE,
-				CSS.GET_DATA,
 				query.widget,
 				"wrong method call for getMessages, type used is",
 				query.type
@@ -100,10 +102,12 @@ export class BuzzcastingStorageReader {
 	public getSeries = async (query: IQuery): Promise<IResponse> => {
 		if (query.type !== API.SERIES) {
 			console.warn(
-				"%capp%c %get",
-				CSS.APP,
+				"%cget%c %cstorage%c %cseries",
+				CSS.KO,
 				CSS.NONE,
-				CSS.GET_DATA,
+				CSS.STORAGE,
+				CSS.NONE,
+				CSS.SERIES,
 				query.widget,
 				"wrong method call for getMessages, type used is",
 				query.type
