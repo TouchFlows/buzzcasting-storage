@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.9.5
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.9.4...v3.9.5)
+
+### 🩹 Fixes
+
+- Cloud check widget id ([d33f594](https://github.com/TouchFlows/buzzcasting-storage/commit/d33f594))
+
+### 🏡 Chore
+
+- **release:** V3.9.4 ([6956bf1](https://github.com/TouchFlows/buzzcasting-storage/commit/6956bf1))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.9.4
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.9.3...v3.9.4)
