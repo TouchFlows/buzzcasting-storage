@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.9.9
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.9.8...v3.9.9)
+
+### 🩹 Fixes
+
+- Hash of 'none' when no messages retrieved ([4c21d1b](https://github.com/TouchFlows/buzzcasting-storage/commit/4c21d1b))
+
+### 🏡 Chore
+
+- **release:** V3.9.8 ([0ed7dd6](https://github.com/TouchFlows/buzzcasting-storage/commit/0ed7dd6))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.9.8
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.9.7...v3.9.8)
