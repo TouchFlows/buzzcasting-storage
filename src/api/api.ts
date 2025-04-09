@@ -195,6 +195,11 @@ export default class ApiClient {
 			})
 			.then((json: IResponse): IResponse => {
 				json.query = query;
+				// @ts-ignore
+				if(json.data && json.data.json) {
+					// @ts-ignore
+					json.data.json = JSON.parse(json.data.json)
+				}
 				return json;
 			})
 			.catch((code) => {

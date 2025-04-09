@@ -133,7 +133,7 @@ function St(p, n) {
   }
   return n;
 }
-const xa = "3.9.7";
+const xa = "3.9.8";
 class ka {
   options;
   url;
@@ -5399,7 +5399,7 @@ class La {
           let C;
           C = n.data.messages.filter(
             (G) => G.id !== null
-          ), n.data.messages = C, _ = Fn(n.data.messages[0].utc), E?.hash && E.hash === _ ? (K(3, [
+          ), n.data.messages = C, _ = n.data.messages.length > 0 ? Fn(n.data.messages[0].utc) : "none", E?.hash && E.hash === _ ? (K(3, [
             "%cload%c %cmessages%c %cno updates",
             c.OK,
             c.NONE,
