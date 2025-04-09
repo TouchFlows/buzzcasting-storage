@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.9.7
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.9.6...v3.9.7)
+
+### 🩹 Fixes
+
+- Inttostring formatting ([ca96742](https://github.com/TouchFlows/buzzcasting-storage/commit/ca96742))
+
+### 🏡 Chore
+
+- **release:** V3.9.6 ([ea4cf31](https://github.com/TouchFlows/buzzcasting-storage/commit/ea4cf31))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.9.6
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.9.5...v3.9.6)
