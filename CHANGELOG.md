@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.9.10
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.9.9...v3.9.10)
+
+### 🩹 Fixes
+
+- Loadslide json ([0912574](https://github.com/TouchFlows/buzzcasting-storage/commit/0912574))
+
+### 🏡 Chore
+
+- **release:** V3.9.9 ([18a1909](https://github.com/TouchFlows/buzzcasting-storage/commit/18a1909))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.9.9
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.9.8...v3.9.9)
