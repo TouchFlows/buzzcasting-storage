@@ -133,7 +133,7 @@ function St(p, n) {
   }
   return n;
 }
-const xa = "3.9.3";
+const xa = "3.9.4";
 class ka {
   options;
   url;
@@ -3452,7 +3452,7 @@ class Mr {
    * @returns IResponse
    */
   getCloud = async (n) => {
-    if (n.widget = "")
+    if (n.widget === "")
       return K(3, [
         "%cget%c %cstorage%c %ccloud",
         c.KO,
@@ -5399,7 +5399,7 @@ class La {
           let C;
           C = n.data.messages.filter(
             (G) => G.id !== null
-          ), n.data.messages = C, _ = Fn(n.data.messages), E?.hash && E.hash === _ ? (K(3, [
+          ), n.data.messages = C, _ = Fn(n.data.messages[0].utc), E?.hash && E.hash === _ ? (K(3, [
             "%cload%c %cmessages%c %cno updates",
             c.OK,
             c.NONE,
@@ -5444,25 +5444,25 @@ class La {
           }, l = await this.sm?.setSeries(n.query, n.data).then((G) => this.broadcastUpdate(G, n)));
           break;
         default:
-          K(4, [
-            "%cload%c %cunknown%c %cno updates",
+          return K(4, [
+            "%cfetch%c %capi%c %cno updates",
             c.KO,
             c.NONE,
-            c.STORAGE,
+            c.API,
             c.NONE,
             c.NO_UPDATES,
             `Bad request: type ${n.query.type} unknown`
-          ]), l = 204;
+          ]), n;
       }
     } else
-      switch (K(2, [
-        "%cload%c %cunknown%c %cno updates",
+      switch (K(4, [
+        `%cload%c %c${n.query}%c %bad request`,
         c.KO,
         c.NONE,
         c.STORAGE,
         c.NONE,
         c.NO_UPDATES,
-        n.status
+        n.query
       ]), n.query.type) {
         case O.MESSAGES:
           return await this.sm?.getMessages(n.query).then((E) => {
