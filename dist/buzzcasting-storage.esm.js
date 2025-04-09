@@ -133,7 +133,7 @@ function St(p, n) {
   }
   return n;
 }
-const xa = "3.9.5";
+const xa = "3.9.6";
 class ka {
   options;
   url;
