@@ -117,7 +117,10 @@ export class BuzzcastingStorageManager {
 					);
 					resp.data.messages = filteredMessages;
 					// check if any topic dynamics have changed
-					newHash = hashSum(resp.data.messages[0].utc);
+					newHash =
+						resp.data.messages.length > 0
+							? hashSum(resp.data.messages[0].utc)
+							: "none";
 					if (previousHash?.hash && previousHash.hash === newHash) {
 						log(3, [
 							"%cload%c %cmessages%c %cno updates",
