@@ -1037,7 +1037,7 @@ export default class DexieClient {
 
 		return {
 			// @ts-ignore
-			data: data !== undefined ? { preferences: data, query: query } : null,
+			data: data !== undefined ? { preferences: data, query: preference } : null,
 			message:
 				data !== undefined
 					? `Preference loaded from storage`
