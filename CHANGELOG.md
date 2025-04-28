@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.9.14
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.9.13...v3.9.14)
+
+### 🩹 Fixes
+
+- Bc utils ICloud ([178be25](https://github.com/TouchFlows/buzzcasting-storage/commit/178be25))
+
+### 🏡 Chore
+
+- **release:** V3.9.13 ([5caef3f](https://github.com/TouchFlows/buzzcasting-storage/commit/5caef3f))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.9.13
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.9.12...v3.9.13)
