@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v3.9.15
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.9.14...v3.9.15)
+
+### 🏡 Chore
+
+- **release:** V3.9.14 ([d3b72cf](https://github.com/TouchFlows/buzzcasting-storage/commit/d3b72cf))
+- Deps ([6128c41](https://github.com/TouchFlows/buzzcasting-storage/commit/6128c41))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.9.14
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.9.13...v3.9.14)
