@@ -1,6 +1,26 @@
 # Changelog
 
 
+## v3.11.0
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.10.0...v3.11.0)
+
+### 🚀 Enhancements
+
+- Image handling in storage ([24ea36f](https://github.com/TouchFlows/buzzcasting-storage/commit/24ea36f))
+
+### 🩹 Fixes
+
+- Import cleanup in api.ts ([0ab5835](https://github.com/TouchFlows/buzzcasting-storage/commit/0ab5835))
+
+### 🏡 Chore
+
+- **release:** V3.10.0 ([aea915e](https://github.com/TouchFlows/buzzcasting-storage/commit/aea915e))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.10.0
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.9.15...v3.10.0)
