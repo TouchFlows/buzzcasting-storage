@@ -43,6 +43,9 @@ export declare class BuzzcastingStorageManager {
     getDashboard: (query: IQuery) => Promise<IResponse | undefined>;
     getDashboards: (query: IQuery) => Promise<IResponse | undefined>;
     setDashboard: (query: IQuery) => Promise<IResponse | undefined>;
+    loadImages: () => Promise<IResponse | undefined>;
+    storeImage: (imageName: string) => Promise<IResponse | number>;
+    deleteImage: (imageName: string) => Promise<IResponse | number>;
 }
 
 export declare class BuzzcastingStorageReader {

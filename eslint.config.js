@@ -19,5 +19,5 @@ export default antfu({
     parserOptions: {
       warnOnUnsupportedTypeScriptVersion: false,
     },
-  }
+  },
 })

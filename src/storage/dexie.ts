@@ -6,7 +6,6 @@ import type {
 	IStorageOptions,
 	ITopic,
 } from "buzzcasting-utils";
-import Dexie from "dexie";
 import {
 	API,
 	CSS,
@@ -15,6 +14,8 @@ import {
 	moderation,
 	widgetParams,
 } from "buzzcasting-utils";
+import Dexie from "dexie";
+import { basename } from "path";
 
 export default class DexieClient {
 	private db: Dexie;
@@ -25,11 +26,12 @@ export default class DexieClient {
 		this.options = options;
 
 		this.db = new Dexie(options.app);
-		this.db.version(11).stores({
+		this.db.version(12).stores({
 			channel: "id,slide_index",
 			cloud: "id,dashboard_id",
 			dashboard: "id,name,update",
 			display: "id,monitor_id,presentation_id,colstart,colend,rowstart,rowend",
+			images: "id,basename,extension,size,type,url",
 			messages: "id,utc,expires",
 			monitor:
 				"id,player_id,cols,rows,order,width,height,physicalwidth,physicalheight,devicePixelRatio,screenLeft,screenTop,orientation,monitor",
@@ -112,8 +114,8 @@ export default class DexieClient {
 				.put({
 					id: query.widget,
 					dashboard_id: query.dashboard,
-					//data: data.data,
-					data: data,
+					// data: data.data,
+					data,
 				})
 				.then(() => 201)
 				.catch((error: Error) => {
@@ -162,9 +164,9 @@ export default class DexieClient {
 			return query?.name ? dashboard.name.includes(query?.name) : false;
 		};
 
-		//let data = []
+		// let data = []
 
-		let data = await this.db
+		const data = await this.db
 			.table(API.DASHBOARD)
 			.toArray()
 			.then((res) => {
@@ -188,7 +190,7 @@ export default class DexieClient {
 
 		return {
 			// @ts-ignore
-			data: data !== undefined ? { dashboards: data, query: query } : null,
+			data: data !== undefined ? { dashboards: data, query } : null,
 			message:
 				data !== undefined
 					? `Dashboards loaded from storage`
@@ -283,6 +285,7 @@ export default class DexieClient {
 			});
 		return messagesCount;
 	};
+
 	/**
 	 * Retrieve Messages Data
 	 * @param query IQuery
@@ -351,8 +354,8 @@ export default class DexieClient {
 				};
 			}
 
-			//let messages: any[] = [];
-			let getMessages = topicMessages.map((message: any) => {
+			// let messages: any[] = [];
+			const getMessages = topicMessages.map((message: any) => {
 				return this.db.table(API.MESSAGES).get({ id: message.message_id });
 			});
 
@@ -512,9 +515,9 @@ export default class DexieClient {
 				 * (including in other topics)
 				 */
 				await data.data.topics.forEach(async (topic: ITopic) => {
-					const id = topic.message_id,
-						show = topic.visible ? 1 : 0,
-						title = topic.title;
+					const id = topic.message_id;
+					const show = topic.visible ? 1 : 0;
+					const title = topic.title;
 					await this.db
 						.table(API.TOPICS)
 						.where("message_id")
@@ -611,8 +614,8 @@ export default class DexieClient {
 				.put({
 					id: query.widget,
 					dashboard_id: query.dashboard,
-					//data: data.data,
-					data: data,
+					// data: data.data,
+					data,
 				})
 				.then(() => 201)
 				.catch((error: Error) => {
@@ -692,9 +695,9 @@ export default class DexieClient {
 			return query?.name ? slide.name.includes(query?.name) : false;
 		};
 
-		//let data = []
+		// let data = []
 
-		let data = await this.db
+		const data = await this.db
 			.table(API.WIDGET)
 			.toArray()
 			.then((res) => {
@@ -721,7 +724,7 @@ export default class DexieClient {
 
 		return {
 			// @ts-ignore
-			data: data !== undefined ? { data, query: query } : null,
+			data: data !== undefined ? { data, query } : null,
 			message:
 				data !== undefined
 					? `Widgets loaded from storage`
@@ -828,7 +831,7 @@ export default class DexieClient {
 
 		return {
 			// @ts-ignore
-			data: data !== undefined ? { slides: data, query: query } : null,
+			data: data !== undefined ? { slides: data, query } : null,
 			message:
 				data !== undefined ? `Slide loaded from storage` : `Slide load error`,
 			success: data !== undefined,
@@ -864,7 +867,7 @@ export default class DexieClient {
 
 		return {
 			// @ts-ignore
-			data: data !== undefined ? { slides: data, query: query } : null,
+			data: data !== undefined ? { slides: data, query } : null,
 			message:
 				data !== undefined ? `Slides loaded from storage` : `Slides load error`,
 			success: data !== undefined,
@@ -970,7 +973,7 @@ export default class DexieClient {
 
 		return {
 			// @ts-ignore
-			data: data !== undefined ? { presentations: data, query: query } : null,
+			data: data !== undefined ? { presentations: data, query } : null,
 			message:
 				data !== undefined
 					? `Presentations loaded from storage`
@@ -1037,12 +1040,13 @@ export default class DexieClient {
 
 		return {
 			// @ts-ignore
-			data: data !== undefined ? { preferences: data, query: preference } : null,
+			data: data !== undefined ? { preferences: data } : null,
 			message:
 				data !== undefined
 					? `Preference loaded from storage`
 					: `Preference load error`,
 			success: data !== undefined,
+			query: { preference, widget: "" }, // widget needs to have a value in IQuery interface
 		};
 	};
 
@@ -1073,7 +1077,7 @@ export default class DexieClient {
 
 		return {
 			// @ts-ignore
-			data: data !== undefined ? { prefrences: data, query: query } : null,
+			data: data !== undefined ? { prefrences: data, query } : null,
 			message:
 				data !== undefined
 					? `Preferences loaded from storage`
@@ -1112,6 +1116,79 @@ export default class DexieClient {
 				return {
 					data: null,
 					message: `Preference ${preference.id} save error: ${error.message}`,
+					success: false,
+				};
+			});
+	};
+
+	/**
+	 * Retrieve List of Images from Storage
+	 * @param query IQuery
+	 * @returns IResponse
+	 */
+	getImages = async (query?: IQuery): Promise<IResponse> => {
+		const nameFilter = (basename: { name: string }) => {
+			return query?.name ? basename.name.includes(query?.name) : false;
+		};
+
+		const imagesCollection: any = this.db.table(API.IMAGES);
+
+		const data: any = await imagesCollection.toArray().then((res: any) => {
+			return query?.name ? res.filter(nameFilter) : res;
+		});
+
+		data !== undefined &&
+			log(3, [
+				"%cstorage%c %cimages",
+				CSS.STORAGE,
+				CSS.NONE,
+				CSS.PRESENTATION,
+				query,
+			]);
+
+		return {
+			// @ts-ignore
+			data: data !== undefined ? { images: data, query } : null,
+			message:
+				data !== undefined ? `Images loaded from storage` : `Images load error`,
+			success: data !== undefined,
+		};
+	};
+
+	/**
+	 * Update Image in Storage
+	 * @param query IQuery
+	 * @returns number
+	 */
+	setImage = async (query: IQuery): Promise<IResponse> => {
+		return await this.db
+			.table(API.IMAGES)
+			.put({
+				id: query.data.name,
+				basename: query.data.basename,
+				extension: query.data.extension,
+				size: query.data.size,
+				type: query.data.type,
+				url: query.data.url,
+			})
+			.then(() => {
+				return {
+					data: null,
+					message: `Image ${query.data.name} saved to storage`,
+					success: true,
+				};
+			})
+			.catch((error: Error) => {
+				console.error(
+					"%cstorage",
+					CSS.STORAGE,
+					EVENTS.IMAGE_SET,
+					query,
+					error.message
+				);
+				return {
+					data: null,
+					message: `Image ${query.data.id} save error: ${error.message}`,
 					success: false,
 				};
 			});

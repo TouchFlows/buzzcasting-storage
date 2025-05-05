@@ -1,11 +1,11 @@
-import { get, set } from "idb-keyval";
 import type {
 	IPreference,
-	IResponse,
 	IQuery,
+	IResponse,
 	IStorageOptions,
 } from "buzzcasting-utils";
-import { API, CSS,moderation, getKey } from "buzzcasting-utils";
+import { API, CSS, getKey, moderation } from "buzzcasting-utils";
+import { get, set } from "idb-keyval";
 
 export default class KeyvalClient {
 	public subscribers: Array<any> = [];
@@ -152,7 +152,7 @@ export default class KeyvalClient {
 	};
 
 	getDashboards = async (): Promise<IResponse> => {
-		//const key = getKey(query);
+		// const key = getKey(query);
 		// return await get(key)
 		// 	.then((data) => data)
 		// 	.catch((error) => {
@@ -266,7 +266,7 @@ export default class KeyvalClient {
 	 * @returns null
 	 */
 	subscribe = (query: IQuery): null => {
-		//query = widgetParams(query)
+		// query = widgetParams(query)
 		if (query.type === API.MESSAGES) {
 			query = moderation(this.options, query);
 		}
@@ -371,7 +371,7 @@ export default class KeyvalClient {
 	};
 
 	getPresentations = async (): Promise<IResponse> => {
-		//const key = getKey(query);
+		// const key = getKey(query);
 		// return await get(key)
 		// 	.then((data) => data)
 		// 	.catch((error) => {
@@ -470,5 +470,21 @@ export default class KeyvalClient {
 					success: false,
 				};
 			});
+	};
+
+	getImages = async (query: IQuery) => {
+		return {
+			data: null,
+			message: `Images ${query.id} `,
+			success: false,
+		};
+	};
+
+	setImage = async (query: IQuery) => {
+		return {
+			data: null,
+			message: `Image ${query.id} saved`,
+			success: false,
+		};
 	};
 }

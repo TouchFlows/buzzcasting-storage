@@ -1,5 +1,8 @@
 import type {
+	IApiResponse,
 	IDashboard,
+	IImage,
+	IImages,
 	IPreference,
 	IQuery,
 	IResponse,
@@ -477,15 +480,18 @@ export default class ApiClient {
 				}
 				return response;
 			})
-			.then((response: Response) => {
-				return response.json();
+			.then((response: Response): IApiResponse => {
+				const resp = response.json() as unknown
+				const json: IApiResponse =  resp as IApiResponse
+				return json
 			})
-			.then((json: IDashboard[]): IResponse => {
-				return {
-					data: { dashboards: json },
+			.then((json: IApiResponse): IResponse => {
+				const imgArray = json.data as IImage[]
+				return{
+					data: { images: imgArray },
 					message: "Images loaded via api",
 					success: true,
-				};
+				}
 			})
 			.catch((code) => {
 				return { success: false, message: `${code}`, data: null };

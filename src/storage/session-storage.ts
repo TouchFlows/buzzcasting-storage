@@ -1,7 +1,7 @@
 import type {
 	IPreference,
-	IResponse,
 	IQuery,
+	IResponse,
 	IStorageOptions,
 } from "buzzcasting-utils";
 import { API, CSS, getKey, moderation } from "buzzcasting-utils";
@@ -153,17 +153,17 @@ export default class SessionStorageClient {
 	};
 
 	getDashboards = async (): Promise<IResponse> => {
-		//const key = getKey(query);
+		// const key = getKey(query);
 		// return await get(key)
 		// 	.then((data) => data)
 		// 	.catch((error) => {
 		// 		console.warn("%capi", CSS.API, API.PRESENTATION);
-				return {
-					data: null,
-					message: `Dashboards get error: `,
-					success: false,
-				};
-			// });
+		return {
+			data: null,
+			message: `Dashboards get error: `,
+			success: false,
+		};
+		// });
 	};
 
 	setDashboard = async (query: IQuery) => {
@@ -175,7 +175,7 @@ export default class SessionStorageClient {
 				message: `Dashboard ${query.data.id} saved to storage`,
 				success: true,
 			};
-		} catch (error:any) {
+		} catch (error: any) {
 			console.error("%cstorage", CSS.STORAGE, API.WIDGET, query, error);
 			return {
 				data: null,
@@ -199,17 +199,17 @@ export default class SessionStorageClient {
 	};
 
 	getWidgets = async (): Promise<IResponse> => {
-		//const key = getKey(query);
+		// const key = getKey(query);
 		// return await get(key)
 		// 	.then((data) => data)
 		// 	.catch((error) => {
 		// 		console.warn("%capi", CSS.API, API.PRESENTATION);
-				return {
-					data: null,
-					message: `Widgets get error: `,
-					success: false,
-				};
-			// });
+		return {
+			data: null,
+			message: `Widgets get error: `,
+			success: false,
+		};
+		// });
 	};
 
 	setWidget = async (query: IQuery) => {
@@ -221,7 +221,7 @@ export default class SessionStorageClient {
 				message: `Widget ${query.data.id} saved to storage`,
 				success: true,
 			};
-		} catch (error:any) {
+		} catch (error: any) {
 			console.error("%cstorage", CSS.STORAGE, API.WIDGET, query, error);
 			return {
 				data: null,
@@ -237,7 +237,7 @@ export default class SessionStorageClient {
 	 * @returns null
 	 */
 	subscribe = (query: IQuery): null => {
-		//query = widgetParams(query)
+		// query = widgetParams(query)
 		if (query.type === API.MESSAGES) {
 			query = moderation(this.options, query);
 		}
@@ -292,6 +292,7 @@ export default class SessionStorageClient {
 			};
 		}
 	};
+
 	/**
 	 * Update Slide
 	 * @param query IQuery
@@ -322,9 +323,17 @@ export default class SessionStorageClient {
 
 	getPresentation = async (query: IQuery): Promise<IResponse> => {
 		try {
-			return sessionStorage.getObject(`${API.PRESENTATION}.${query.presentation}`);
+			return sessionStorage.getObject(
+				`${API.PRESENTATION}.${query.presentation}`
+			);
 		} catch (error: any) {
-			console.warn("%capi", CSS.API, API.PRESENTATION, query.presentation, error);
+			console.warn(
+				"%capi",
+				CSS.API,
+				API.PRESENTATION,
+				query.presentation,
+				error
+			);
 			return {
 				data: null,
 				message: `Presentation ${query.presentation} load error: ${error.message}`,
@@ -348,7 +357,10 @@ export default class SessionStorageClient {
 
 	setPresentation = async (query: IQuery): Promise<IResponse> => {
 		try {
-			sessionStorage.setObject(`${API.PRESENTATION}.${query.data.id}`, query.data);
+			sessionStorage.setObject(
+				`${API.PRESENTATION}.${query.data.id}`,
+				query.data
+			);
 			return {
 				data: null,
 				message: `Presentation ${query.data.id} saved to storage`,
@@ -415,5 +427,21 @@ export default class SessionStorageClient {
 				success: false,
 			};
 		}
+	};
+
+	getImages = async (query: IQuery) => {
+		return {
+			data: null,
+			message: `Images ${query.id} `,
+			success: false,
+		};
+	};
+
+	setImage = async (query: IQuery) => {
+		return {
+			data: null,
+			message: `Image ${query.id} saved`,
+			success: false,
+		};
 	};
 }

@@ -1,7 +1,7 @@
 import type {
 	IPreference,
-	IResponse,
 	IQuery,
+	IResponse,
 	IStorageOptions,
 } from "buzzcasting-utils";
 import { API, CSS, getKey, moderation } from "buzzcasting-utils";
@@ -142,17 +142,17 @@ export default class WindowClient {
 	};
 
 	getDashboards = async (): Promise<IResponse> => {
-		//const key = getKey(query);
+		// const key = getKey(query);
 		// return await get(key)
 		// 	.then((data) => data)
 		// 	.catch((error) => {
 		// 		console.warn("%capi", CSS.API, API.PRESENTATION);
-				return {
-					data: null,
-					message: `Dashboards get error: `,
-					success: false,
-				};
-			// });
+		return {
+			data: null,
+			message: `Dashboards get error: `,
+			success: false,
+		};
+		// });
 	};
 
 	setDashboard = async (query: IQuery) => {
@@ -188,17 +188,17 @@ export default class WindowClient {
 	};
 
 	getWidgets = async (): Promise<IResponse> => {
-		//const key = getKey(query);
+		// const key = getKey(query);
 		// return await get(key)
 		// 	.then((data) => data)
 		// 	.catch((error) => {
 		// 		console.warn("%capi", CSS.API, API.PRESENTATION);
-				return {
-					data: null,
-					message: `Widgets get error: `,
-					success: false,
-				};
-			// });
+		return {
+			data: null,
+			message: `Widgets get error: `,
+			success: false,
+		};
+		// });
 	};
 
 	setWidget = async (query: IQuery) => {
@@ -226,7 +226,7 @@ export default class WindowClient {
 	 * @returns null
 	 */
 	subscribe = (query: IQuery): null => {
-		//query = widgetParams(query)
+		// query = widgetParams(query)
 		if (query.type === API.MESSAGES) {
 			query = moderation(this.options, query);
 		}
@@ -271,10 +271,17 @@ export default class WindowClient {
 
 	getSlides = async (query: IQuery): Promise<IResponse> => {
 		try {
-
-			return window.BuzzCasting.SlideData.filter((slide:any) => slide.presentation_id === query.presentation);
+			return window.BuzzCasting.SlideData.filter(
+				(slide: any) => slide.presentation_id === query.presentation
+			);
 		} catch (error: any) {
-			console.warn("%capi", CSS.API, API.PRESENTATION, query.presentation_id, error);
+			console.warn(
+				"%capi",
+				CSS.API,
+				API.PRESENTATION,
+				query.presentation_id,
+				error
+			);
 			return {
 				data: null,
 				message: `Slides for presentation ${query.presentation} load error: ${error.message}`,
@@ -308,10 +315,16 @@ export default class WindowClient {
 
 	getPresentation = async (query: IQuery): Promise<IResponse> => {
 		try {
-			const id = query.presentation || 'none'
+			const id = query.presentation || "none";
 			return window.BuzzCasting.PresentationData[id];
 		} catch (error: any) {
-			console.warn("%capi", CSS.API, API.PRESENTATION, query.presentation, error);
+			console.warn(
+				"%capi",
+				CSS.API,
+				API.PRESENTATION,
+				query.presentation,
+				error
+			);
 			return {
 				data: null,
 				message: `Presentation ${query.presentation} load error: ${error.message}`,
@@ -399,5 +412,21 @@ export default class WindowClient {
 				success: false,
 			};
 		}
+	};
+
+  getImages = async (query: IQuery) => {
+		return {
+			data: null,
+			message: `Images ${query.id} `,
+			success: false
+		};
+	};
+
+	setImage = async (query: IQuery) => {
+		return {
+			data: null,
+			message: `Image ${query.name} saved`,
+			success: false
+		};
 	};
 }

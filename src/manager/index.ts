@@ -9,8 +9,8 @@ import {
 	CSS,
 	EVENTS,
 	hashSum,
-	STORAGE,
 	log,
+	STORAGE,
 	typeCss,
 } from "buzzcasting-utils";
 import { version } from "../../package.json";
@@ -34,7 +34,7 @@ export class BuzzcastingStorageManager {
 	private bc: BroadcastChannel;
 	private options: IStorageOptions;
 	private subscribers: any = [];
-	//private temp: {[x:string]:any} = []
+	// private temp: {[x:string]:any} = []
 
 	constructor(options: IStorageOptions) {
 		log(3, [
@@ -222,7 +222,7 @@ export class BuzzcastingStorageManager {
 					status = 204;
 			}
 		} else {
-			//status = 401;
+			// status = 401;
 			log(4, [
 				`%cload%c %c${resp.query}%c %bad request`,
 				CSS.KO,
@@ -276,13 +276,13 @@ export class BuzzcastingStorageManager {
 					CSS.WIDGET,
 					CSS.NONE,
 					typeCss(resp.query),
-					//@ts-ignore
+					// @ts-ignore
 					`${resp.data?.title ?? ""} ${resp.query.widget}`,
 				]);
 				log(4, [
 					"%cevent",
 					CSS.BROADCAST,
-					//@ts-ignore
+					// @ts-ignore
 					resp,
 				]);
 				this.bc.postMessage({
@@ -390,7 +390,7 @@ export class BuzzcastingStorageManager {
 
 	public getSubscribers = async () => {
 		return await new Promise<any[]>((resolve) => resolve(this.subscribers));
-		//return await this.sm?.getSubscribers();
+		// return await this.sm?.getSubscribers();
 	};
 
 	public getSlide = async (query: IQuery): Promise<IResponse | undefined> => {
@@ -405,7 +405,7 @@ export class BuzzcastingStorageManager {
 		return await this.sm?.setSlide(query);
 	};
 
-	public loadSlide = async (query: IQuery): Promise<Number> => {
+	public loadSlide = async (query: IQuery): Promise<number> => {
 		return await this.api.loadSlide(query);
 	};
 
@@ -431,7 +431,7 @@ export class BuzzcastingStorageManager {
 		return await this.sm?.setPresentation(query);
 	};
 
-	public loadPresentation = async (query: IQuery): Promise<Number> => {
+	public loadPresentation = async (query: IQuery): Promise<number> => {
 		return await this.api.loadPresentation(query);
 	};
 
@@ -471,9 +471,9 @@ export class BuzzcastingStorageManager {
 		return await this.api.storePreference(preference);
 	};
 
-	/*public loadDashboardWidgets = async (query: IQuery): Promise<Number> => {
+	/* public loadDashboardWidgets = async (query: IQuery): Promise<Number> => {
 		return await this.api.loadDashboardWidgets(query);
-	};*/
+	}; */
 
 	public getWidget = async (query: IQuery): Promise<IResponse | undefined> => {
 		return await this.sm?.getWidget(query);
@@ -523,8 +523,17 @@ export class BuzzcastingStorageManager {
 		return await this.api.storeImage(imageName);
 	};
 
-	public deleteImage = async (imageName: string): Promise<IResponse | number> => {
+	public deleteImage = async (
+		imageName: string
+	): Promise<IResponse | number> => {
 		return await this.api.deleteImage(imageName);
 	};
 
+	public getImages = async (query: IQuery): Promise<IResponse | undefined> => {
+		return await this.sm?.getImages(query);
+	};
+
+	public setImage = async (query: IQuery): Promise<IResponse | undefined> => {
+		return await this.sm?.setImage(query);
+	};
 }
