@@ -2,7 +2,6 @@ import type {
 	IApiResponse,
 	IDashboard,
 	IImage,
-	IImages,
 	IPreference,
 	IQuery,
 	IResponse,
