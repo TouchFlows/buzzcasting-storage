@@ -196,9 +196,9 @@ export default class ApiClient {
 			.then((json: IResponse): IResponse => {
 				json.query = query;
 				// @ts-ignore
-				if(json.data && json.data.json) {
+				if (json.data && json.data.json) {
 					// @ts-ignore
-					json.data.json = JSON.parse(json.data.json)
+					json.data.json = JSON.parse(json.data.json);
 				}
 				return json;
 			})
@@ -433,7 +433,7 @@ export default class ApiClient {
 		const { version }: IStorageOptions = this.options;
 		const headers = this.headers();
 
-		log(3, ["%capi%c %dashboards", CSS.API, CSS.NONE, CSS.WIDGET]);
+		log(3, ["%capi%c %cdashboards", CSS.API, CSS.NONE, CSS.WIDGET]);
 		return await fetch(
 			[this.url, "api", version, API.WIDGETS, query?.id || ""].join("/"),
 			{
@@ -459,6 +459,96 @@ export default class ApiClient {
 			})
 			.catch((code) => {
 				return { success: false, message: `${code}`, data: null };
+			});
+	}
+
+	public async loadImages(): Promise<any> {
+		const { version }: IStorageOptions = this.options;
+		const headers = this.headers();
+
+		console.info("%capi%c %cloadImage", CSS.API, CSS.NONE, CSS.WIDGET);
+		return await fetch([this.url, "api", version, API.IMAGES].join("/"), {
+			...headers,
+			method: "get",
+		})
+			.then(async (response: Response) => {
+				if (!response.ok) {
+					throw new Error(`${response.status}`);
+				}
+				return response;
+			})
+			.then((response: Response) => {
+				return response.json();
+			})
+			.then((json: IDashboard[]): IResponse => {
+				return {
+					data: { dashboards: json },
+					message: "Images loaded via api",
+					success: true,
+				};
+			})
+			.catch((code) => {
+				return { success: false, message: `${code}`, data: null };
+			});
+	}
+
+	public async storeImage(imageName: string): Promise<any> {
+		const { version }: IStorageOptions = this.options;
+		const headers = this.formHeaders();
+
+		const body = JSON.stringify({ data: imageName });
+
+		console.info(
+			"%capi%c %cstoreImage",
+			CSS.API,
+			CSS.NONE,
+			CSS.WIDGET,
+			imageName
+		);
+		return await fetch(
+			[this.url, "api", version, API.IMAGES, imageName].join("/"),
+			{ ...headers, body, method: "post" }
+		)
+			.then((response) => {
+				if (!response.ok) {
+					throw new Error(response.statusText);
+				}
+				return response;
+			})
+			.then((response) => {
+				return response.json();
+			})
+			.catch((message) => {
+				return { succes: false, message, data: [] };
+			});
+	}
+
+	public async deleteImage(imageName: string): Promise<any> {
+		const { version }: IStorageOptions = this.options;
+		const headers = this.formHeaders();
+
+		console.info(
+			"%capi%c %cdeleteImage",
+			CSS.API,
+			CSS.NONE,
+			CSS.WIDGET,
+			imageName
+		);
+		return await fetch(
+			[this.url, "api", version, API.IMAGES, imageName].join("/"),
+			{ ...headers, method: "delete" }
+		)
+			.then((response) => {
+				if (!response.ok) {
+					throw new Error(response.statusText);
+				}
+				return response;
+			})
+			.then((response) => {
+				return response.json();
+			})
+			.catch((message) => {
+				return { succes: false, message, data: [] };
 			});
 	}
 }
