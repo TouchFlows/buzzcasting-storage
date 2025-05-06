@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.11.3
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.11.2...v3.11.3)
+
+### 🩹 Fixes
+
+- Add Fileheaders ([c99c3bf](https://github.com/TouchFlows/buzzcasting-storage/commit/c99c3bf))
+
+### 🏡 Chore
+
+- **release:** V3.11.2 ([4ac8f20](https://github.com/TouchFlows/buzzcasting-storage/commit/4ac8f20))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.11.2
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.11.1...v3.11.2)
