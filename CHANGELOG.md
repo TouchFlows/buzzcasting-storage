@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.11.1
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.11.0...v3.11.1)
+
+### 🩹 Fixes
+
+- Api.storeImage ([bd4abb7](https://github.com/TouchFlows/buzzcasting-storage/commit/bd4abb7))
+
+### 🏡 Chore
+
+- **release:** V3.11.0 ([b666802](https://github.com/TouchFlows/buzzcasting-storage/commit/b666802))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.11.0
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.10.0...v3.11.0)
