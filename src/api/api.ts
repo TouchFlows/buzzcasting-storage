@@ -506,7 +506,7 @@ export default class ApiClient {
 			});
 	}
 
-	public async storeImage(imageFile:File): Promise<any> {
+	public async storeImage(imageFile:FormData): Promise<any> {
 		const { version }: IStorageOptions = this.options;
 		const headers = this.fileHeaders();
 
@@ -517,7 +517,7 @@ export default class ApiClient {
 			CSS.API,
 			CSS.NONE,
 			CSS.WIDGET,
-			imageFile.name
+			imageFile.get('name')
 		);
 		return await fetch(
 			[this.url, "api", version, API.IMAGES].join("/"),

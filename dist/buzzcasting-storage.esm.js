@@ -133,7 +133,7 @@ function Ot(h, t) {
   }
   return t;
 }
-const xa = "3.11.1";
+const xa = "3.11.2";
 class ka {
   options;
   url;
@@ -148,6 +148,14 @@ class ka {
         Accept: "application/json"
         // 'Cache-Control': 'no-cache',
         // 'X-Session-Key': localStorage.getItem('guid') || 'invalid',
+      })
+    };
+  };
+  fileHeaders = () => {
+    const t = `Bearer ${this.options.bearer}`;
+    return {
+      headers: new Headers({
+        Authorization: t
       })
     };
   };
@@ -421,7 +429,7 @@ class ka {
     })).catch((l) => ({ success: !1, message: `${l}`, data: null }));
   }
   async storeImage(t) {
-    const { version: o } = this.options, l = this.formHeaders(), m = t;
+    const { version: o } = this.options, l = this.fileHeaders(), m = t;
     return console.info(
       "%capi%c %cstoreImage",
       c.API,
