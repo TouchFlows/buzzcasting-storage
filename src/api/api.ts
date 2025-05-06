@@ -497,22 +497,22 @@ export default class ApiClient {
 			});
 	}
 
-	public async storeImage(imageName: string): Promise<any> {
+	public async storeImage(imageFile:File): Promise<any> {
 		const { version }: IStorageOptions = this.options;
 		const headers = this.formHeaders();
 
-		const body = JSON.stringify({ data: imageName });
+		const body = imageFile
 
 		console.info(
 			"%capi%c %cstoreImage",
 			CSS.API,
 			CSS.NONE,
 			CSS.WIDGET,
-			imageName
+			imageFile.name
 		);
 		return await fetch(
-			[this.url, "api", version, API.IMAGES, imageName].join("/"),
-			{ ...headers, body, method: "post" }
+			[this.url, "api", version, API.IMAGES, imageFile.name].join("/"),
+			{ ...headers, body, method: "put" }
 		)
 			.then((response) => {
 				if (!response.ok) {

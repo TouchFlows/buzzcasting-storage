@@ -518,9 +518,9 @@ export class BuzzcastingStorageManager {
 	};
 
 	public storeImage = async (
-		imageName: string
+		imageFile: File
 	): Promise<IResponse | number> => {
-		return await this.api.storeImage(imageName);
+		return await this.api.storeImage(imageFile);
 	};
 
 	public deleteImage = async (

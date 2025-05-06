@@ -15,7 +15,6 @@ import {
 	widgetParams,
 } from "buzzcasting-utils";
 import Dexie from "dexie";
-import { basename } from "path";
 
 export default class DexieClient {
 	private db: Dexie;

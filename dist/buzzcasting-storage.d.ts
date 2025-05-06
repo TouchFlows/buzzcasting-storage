@@ -24,12 +24,12 @@ export declare class BuzzcastingStorageManager {
     getSlide: (query: IQuery) => Promise<IResponse | undefined>;
     getSlides: (query: IQuery) => Promise<IResponse | undefined>;
     setSlide: (query: IQuery) => Promise<IResponse | undefined>;
-    loadSlide: (query: IQuery) => Promise<Number>;
+    loadSlide: (query: IQuery) => Promise<number>;
     storeSlide: (query: IQuery) => Promise<IResponse | number>;
     getPresentation: (query: IQuery) => Promise<IResponse | undefined>;
     getPresentations: (query?: IQuery) => Promise<IResponse | undefined>;
     setPresentation: (query: IQuery) => Promise<IResponse | undefined>;
-    loadPresentation: (query: IQuery) => Promise<Number>;
+    loadPresentation: (query: IQuery) => Promise<number>;
     storePresentation: (query: IQuery) => Promise<IResponse | number>;
     getPreference: (preference: IPreference) => Promise<IResponse | undefined>;
     getPreferences: (query?: IQuery) => Promise<IResponse | undefined>;
@@ -46,6 +46,8 @@ export declare class BuzzcastingStorageManager {
     loadImages: () => Promise<IResponse | undefined>;
     storeImage: (imageName: string) => Promise<IResponse | number>;
     deleteImage: (imageName: string) => Promise<IResponse | number>;
+    getImages: (query: IQuery) => Promise<IResponse | undefined>;
+    setImage: (query: IQuery) => Promise<IResponse | undefined>;
 }
 
 export declare class BuzzcastingStorageReader {
