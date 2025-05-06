@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.11.4
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.11.3...v3.11.4)
+
+### 🩹 Fixes
+
+- Api storeImage takes FormData ([48cb779](https://github.com/TouchFlows/buzzcasting-storage/commit/48cb779))
+
+### 🏡 Chore
+
+- **release:** V3.11.3 ([17a6af7](https://github.com/TouchFlows/buzzcasting-storage/commit/17a6af7))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.11.3
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.11.2...v3.11.3)
