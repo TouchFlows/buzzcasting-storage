@@ -511,8 +511,8 @@ export default class ApiClient {
 			imageFile.name
 		);
 		return await fetch(
-			[this.url, "api", version, API.IMAGES, imageFile.name].join("/"),
-			{ ...headers, body, method: "put" }
+			[this.url, "api", version, API.IMAGES].join("/"),
+			{ ...headers, body, method: "post" }
 		)
 			.then((response) => {
 				if (!response.ok) {

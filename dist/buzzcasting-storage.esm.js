@@ -133,7 +133,7 @@ function Ot(h, t) {
   }
   return t;
 }
-const xa = "3.10.0";
+const xa = "3.11.0";
 class ka {
   options;
   url;
@@ -421,16 +421,16 @@ class ka {
     })).catch((l) => ({ success: !1, message: `${l}`, data: null }));
   }
   async storeImage(t) {
-    const { version: o } = this.options, l = this.formHeaders(), m = JSON.stringify({ data: t });
+    const { version: o } = this.options, l = this.formHeaders(), m = t;
     return console.info(
       "%capi%c %cstoreImage",
       c.API,
       c.NONE,
       c.WIDGET,
-      t
+      t.name
     ), await fetch(
-      [this.url, "api", o, _.IMAGES, t].join("/"),
-      { ...l, body: m, method: "post" }
+      [this.url, "api", o, _.IMAGES, t.name].join("/"),
+      { ...l, body: m, method: "put" }
     ).then((w) => {
       if (!w.ok)
         throw new Error(w.statusText);
