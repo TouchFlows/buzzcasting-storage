@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.11.2
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.11.1...v3.11.2)
+
+### 🩹 Fixes
+
+- Change api storeImage from PUT to POST ([a6aa830](https://github.com/TouchFlows/buzzcasting-storage/commit/a6aa830))
+
+### 🏡 Chore
+
+- **release:** V3.11.1 ([6463d46](https://github.com/TouchFlows/buzzcasting-storage/commit/6463d46))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.11.1
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.11.0...v3.11.1)
