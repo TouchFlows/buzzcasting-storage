@@ -133,7 +133,7 @@ function Ot(h, t) {
   }
   return t;
 }
-const xa = "3.11.0";
+const xa = "3.11.1";
 class ka {
   options;
   url;
@@ -429,8 +429,8 @@ class ka {
       c.WIDGET,
       t.name
     ), await fetch(
-      [this.url, "api", o, _.IMAGES, t.name].join("/"),
-      { ...l, body: m, method: "put" }
+      [this.url, "api", o, _.IMAGES].join("/"),
+      { ...l, body: m, method: "post" }
     ).then((w) => {
       if (!w.ok)
         throw new Error(w.statusText);

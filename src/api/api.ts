@@ -30,6 +30,15 @@ export default class ApiClient {
 		};
 	};
 
+	private fileHeaders = () => {
+		const token = `Bearer ${this.options.bearer}`;
+		return {
+			headers: new Headers({
+				Authorization: token,
+			}),
+		};
+	};
+
 	private formHeaders = () => {
 		const token = `Bearer ${this.options.bearer}`;
 		return {
@@ -499,7 +508,7 @@ export default class ApiClient {
 
 	public async storeImage(imageFile:File): Promise<any> {
 		const { version }: IStorageOptions = this.options;
-		const headers = this.formHeaders();
+		const headers = this.fileHeaders();
 
 		const body = imageFile
 
