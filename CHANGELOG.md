@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.11.5
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.11.4...v3.11.5)
+
+### 🩹 Fixes
+
+- GetImages id filter ([368f482](https://github.com/TouchFlows/buzzcasting-storage/commit/368f482))
+
+### 🏡 Chore
+
+- **release:** V3.11.4 ([55f9264](https://github.com/TouchFlows/buzzcasting-storage/commit/55f9264))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.11.4
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.11.3...v3.11.4)
