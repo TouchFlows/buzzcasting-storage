@@ -1126,14 +1126,14 @@ export default class DexieClient {
 	 * @returns IResponse
 	 */
 	getImages = async (query?: IQuery): Promise<IResponse> => {
-		const nameFilter = (basename: { name: string }) => {
-			return query?.name ? basename.name.includes(query?.name) : false;
+		const idFilter = (id:  string ) => {
+			return query?.id ? id.includes(query.id) : false;
 		};
 
 		const imagesCollection: any = this.db.table(API.IMAGES);
 
 		const data: any = await imagesCollection.toArray().then((res: any) => {
-			return query?.name ? res.filter(nameFilter) : res;
+			return query?.id ? res.filter(idFilter) : res;
 		});
 
 		data !== undefined &&

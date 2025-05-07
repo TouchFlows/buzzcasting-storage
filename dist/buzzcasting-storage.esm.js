@@ -133,7 +133,7 @@ function Ot(h, t) {
   }
   return t;
 }
-const xa = "3.11.2";
+const xa = "3.11.3";
 class ka {
   options;
   url;
@@ -435,7 +435,7 @@ class ka {
       c.API,
       c.NONE,
       c.WIDGET,
-      t.name
+      t.get("name")
     ), await fetch(
       [this.url, "api", o, _.IMAGES].join("/"),
       { ...l, body: m, method: "post" }
