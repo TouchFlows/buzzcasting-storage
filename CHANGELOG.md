@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v3.11.6
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.11.5...v3.11.6)
+
+### 🏡 Chore
+
+- **release:** V3.11.5 ([37d1bfb](https://github.com/TouchFlows/buzzcasting-storage/commit/37d1bfb))
+- Deps & set widget cheannel to presentation id ([b16778d](https://github.com/TouchFlows/buzzcasting-storage/commit/b16778d))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.11.5
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.11.4...v3.11.5)
