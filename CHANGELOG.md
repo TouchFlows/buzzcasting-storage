@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.12.0
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.11.6...v3.12.0)
+
+### 🚀 Enhancements
+
+- Handle cdn images ([b8506c0](https://github.com/TouchFlows/buzzcasting-storage/commit/b8506c0))
+
+### 🏡 Chore
+
+- **release:** V3.11.6 ([1c1772a](https://github.com/TouchFlows/buzzcasting-storage/commit/1c1772a))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.11.6
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.11.5...v3.11.6)
