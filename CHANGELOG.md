@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.12.2
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.12.1...v3.12.2)
+
+### 🩹 Fixes
+
+- Store image take folder name from image ([15c931a](https://github.com/TouchFlows/buzzcasting-storage/commit/15c931a))
+
+### 🏡 Chore
+
+- **release:** V3.12.1 ([d78e52a](https://github.com/TouchFlows/buzzcasting-storage/commit/d78e52a))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.12.1
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.12.0...v3.12.1)
