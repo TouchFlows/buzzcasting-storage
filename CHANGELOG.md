@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.12.3
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.12.2...v3.12.3)
+
+### 🩹 Fixes
+
+- StoreImage remove foldername ([2018a58](https://github.com/TouchFlows/buzzcasting-storage/commit/2018a58))
+
+### 🏡 Chore
+
+- **release:** V3.12.2 ([6734909](https://github.com/TouchFlows/buzzcasting-storage/commit/6734909))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.12.2
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.12.1...v3.12.2)
