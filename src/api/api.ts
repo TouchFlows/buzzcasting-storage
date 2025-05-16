@@ -473,13 +473,15 @@ export default class ApiClient {
 			});
 	}
 
-	public async loadImages(folder: string): Promise<any> {
+	public async loadImages(folderName: string): Promise<any> {
 		const { version }: IStorageOptions = this.options;
 		const headers = this.headers();
 
 		console.info("%capi%c %cloadImage", CSS.API, CSS.NONE, CSS.WIDGET);
 		return await fetch(
-			[this.url, "api", version, API.IMAGES, `?folder=${folder}`].join("/"),
+			`${[this.url, "api", version, API.IMAGES].join(
+				"/"
+			)}?folder=${folderName}`,
 			{
 				...headers,
 				method: "get",
@@ -509,7 +511,10 @@ export default class ApiClient {
 			});
 	}
 
-	public async storeImage(imageFile: FormData): Promise<any> {
+	public async storeImage(
+		folderName: string,
+		imageFile: FormData
+	): Promise<any> {
 		const { version }: IStorageOptions = this.options;
 		const headers = this.fileHeaders();
 
@@ -522,11 +527,16 @@ export default class ApiClient {
 			CSS.WIDGET,
 			imageFile.get("name")
 		);
-		return await fetch([this.url, "api", version, API.IMAGES].join("/"), {
-			...headers,
-			body,
-			method: "post",
-		})
+		return await fetch(
+			`${[this.url, "api", version, API.IMAGES].join(
+				"/"
+			)}?folder=${folderName}`,
+			{
+				...headers,
+				body,
+				method: "post",
+			}
+		)
 			.then((response) => {
 				if (!response.ok) {
 					throw new Error(response.statusText);
@@ -541,7 +551,10 @@ export default class ApiClient {
 			});
 	}
 
-	public async deleteImage(imageName: string): Promise<any> {
+	public async deleteImage(
+		folderName: string,
+		imageName: string
+	): Promise<any> {
 		const { version }: IStorageOptions = this.options;
 		const headers = this.formHeaders();
 
@@ -553,7 +566,9 @@ export default class ApiClient {
 			imageName
 		);
 		return await fetch(
-			[this.url, "api", version, API.IMAGES, imageName].join("/"),
+			`${[this.url, "api", version, API.IMAGES, imageName].join(
+				"/"
+			)}?folder=${folderName}`,
 			{ ...headers, method: "delete" }
 		)
 			.then((response) => {

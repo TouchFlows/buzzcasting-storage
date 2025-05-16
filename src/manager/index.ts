@@ -520,15 +520,17 @@ export class BuzzcastingStorageManager {
 	};
 
 	public storeImage = async (
+		folderName: string,
 		imageFile: FormData
 	): Promise<IResponse | number> => {
-		return await this.api.storeImage(imageFile);
+		return await this.api.storeImage(folderName, imageFile);
 	};
 
 	public deleteImage = async (
+		folderName: string,
 		imageName: string
 	): Promise<IResponse | number> => {
-		return await this.api.deleteImage(imageName);
+		return await this.api.deleteImage(folderName, imageName);
 	};
 
 	public getImages = async (query: IQuery): Promise<IResponse | undefined> => {
