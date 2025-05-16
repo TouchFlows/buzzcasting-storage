@@ -473,15 +473,18 @@ export default class ApiClient {
 			});
 	}
 
-	public async loadImages(): Promise<any> {
+	public async loadImages(folder: string): Promise<any> {
 		const { version }: IStorageOptions = this.options;
 		const headers = this.headers();
 
 		console.info("%capi%c %cloadImage", CSS.API, CSS.NONE, CSS.WIDGET);
-		return await fetch([this.url, "api", version, API.IMAGES].join("/"), {
-			...headers,
-			method: "get",
-		})
+		return await fetch(
+			[this.url, "api", version, API.IMAGES, `?folder=${folder}`].join("/"),
+			{
+				...headers,
+				method: "get",
+			}
+		)
 			.then(async (response: Response) => {
 				if (!response.ok) {
 					throw new Error(`${response.status}`);
@@ -489,40 +492,41 @@ export default class ApiClient {
 				return response;
 			})
 			.then((response: Response): IApiResponse => {
-				const resp = response.json() as unknown
-				const json: IApiResponse =  resp as IApiResponse
-				return json
+				const resp = response.json() as unknown;
+				const json: IApiResponse = resp as IApiResponse;
+				return json;
 			})
 			.then((json: IApiResponse): IResponse => {
-				const imgArray = json.data as IImage[]
-				return{
+				const imgArray = json.data as IImage[];
+				return {
 					data: { images: imgArray },
 					message: "Images loaded via api",
 					success: true,
-				}
+				};
 			})
 			.catch((code) => {
 				return { success: false, message: `${code}`, data: null };
 			});
 	}
 
-	public async storeImage(imageFile:FormData): Promise<any> {
+	public async storeImage(imageFile: FormData): Promise<any> {
 		const { version }: IStorageOptions = this.options;
 		const headers = this.fileHeaders();
 
-		const body = imageFile
+		const body = imageFile;
 
 		console.info(
 			"%capi%c %cstoreImage",
 			CSS.API,
 			CSS.NONE,
 			CSS.WIDGET,
-			imageFile.get('name')
+			imageFile.get("name")
 		);
-		return await fetch(
-			[this.url, "api", version, API.IMAGES].join("/"),
-			{ ...headers, body, method: "post" }
-		)
+		return await fetch([this.url, "api", version, API.IMAGES].join("/"), {
+			...headers,
+			body,
+			method: "post",
+		})
 			.then((response) => {
 				if (!response.ok) {
 					throw new Error(response.statusText);

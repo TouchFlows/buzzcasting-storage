@@ -513,8 +513,10 @@ export class BuzzcastingStorageManager {
 		return await this.sm?.setDashboard(query);
 	};
 
-	public loadImages = async (): Promise<IResponse | undefined> => {
-		return await this.api.loadImages();
+	public loadImages = async (
+		folder: string
+	): Promise<IResponse | undefined> => {
+		return await this.api.loadImages(folder);
 	};
 
 	public storeImage = async (
