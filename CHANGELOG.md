@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.12.1
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.12.0...v3.12.1)
+
+### 🩹 Fixes
+
+- Add folder param fo image get, put, delete ([a42f0c5](https://github.com/TouchFlows/buzzcasting-storage/commit/a42f0c5))
+
+### 🏡 Chore
+
+- **release:** V3.12.0 ([007dd56](https://github.com/TouchFlows/buzzcasting-storage/commit/007dd56))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.12.0
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.11.6...v3.12.0)
