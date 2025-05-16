@@ -520,7 +520,6 @@ export class BuzzcastingStorageManager {
 	};
 
 	public storeImage = async (
-		folderName: string,
 		imageFile: FormData
 	): Promise<IResponse | number> => {
 		return await this.api.storeImage(imageFile);
