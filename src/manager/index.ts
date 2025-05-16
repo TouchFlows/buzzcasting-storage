@@ -523,7 +523,7 @@ export class BuzzcastingStorageManager {
 		folderName: string,
 		imageFile: FormData
 	): Promise<IResponse | number> => {
-		return await this.api.storeImage(folderName, imageFile);
+		return await this.api.storeImage(imageFile);
 	};
 
 	public deleteImage = async (
