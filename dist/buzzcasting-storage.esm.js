@@ -133,7 +133,7 @@ function Ot(h, t) {
   }
   return t;
 }
-const xa = "3.12.1";
+const xa = "3.12.2";
 class ka {
   options;
   url;
@@ -5818,7 +5818,7 @@ class Ja {
   getDashboards = async (t) => await this.sm?.getDashboards();
   setDashboard = async (t) => await this.sm?.setDashboard(t);
   loadImages = async (t) => await this.api.loadImages(t);
-  storeImage = async (t, o) => await this.api.storeImage(o);
+  storeImage = async (t) => await this.api.storeImage(t);
   deleteImage = async (t, o) => await this.api.deleteImage(t, o);
   getImages = async (t) => await this.sm?.getImages(t);
   setImage = async (t) => await this.sm?.setImage(t);

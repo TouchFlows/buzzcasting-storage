@@ -35,7 +35,7 @@ export default class DexieClient {
 			monitor:
 				"id,player_id,cols,rows,order,width,height,physicalwidth,physicalheight,devicePixelRatio,screenLeft,screenTop,orientation,monitor",
 			player: "id,title,name,location",
-			preference: "id,value",
+			preference: "id,value,update",
 			presentation: "id,name,update",
 			series: "id,dashboard_id",
 			slide: "id,name,presentation_id,order_index,json,html,update",
@@ -844,16 +844,25 @@ export default class DexieClient {
 	 */
 	getSlides = async (query: IQuery): Promise<IResponse> => {
 		const idFilter = (slide: { id: string }) => {
-			return query?.id ? (query.id = slide.id) : false;
+			return query?.id ? (slide.id = query.id) : false;
 		};
 		const nameFilter = (slide: { name: string }) => {
 			return query?.name ? slide.name.includes(query?.name) : false;
+		};
+
+		const presentationFilter = (slide: { presentation_id: string }) => {
+			return query?.presentation_id
+				? (slide.presentation_id = query.presentation_id)
+				: false;
 		};
 
 		const slidesCollection: any = this.db.table(API.SLIDE);
 
 		const data: any = await slidesCollection
 			.toArray()
+			.then((res: any) => {
+				return query?.presentation_id ? res.filter(presentationFilter) : res;
+			})
 			.then((res: any) => {
 				return query?.id ? res.filter(idFilter) : res;
 			})
@@ -1096,6 +1105,7 @@ export default class DexieClient {
 			.put({
 				id: preference.id,
 				value: preference.value,
+				update: preference.update,
 			})
 			.then(() => {
 				return {
@@ -1126,7 +1136,7 @@ export default class DexieClient {
 	 * @returns IResponse
 	 */
 	getImages = async (query?: IQuery): Promise<IResponse> => {
-		const idFilter = (id:  string ) => {
+		const idFilter = (id: string) => {
 			return query?.id ? id.includes(query.id) : false;
 		};
 
