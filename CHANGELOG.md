@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.12.5
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.12.4...v3.12.5)
+
+### 🩹 Fixes
+
+- Load slides, presentations, preferences ([20b361e](https://github.com/TouchFlows/buzzcasting-storage/commit/20b361e))
+
+### 🏡 Chore
+
+- **release:** V3.12.4 ([b312142](https://github.com/TouchFlows/buzzcasting-storage/commit/b312142))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.12.4
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.12.3...v3.12.4)
