@@ -18,7 +18,7 @@
 		"dist"
 	],
 	"scripts": {
-		"dev": "vite",
+		"start": "vite",
 		"build": "tsc && vite build",
 		"changelog": "changelogen --release",
 		"release": "npm test && npm run build && changelogen --release && npm publish && git push --follow-tags",

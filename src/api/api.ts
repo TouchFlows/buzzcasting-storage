@@ -205,12 +205,36 @@ export default class ApiClient {
 				return response.json();
 			})
 			.then((json: IResponse): IResponse => {
+				let res: any | any[];
+				//@ts-ignore
+				query.type = "slides";
 				json.query = query;
-				// @ts-ignore
-				if (json.data && json.data.json) {
+
+				if (json?.data) {
+					//@ts-ignore
+
+					if (Array.isArray(json.data)) {
+						res = structuredClone(json.data);
+
+						res.forEach((slide: any) => {
+							if (typeof slide.json === "string") {
+								slide.json = JSON.parse(slide.json);
+							}
+						});
+					} else {
+						// Single slide
+						res = structuredClone(json.data);
+						res.json = JSON.parse(res.json);
+					}
 					// @ts-ignore
-					json.data.json = JSON.parse(json.data.json);
+					json.data = res;
 				}
+
+				// @ts-ignore
+				// if (json.data && json.data.json) {
+				// 	// @ts-ignore
+				// 	json.data.json = JSON.parse(json.data.json);
+				// }
 				return json;
 			})
 			.catch((code) => {
@@ -293,7 +317,19 @@ export default class ApiClient {
 				return response.json();
 			})
 			.then((json: IResponse): IResponse => {
+				let res: any | any[];
+				//@ts-ignore
+				query.type = "presentations";
 				json.query = query;
+
+				if (json?.data) {
+					//@ts-ignore
+					res = structuredClone(json.data);
+
+					// @ts-ignore
+					json.data = res;
+				}
+
 				return json;
 			})
 			.catch((code) => {
@@ -363,6 +399,10 @@ export default class ApiClient {
 				return response.json();
 			})
 			.then((json: IResponse): IResponse => {
+				//@ts-ignore
+				preference.type = "preference";
+				//@ts-ignore
+				json.query = preference;
 				return json;
 			})
 			.catch((code) => {

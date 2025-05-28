@@ -169,6 +169,10 @@
       const series2 = new Widget(document.getElementById("series-2"), [
         setData,
       ]);
+      const slides = await sm.loadPresentation({
+        id: "",
+      });
+      console.log("preferences", slides);
 
       setTimeout(async () => {
         bc.postMessage({
