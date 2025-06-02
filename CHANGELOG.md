@@ -1,6 +1,21 @@
 # Changelog
 
 
+## v3.12.8
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.12.7...v3.12.8)
+
+### 🏡 Chore
+
+- **release:** V3.12.7 ([9e1db1d](https://github.com/TouchFlows/buzzcasting-storage/commit/9e1db1d))
+- Deps ([3905477](https://github.com/TouchFlows/buzzcasting-storage/commit/3905477))
+- Deps ([8f878e1](https://github.com/TouchFlows/buzzcasting-storage/commit/8f878e1))
+- Deps ([454adfc](https://github.com/TouchFlows/buzzcasting-storage/commit/454adfc))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.12.7
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.12.6...v3.12.7)
