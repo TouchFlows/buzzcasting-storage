@@ -224,7 +224,7 @@ export class BuzzcastingStorageManager {
 		} else {
 			// status = 401;
 			log(4, [
-				`%cload%c %c${resp.query}%c %bad request`,
+				`%cload%c %c${resp.query.type}%c %bad request`,
 				CSS.KO,
 				CSS.NONE,
 				CSS.STORAGE,

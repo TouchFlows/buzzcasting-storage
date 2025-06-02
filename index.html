@@ -169,10 +169,20 @@
       const series2 = new Widget(document.getElementById("series-2"), [
         setData,
       ]);
-      const slides = await sm.loadPresentation({
-        id: "",
+
+      // const data = await sm.loadSlide({ id: "" }).then(async (res) => {
+      //   for (let key in res.data) {
+      //     const slide = res.data[key];
+      //     await sm
+      //       // @ts-ignore
+      //       .setSlide({ data: slide });
+      //   }
+      // });
+
+      const slides = await sm.getSlides({
+        name: "Ambas",
       });
-      console.log("preferences", slides);
+      console.log("slides", slides);
 
       setTimeout(async () => {
         bc.postMessage({

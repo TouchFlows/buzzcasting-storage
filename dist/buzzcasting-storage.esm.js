@@ -45,8 +45,8 @@ function jr(h, t, o, l) {
       return b;
     try {
       return Oe(b, String(t.valueOf()));
-    } catch (x) {
-      return Oe(b, `[valueOf exception]${x.stack || x.message}`);
+    } catch (T) {
+      return Oe(b, `[valueOf exception]${T.stack || T.message}`);
     }
   }
   return Oe(g, t.toString());
@@ -117,10 +117,10 @@ function Ta(h) {
 }
 function Ot(h, t) {
   var o;
-  let l, g, b, x, $;
+  let l, g, b, T, $;
   switch (h.moderation) {
     case en.BEFORE:
-      l = /* @__PURE__ */ new Date(), g = (o = h.beforeTime) == null ? void 0 : o.split(":"), b = Number.parseInt(g ? g[0] : "00"), x = Number.parseInt(g ? g[1] : "00"), $ = Number.parseInt(g ? g[2] : "00"), t.before = l.setHours(b, x, $, 0) / 1e3, t.period || (t.period = l.getDay() === 1 ? 72 : 24);
+      l = /* @__PURE__ */ new Date(), g = (o = h.beforeTime) == null ? void 0 : o.split(":"), b = Number.parseInt(g ? g[0] : "00"), T = Number.parseInt(g ? g[1] : "00"), $ = Number.parseInt(g ? g[2] : "00"), t.before = l.setHours(b, T, $, 0) / 1e3, t.period || (t.period = l.getDay() === 1 ? 72 : 24);
       break;
     case en.DELAYED:
       h.delay && h.delay > 0 && (t.delay = `${h.delay}`);
@@ -133,7 +133,7 @@ function Ot(h, t) {
   }
   return t;
 }
-const xa = "3.12.4";
+const xa = "3.12.6";
 class ka {
   options;
   url;
@@ -174,16 +174,16 @@ class ka {
     const { version: o } = this.options, l = this.headers(), g = Object.assign({}, t);
     delete g.type, delete g.hash, delete g.order, g.topics = `${g.dashboard}-${g.widget}`, delete g.presentation;
     const b = Object.keys(g).length > 0 ? `?${new URLSearchParams(g).toString()}` : "";
-    let x = "";
+    let T = "";
     switch (t.type) {
       case _.MESSAGES:
-        x = c.MESSAGES;
+        T = c.MESSAGES;
         break;
       case _.SERIES:
-        x = c.SERIES;
+        T = c.SERIES;
         break;
       case _.CLOUD:
-        x = c.CLOUD;
+        T = c.CLOUD;
         break;
     }
     return K(3, [
@@ -192,7 +192,7 @@ class ka {
       c.NONE,
       c.API,
       c.NONE,
-      x,
+      T,
       t.widget
     ]), K(4, [t.type, g]), await fetch(
       [this.url, "api", o, t.type].join("/") + b,
@@ -224,8 +224,8 @@ class ka {
   }
   async hideLabels(t) {
     const { version: o } = this.options, l = this.formHeaders(), g = new URLSearchParams(), b = t.labels || [];
-    for (const [x, $] of b.entries())
-      g.append(`custom_filters[${x}]`, $);
+    for (const [T, $] of b.entries())
+      g.append(`custom_filters[${T}]`, $);
     return console.info(
       "%capi%c %cput",
       c.API,
@@ -237,11 +237,11 @@ class ka {
     ), await fetch(
       [this.url, "api", o, t.type, t.widget].join("/"),
       { ...l, body: g, method: "put" }
-    ).then((x) => {
-      if (!x.ok)
-        throw new Error(x.statusText);
-      return x;
-    }).then((x) => x.json()).catch((x) => ({ succes: !1, message: x, data: [] }));
+    ).then((T) => {
+      if (!T.ok)
+        throw new Error(T.statusText);
+      return T;
+    }).then((T) => T.json()).catch((T) => ({ succes: !1, message: T, data: [] }));
   }
   async loadSlide(t) {
     const { version: o } = this.options, l = this.headers(), g = Object.assign({}, t);
@@ -253,10 +253,10 @@ class ka {
         throw new Error(`${b.status}`);
       return b;
     }).then((b) => b.json()).then((b) => {
-      let x;
-      return t.type = "slides", b.query = t, b?.data && (Array.isArray(b.data) ? (x = structuredClone(b.data), x.forEach(($) => {
+      let T;
+      return t.type = "slides", b.query = t, b?.data && (Array.isArray(b.data) ? (T = structuredClone(b.data), T.forEach(($) => {
         typeof $.json == "string" && ($.json = JSON.parse($.json));
-      })) : (x = structuredClone(b.data), x.json = JSON.parse(x.json)), b.data = x), b;
+      })) : (T = structuredClone(b.data), T.json = JSON.parse(T.json)), b.data = T), b;
     }).catch((b) => ({ success: !1, message: `${b}`, data: null }));
   }
   /**
@@ -510,9 +510,9 @@ function Ma() {
         for (var a, s = 0, i = n.length; s < i; s++) !a && s in n || ((a = a || Array.prototype.slice.call(n, 0, s))[s] = n[s]);
         return e.concat(a || Array.prototype.slice.call(n));
       }
-      var b = typeof globalThis < "u" ? globalThis : typeof self < "u" ? self : typeof window < "u" ? window : Ca, x = Object.keys, $ = Array.isArray;
+      var b = typeof globalThis < "u" ? globalThis : typeof self < "u" ? self : typeof window < "u" ? window : Ca, T = Object.keys, $ = Array.isArray;
       function te(e, n) {
-        return typeof n != "object" || x(n).forEach(function(r) {
+        return typeof n != "object" || T(n).forEach(function(r) {
           e[r] = n[r];
         }), e;
       }
@@ -522,7 +522,7 @@ function Ma() {
         return Ce.call(e, n);
       }
       function be(e, n) {
-        typeof n == "function" && (n = n(ge(e))), (typeof Reflect > "u" ? x : Reflect.ownKeys)(n).forEach(function(r) {
+        typeof n == "function" && (n = n(ge(e))), (typeof Reflect > "u" ? T : Reflect.ownKeys)(n).forEach(function(r) {
           Ae(e, r, n[r]);
         });
       }
@@ -1146,7 +1146,7 @@ function Ma() {
       }, J.prototype.where = function(e) {
         if (typeof e == "string") return new this.db.WhereClause(this, e);
         if ($(e)) return new this.db.WhereClause(this, "[".concat(e.join("+"), "]"));
-        var n = x(e);
+        var n = T(e);
         if (n.length === 1) return this.where(n[0]).equals(e[n[0]]);
         var r = this.schema.indexes.concat(this.schema.primKey).filter(function(d) {
           if (d.compound && n.every(function(y) {
@@ -1379,7 +1379,7 @@ function Ma() {
             } };
             return r[u] = n[u] = w;
           }
-          x(y = u).forEach(function(f) {
+          T(y = u).forEach(function(f) {
             var O = y[f];
             if ($(O)) i(f, y[f][0], y[f][1]);
             else {
@@ -1653,7 +1653,7 @@ function Ma() {
         var n = this, r = this._ctx;
         return this._write(function(a) {
           var s, i, u;
-          u = typeof e == "function" ? e : (s = x(e), i = s.length, function(v) {
+          u = typeof e == "function" ? e : (s = T(e), i = s.length, function(v) {
             for (var A = !1, P = 0; P < i; ++P) {
               var D = s[P], I = e[D], N = ve(v, D);
               I instanceof pt ? (ue(v, D, I.execute(N)), A = !0) : N !== I && (ue(v, D, I), A = !0);
@@ -1665,7 +1665,7 @@ function Ma() {
           function O(v, D) {
             var P = D.failures, D = D.numFailures;
             E += v - D;
-            for (var I = 0, N = x(P); I < N.length; I++) {
+            for (var I = 0, N = T(P); I < N.length; I++) {
               var C = N[I];
               m.push(P[C]);
             }
@@ -1675,15 +1675,15 @@ function Ma() {
             function A(D) {
               var I = Math.min(w, v.length - D);
               return d.getMany({ trans: a, keys: v.slice(D, D + I), cache: "immutable" }).then(function(N) {
-                for (var C = [], R = [], T = p ? [] : null, j = [], k = 0; k < I; ++k) {
+                for (var C = [], R = [], x = p ? [] : null, j = [], k = 0; k < I; ++k) {
                   var G = N[k], F = { value: $e(G), primKey: v[D + k] };
-                  u.call(F, F.value, F) !== !1 && (F.value == null ? j.push(v[D + k]) : p || H(y(G), y(F.value)) === 0 ? (R.push(F.value), p && T.push(v[D + k])) : (j.push(v[D + k]), C.push(F.value)));
+                  u.call(F, F.value, F) !== !1 && (F.value == null ? j.push(v[D + k]) : p || H(y(G), y(F.value)) === 0 ? (R.push(F.value), p && x.push(v[D + k])) : (j.push(v[D + k]), C.push(F.value)));
                 }
                 return Promise.resolve(0 < C.length && d.mutate({ trans: a, type: "add", values: C }).then(function(U) {
                   for (var z in U.failures) j.splice(parseInt(z), 1);
                   O(C.length, U);
                 })).then(function() {
-                  return (0 < R.length || P && typeof e == "object") && d.mutate({ trans: a, type: "put", keys: T, values: R, criteria: P, changeSpec: typeof e != "function" && e, isAdditionalChunk: 0 < D }).then(function(U) {
+                  return (0 < R.length || P && typeof e == "object") && d.mutate({ trans: a, type: "put", keys: x, values: R, criteria: P, changeSpec: typeof e != "function" && e, isAdditionalChunk: 0 < D }).then(function(U) {
                     return O(R.length, U);
                   });
                 }).then(function() {
@@ -1774,13 +1774,13 @@ function Ma() {
           var P = i(A);
           if (n(P, p, m)) return !0;
           for (var D = null, I = m; I < f; ++I) {
-            var N = function(C, R, T, j, k, G) {
+            var N = function(C, R, x, j, k, G) {
               for (var F = Math.min(C.length, j.length), U = -1, z = 0; z < F; ++z) {
                 var de = R[z];
-                if (de !== j[z]) return k(C[z], T[z]) < 0 ? C.substr(0, z) + T[z] + T.substr(z + 1) : k(C[z], j[z]) < 0 ? C.substr(0, z) + j[z] + T.substr(z + 1) : 0 <= U ? C.substr(0, U) + R[U] + T.substr(U + 1) : null;
+                if (de !== j[z]) return k(C[z], x[z]) < 0 ? C.substr(0, z) + x[z] + x.substr(z + 1) : k(C[z], j[z]) < 0 ? C.substr(0, z) + j[z] + x.substr(z + 1) : 0 <= U ? C.substr(0, U) + R[U] + x.substr(U + 1) : null;
                 k(C[z], de) < 0 && (U = z);
               }
-              return F < j.length && G === "next" ? C + T.substr(C.length) : F < C.length && G === "prev" ? C.substr(0, T.length) : U < 0 ? null : C.substr(0, U) + j[U] + T.substr(U + 1);
+              return F < j.length && G === "next" ? C + x.substr(C.length) : F < C.length && G === "prev" ? C.substr(0, x.length) : U < 0 ? null : C.substr(0, U) + j[U] + x.substr(U + 1);
             }(A, P, d[I], p[I], u, y);
             N === null && D === null ? m = I + 1 : (D === null || 0 < u(D, N)) && (D = N);
           }
@@ -2088,7 +2088,7 @@ function Ma() {
             var v = S.trans, A = S.type, P = S.keys, D = S.values, I = S.range;
             return new Promise(function(N, C) {
               N = Z(N);
-              var R = v.objectStore(E), T = R.keyPath == null, j = A === "put" || A === "add";
+              var R = v.objectStore(E), x = R.keyPath == null, j = A === "put" || A === "add";
               if (!j && A !== "delete" && A !== "deleteRange") throw new Error("Invalid operation type: " + A);
               var k, G = (P || D || { length: 1 }).length;
               if (P && D && P.length !== D.length) throw new Error("Given keys array must have same length as given values array.");
@@ -2101,7 +2101,7 @@ function Ma() {
                 if (I.type === 4) return N({ numFailures: de, failures: z, results: [], lastResult: void 0 });
                 I.type === 3 ? U.push(k = R.clear()) : U.push(k = R.delete(a(I)));
               } else {
-                var T = j ? T ? [D, P] : [D, null] : [P, null], W = T[0], se = T[1];
+                var x = j ? x ? [D, P] : [D, null] : [P, null], W = x[0], se = x[1];
                 if (j) for (var oe = 0; oe < G; ++oe) U.push(k = se && se[oe] !== void 0 ? R[A](W[oe], se[oe]) : R[A](W[oe])), k.onerror = F;
                 else for (oe = 0; oe < G; ++oe) U.push(k = R[A](W[oe])), k.onerror = F;
               }
@@ -2120,10 +2120,10 @@ function Ma() {
             var v = S.trans, A = S.keys;
             return new Promise(function(P, D) {
               P = Z(P);
-              for (var I, N = v.objectStore(E), C = A.length, R = new Array(C), T = 0, j = 0, k = function(U) {
-                U = U.target, R[U._pos] = U.result, ++j === T && P(R);
-              }, G = me(D), F = 0; F < C; ++F) A[F] != null && ((I = N.get(A[F]))._pos = F, I.onsuccess = k, I.onerror = G, ++T);
-              T === 0 && P(R);
+              for (var I, N = v.objectStore(E), C = A.length, R = new Array(C), x = 0, j = 0, k = function(U) {
+                U = U.target, R[U._pos] = U.result, ++j === x && P(R);
+              }, G = me(D), F = 0; F < C; ++F) A[F] != null && ((I = N.get(A[F]))._pos = F, I.onsuccess = k, I.onerror = G, ++x);
+              x === 0 && P(R);
             });
           }, get: function(S) {
             var v = S.trans, A = S.key;
@@ -2137,7 +2137,7 @@ function Ma() {
           }, query: (m = y, function(S) {
             return new Promise(function(v, A) {
               v = Z(v);
-              var P, D, I, T = S.trans, N = S.values, C = S.limit, k = S.query, R = C === 1 / 0 ? void 0 : C, j = k.index, k = k.range, T = T.objectStore(E), j = j.isPrimaryKey ? T : T.index(j.name), k = a(k);
+              var P, D, I, x = S.trans, N = S.values, C = S.limit, k = S.query, R = C === 1 / 0 ? void 0 : C, j = k.index, k = k.range, x = x.objectStore(E), j = j.isPrimaryKey ? x : x.index(j.name), k = a(k);
               if (C === 0) return v({ result: [] });
               m ? ((R = N ? j.getAll(k, R) : j.getAllKeys(k, R)).onsuccess = function(G) {
                 return v({ result: G.target.result });
@@ -2150,7 +2150,7 @@ function Ma() {
             var v = S.trans, A = S.values, P = S.query, D = S.reverse, I = S.unique;
             return new Promise(function(N, C) {
               N = Z(N);
-              var j = P.index, R = P.range, T = v.objectStore(E), T = j.isPrimaryKey ? T : T.index(j.name), j = D ? I ? "prevunique" : "prev" : I ? "nextunique" : "next", k = !A && "openKeyCursor" in T ? T.openKeyCursor(a(R), j) : T.openCursor(a(R), j);
+              var j = P.index, R = P.range, x = v.objectStore(E), x = j.isPrimaryKey ? x : x.index(j.name), j = D ? I ? "prevunique" : "prev" : I ? "nextunique" : "next", k = !A && "openKeyCursor" in x ? x.openKeyCursor(a(R), j) : x.openCursor(a(R), j);
               k.onerror = me(C), k.onsuccess = Z(function(G) {
                 var F, U, z, de, W = k.result;
                 W ? (W.___id = ++la, W.done = !1, F = W.continue.bind(W), U = (U = W.continuePrimaryKey) && U.bind(W), z = W.advance.bind(W), de = function() {
@@ -2190,8 +2190,8 @@ function Ma() {
             var v = S.query, A = S.trans, P = v.index, D = v.range;
             return new Promise(function(I, N) {
               var C = A.objectStore(E), R = P.isPrimaryKey ? C : C.index(P.name), C = a(D), R = C ? R.count(C) : R.count();
-              R.onsuccess = Z(function(T) {
-                return I(T.target.result);
+              R.onsuccess = Z(function(x) {
+                return I(x.target.result);
               }), R.onerror = me(N);
             });
           } };
@@ -2290,11 +2290,11 @@ function Ma() {
                   var C = Qn(D);
                   I.del.forEach(function(j) {
                     C[j] = P[j];
-                  }), An(f, [f.Transaction.prototype]), Wt(f, [f.Transaction.prototype], x(C), C), m.schema = C;
-                  var R, T = an(N);
-                  return T && et(), I = M.follow(function() {
+                  }), An(f, [f.Transaction.prototype]), Wt(f, [f.Transaction.prototype], T(C), C), m.schema = C;
+                  var R, x = an(N);
+                  return x && et(), I = M.follow(function() {
                     var j;
-                    (R = N(m)) && T && (j = Ie.bind(null, null), R.then(j, j));
+                    (R = N(m)) && x && (j = Ie.bind(null, null), R.then(j, j));
                   }), R && typeof R.then == "function" ? M.resolve(R) : I.then(function() {
                     return R;
                   });
@@ -2315,7 +2315,7 @@ function Ma() {
               vr(v, E);
             })) : M.resolve();
             var f, O, m, E, S, v;
-          }).catch(u)) : (x(s).forEach(function(w) {
+          }).catch(u)) : (T(s).forEach(function(w) {
             Dn(r, w, s[w].primKey, s[w].indexes);
           }), Lt(e, r), void M.follow(function() {
             return e.on.populate.fire(i);
@@ -2366,7 +2366,7 @@ function Ma() {
         }), s;
       }
       function vr(e, n) {
-        x(e).forEach(function(r) {
+        T(e).forEach(function(r) {
           n.db.objectStoreNames.contains(r) || (pe && console.debug("Dexie: Creating missing table", r), Dn(n, r, e[r].primKey, e[r].indexes));
         });
       }
@@ -2401,7 +2401,7 @@ function Ma() {
         });
       }
       var ma = (Ht.prototype._parseStoresSpec = function(e, n) {
-        x(e).forEach(function(r) {
+        T(e).forEach(function(r) {
           if (e[r] !== null) {
             var a = Er(e[r]), s = a.shift();
             if (s.unique = !0, s.multi) throw new L.Schema("Primary key cannot be multi-valued");
@@ -2417,7 +2417,7 @@ function Ma() {
         var r = n._versions, a = {}, s = {};
         return r.forEach(function(i) {
           te(a, i._cfg.storesSource), s = i._cfg.dbschema = {}, i._parseStoresSpec(a, s);
-        }), n._dbSchema = s, An(n, [n._allTables, n, n.Transaction.prototype]), Wt(n, [n._allTables, n, n.Transaction.prototype, this._cfg.tables], x(s), s), n._storeNames = x(s), this;
+        }), n._dbSchema = s, An(n, [n._allTables, n, n.Transaction.prototype]), Wt(n, [n._allTables, n, n.Transaction.prototype, this._cfg.tables], T(s), s), n._storeNames = T(s), this;
       }, Ht.prototype.upgrade = function(e) {
         return this._cfg.contentUpgrade = on(this._cfg.contentUpgrade || Q, e), this;
       }, Ht);
@@ -2500,7 +2500,7 @@ function Ma() {
         return (n ? r ? Math.max(n.d, r.d) : n.d : r ? r.d : 0) + 1;
       }
       function Yt(e, n) {
-        return x(n).forEach(function(r) {
+        return T(n).forEach(function(r) {
           e[r] ? wt(e[r], n[r]) : e[r] = function a(s) {
             var i, u, d = {};
             for (i in s) ie(s, i) && (u = s[i], d[i] = !u || typeof u != "object" || Jn.has(u.constructor) ? u : a(u));
@@ -2586,17 +2586,17 @@ function Ma() {
               var v, A, P, D, I, N = e.idbdb = S.result, C = At(N.objectStoreNames);
               if (0 < C.length) try {
                 var R = N.transaction((D = C).length === 1 ? D[0] : D, "readonly");
-                if (n.autoSchema) A = N, P = R, (v = e).verno = A.version / 10, P = v._dbSchema = Ut(0, A, P), v._storeNames = At(A.objectStoreNames, 0), Wt(v, [v._allTables], x(P), P);
-                else if (zt(e, e._dbSchema, R), ((I = Pn(Ut(0, (I = e).idbdb, R), I._dbSchema)).add.length || I.change.some(function(T) {
-                  return T.add.length || T.change.length;
+                if (n.autoSchema) A = N, P = R, (v = e).verno = A.version / 10, P = v._dbSchema = Ut(0, A, P), v._storeNames = At(A.objectStoreNames, 0), Wt(v, [v._allTables], T(P), P);
+                else if (zt(e, e._dbSchema, R), ((I = Pn(Ut(0, (I = e).idbdb, R), I._dbSchema)).add.length || I.change.some(function(x) {
+                  return x.add.length || x.change.length;
                 })) && !i) return console.warn("Dexie SchemaDiff: Schema was extended without increasing the number passed to db.version(). Dexie will add missing parts and increment native version number to workaround this."), N.close(), s = N.version + 1, i = !0, O(d());
                 Lt(e, R);
               } catch {
               }
-              tt.push(e), N.onversionchange = Z(function(T) {
-                n.vcFired = !0, e.on("versionchange").fire(T);
-              }), N.onclose = Z(function(T) {
-                e.on("close").fire(T);
+              tt.push(e), N.onversionchange = Z(function(x) {
+                n.vcFired = !0, e.on("versionchange").fire(x);
+              }), N.onclose = Z(function(x) {
+                e.on("close").fire(x);
               }), f && (I = e._deps, R = E, N = I.indexedDB, I = I.IDBKeyRange, Nn(N) || R === jt || In(N, I).put({ name: R }).catch(Q)), O();
             }, m);
           }).catch(function(O) {
@@ -2715,10 +2715,10 @@ function Ma() {
         } });
       } };
       function Mn(e, n, r, a) {
-        return r = r || {}, a = a || "", x(e).forEach(function(s) {
+        return r = r || {}, a = a || "", T(e).forEach(function(s) {
           var i, u, d;
           ie(n, s) ? (i = e[s], u = n[s], typeof i == "object" && typeof u == "object" && i && u ? (d = nn(i)) !== nn(u) ? r[a + s] = n[s] : d === "Object" ? Mn(i, u, r, a + s + ".") : i !== u && (r[a + s] = n[s]) : i !== u && (r[a + s] = n[s])) : r[a + s] = void 0;
-        }), x(n).forEach(function(s) {
+        }), T(n).forEach(function(s) {
           ie(e, s) || (r[a + s] = n[s]);
         }), r;
       }
@@ -2765,15 +2765,15 @@ function Ma() {
               if (!v) throw new Error("Keys missing");
               return (f = f.type === "add" || f.type === "put" ? l(l({}, f), { keys: v }) : l({}, f)).type !== "delete" && (f.values = g([], f.values)), f.keys && (f.keys = g([], f.keys)), O = r, E = v, ((m = f).type === "add" ? Promise.resolve([]) : O.getMany({ trans: m.trans, keys: E, cache: "immutable" })).then(function(A) {
                 var P = v.map(function(D, I) {
-                  var N, C, R, T = A[I], j = { onerror: null, onsuccess: null };
-                  return f.type === "delete" ? d.fire.call(j, D, T, S) : f.type === "add" || T === void 0 ? (N = p.fire.call(j, D, f.values[I], S), D == null && N != null && (f.keys[I] = D = N, a.outbound || ue(f.values[I], a.keyPath, D))) : (N = Mn(T, f.values[I]), (C = y.fire.call(j, N, D, T, S)) && (R = f.values[I], Object.keys(C).forEach(function(k) {
+                  var N, C, R, x = A[I], j = { onerror: null, onsuccess: null };
+                  return f.type === "delete" ? d.fire.call(j, D, x, S) : f.type === "add" || x === void 0 ? (N = p.fire.call(j, D, f.values[I], S), D == null && N != null && (f.keys[I] = D = N, a.outbound || ue(f.values[I], a.keyPath, D))) : (N = Mn(x, f.values[I]), (C = y.fire.call(j, N, D, x, S)) && (R = f.values[I], Object.keys(C).forEach(function(k) {
                     ie(R, k) ? R[k] = C[k] : ue(R, k, C[k]);
                   }))), j;
                 });
                 return r.mutate(f).then(function(D) {
                   for (var I = D.failures, N = D.results, C = D.numFailures, D = D.lastResult, R = 0; R < v.length; ++R) {
-                    var T = (N || v)[R], j = P[R];
-                    T == null ? j.onerror && j.onerror(I[R]) : j.onsuccess && j.onsuccess(f.type === "put" && A[R] ? f.values[R] : T);
+                    var x = (N || v)[R], j = P[R];
+                    x == null ? j.onerror && j.onerror(I[R]) : j.onsuccess && j.onsuccess(f.type === "put" && A[R] ? f.values[R] : x);
                   }
                   return { failures: I, results: N, numFailures: C, lastResult: D };
                 }).catch(function(D) {
@@ -2837,8 +2837,8 @@ function Ma() {
             }
             var S, v, A, P = m.trans, D = m.mutatedParts || (m.mutatedParts = {}), I = E(""), N = E(":dels"), C = m.type, j = m.type === "deleteRange" ? [m.range] : m.type === "delete" ? [m.keys] : m.values.length < 50 ? [Gn(u, m).filter(function(k) {
               return k;
-            }), m.values] : [], R = j[0], T = j[1], j = m.trans._cache;
-            return $(R) ? (I.addKeys(R), (j = C === "delete" || R.length === T.length ? Ar(R, j) : null) || N.addKeys(R), (j || T) && (S = E, v = j, A = T, i.indexes.forEach(function(k) {
+            }), m.values] : [], R = j[0], x = j[1], j = m.trans._cache;
+            return $(R) ? (I.addKeys(R), (j = C === "delete" || R.length === x.length ? Ar(R, j) : null) || N.addKeys(R), (j || x) && (S = E, v = j, A = x, i.indexes.forEach(function(k) {
               var G = S(k.name || "");
               function F(z) {
                 return z != null ? k.extractKey(z) : null;
@@ -2852,7 +2852,7 @@ function Ma() {
                 var W = v && F(v[se]), se = A && F(A[se]);
                 H(W, se) !== 0 && (W != null && U(W), se != null && U(se));
               });
-            }))) : R ? (T = { from: (T = R.lower) !== null && T !== void 0 ? T : e.MIN_KEY, to: (T = R.upper) !== null && T !== void 0 ? T : e.MAX_KEY }, N.add(T), I.add(T)) : (I.add(r), N.add(r), i.indexes.forEach(function(k) {
+            }))) : R ? (x = { from: (x = R.lower) !== null && x !== void 0 ? x : e.MIN_KEY, to: (x = R.upper) !== null && x !== void 0 ? x : e.MAX_KEY }, N.add(x), I.add(x)) : (I.add(r), N.add(r), i.indexes.forEach(function(k) {
               return E(k.name).add(r);
             })), s.mutate(m).then(function(k) {
               return !R || m.type !== "add" && m.type !== "put" || (I.addKeys(k.results), y && y.forEach(function(G) {
@@ -2872,25 +2872,25 @@ function Ma() {
           }, getMany: function(m) {
             return [u, new ae().addKeys(m.keys)];
           }, count: f, query: f, openCursor: f };
-          return x(O).forEach(function(m) {
+          return T(O).forEach(function(m) {
             w[m] = function(E) {
               var S = B.subscr, v = !!S, A = Pr(B, s) && Dr(m, E) ? E.obsSet = {} : S;
               if (v) {
-                var P = function(T) {
-                  return T = "idb://".concat(n, "/").concat(a, "/").concat(T), A[T] || (A[T] = new ae());
+                var P = function(x) {
+                  return x = "idb://".concat(n, "/").concat(a, "/").concat(x), A[x] || (A[x] = new ae());
                 }, D = P(""), I = P(":dels"), S = O[m](E), v = S[0], S = S[1];
                 if ((m === "query" && v.isPrimaryKey && !E.values ? I : P(v.name || "")).add(S), !v.isPrimaryKey) {
                   if (m !== "count") {
                     var N = m === "query" && p && E.values && s.query(l(l({}, E), { values: !1 }));
-                    return s[m].apply(this, arguments).then(function(T) {
+                    return s[m].apply(this, arguments).then(function(x) {
                       if (m === "query") {
                         if (p && E.values) return N.then(function(F) {
-                          return F = F.result, D.addKeys(F), T;
+                          return F = F.result, D.addKeys(F), x;
                         });
-                        var j = E.values ? T.result.map(d) : T.result;
+                        var j = E.values ? x.result.map(d) : x.result;
                         (E.values ? D : I).addKeys(j);
                       } else if (m === "openCursor") {
-                        var k = T, G = E.values;
+                        var k = x, G = E.values;
                         return k && Object.create(k, { key: { get: function() {
                           return I.addKey(k.primaryKey), k.key;
                         } }, primaryKey: { get: function() {
@@ -2900,7 +2900,7 @@ function Ma() {
                           return G && D.addKey(k.primaryKey), k.value;
                         } } });
                       }
-                      return T;
+                      return x;
                     });
                   }
                   I.add(r);
@@ -2958,9 +2958,9 @@ function Ma() {
               }));
               break;
             case "delete":
-              var T = new ae().addKeys(E.keys);
+              var x = new ae().addKeys(E.keys);
               S = m.filter(function(G) {
-                return !T.hasKey(n.values ? y(G) : G);
+                return !x.hasKey(n.values ? y(G) : G);
               });
               break;
             case "deleteRange":
@@ -3027,9 +3027,9 @@ function Ma() {
                       m.optimisticOps = m.optimisticOps.filter(function(G) {
                         return G.trans !== d;
                       });
-                      for (var I = 0, N = Object.values(m.queries.query); I < N.length; I++) for (var C, R, T, j = 0, k = (C = N[I]).slice(); j < k.length; j++) (R = k[j]).res != null && d.mutatedParts && (p && !R.dirty ? (T = Object.isFrozen(R.res), T = Nr(R.res, R.req, S, E, R, T), R.dirty ? (je(C, R), R.subscribers.forEach(function(G) {
+                      for (var I = 0, N = Object.values(m.queries.query); I < N.length; I++) for (var C, R, x, j = 0, k = (C = N[I]).slice(); j < k.length; j++) (R = k[j]).res != null && d.mutatedParts && (p && !R.dirty ? (x = Object.isFrozen(R.res), x = Nr(R.res, R.req, S, E, R, x), R.dirty ? (je(C, R), R.subscribers.forEach(function(G) {
                         return y.add(G);
-                      })) : T !== R.res && (R.res = T, R.promise = M.resolve({ result: T }))) : (R.dirty && je(C, R), R.subscribers.forEach(function(G) {
+                      })) : x !== R.res && (R.res = x, R.promise = M.resolve({ result: x }))) : (R.dirty && je(C, R), R.subscribers.forEach(function(G) {
                         return y.add(G);
                       })));
                     }
@@ -3183,7 +3183,7 @@ function Ma() {
         return this._state.autoSchema;
       }, Object.defineProperty(ee.prototype, "tables", { get: function() {
         var e = this;
-        return x(this._allTables).map(function(n) {
+        return T(this._allTables).map(function(n) {
           return e._allTables[n];
         });
       }, enumerable: !1, configurable: !0 }), ee.prototype.transaction = function() {
@@ -3693,9 +3693,9 @@ class Mr {
       };
     const o = t?.order ?? "utc", l = Math.floor(Date.now() / 1e3);
     o !== "utc" && (t.since = l - 60 * 60 * 24 * 30), this.options.delay != 0 ? t.before = l - (this.options.delay || 0) : t.before = l;
-    const g = ($) => $.utc > (t?.since || 0), b = ($) => $.utc < (t?.before || l), x = ($) => $?.visible !== 0;
+    const g = ($) => $.utc > (t?.since || 0), b = ($) => $.utc < (t?.before || l), T = ($) => $?.visible !== 0;
     try {
-      const te = await this.db.table(_.TOPICS).where("widget_id").equals(t.widget).filter(x).filter(g).filter(b).reverse().limit(t?.limit ?? 25).sortBy(o);
+      const te = await this.db.table(_.TOPICS).where("widget_id").equals(t.widget).filter(T).filter(g).filter(b).reverse().limit(t?.limit ?? 25).sortBy(o);
       if (te.length === 0)
         return {
           data: null,
@@ -3770,7 +3770,7 @@ class Mr {
         utc: b.utc,
         data: b,
         expires: b.expires
-      }).catch((x) => {
+      }).catch((T) => {
         g++, K(4, [
           "%cset%c %cstorage",
           c.KO,
@@ -3779,7 +3779,7 @@ class Mr {
           "set message",
           `title: ${l}`,
           b,
-          x.message
+          T.message
         ]);
       }), await this.db.table(_.TOPICS).put({
         title: l,
@@ -3792,7 +3792,7 @@ class Mr {
         sentiment: b.topics[0]?.sentiment || 0,
         utc: b.utc,
         expires: b.expires
-      }).catch((x) => {
+      }).catch((T) => {
         g++, K(4, [
           "%cset%c %cstorage",
           c.KO,
@@ -3801,10 +3801,10 @@ class Mr {
           "set topic",
           `title: ${l}`,
           b,
-          x.message
+          T.message
         ]);
-      }), await o.data.topics.forEach(async (x) => {
-        const $ = x.message_id, te = x.visible ? 1 : 0, ge = x.title;
+      }), await o.data.topics.forEach(async (T) => {
+        const $ = T.message_id, te = T.visible ? 1 : 0, ge = T.title;
         await this.db.table(_.TOPICS).where("message_id").equals($).modify({ visible: te }).catch((Ce) => {
           g++, K(4, [
             "%cset%c %cstorage",
@@ -3813,7 +3813,7 @@ class Mr {
             c.STORAGE,
             "update message visibility",
             `title: ${ge}`,
-            `widget: ${x.widget_id}`,
+            `widget: ${T.widget_id}`,
             Ce.message
           ]);
         });
@@ -3924,7 +3924,7 @@ class Mr {
    * @returns IResponse
    */
   getWidgets = async (t) => {
-    const o = (x) => t?.dashboard === x.dashboard_id, l = (x) => t?.type === x.type, g = (x) => t?.name ? x.name.includes(t?.name) : !1, b = await this.db.table(_.WIDGET).toArray().then((x) => t?.dashboard ? x.filter(o) : x).then((x) => t?.type ? x.filter(l) : x).then((x) => t?.name ? x.filter(g) : x).catch(() => {
+    const o = (T) => t?.dashboard === T.dashboard_id, l = (T) => t?.type === T.type, g = (T) => t?.name ? T.name.includes(t?.name) : !1, b = await this.db.table(_.WIDGET).toArray().then((T) => t?.dashboard ? T.filter(o) : T).then((T) => t?.type ? T.filter(l) : T).then((T) => t?.name ? T.filter(g) : T).catch(() => {
       K(2, ["%cstorage", c.STORAGE, X.WIDGET_LOAD, t]);
     });
     return b !== void 0 && K(3, [
@@ -4014,12 +4014,12 @@ class Mr {
    * @returns IResponse
    */
   getSlides = async (t) => {
-    const o = ($) => t?.id ? $.id = t.id : !1, l = ($) => t?.name ? $.name.includes(t?.name) : !1, g = ($) => t?.presentation_id ? $.presentation_id = t.presentation_id : !1, x = await this.db.table(_.SLIDE).toArray().then(($) => t?.presentation_id ? $.filter(g) : $).then(($) => t?.id ? $.filter(o) : $).then(($) => t?.name ? $.filter(l) : $);
-    return x !== void 0 && K(3, ["%cstorage%c %cslides", c.STORAGE, c.NONE, c.SLIDE, t]), {
+    const o = ($) => t?.id ? $.id = t.id : !1, l = ($) => t?.name ? $.name.includes(t?.name) : !1, g = ($) => t?.presentation_id ? $.presentation_id === t.presentation_id : !1, T = await this.db.table(_.SLIDE).toArray().then(($) => t?.presentation_id ? $.filter(g) : $).then(($) => t?.id ? $.filter(o) : $).then(($) => t?.name ? $.filter(l) : $);
+    return T && T.sort(($, te) => $.order_index - te.order_index), T !== void 0 && K(3, ["%cstorage%c %cslides", c.STORAGE, c.NONE, c.SLIDE, t]), {
       // @ts-ignore
-      data: x !== void 0 ? { slides: x, query: t } : null,
-      message: x !== void 0 ? "Slides loaded from storage" : "Slides load error",
-      success: x !== void 0
+      data: T !== void 0 ? { slides: T, query: t } : null,
+      message: T !== void 0 ? "Slides loaded from storage" : "Slides load error",
+      success: T !== void 0
     };
   };
   /**
@@ -4246,7 +4246,7 @@ function Ka(h, t) {
     }, () => {
     }), o;
   };
-  return (g, b) => l().then((x) => b(x.transaction(t, g).objectStore(t)));
+  return (g, b) => l().then((T) => b(T.transaction(t, g).objectStore(t)));
 }
 let Un;
 function Gr() {
@@ -5618,10 +5618,10 @@ class Ja {
       let b = "";
       switch (t.query.type) {
         case _.MESSAGES:
-          let x;
-          x = t.data.messages.filter(
+          let T;
+          T = t.data.messages.filter(
             ($) => $.id !== null
-          ), t.data.messages = x, b = t.data.messages.length > 0 ? Fn(t.data.messages[0].utc) : "none", g?.hash && g.hash === b ? (K(3, [
+          ), t.data.messages = T, b = t.data.messages.length > 0 ? Fn(t.data.messages[0].utc) : "none", g?.hash && g.hash === b ? (K(3, [
             "%cload%c %cmessages%c %cno updates",
             c.OK,
             c.NONE,
@@ -5678,7 +5678,7 @@ class Ja {
       }
     } else
       switch (K(4, [
-        `%cload%c %c${t.query}%c %bad request`,
+        `%cload%c %c${t.query.type}%c %bad request`,
         c.KO,
         c.NONE,
         c.STORAGE,

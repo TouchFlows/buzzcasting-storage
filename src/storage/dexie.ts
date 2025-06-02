@@ -852,7 +852,7 @@ export default class DexieClient {
 
 		const presentationFilter = (slide: { presentation_id: string }) => {
 			return query?.presentation_id
-				? (slide.presentation_id = query.presentation_id)
+				? slide.presentation_id === query.presentation_id
 				: false;
 		};
 
@@ -868,6 +868,10 @@ export default class DexieClient {
 			})
 			.then((res: any) => {
 				return query?.name ? res.filter(nameFilter) : res;
+			});
+		data &&
+			data.sort((a: any, b: any) => {
+				return a.order_index - b.order_index;
 			});
 
 		data !== undefined &&
