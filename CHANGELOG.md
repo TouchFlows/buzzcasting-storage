@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.13.0
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.12.8...v3.13.0)
+
+### 🚀 Enhancements
+
+- Dexie geslide return simplified ([17a657c](https://github.com/TouchFlows/buzzcasting-storage/commit/17a657c))
+
+### 🏡 Chore
+
+- **release:** V3.12.8 ([cc51116](https://github.com/TouchFlows/buzzcasting-storage/commit/cc51116))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.12.8
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.12.7...v3.12.8)
