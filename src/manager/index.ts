@@ -123,12 +123,10 @@ export class BuzzcastingStorageManager {
 							: "none";
 					if (previousHash?.hash && previousHash.hash === newHash) {
 						log(3, [
-							"%cload%c %cmessages%c %cno updates",
-							CSS.OK,
+							"%cload%c %cleanMessages",
+							CSS.NO_UPDATES,
 							CSS.NONE,
 							CSS.MESSAGES,
-							CSS.NONE,
-							CSS.NO_UPDATES,
 							resp.query.widget,
 						]);
 
@@ -151,12 +149,10 @@ export class BuzzcastingStorageManager {
 					newHash = hashSum(resp.data.cloud);
 					if (previousHash?.hash && previousHash.hash === newHash) {
 						log(3, [
-							"%cload%c %ccloud%c %cno updates",
-							CSS.OK,
+							"%cload%c %ccloud",
+							CSS.NO_UPDATES,
 							CSS.NONE,
 							CSS.CLOUD,
-							CSS.NONE,
-							CSS.NO_UPDATES,
 							resp.query.widget,
 						]);
 
@@ -183,12 +179,10 @@ export class BuzzcastingStorageManager {
 					newHash = hashSum(resp.data.series);
 					if (previousHash?.hash && previousHash.hash === newHash) {
 						log(3, [
-							"%cload%c %cseries%c %cno updates",
-							CSS.OK,
+							"%cload%c %cseries",
+							CSS.NO_UPDATES,
 							CSS.NONE,
 							CSS.SERIES,
-							CSS.NONE,
-							CSS.NO_UPDATES,
 							resp.query.widget,
 						]);
 						log(4, ["%cseries", CSS.SERIES, resp]);
@@ -210,12 +204,10 @@ export class BuzzcastingStorageManager {
 					break;
 				default:
 					log(4, [
-						`%cfetch%c %capi%c %cno updates`,
-						CSS.KO,
+						`%cfetch%c %capi`,
+						CSS.NO_UPDATES,
 						CSS.NONE,
 						CSS.API,
-						CSS.NONE,
-						CSS.NO_UPDATES,
 						`Bad request: type ${resp.query.type} unknown`,
 					]);
 					return resp;

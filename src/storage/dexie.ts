@@ -829,8 +829,8 @@ export default class DexieClient {
 			});
 
 		return {
-			// @ts-ignore
-			data: data !== undefined ? { slides: data, query } : null,
+			data,
+			query,
 			message:
 				data !== undefined ? `Slide loaded from storage` : `Slide load error`,
 			success: data !== undefined,
@@ -844,7 +844,7 @@ export default class DexieClient {
 	 */
 	getSlides = async (query: IQuery): Promise<IResponse> => {
 		const idFilter = (slide: { id: string }) => {
-			return query?.id ? (slide.id = query.id) : false;
+			return query?.id ? slide.id === query.id : false;
 		};
 		const nameFilter = (slide: { name: string }) => {
 			return query?.name ? slide.name.includes(query?.name) : false;
@@ -879,7 +879,8 @@ export default class DexieClient {
 
 		return {
 			// @ts-ignore
-			data: data !== undefined ? { slides: data, query } : null,
+			data,
+			query, //: data !== undefined ? { data, query } : null,
 			message:
 				data !== undefined ? `Slides loaded from storage` : `Slides load error`,
 			success: data !== undefined,
@@ -951,6 +952,7 @@ export default class DexieClient {
 				success: false,
 			};
 		}
+		data.query = query;
 		data.message = `Presentation ${query.id} retrieved from storage`;
 		data.success = true;
 		return data;
@@ -985,7 +987,8 @@ export default class DexieClient {
 
 		return {
 			// @ts-ignore
-			data: data !== undefined ? { presentations: data, query } : null,
+			data,
+			query,
 			message:
 				data !== undefined
 					? `Presentations loaded from storage`
@@ -1011,6 +1014,7 @@ export default class DexieClient {
 			.then(() => {
 				return {
 					data: null,
+					query,
 					message: `Presentation ${query.data.id} saved to storage`,
 					success: true,
 				};
@@ -1025,6 +1029,7 @@ export default class DexieClient {
 				);
 				return {
 					data: null,
+					query,
 					message: `Presentation ${query.data.id} save error: ${error.message}`,
 					success: false,
 				};
