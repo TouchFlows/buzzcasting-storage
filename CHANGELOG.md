@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v3.14.0
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.13.0...v3.14.0)
+
+### 🚀 Enhancements
+
+- Add/delete subscribers ([93b16de](https://github.com/TouchFlows/buzzcasting-storage/commit/93b16de))
+
+### 🏡 Chore
+
+- **release:** V3.13.0 ([aa53b1e](https://github.com/TouchFlows/buzzcasting-storage/commit/aa53b1e))
+- Deps ([f49d860](https://github.com/TouchFlows/buzzcasting-storage/commit/f49d860))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.13.0
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.12.8...v3.13.0)
