@@ -4014,7 +4014,7 @@ class Mr {
    * @returns IResponse
    */
   getSlides = async (t) => {
-    const o = ($) => t?.id ? $.id = t.id : !1, l = ($) => t?.name ? $.name.includes(t?.name) : !1, g = ($) => t?.presentation_id ? $.presentation_id === t.presentation_id : !1, x = await this.db.table(_.SLIDE).toArray().then(($) => t?.presentation_id ? $.filter(g) : $).then(($) => t?.id ? $.filter(o) : $).then(($) => t?.name ? $.filter(l) : $);
+    const o = ($) => t?.id ? $.id === t.id : !1, l = ($) => t?.name ? $.name.includes(t?.name) : !1, g = ($) => t?.presentation_id ? $.presentation_id === t.presentation_id : !1, x = await this.db.table(_.SLIDE).toArray().then(($) => t?.presentation_id ? $.filter(g) : $).then(($) => t?.id ? $.filter(o) : $).then(($) => t?.name ? $.filter(l) : $);
     return x && x.sort(($, te) => $.order_index - te.order_index), x !== void 0 && K(3, ["%cstorage%c %cslides", c.STORAGE, c.NONE, c.SLIDE, t]), {
       // @ts-ignore
       data: x,
@@ -4070,7 +4070,7 @@ class Mr {
       data: null,
       message: `Presentation ${t.id} Load error`,
       success: !1
-    } : (o.message = `Presentation ${t.id} retrieved from storage`, o.success = !0, o);
+    } : (o.query = t, o.message = `Presentation ${t.id} retrieved from storage`, o.success = !0, o);
   };
   /**
    * Retrieve Presentations from Storage
@@ -4087,7 +4087,8 @@ class Mr {
       t
     ]), {
       // @ts-ignore
-      data: g !== void 0 ? { presentations: g, query: t } : null,
+      data: g,
+      query: t,
       message: g !== void 0 ? "Presentations loaded from storage" : "Presentations load error",
       success: g !== void 0
     };
@@ -4104,6 +4105,7 @@ class Mr {
     update: t.update
   }).then(() => ({
     data: null,
+    query: t,
     message: `Presentation ${t.data.id} saved to storage`,
     success: !0
   })).catch((o) => (console.error(
@@ -4114,6 +4116,7 @@ class Mr {
     o.message
   ), {
     data: null,
+    query: t,
     message: `Presentation ${t.data.id} save error: ${o.message}`,
     success: !1
   }));

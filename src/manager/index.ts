@@ -82,6 +82,10 @@ export class BuzzcastingStorageManager {
 		this.subscribers[query.widget] = query;
 	}
 
+	public deleteSubscriber(query: IQuery) {
+		delete this.subscribers[query.widget];
+	}
+
 	public update = async (query: IQuery) => {
 		if (this.sm === null || Object.keys(this.subscribers).length === 0) {
 			return;
@@ -382,7 +386,11 @@ export class BuzzcastingStorageManager {
 
 	public getSubscribers = async () => {
 		return await new Promise<any[]>((resolve) => resolve(this.subscribers));
-		// return await this.sm?.getSubscribers();
+	};
+
+	public deleteSubscribers = async () => {
+		this.subscribers = [];
+		return await new Promise<any[]>((resolve) => resolve(this.subscribers));
 	};
 
 	public getSlide = async (query: IQuery): Promise<IResponse | undefined> => {
