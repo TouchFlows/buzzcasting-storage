@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.14.2
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.14.1...v3.14.2)
+
+### 🩹 Fixes
+
+- Export IDynamics ([f622e7b](https://github.com/TouchFlows/buzzcasting-storage/commit/f622e7b))
+
+### 🏡 Chore
+
+- **release:** V3.14.1 ([8af0371](https://github.com/TouchFlows/buzzcasting-storage/commit/8af0371))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.14.1
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.14.0...v3.14.1)
