@@ -12,6 +12,7 @@ export declare class BuzzcastingStorageManager {
     private subscribers;
     constructor(options: IStorageOptions);
     addSubscriber(query: IQuery): void;
+    deleteSubscriber(query: IQuery): void;
     update: (query: IQuery) => Promise<void>;
     private processResponse;
     private broadcastUpdate;
@@ -21,6 +22,7 @@ export declare class BuzzcastingStorageManager {
     hideMessage: (query: IQuery) => Promise<IResponse>;
     hideLabels: (query: IQuery) => Promise<IResponse>;
     getSubscribers: () => Promise<any[]>;
+    deleteSubscribers: () => Promise<any[]>;
     getSlide: (query: IQuery) => Promise<IResponse | undefined>;
     getSlides: (query: IQuery) => Promise<IResponse | undefined>;
     setSlide: (query: IQuery) => Promise<IResponse | undefined>;

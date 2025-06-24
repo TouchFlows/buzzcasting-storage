@@ -170,15 +170,6 @@
         setData,
       ]);
 
-      // const data = await sm.loadSlide({ id: "" }).then(async (res) => {
-      //   for (let key in res.data) {
-      //     const slide = res.data[key];
-      //     await sm
-      //       // @ts-ignore
-      //       .setSlide({ data: slide });
-      //   }
-      // });
-
       const slides = await sm.getSlides({
         name: "Ambas",
       });
