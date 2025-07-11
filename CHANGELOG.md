@@ -1,6 +1,24 @@
 # Changelog
 
 
+## v3.14.3
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.14.2...v3.14.3)
+
+### 🩹 Fixes
+
+- Visible and approve on dexie getMessages ([e68641d](https://github.com/TouchFlows/buzzcasting-storage/commit/e68641d))
+- Friendly errors ([8843a7d](https://github.com/TouchFlows/buzzcasting-storage/commit/8843a7d))
+
+### 🏡 Chore
+
+- **release:** V3.14.2 ([8dcebbf](https://github.com/TouchFlows/buzzcasting-storage/commit/8dcebbf))
+- Deps ([2798096](https://github.com/TouchFlows/buzzcasting-storage/commit/2798096))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.14.2
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.14.1...v3.14.2)
