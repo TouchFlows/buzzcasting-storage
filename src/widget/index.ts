@@ -196,7 +196,6 @@ export default class Widget {
 				success: false,
 			};
 		}
-
 		return await this.storageReader.getMessages(this.query);
 	};
 

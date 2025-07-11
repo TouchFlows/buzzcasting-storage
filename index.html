@@ -26,7 +26,7 @@
     >
       <buzzcasting-presentation>
         <buzzcasting-slide id="un" class="w-[1920px] h-[1080px]">
-          <cards-widget
+          <old-cards-widget
             id="cards"
             layout="base"
             component="card-image-top"
@@ -47,7 +47,7 @@
             animation="0"
             interval="8000"
             debug="true"
-          ></cards-widget>
+          ></old-cards-widget>
           <series-widget
             id="series"
             component="kpi-evolution"
@@ -81,6 +81,7 @@
             data-order="engagement"
             data-dashboard="lzzzniev_1670v2kaule1j"
             data-widget="40a93a9f_6c51_4dd7_a44e_0c206dc6df8f"
+            data-approved="true"
             show-kpi="false"
             css-date="text-base text-white"
             show-brand="false"
@@ -158,7 +159,7 @@
         getOptions: () => options,
       };
 
-      const cards = new Widget(document.getElementById("cards"), [setData]);
+      //const cards = new Widget(document.getElementById("cards"), [setData]);
 
       const series = new Widget(document.getElementById("series"), [setData]);
 

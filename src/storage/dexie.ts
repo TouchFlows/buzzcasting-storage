@@ -25,7 +25,7 @@ export default class DexieClient {
 		this.options = options;
 
 		this.db = new Dexie(options.app);
-		this.db.version(12).stores({
+		this.db.version(13).stores({
 			channel: "id,slide_index",
 			cloud: "id,dashboard_id",
 			dashboard: "id,name,update",
@@ -40,7 +40,7 @@ export default class DexieClient {
 			series: "id,dashboard_id",
 			slide: "id,name,presentation_id,order_index,json,html,update",
 			topics:
-				"[widget_id+message_id],message_id,widget_id,dashboard_id,title,engagement,impressions,reach,sentiment,visible,utc,expires",
+				"[widget_id+message_id],message_id,widget_id,dashboard_id,title,engagement,impressions,reach,sentiment,visible,approved,utc,expires",
 			widget: "id,name,dashboard_id,type,update",
 		});
 		this.db.open();
@@ -327,18 +327,29 @@ export default class DexieClient {
 		const beforeFilter = (topic: { utc: number }) =>
 			topic.utc < (query?.before || now);
 
-		const visibleFilter = (topic: { visible: number | undefined }) =>
-			topic?.visible !== 0;
+		// const visibleFilter = (topic: { visible: number | undefined }) =>
+		// 	topic.visible !== 0;
+
+		// const approvedFilter = (topic: { approved: number | undefined }) => {
+		// 	topic.approved !== 0;
+		// };
 
 		try {
 			const topicMessagesCollection: any = this.db
 				.table(API.TOPICS)
 				.where("widget_id")
 				.equals(query.widget)
-				.filter(visibleFilter)
 				.filter(sinceFilter)
-				.filter(beforeFilter)
-				.reverse();
+				.filter(beforeFilter);
+
+			if (query?.approved === "true") {
+				// @ts-ignore
+				topicMessagesCollection.and((topic) => topic.approved === 1);
+			} else {
+				// @ts-ignore
+				topicMessagesCollection.and((topic) => topic.visible === 1);
+			}
+			topicMessagesCollection.reverse();
 
 			const topicMessages: any = await topicMessagesCollection
 				.limit(query?.limit ?? 25)
@@ -447,7 +458,10 @@ export default class DexieClient {
 					reach:
 						message.topics[0]?.reach || message.dynamics?.potential_reach || 0,
 					sentiment: message.topics[0]?.sentiment || 0,
+					//@ts-ignore
+					approved: message.topics[0]?.approved ? 1 : 0,
 				};
+
 				await this.db
 					.table(API.MESSAGES)
 					.put({
@@ -473,29 +487,30 @@ export default class DexieClient {
 				 * Update topics table with new engagement stats
 				 * using put to replace the whole entry
 				 */
+				const update = {
+					title,
+					widget_id: query.widget,
+					visible: message.topics[0]?.visible || 1,
+					// @ts-ignore
+					approved: message.topics[0]?.approved || 0,
+					message_id: message.id,
+					dashboard_id: query.dashboard,
+					engagement:
+						message.topics[0]?.engagement || message.dynamics?.engagement || 0,
+					impressions:
+						message.topics[0]?.impressions ||
+						message.dynamics?.semrush_visits ||
+						0,
+					reach:
+						message.topics[0]?.reach || message.dynamics?.potential_reach || 0,
+					sentiment: message.topics[0]?.sentiment || 0,
+					utc: message.utc,
+					expires: message.expires,
+				};
+
 				await this.db
 					.table(API.TOPICS)
-					.put({
-						title,
-						widget_id: query.widget,
-						message_id: message.id,
-						dashboard_id: query.dashboard,
-						engagement:
-							message.topics[0]?.engagement ||
-							message.dynamics?.engagement ||
-							0,
-						impressions:
-							message.topics[0]?.impressions ||
-							message.dynamics?.semrush_visits ||
-							0,
-						reach:
-							message.topics[0]?.reach ||
-							message.dynamics?.potential_reach ||
-							0,
-						sentiment: message.topics[0]?.sentiment || 0,
-						utc: message.utc,
-						expires: message.expires,
-					})
+					.put(update)
 					.catch((error: Error) => {
 						errorCount++;
 						log(4, [
@@ -516,12 +531,15 @@ export default class DexieClient {
 				await data.data.topics.forEach(async (topic: ITopic) => {
 					const id = topic.message_id;
 					const show = topic.visible ? 1 : 0;
+					//@ts-ignore
+					const aprv = topic.approve ? 1 : 0;
+					//@ts-ignore
 					const title = topic.title;
 					await this.db
 						.table(API.TOPICS)
 						.where("message_id")
 						.equals(id)
-						.modify({ visible: show })
+						.modify({ visible: show, approve: aprv })
 						.catch((error: Error) => {
 							errorCount++;
 							log(4, [
