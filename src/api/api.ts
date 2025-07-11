@@ -190,7 +190,15 @@ export default class ApiClient {
 		// 	= Object.keys(search).length > 0
 		// 	  ? `?${new URLSearchParams(search).toString()}`
 		// 	  : ''
-		log(3, ["%capi%c %cloadSlide", CSS.API, CSS.NONE, CSS.SLIDE, query.id]);
+		log(3, [
+			"%cload%c %capi%c %c %clide",
+			CSS.OK,
+			CSS.NONE,
+			CSS.API,
+			CSS.NONE,
+			CSS.SLIDE,
+			query.id,
+		]);
 		return await fetch(
 			[this.url, "api", version, "slides", query.id].join("/"),
 			{ ...headers, method: "get" }
@@ -295,7 +303,7 @@ export default class ApiClient {
 		delete query.update;
 
 		log(3, [
-			"%cload%c %capi%c %cloadPresentation",
+			"%cload%c %capi%c %cpresentation",
 			CSS.OK,
 			CSS.NONE,
 			CSS.API,
@@ -379,7 +387,9 @@ export default class ApiClient {
 		// 	  ? `?${new URLSearchParams(search).toString()}`
 		// 	  : ''
 		log(3, [
-			"%capi%c %cloadPreference",
+			"%cload%c %capi%c %cpreference",
+			CSS.OK,
+			CSS.NONE,
 			CSS.API,
 			CSS.NONE,
 			CSS.APP,
@@ -442,44 +452,6 @@ export default class ApiClient {
 			});
 	}
 
-	/*public async loadDashboardWidgets(query: IQuery): Promise<any> {
-		if (query?.dashboard === undefined)
-			return { success: false, message: `Dashboard ID not defines`, data: null };
-		const { version }: IStorageOptions = this.options;
-		const headers = this.headers();
-
-		log(3,[
-			"%capi%c %cloadDashboardWidget",
-			CSS.API,
-			CSS.NONE,
-			CSS.WIDGET,
-			query.id
-		);
-		return await fetch(
-			[this.url, "api", version, API.WIDGETS, query.dashboard].join("/"),
-			{ ...headers, method: "get" }
-		)
-			.then(async (response: Response) => {
-				if (!response.ok) {
-					throw new Error(`${response.status}`);
-				}
-				return response;
-			})
-			.then((response: Response) => {
-				return response.json();
-			})
-			.then((json: IWidget[]): IResponse => {
-				return {
-					data: { widgets: json},
-					message: "Dashboard Widgets loaded from api",
-					success: true
-				};
-			})
-			.catch((code) => {
-				return { success: false, message: `${code}`, data: null, query: query };
-			});
-	}*/
-
 	public async loadDashboards(query?: IQuery): Promise<any> {
 		const { version }: IStorageOptions = this.options;
 		const headers = this.headers();
@@ -517,7 +489,14 @@ export default class ApiClient {
 		const { version }: IStorageOptions = this.options;
 		const headers = this.headers();
 
-		console.info("%capi%c %cloadImage", CSS.API, CSS.NONE, CSS.WIDGET);
+		console.info(
+			"%cload%c %capi%c %cimage",
+			CSS.OK,
+			CSS.NONE,
+			CSS.API,
+			CSS.NONE,
+			CSS.WIDGET
+		);
 		return await fetch(
 			`${[this.url, "api", version, API.IMAGES].join(
 				"/"

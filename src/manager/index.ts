@@ -153,8 +153,10 @@ export class BuzzcastingStorageManager {
 					newHash = hashSum(resp.data.cloud);
 					if (previousHash?.hash && previousHash.hash === newHash) {
 						log(3, [
-							"%cload%c %ccloud",
+							"%cset%c %capi%c %ccloud",
 							CSS.NO_UPDATES,
+							CSS.NONE,
+							CSS.API,
 							CSS.NONE,
 							CSS.CLOUD,
 							resp.query.widget,
@@ -183,11 +185,12 @@ export class BuzzcastingStorageManager {
 					newHash = hashSum(resp.data.series);
 					if (previousHash?.hash && previousHash.hash === newHash) {
 						log(3, [
-							"%cload%c %cseries",
+							"%cset%c %capi%c %cseries",
 							CSS.NO_UPDATES,
 							CSS.NONE,
-							CSS.SERIES,
-							resp.query.widget,
+							CSS.API,
+							CSS.NONE,
+							CSS.CLOUD,
 						]);
 						log(4, ["%cseries", CSS.SERIES, resp]);
 						status = 204;
@@ -220,7 +223,7 @@ export class BuzzcastingStorageManager {
 		} else {
 			// status = 401;
 			log(4, [
-				`%cload%c %c${resp.query.type}%c %bad request`,
+				`%cset%c %c${resp.query.type}%c %cbad request`,
 				CSS.KO,
 				CSS.NONE,
 				CSS.STORAGE,

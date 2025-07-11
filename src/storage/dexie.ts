@@ -55,7 +55,7 @@ export default class DexieClient {
 		if (query.widget === "") {
 			log(3, [
 				"%cget%c %cstorage%c %ccloud",
-				CSS.KO,
+				CSS.NO_UPDATES,
 				CSS.NONE,
 				CSS.STORAGE,
 				CSS.NONE,
@@ -294,7 +294,7 @@ export default class DexieClient {
 		if (query.widget === "") {
 			log(3, [
 				"%cget%c %cstorage%c %cmessages",
-				CSS.KO,
+				CSS.NO_UPDATES,
 				CSS.NONE,
 				CSS.STORAGE,
 				CSS.NONE,
@@ -568,7 +568,7 @@ export default class DexieClient {
 		if (query.widget === "") {
 			log(3, [
 				"%cget%c %cstorage%c %cseries",
-				CSS.KO,
+				CSS.NO_UPDATES,
 				CSS.NONE,
 				CSS.STORAGE,
 				CSS.NONE,
