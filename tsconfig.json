@@ -3,6 +3,8 @@
     "target": "ESNext",
     "lib": ["ESNext", "DOM"],
     "rootDir": "./src",
+    "declaration": true,
+    "declarationMap": true,
     "module": "ESNext",
     "moduleResolution": "Node",
     "resolveJsonModule": true,

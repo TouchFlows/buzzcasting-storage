@@ -13,8 +13,9 @@ export declare class BuzzcastingStorageManager {
     constructor(options: IStorageOptions);
     addSubscriber(query: IQuery): void;
     deleteSubscriber(query: IQuery): void;
-    update: (query: IQuery) => Promise<void>;
+    update: (data: any) => Promise<void>;
     private processResponse;
+    startBroadcastListener: () => void;
     private broadcastUpdate;
     hide: (query: IQuery) => void;
     private actions;
@@ -43,7 +44,7 @@ export declare class BuzzcastingStorageManager {
     setWidget: (query: IQuery) => Promise<IResponse | undefined>;
     loadDashboards: (query?: IQuery) => Promise<IResponse | undefined>;
     getDashboard: (query: IQuery) => Promise<IResponse | undefined>;
-    getDashboards: (query: IQuery) => Promise<IResponse | undefined>;
+    getDashboards: () => Promise<IResponse | undefined>;
     setDashboard: (query: IQuery) => Promise<IResponse | undefined>;
     loadImages: (folder: string) => Promise<IResponse | undefined>;
     storeImage: (imageFile: FormData) => Promise<IResponse | number>;

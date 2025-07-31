@@ -188,7 +188,6 @@ export default class DexieClient {
 			]);
 
 		return {
-			// @ts-ignore
 			data: data !== undefined ? { dashboards: data, query } : null,
 			message:
 				data !== undefined
@@ -315,7 +314,7 @@ export default class DexieClient {
 			query.since = now - 60 * 60 * 24 * 30;
 		}
 
-		if (this.options.delay != 0) {
+		if (this.options.delay !== 0) {
 			query.before = now - (this.options.delay || 0);
 		} else {
 			query.before = now;
@@ -343,10 +342,10 @@ export default class DexieClient {
 				.filter(beforeFilter);
 
 			if (query?.approved === "true") {
-				// @ts-ignore
+				// @ts-expect-error
 				topicMessagesCollection.and((topic) => topic.approved === 1);
 			} else {
-				// @ts-ignore
+				// @ts-expect-error
 				topicMessagesCollection.and((topic) => topic.visible === 1);
 			}
 			topicMessagesCollection.reverse();
@@ -369,7 +368,6 @@ export default class DexieClient {
 				return this.db.table(API.MESSAGES).get({ id: message.message_id });
 			});
 
-			// @ts-ignore
 			return Dexie.Promise.all(getMessages).then(async (messages) => {
 				const filtered = messages.map((message: any) => {
 					return message.data;
@@ -458,7 +456,7 @@ export default class DexieClient {
 					reach:
 						message.topics[0]?.reach || message.dynamics?.potential_reach || 0,
 					sentiment: message.topics[0]?.sentiment || 0,
-					//@ts-ignore
+					// @ts-ignore
 					approved: message.topics[0]?.approved ? 1 : 0,
 				};
 
@@ -531,9 +529,8 @@ export default class DexieClient {
 				await data.data.topics.forEach(async (topic: ITopic) => {
 					const id = topic.message_id;
 					const show = topic.visible ? 1 : 0;
-					//@ts-ignore
+					// @ts-ignore
 					const aprv = topic.approve ? 1 : 0;
-					//@ts-ignore
 					const title = topic.title;
 					await this.db
 						.table(API.TOPICS)
@@ -898,7 +895,7 @@ export default class DexieClient {
 		return {
 			// @ts-ignore
 			data,
-			query, //: data !== undefined ? { data, query } : null,
+			query, // : data !== undefined ? { data, query } : null,
 			message:
 				data !== undefined ? `Slides loaded from storage` : `Slides load error`,
 			success: data !== undefined,
@@ -1004,7 +1001,6 @@ export default class DexieClient {
 			]);
 
 		return {
-			// @ts-ignore
 			data,
 			query,
 			message:
@@ -1112,7 +1108,7 @@ export default class DexieClient {
 
 		return {
 			// @ts-ignore
-			data: data !== undefined ? { prefrences: data, query } : null,
+			data: data !== undefined ? { preferences: data, query } : null,
 			message:
 				data !== undefined
 					? `Preferences loaded from storage`
@@ -1183,7 +1179,7 @@ export default class DexieClient {
 			]);
 
 		return {
-			// @ts-ignore
+			// @ts-expect-error query.widget is obligatory but not always
 			data: data !== undefined ? { images: data, query } : null,
 			message:
 				data !== undefined ? `Images loaded from storage` : `Images load error`,

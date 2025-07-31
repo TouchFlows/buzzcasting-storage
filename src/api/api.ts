@@ -60,7 +60,7 @@ export default class ApiClient {
 		delete search.hash;
 		delete search.order;
 		search.topics = `${search.dashboard}-${search.widget}`;
-		//delete search.period;
+		// delete search.period;
 		delete search.presentation;
 		const params =
 			Object.keys(search).length > 0
@@ -107,7 +107,7 @@ export default class ApiClient {
 				return json;
 			})
 			.catch((code) => {
-				return { success: false, message: `${code}`, data: null, query: query };
+				return { success: false, message: `${code}`, data: null, query };
 			});
 	}
 
@@ -191,7 +191,7 @@ export default class ApiClient {
 		// 	  ? `?${new URLSearchParams(search).toString()}`
 		// 	  : ''
 		log(3, [
-			"%cload%c %capi%c %c %clide",
+			"%cload%c %capi%c %cslide",
 			CSS.OK,
 			CSS.NONE,
 			CSS.API,
@@ -214,13 +214,11 @@ export default class ApiClient {
 			})
 			.then((json: IResponse): IResponse => {
 				let res: any | any[];
-				//@ts-ignore
+				// @ts-expect-error query.widget is obligatory but not always
 				query.type = "slides";
 				json.query = query;
 
 				if (json?.data) {
-					//@ts-ignore
-
 					if (Array.isArray(json.data)) {
 						res = structuredClone(json.data);
 
@@ -234,15 +232,8 @@ export default class ApiClient {
 						res = structuredClone(json.data);
 						res.json = JSON.parse(res.json);
 					}
-					// @ts-ignore
 					json.data = res;
 				}
-
-				// @ts-ignore
-				// if (json.data && json.data.json) {
-				// 	// @ts-ignore
-				// 	json.data.json = JSON.parse(json.data.json);
-				// }
 				return json;
 			})
 			.catch((code) => {
@@ -326,15 +317,11 @@ export default class ApiClient {
 			})
 			.then((json: IResponse): IResponse => {
 				let res: any | any[];
-				//@ts-ignore
 				query.type = "presentations";
 				json.query = query;
 
 				if (json?.data) {
-					//@ts-ignore
 					res = structuredClone(json.data);
-
-					// @ts-ignore
 					json.data = res;
 				}
 
@@ -409,9 +396,9 @@ export default class ApiClient {
 				return response.json();
 			})
 			.then((json: IResponse): IResponse => {
-				//@ts-ignore
+				// @ts-ignore
 				preference.type = "preference";
-				//@ts-ignore
+				// @ts-ignore
 				json.query = preference;
 				return json;
 			})

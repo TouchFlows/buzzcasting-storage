@@ -68,7 +68,7 @@ actions = (messageEvent: MessageEvent) => {
       this.widgetUpdated.emit(messageEvent.data.data)
       break
     default:
-      // console.log('[storage]', messageEvent.data)
+    // console.log('[storage]', messageEvent.data)
   }
 }
 ```
@@ -79,7 +79,7 @@ actions = (messageEvent: MessageEvent) => {
 git clone https://github.com/TouchFlows/buzzcasting-storage.git
 cd buzzcasting-storage
 pnpm install
-````
+```
 
 ## Usage
 
@@ -93,6 +93,10 @@ The project contains the following scripts:
 - `test:watch` - Run all tests with watch mode
 - `test:coverage` - Run all tests with code coverage report
 - `prepare` - Script for setting up husky hooks
+
+## Useful Links
+
+- [IndexedDB Reference](https://app.studyraid.com/en/read/11356/355143/optimizing-database-schema-design)
 
 ## License
 
