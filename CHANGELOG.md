@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v3.14.4
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.14.3...v3.14.4)
+
+### 🏡 Chore
+
+- **release:** V3.14.3 ([6a93983](https://github.com/TouchFlows/buzzcasting-storage/commit/6a93983))
+- Deps & cleanup- remove ts-ignore ([0c18b1a](https://github.com/TouchFlows/buzzcasting-storage/commit/0c18b1a))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.14.3
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.14.2...v3.14.3)
