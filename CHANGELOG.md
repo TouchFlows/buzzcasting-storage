@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.14.6
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.14.5...v3.14.6)
+
+### 🩹 Fixes
+
+- Widget debug message ([f29d090](https://github.com/TouchFlows/buzzcasting-storage/commit/f29d090))
+
+### 🏡 Chore
+
+- **release:** V3.14.5 ([b11eaaf](https://github.com/TouchFlows/buzzcasting-storage/commit/b11eaaf))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.14.5
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.14.4...v3.14.5)
