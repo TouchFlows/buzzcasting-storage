@@ -14,6 +14,7 @@ export declare class BuzzcastingStorageManager {
     addSubscriber(query: IQuery): void;
     deleteSubscriber(query: IQuery): void;
     update: (data: any) => Promise<void>;
+    apiQuery: (apiQuery: any) => Promise<IprocessResponse>;
     private processResponse;
     startBroadcastListener: () => void;
     private broadcastUpdate;
@@ -76,6 +77,11 @@ export declare class BuzzcastingStorageReader {
     getSeries: (query: IQuery) => Promise<IResponse>;
 }
 
+declare interface IprocessResponse {
+    code: number;
+    hash: string;
+}
+
 /**
  * Main class for managing widgets and data updates
  */
@@ -104,6 +110,8 @@ export declare class Widget {
      * This takes place when the container indicates it has finished loading (ready)
      */
     subscribe(): void;
+    setHash(hash: string): void;
+    getHash(): string | undefined;
     /**
      * Generic call to any query type
      *

@@ -86,8 +86,8 @@ export default class ApiClient {
 			CSS.NONE,
 			color,
 			query.widget,
+			search,
 		]);
-		log(4, [query.type, search]);
 
 		return await fetch(
 			[this.url, "api", version, query.type].join("/") + params,

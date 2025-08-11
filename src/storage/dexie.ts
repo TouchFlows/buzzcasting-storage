@@ -10,6 +10,7 @@ import {
 	API,
 	CSS,
 	EVENTS,
+	hashSum,
 	log,
 	moderation,
 	widgetParams,
@@ -108,11 +109,21 @@ export default class DexieClient {
 	 */
 	setCloud = async (query: IQuery, data: any): Promise<number> => {
 		if (query.type === API.CLOUD && data !== "") {
+			log(3, [
+				"%cset%c %cstorage%c %ccloud",
+				CSS.OK,
+				CSS.NONE,
+				CSS.STORAGE,
+				CSS.NONE,
+				CSS.CLOUD,
+				data?.title ?? query.widget,
+			]);
 			return await this.db
 				.table(API.CLOUD)
 				.put({
 					id: query.widget,
 					dashboard_id: query.dashboard,
+					hash: query.hash,
 					// data: data.data,
 					data,
 				})
@@ -370,7 +381,7 @@ export default class DexieClient {
 
 			return Dexie.Promise.all(getMessages).then(async (messages) => {
 				const filtered = messages.map((message: any) => {
-					return message.data;
+					if (message !== undefined) return message.data;
 				});
 				const data = {
 					data: {
@@ -380,6 +391,12 @@ export default class DexieClient {
 					message: "Messages retrieved successfully",
 					success: true,
 				};
+
+				//@ts-ignore
+				data.query.hash = data.data.messages.length
+					? hashSum(data.data.messages[0].utc)
+					: "";
+
 				log(3, [
 					"%cget%c %cstorage%c %cmessages",
 					CSS.OK,
@@ -442,6 +459,15 @@ export default class DexieClient {
 		const title: string = data.data.title;
 		// const topics: string = data.data.topics
 		let errorCount: number = 0;
+		log(3, [
+			"%cset%c %cstorage%c %cmessages",
+			CSS.OK,
+			CSS.NONE,
+			CSS.STORAGE,
+			CSS.NONE,
+			CSS.MESSAGES,
+			data?.title ?? query.widget,
+		]);
 
 		await data.data.messages.forEach(async (message: IMessage) => {
 			if (message.id !== null) {
@@ -623,11 +649,21 @@ export default class DexieClient {
 	setSeries = async (query: IQuery, data: any): Promise<number> => {
 		delete data?.query;
 		if (query.type === API.SERIES && data !== "") {
+			log(3, [
+				"%cset%c %cstorage%c %cseries",
+				CSS.OK,
+				CSS.NONE,
+				CSS.STORAGE,
+				CSS.NONE,
+				CSS.SERIES,
+				data?.title ?? query.widget,
+			]);
 			return await this.db
 				.table(API.SERIES)
 				.put({
 					id: query.widget,
 					dashboard_id: query.dashboard,
+					hash: query.hash,
 					// data: data.data,
 					data,
 				})

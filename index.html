@@ -20,34 +20,48 @@
       delay="0"
       moderation="realtime"
       interval="120000"
-      presentation="01j7h4f0y32njz7bthhqrtyq5s"
+      presentation="01jc6ajqqv7ra88785zct853mm"
       before-time="00:00:00"
       storage="dexie"
     >
       <buzzcasting-presentation>
-        <buzzcasting-slide id="un" class="w-[1920px] h-[1080px]">
-          <old-cards-widget
-            id="cards"
-            layout="base"
-            component="card-image-top"
+        <buzzcasting-slide
+          id="01jc6ajqr0cbpjrrvab714f3sq"
+          class="w-[1920px] h-[1080px]"
+        >
+          <cards-widget
+            id="messages"
             data-type="messages"
-            data-order="engagement"
+            data-moderation=""
+            layout="base"
+            component="card-linkedin"
             data-dashboard="lzzzniev_1670v2kaule1j"
-            data-widget="40a93a9f_6c51_4dd7_a44e_0c206dc6df8f"
-            show-kpi="false"
-            css-date="text-base text-white"
+            data-widget="859c518e_0bf6_489c_b07d_f28fe3245eec"
+            css-card="text-white font-sans h-full gap-2"
+            show-sender="true"
             show-brand="false"
-            show-sender="false"
-            css-card="gap-4 h-[430px]"
-            css-body="overflow-clip text-xl text-white break-words h-[136px]"
-            css-brand="h-6 w-6 text-white bg-white/50 rounded-full text-shadow-none"
-            css-handle="text-white text-base"
-            css-name="font-bold text-white text-xl"
-            date-format="long"
             animation="0"
-            interval="8000"
-            debug="true"
-          ></old-cards-widget>
+            interval="7000"
+            show-date="true"
+            date-format="medium"
+            css-date="text-shadow-none text-sm text-gray-400"
+            css-host=""
+            css-body="text-lg max-h-36 text-ellipsis overflow-hidden line-clamp-5 break-keep"
+            show-avatar="false"
+            show-kpi="true"
+            css-kpi="text-sm pr-2"
+            css-avatar="max-w-16 h-16 max-h-16 w-16 rounded-full bg-contain bg-no-repeat bg-center"
+            css-sender="text-ellipsis gap-x-1"
+            css-brand="h-8 w-8"
+            time-format=""
+            css-name="font-bold text-base text-ellipsis text-nowrap overflow-hidden hidden"
+            css-handle="text-sm text-ellipsis text-nowrap overflow-hidden"
+            data-order="utc"
+            locale="en-US"
+            class="hydrated"
+            index="15"
+          >
+          </cards-widget>
           <series-widget
             id="series"
             component="kpi-evolution"
@@ -62,52 +76,6 @@
             css-down="text-white self-end"
             css-up="text-white self-end"
             class="hydrated"
-          ></series-widget>
-          <cloud-axagroup-ambassadors
-            id="cloud"
-            data-type="cloud"
-            data-dashboard="01JD32_VDXWMXA_WC2D"
-            data-widget="BMKPN_W4RH"
-            c-host=""
-            class="grid grid-cols-[1fr_1px_1fr]"
-          />
-        </buzzcasting-slide>
-        <buzzcasting-slide id="deux">
-          <cards-widget
-            id="cards-2"
-            layout="base"
-            component="card-image-top"
-            data-type="messages"
-            data-order="engagement"
-            data-dashboard="lzzzniev_1670v2kaule1j"
-            data-widget="40a93a9f_6c51_4dd7_a44e_0c206dc6df8f"
-            data-approved="true"
-            show-kpi="false"
-            css-date="text-base text-white"
-            show-brand="false"
-            show-sender="false"
-            css-card="gap-4 h-[430px]"
-            css-body="overflow-clip text-xl text-white break-words h-[136px]"
-            css-brand="h-6 w-6 text-white bg-white/50 rounded-full text-shadow-none"
-            css-handle="text-white text-base"
-            css-name="font-bold text-white text-xl"
-            date-format="long"
-            animation="0"
-            interval="8000"
-          ></cards-widget>
-          <series-widget
-            id="series-2"
-            component="kpi-evolution"
-            data-type="series"
-            data-dashboard="lzzzniev_1670v2kaule1j"
-            data-widget="75848543_58e8_4d44_82e2_7eb01239349a"
-            css-arrow-down="bg-arrow-down-red rounded-full h-6 w-6 bg-white bg-arrow-up-green,rounded-full,h-6,w-6,bg-white"
-            css-body="px-4 text-40 font-publico-light gap-x-3"
-            css-brand="h-6 w-6 bg-linkedin-logo"
-            css-change="font-serif-regular text-3xl text-center self-center"
-            css-count="text-white font-serif-regular text-4xl self-center"
-            css-down="text-white self-end"
-            css-up="text-white self-end"
           ></series-widget>
         </buzzcasting-slide>
       </buzzcasting-presentation>
@@ -134,12 +102,13 @@
         delay: 0,
         period: 0,
         presentation: "01j7h4f0y32njz7bthhqrtyq5s",
-        suspended: "1",
+        suspended: true,
       };
       console.log(options);
 
       const bc = new BroadcastChannel(options.presentation);
       const sm = new BuzzcastingStorageManager(options);
+      sm.startBroadcastListener();
       const sr = new BuzzcastingStorageReader(options);
 
       //bc.onmessage = (ev) => console.log(options.presentation, ev.data);
@@ -154,8 +123,8 @@
       };
 
       window.BuzzCasting = {
-        storage: sm,
-        reader: sr,
+        storageManager: sm,
+        storageReader: sr,
         getOptions: () => options,
       };
 
@@ -163,20 +132,31 @@
 
       const series = new Widget(document.getElementById("series"), [setData]);
 
-      const cloud = new Widget(document.getElementById("cloud"), [setData]);
-
-      const cards2 = new Widget(document.getElementById("cards-2"), [setData]);
-
-      const series2 = new Widget(document.getElementById("series-2"), [
-        setData,
-      ]);
+      const cards2 = new Widget(document.getElementById("messages"), [setData]);
 
       const slides = await sm.getSlides({
-        name: "Ambas",
+        name: "High",
       });
-      console.log("slides", slides);
-      const slide = await sm.getSlide({ id: "01j7h4f0y9eepxyp2ckxvhrw33" });
-      console.log("01j7h4f0y9eepxyp2ckxvhrw33", slide);
+      /*console.log("slides", slides);
+      const slide = await sm.getSlide({ id: "01jc6ajqr0cbpjrrvab714f3sq" });
+      console.log("01jc6ajqr0cbpjrrvab714f3sq", slide);
+      const subscribers = {
+        "859c518e_0bf6_489c_b07d_f28fe3245eec": {
+          type: "messages",
+          moderation: "",
+          dashboard: "lzzzniev_1670v2kaule1j",
+          widget: "859c518e_0bf6_489c_b07d_f28fe3245eec",
+          presentation: options.presentation,
+          before: 1754656173,
+          hash: "18e54848",
+        },
+      };
+
+      Object.values(subscribers).forEach((apiQuery) => {
+        console.log("call", apiQuery);
+        // Paralelize calls
+        sm.apiQuery(apiQuery);
+      });*/
 
       setTimeout(async () => {
         bc.postMessage({
@@ -185,7 +165,6 @@
         });
       }, 10);
 
-      //console.log(widget);
       setTimeout(async () => {
         await bc.postMessage({
           event: "update",
