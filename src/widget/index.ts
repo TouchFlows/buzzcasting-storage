@@ -112,16 +112,17 @@ export default class Widget {
 	 */
 	subscribe() {
 		log(3, [
-			"%csubscribe%c %cwidget",
+			`%csubscribe%c %cwidget%c %c${this.query.type}`,
 			CSS.SUBSCRIBE,
 			CSS.NONE,
 			CSS.WIDGET,
-			this.query.presentation,
+			CSS.NONE,
+			typeCss(this.query),
 			this.query.widget,
 		]);
 
 		log(4, [
-			"%debug%c %cwidget",
+			"%cdebug%c %cwidget",
 			CSS.NO_UPDATES,
 			CSS.NONE,
 			CSS.WIDGET,
@@ -275,7 +276,7 @@ export default class Widget {
 	 */
 	public showModal = (modal: IModal) => {
 		log(3, [
-			"%Cmodal%c %cwidget",
+			"%cmodal%c %cwidget",
 			CSS.OK,
 			CSS.NONE,
 			CSS.WIDGET,
