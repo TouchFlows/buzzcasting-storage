@@ -52,6 +52,8 @@ export declare class BuzzcastingStorageManager {
     deleteImage: (folderName: string, imageName: string) => Promise<IResponse | number>;
     getImages: (query: IQuery) => Promise<IResponse | undefined>;
     setImage: (query: IQuery) => Promise<IResponse | undefined>;
+    getHash: (resource: string, query: IQuery) => Promise<any>;
+    setHash: (resource: string, query: IQuery) => Promise<number>;
 }
 
 export declare class BuzzcastingStorageReader {
@@ -110,8 +112,6 @@ export declare class Widget {
      * This takes place when the container indicates it has finished loading (ready)
      */
     subscribe(): void;
-    setHash(hash: string): void;
-    getHash(): string | undefined;
     /**
      * Generic call to any query type
      *

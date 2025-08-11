@@ -10,7 +10,6 @@ import {
 	API,
 	CSS,
 	EVENTS,
-	hashSum,
 	log,
 	moderation,
 	widgetParams,
@@ -26,9 +25,10 @@ export default class DexieClient {
 		this.options = options;
 
 		this.db = new Dexie(options.app);
-		this.db.version(13).stores({
+		this.db.version(14).stores({
+			cards: "id,dashboard_id,hash",
 			channel: "id,slide_index",
-			cloud: "id,dashboard_id",
+			cloud: "id,dashboard_id,hash",
 			dashboard: "id,name,update",
 			display: "id,monitor_id,presentation_id,colstart,colend,rowstart,rowend",
 			images: "id,basename,extension,size,type,url",
@@ -38,7 +38,7 @@ export default class DexieClient {
 			player: "id,title,name,location",
 			preference: "id,value,update",
 			presentation: "id,name,update",
-			series: "id,dashboard_id",
+			series: "id,dashboard_id,hash",
 			slide: "id,name,presentation_id,order_index,json,html,update",
 			topics:
 				"[widget_id+message_id],message_id,widget_id,dashboard_id,title,engagement,impressions,reach,sentiment,visible,approved,utc,expires",
@@ -46,6 +46,84 @@ export default class DexieClient {
 		});
 		this.db.open();
 	}
+
+	getHash = async (resource: string, query: IQuery) => {
+		const data = await this.db
+			.table(resource)
+			.where({ id: query.widget })
+			.last()
+			.catch(() => {
+				log(2, [`%chash%c %capi%C %c${resource}`, CSS.API, CSS.NONE, CSS.APP]);
+			});
+		log(3, [
+			`%cget%c %chash%c %c${resource}`,
+			CSS.OK,
+			CSS.NONE,
+			CSS.API,
+			CSS.NONE,
+			CSS.APP,
+			query,
+		]);
+		return data?.hash ?? "none";
+	};
+
+	setHash = async (resource: string, query: IQuery): Promise<number> => {
+		return await this.db
+			.table(resource)
+			.where({
+				id: query.widget,
+			})
+			.modify({ hash: query.hash })
+			.then(() => {
+				log(3, [
+					`%cset%c %chash%c %c${resource}`,
+					CSS.OK,
+					CSS.NONE,
+					CSS.API,
+					CSS.NONE,
+					CSS.APP,
+					query,
+				]);
+				return 201;
+			})
+			.catch((error: Error) => {
+				log(2, [
+					`%cget%c %chash%c %c${resource}`,
+					CSS.OK,
+					CSS.NONE,
+					CSS.API,
+					CSS.NONE,
+					CSS.APP,
+					query,
+					error.message,
+				]);
+				return 400;
+			});
+	};
+
+	setCards = async (query: IQuery): Promise<number> => {
+		return await this.db
+			.table("cards")
+			.put({
+				id: query.widget,
+				dashboard_id: query.dashboard,
+				hash: query.hash,
+			})
+			.then(() => 201)
+			.catch((error: Error) => {
+				log(2, [
+					"%cset%c %cstorage%c %ccloud",
+					CSS.KO,
+					CSS.NONE,
+					CSS.STORAGE,
+					CSS.NONE,
+					CSS.CLOUD,
+					query,
+					error.message,
+				]);
+				return 400;
+			});
+	};
 
 	/**
 	 * Retrieve Cloud Data
@@ -81,7 +159,7 @@ export default class DexieClient {
 			return { data: null, message: "Cloud Data error", success: false, query };
 		}
 		const resp = {
-			data: data.data,
+			data: data?.data ?? null,
 			message:
 				data !== undefined
 					? "Cloud retrieved successfully"
@@ -392,11 +470,6 @@ export default class DexieClient {
 					success: true,
 				};
 
-				//@ts-ignore
-				data.query.hash = data.data.messages.length
-					? hashSum(data.data.messages[0].utc)
-					: "";
-
 				log(3, [
 					"%cget%c %cstorage%c %cmessages",
 					CSS.OK,
@@ -622,7 +695,7 @@ export default class DexieClient {
 			});
 
 		const resp = {
-			data: data.data,
+			data: data?.data ?? null,
 			message: data !== undefined ? "Get Series success" : "Get Series error",
 			success: data !== undefined,
 			query,

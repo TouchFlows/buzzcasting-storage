@@ -128,15 +128,21 @@
         getOptions: () => options,
       };
 
-      //const cards = new Widget(document.getElementById("cards"), [setData]);
+      const messages = new Widget(document.getElementById("messages"), [
+        setData,
+      ]);
+
+      await messages.getMessages().then((response) => setData(response));
 
       const series = new Widget(document.getElementById("series"), [setData]);
 
-      const cards2 = new Widget(document.getElementById("messages"), [setData]);
+      await series.getSeries().then((response) => setData(response));
 
-      const slides = await sm.getSlides({
-        name: "High",
-      });
+      // const cards2 = new Widget(document.getElementById("messages"), [setData]);
+
+      // const slides = await sm.getSlides({
+      //   name: "High",
+      // });
       /*console.log("slides", slides);
       const slide = await sm.getSlide({ id: "01jc6ajqr0cbpjrrvab714f3sq" });
       console.log("01jc6ajqr0cbpjrrvab714f3sq", slide);

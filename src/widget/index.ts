@@ -134,14 +134,6 @@ export default class Widget {
 		});
 	}
 
-	public setHash(hash: string) {
-		this.query.hash = hash;
-	}
-
-	public getHash() {
-		return this.query.hash;
-	}
-
 	/**
 	 * Generic call to any query type
 	 *
