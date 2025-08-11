@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.15.0
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.14.6...v3.15.0)
+
+### 🚀 Enhancements
+
+- Hash management for updates ([1cda42c](https://github.com/TouchFlows/buzzcasting-storage/commit/1cda42c))
+
+### 🏡 Chore
+
+- **release:** V3.14.6 ([cb6cc7a](https://github.com/TouchFlows/buzzcasting-storage/commit/cb6cc7a))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.14.6
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.14.5...v3.14.6)
