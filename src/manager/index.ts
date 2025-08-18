@@ -322,6 +322,7 @@ export class BuzzcastingStorageManager {
 					}
 			}
 		}
+		apiResp = null;
 		return status;
 	};
 
