@@ -131,7 +131,7 @@ function St(f, t) {
   }
   return t;
 }
-const xa = "3.14.6";
+const xa = "3.15.0";
 class ka {
   options;
   url;
@@ -5787,7 +5787,7 @@ class Ja {
         case S.SERIES:
           return this.sm !== null ? await this.sm?.getSeries(t.query).then((I) => (this.broadcastUpdate(201, I), { code: 201, hash: g })) : { code: 500, hash: g };
       }
-    return l;
+    return t = null, l;
   };
   startBroadcastListener = () => {
     const t = this.options.presentation;
