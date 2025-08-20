@@ -51,7 +51,7 @@ export class BuzzcastingStorageManager {
 		]);
 		this.options = options;
 		this.sm = null;
-		this.bc = null;
+		this.bc = new BroadcastChannel(this.options.presentation);
 		this.api = new ApiClient(options);
 		switch (options.storage) {
 			case STORAGE.DEXIE:
@@ -328,13 +328,20 @@ export class BuzzcastingStorageManager {
 
 	public startBroadcastListener = () => {
 		const broadcast = this.options.presentation;
-		this.bc = new BroadcastChannel(broadcast);
 
 		log(3, ["%cchannel%c %capi", CSS.BROADCAST, CSS.NONE, CSS.API, broadcast]);
-		this.bc.onmessage = (messageEvent: MessageEvent) => {
-			this.actions(messageEvent);
-		};
-		this.bc.postMessage({ event: EVENTS.STORAGE_INIT, data: {} });
+		if (this.bc) {
+			this.bc.onmessage = (messageEvent: MessageEvent) => {
+				this.actions(messageEvent);
+			};
+			this.bc.postMessage({ event: EVENTS.STORAGE_INIT, data: {} });
+		}
+	};
+
+	public broadcastMessage = (eventName: string, detail: any) => {
+		if (this.bc) {
+			this.bc.postMessage({ event: eventName, data: detail });
+		}
 	};
 
 	private broadcastUpdate = (status: number, resp: IResponse) => {
