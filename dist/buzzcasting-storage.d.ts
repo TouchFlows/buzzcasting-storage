@@ -17,6 +17,7 @@ export declare class BuzzcastingStorageManager {
     apiQuery: (apiQuery: any) => Promise<IprocessResponse>;
     private processResponse;
     startBroadcastListener: () => void;
+    broadcastMessage: (eventName: string, detail: any) => void;
     private broadcastUpdate;
     hide: (query: IQuery) => void;
     private actions;

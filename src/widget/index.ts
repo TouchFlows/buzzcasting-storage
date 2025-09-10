@@ -42,7 +42,7 @@ export default class Widget {
 		// @ts-expect-error query.widget is obligatory but not always
 		const query: IQuery = { ...element.dataset };
 		delete query.hmr;
-		const options = window.BuzzCasting.getOptions();
+		const options = window.__bc.opts;
 
 		query.presentation = options?.presentation ?? `${selector} not found`; // = element.closest<any>(selector)?.getAttribute('presentation')
 
