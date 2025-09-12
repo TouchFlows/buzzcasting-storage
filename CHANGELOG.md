@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.15.5
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.15.4...v3.15.5)
+
+### 🩹 Fixes
+
+- Dexie getPreferences wrong table ([5b730df](https://github.com/TouchFlows/buzzcasting-storage/commit/5b730df))
+
+### 🏡 Chore
+
+- **release:** V3.15.4 ([fa59eae](https://github.com/TouchFlows/buzzcasting-storage/commit/fa59eae))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.15.4
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.15.3...v3.15.4)
