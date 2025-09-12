@@ -242,7 +242,7 @@ export default class ApiClient {
 	}
 	/**
 	 * Store slide definition
-	 * ex: window.BuzzCasting.storage.storeSlide({id:'1',type:'slide', data: {json: {a:'b'},html:'<div/>',css:'abc'}, update: true}) // update: stockage sur le serveur
+	 * ex: window.__bc.storage.storeSlide({id:'1',type:'slide', data: {json: {a:'b'},html:'<div/>',css:'abc'}, update: true}) // update: stockage sur le serveur
 	 *
 	 * @param query
 	 * @returns
@@ -333,7 +333,7 @@ export default class ApiClient {
 	}
 	/**
 	 * Store slide definition
-	 * ex: window.BuzzCasting.storage.storeSlide({id:'1',type:'slide', data: {json: {a:'b'},html:'<div/>',css:'abc'}, update: true}) // update: stockage sur le serveur
+	 * ex: window.__bc.storage.storeSlide({id:'1',type:'slide', data: {json: {a:'b'},html:'<div/>',css:'abc'}, update: true}) // update: stockage sur le serveur
 	 *
 	 * @param query
 	 * @returns

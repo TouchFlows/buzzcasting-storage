@@ -1200,7 +1200,7 @@ export default class DexieClient {
 			return query?.id ? (query.id = preference.id) : false;
 		};
 
-		const preferencesCollection: any = this.db.table(API.SLIDE);
+		const preferencesCollection: any = this.db.table(API.PREFERENCE);
 
 		const data: any = await preferencesCollection.toArray().then((res: any) => {
 			return query?.id ? res.filter(idFilter) : res;

@@ -12,7 +12,7 @@ export default class WindowClient {
 
 	constructor(options: IStorageOptions) {
 		this.options = options;
-		window.BuzzCasting.WidgetData = new Set();
+		window.__bc.WidgetData = new Set();
 	}
 
 	getHash = async (resource: string, query: IQuery) => {
@@ -33,7 +33,7 @@ export default class WindowClient {
 	getCloud = async (query: IQuery): Promise<IResponse> => {
 		const key = getKey(query);
 		try {
-			return window.BuzzCasting.WidgetData[key];
+			return window.__bc.WidgetData[key];
 		} catch (error) {
 			console.warn(
 				"%capi",
@@ -50,7 +50,7 @@ export default class WindowClient {
 	getSeries = async (query: IQuery): Promise<IResponse> => {
 		const key = getKey(query);
 		try {
-			return window.BuzzCasting.WidgetData[key];
+			return window.__bc.WidgetData[key];
 		} catch (error) {
 			console.warn(
 				"%capi",
@@ -67,7 +67,7 @@ export default class WindowClient {
 	getMessages = async (query: IQuery): Promise<IResponse> => {
 		const key = getKey(query);
 		try {
-			return window.BuzzCasting.WidgetData[key];
+			return window.__bc.WidgetData[key];
 		} catch (error) {
 			console.warn(
 				"%capi",
@@ -90,7 +90,7 @@ export default class WindowClient {
 	setCloud = async (query: IQuery, data: any) => {
 		const key = getKey(query);
 		try {
-			window.BuzzCasting.WidgetData[key] = data;
+			window.__bc.WidgetData[key] = data;
 			return 201;
 		} catch (error) {
 			console.error("%cstorage", CSS.STORAGE, "set", query, error);
@@ -107,7 +107,7 @@ export default class WindowClient {
 	setSeries = async (query: IQuery, data: any): Promise<number> => {
 		const key = getKey(query);
 		try {
-			window.BuzzCasting.WidgetData[key] = data;
+			window.__bc.WidgetData[key] = data;
 			return 201;
 		} catch (error) {
 			console.error("%cstorage", CSS.STORAGE, "set", query, error);
@@ -124,7 +124,7 @@ export default class WindowClient {
 	setMessages = async (query: IQuery, data: any) => {
 		const key = getKey(query);
 		try {
-			window.BuzzCasting.WidgetData[key] = data;
+			window.__bc.WidgetData[key] = data;
 			return 201;
 		} catch (error) {
 			console.error("%cstorage", CSS.STORAGE, "set", query, error);
@@ -145,7 +145,7 @@ export default class WindowClient {
 
 	getDashboard = async (query: IQuery): Promise<IResponse> => {
 		try {
-			return window.BuzzCasting.DashboardData[query.id];
+			return window.__bc.DashboardData[query.id];
 		} catch (error: any) {
 			console.warn("%capi", CSS.API, API.DASHBOARD, query.id, error);
 			return {
@@ -173,7 +173,7 @@ export default class WindowClient {
 	setDashboard = async (query: IQuery) => {
 		const key = `widget.${query.widget}`;
 		try {
-			window.BuzzCasting.DashboardData[key] = query;
+			window.__bc.DashboardData[key] = query;
 			return {
 				data: null,
 				message: `Dashboard ${query.data.id} saved to storage`,
@@ -191,7 +191,7 @@ export default class WindowClient {
 
 	getWidget = async (query: IQuery): Promise<IResponse> => {
 		try {
-			return window.BuzzCasting.WidgetData[query.id];
+			return window.__bc.WidgetData[query.id];
 		} catch (error: any) {
 			console.warn("%capi", CSS.API, API.WIDGET, query.id, error);
 			return {
@@ -219,7 +219,7 @@ export default class WindowClient {
 	setWidget = async (query: IQuery) => {
 		const key = `widget.${query.widget}`;
 		try {
-			window.BuzzCasting.WidgetData[key] = query;
+			window.__bc.WidgetData[key] = query;
 			return {
 				data: null,
 				message: `Widget ${query.data.id} saved to storage`,
@@ -273,7 +273,7 @@ export default class WindowClient {
 
 	getSlide = async (query: IQuery): Promise<IResponse> => {
 		try {
-			return window.BuzzCasting.SlideData[query.id];
+			return window.__bc.SlideData[query.id];
 		} catch (error: any) {
 			console.warn("%capi", CSS.API, API.SLIDE, query.id, error);
 			return {
@@ -286,7 +286,7 @@ export default class WindowClient {
 
 	getSlides = async (query: IQuery): Promise<IResponse> => {
 		try {
-			return window.BuzzCasting.SlideData.filter(
+			return window.__bc.SlideData.filter(
 				(slide: any) => slide.presentation_id === query.presentation
 			);
 		} catch (error: any) {
@@ -307,7 +307,7 @@ export default class WindowClient {
 
 	setSlide = async (query: IQuery): Promise<IResponse> => {
 		try {
-			window.BuzzCasting.SlideData[query.id] = {
+			window.__bc.SlideData[query.id] = {
 				id: query.slide,
 				title: query.data.title || "Not set",
 				json: query.data.json || {},
@@ -331,7 +331,7 @@ export default class WindowClient {
 	getPresentation = async (query: IQuery): Promise<IResponse> => {
 		try {
 			const id = query.presentation || "none";
-			return window.BuzzCasting.PresentationData[id];
+			return window.__bc.PresentationData[id];
 		} catch (error: any) {
 			console.warn(
 				"%capi",
@@ -350,7 +350,7 @@ export default class WindowClient {
 
 	getPresentations = async (): Promise<IResponse> => {
 		try {
-			return window.BuzzCasting.PresentationData;
+			return window.__bc.PresentationData;
 		} catch (error: any) {
 			console.warn("%capi", CSS.API, API.PRESENTATION, error);
 			return {
@@ -363,7 +363,7 @@ export default class WindowClient {
 
 	setPresentation = async (query: IQuery): Promise<IResponse> => {
 		try {
-			window.BuzzCasting.PresentationData[query.id] = query.data;
+			window.__bc.PresentationData[query.id] = query.data;
 			return {
 				data: null,
 				message: `Presentation ${query.data.id} saved to storage`,
@@ -381,7 +381,7 @@ export default class WindowClient {
 
 	getPreference = async (preference: IPreference): Promise<IResponse> => {
 		try {
-			return window.BuzzCasting.Preferences[preference.id];
+			return window.__bc.Preferences[preference.id];
 		} catch (error: any) {
 			console.warn("%capi", CSS.API, API.PREFERENCE, preference.id, error);
 			return {
@@ -394,7 +394,7 @@ export default class WindowClient {
 
 	getPreferences = async (): Promise<IResponse> => {
 		try {
-			return window.BuzzCasting.Preferences;
+			return window.__bc.Preferences;
 		} catch (error: any) {
 			console.warn("%capi", CSS.API, API.PREFERENCE, error);
 			return {
@@ -407,7 +407,7 @@ export default class WindowClient {
 
 	setPreference = async (preference: IPreference): Promise<IResponse> => {
 		try {
-			window.BuzzCasting.Preferences[preference.id] = preference.value;
+			window.__bc.Preferences[preference.id] = preference.value;
 			return {
 				data: null,
 				message: `Preference ${preference.id} saved to storage`,
