@@ -91,8 +91,17 @@ export class BuzzcastingStorageManager {
 		const subscriberQueries: any[] = [];
 
 		Object.values(this.subscribers).forEach((apiQuery: any) => {
-			// Paralelize calls
-			subscriberQueries.push(this.api.get(apiQuery));
+			/**
+			 * Only query when we have the minimum parameters
+			 */
+			if (
+				apiQuery.dashboard?.length &&
+				apiQuery.widget?.length &&
+				apiQuery.type?.length
+			) {
+				// Paralelize calls
+				subscriberQueries.push(this.api.get(apiQuery));
+			}
 		});
 
 		subscriberQueries.forEach(async (apiCall) => {
@@ -394,6 +403,15 @@ export class BuzzcastingStorageManager {
 	private actions = async (messageEvent: MessageEvent) => {
 		switch (messageEvent.data.event) {
 			case EVENTS.SUBSCRIBE:
+				log(3, [
+					`%csubscribe%c %cwidget%c %c${messageEvent.data.data.type}`,
+					CSS.BROADCAST,
+					CSS.NONE,
+					CSS.WIDGET,
+					CSS.NONE,
+					typeCss(messageEvent.data.data),
+					messageEvent.data.data,
+				]);
 				this.addSubscriber(messageEvent.data.data);
 				break;
 			case EVENTS.UPDATE:

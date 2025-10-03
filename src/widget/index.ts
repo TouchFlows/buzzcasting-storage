@@ -64,6 +64,8 @@ export default class Widget {
 	/**
 	 * Data received from BroadcastChannel
 	 * data that is broadcast needs to be a IMessage[] |ICloud or ISeries structure
+	 * WIDGET_UPDATE is used to trigger fetching on the broadcast channel,
+	 * but also to trigger data retrieval on the widget
 	 */
 	public broadcastListener() {
 		const query: IQuery = this.query;
@@ -128,10 +130,19 @@ export default class Widget {
 			CSS.WIDGET,
 			this.query,
 		]);
-		this.broadcastChannel.postMessage({
-			event: EVENTS.SUBSCRIBE,
-			data: this.query,
-		});
+		/**
+		 * Subscribe only when below three parameters are set
+		 */
+		if (
+			this.query.dashboard?.length &&
+			this.query.widget?.length &&
+			this.query.type?.length
+		) {
+			this.broadcastChannel.postMessage({
+				event: EVENTS.SUBSCRIBE,
+				data: this.query,
+			});
+		}
 	}
 
 	/**

@@ -1023,7 +1023,7 @@ export default class DexieClient {
 				id: query.data.id,
 				presentation_id: query.data.presentation_id,
 				order_index: query.data.order_index,
-				name: query.data.name || "Not set",
+				name: query.data.name.replace("-copy", "") || "Not set",
 				json: query.data.json || {},
 				html: query.data.html || "",
 				update: query.data.update,
