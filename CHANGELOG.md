@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.15.6
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.15.5...v3.15.6)
+
+### 🩹 Fixes
+
+- Do not subscribe or make call if no dashboard widget and type ([55a1132](https://github.com/TouchFlows/buzzcasting-storage/commit/55a1132))
+
+### 🏡 Chore
+
+- **release:** V3.15.5 ([2efc34d](https://github.com/TouchFlows/buzzcasting-storage/commit/2efc34d))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.15.5
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.15.4...v3.15.5)
