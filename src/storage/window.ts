@@ -30,6 +30,10 @@ export default class WindowClient {
 		return 404;
 	};
 
+	clearCards = async (): Promise<number | undefined> => {
+		return 404;
+	};
+
 	getCloud = async (query: IQuery): Promise<IResponse> => {
 		const key = getKey(query);
 		try {

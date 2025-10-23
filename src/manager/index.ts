@@ -491,6 +491,10 @@ export class BuzzcastingStorageManager {
 		return await this.api.hideMessage(query);
 	};
 
+	public clearCards = async () => {
+		await this.sm?.clearCards();
+	};
+
 	public hideLabels: (query: IQuery) => Promise<IResponse> = async (
 		query: IQuery
 	): Promise<IResponse> => {
