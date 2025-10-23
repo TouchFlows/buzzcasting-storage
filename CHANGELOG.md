@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.16.1
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.16.0...v3.16.1)
+
+### 🩹 Fixes
+
+- Start stream on EVENTS.STREAM ([9d9ad1e](https://github.com/TouchFlows/buzzcasting-storage/commit/9d9ad1e))
+
+### 🏡 Chore
+
+- **release:** V3.16.0 ([9e07ee7](https://github.com/TouchFlows/buzzcasting-storage/commit/9e07ee7))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.16.0
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.15.14...v3.16.0)
