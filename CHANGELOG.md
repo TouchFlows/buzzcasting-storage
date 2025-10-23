@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.16.0
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.15.14...v3.16.0)
+
+### 🚀 Enhancements
+
+- Send ndjson ([de49bd1](https://github.com/TouchFlows/buzzcasting-storage/commit/de49bd1))
+
+### 🏡 Chore
+
+- **release:** V3.15.14 ([ccbeb59](https://github.com/TouchFlows/buzzcasting-storage/commit/ccbeb59))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.15.14
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.15.13...v3.15.14)
