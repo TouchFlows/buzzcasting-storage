@@ -76,7 +76,7 @@ at(
   "checked,compact,declare,defer,disabled,ismap,multiple,nohref,noresize,noshade,nowrap,readonly,selected"
 );
 at("script,style");
-const Ra = new Blob(
+new Blob(
   [
     `const LOG_LEVELS = new Set([1,2,3,4])
 		self.onmessage = function(e) {
@@ -119,8 +119,6 @@ const Ra = new Blob(
   ],
   { type: "text/javascript" }
 );
-window.__bc = window.__bc || {};
-window.__bc.logger = window.__bc?.logger || new Worker(window.URL.createObjectURL(Ra), { name: "logger" });
 const j = async (f = 0, t) => {
   window.__bc.logger.postMessage({ action: "log", level: f, message: t });
 }, wt = (f) => {
@@ -139,7 +137,7 @@ function Y(f) {
   let t = `${f.type}.${f.topics}`;
   return f.order && (t += `.${f.order}`), f.period && (t += `.${f.period}`), t;
 }
-function xa(f) {
+function Ra(f) {
   if (f.widget === void 0) {
     const t = f.topics?.split("-");
     t && t.length > 1 ? (f.dashboard = t ? t[0] : "", f.widget = t ? t[1] : "") : (f.widget = f.topics, f.dashboard = f.slide);
@@ -163,8 +161,8 @@ function Ot(f, t) {
   }
   return t;
 }
-const ka = "3.15.7";
-async function* Ca(f) {
+const xa = "3.15.8";
+async function* ka(f) {
   const t = f.pipeThrough(new TextDecoderStream("utf-8")).getReader();
   let o = "";
   for (; ; ) {
@@ -178,7 +176,7 @@ async function* Ca(f) {
       }
   }
 }
-class $a {
+class Ca {
   options;
   url;
   constructor(t) {
@@ -257,7 +255,7 @@ class $a {
         method: "post"
       }
     );
-    for await (const y of Ca(g.body))
+    for await (const y of ka(g.body))
       console.log("Received", y);
   }
   async hideMessage(t) {
@@ -521,16 +519,16 @@ class $a {
     }).then((y) => y.json()).catch((y) => ({ succes: !1, message: y, data: [] }));
   }
 }
-var ja = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : typeof global < "u" ? global : typeof self < "u" ? self : {};
-function Ga(f) {
+var $a = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : typeof global < "u" ? global : typeof self < "u" ? self : {};
+function ja(f) {
   return f && f.__esModule && Object.prototype.hasOwnProperty.call(f, "default") ? f.default : f;
 }
-var tr = { exports: {} }, Ma = tr.exports, Cn;
-function Ka() {
+var tr = { exports: {} }, Ga = tr.exports, Cn;
+function Ma() {
   return Cn || (Cn = 1, function(f, t) {
     (function(o, u) {
       f.exports = u();
-    })(Ma, function() {
+    })(Ga, function() {
       var o = function(e, r) {
         return (o = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(n, a) {
           n.__proto__ = a;
@@ -547,7 +545,7 @@ function Ka() {
         for (var a, s = 0, c = r.length; s < c; s++) !a && s in r || ((a = a || Array.prototype.slice.call(r, 0, s))[s] = r[s]);
         return e.concat(a || Array.prototype.slice.call(r));
       }
-      var y = typeof globalThis < "u" ? globalThis : typeof self < "u" ? self : typeof window < "u" ? window : ja, I = Object.keys, M = Array.isArray;
+      var y = typeof globalThis < "u" ? globalThis : typeof self < "u" ? self : typeof window < "u" ? window : $a, I = Object.keys, M = Array.isArray;
       function te(e, r) {
         return typeof r != "object" || I(r).forEach(function(n) {
           e[n] = r[n];
@@ -3536,21 +3534,21 @@ function Ka() {
     });
   }(tr)), tr.exports;
 }
-var La = Ka();
-const Fr = /* @__PURE__ */ Ga(La), $n = Symbol.for("Dexie"), St = globalThis[$n] || (globalThis[$n] = Fr);
+var Ka = Ma();
+const Fr = /* @__PURE__ */ ja(Ka), $n = Symbol.for("Dexie"), St = globalThis[$n] || (globalThis[$n] = Fr);
 if (Fr.semVer !== St.semVer)
   throw new Error(`Two different versions of Dexie loaded in the same app: ${Fr.semVer} and ${St.semVer}`);
 const {
-  liveQuery: Wa,
-  mergeRanges: Fa,
-  rangesOverlap: Ha,
-  RangeSet: Va,
-  cmp: za,
-  Entity: Ya,
-  PropModification: Xa,
-  replacePrefix: Qa,
-  add: Ja,
-  remove: Za
+  liveQuery: Ua,
+  mergeRanges: Wa,
+  rangesOverlap: Fa,
+  RangeSet: Ha,
+  cmp: Va,
+  Entity: za,
+  PropModification: Ya,
+  replacePrefix: Xa,
+  add: Qa,
+  remove: Ja
 } = St;
 class Gn {
   db;
@@ -4095,7 +4093,7 @@ class Gn {
    * @param query IQuery
    * @returns null
    */
-  subscribe = (t) => (t = xa(t), this.subscribers.filter(
+  subscribe = (t) => (t = Ra(t), this.subscribers.filter(
     (u) => u.widget === t.widget
   ).length > 0 || (t.type === S.MESSAGES && (t = Ot(this.options, t)), console.info(
     "%cstorage%c %csubscribe",
@@ -4363,7 +4361,7 @@ function Hr(f) {
     f.oncomplete = f.onsuccess = () => t(f.result), f.onabort = f.onerror = () => o(f.error);
   });
 }
-function Ba(f, t) {
+function La(f, t) {
   let o;
   const u = () => {
     if (o)
@@ -4378,7 +4376,7 @@ function Ba(f, t) {
 }
 let Wr;
 function Mn() {
-  return Wr || (Wr = Ba("keyval-store", "keyval")), Wr;
+  return Wr || (Wr = La("keyval-store", "keyval")), Wr;
 }
 function _e(f, t = Mn()) {
   return t("readonly", (o) => Hr(o.get(f)));
@@ -5700,7 +5698,7 @@ class Un {
     success: !1
   });
 }
-class qa {
+class Za {
   sm;
   api;
   bc;
@@ -5713,8 +5711,8 @@ class qa {
       i.PRESENTATION,
       t.presentation,
       Q.VERSION,
-      ka
-    ]), this.options = t, this.sm = null, this.bc = new BroadcastChannel(this.options.presentation), this.api = new $a(t), t.storage) {
+      xa
+    ]), this.options = t, this.sm = null, this.bc = new BroadcastChannel(this.options.presentation), this.api = new Ca(t), t.storage) {
       case pe.DEXIE:
         this.sm = new Gn(t);
         break;
@@ -6005,7 +6003,7 @@ class qa {
   getHash = async (t, o) => await this.sm?.getHash(t, o);
   setHash = async (t, o) => await this.sm?.setHash(t, o) ?? 400;
 }
-class Ua {
+class Ba {
   sm;
   constructor(t) {
     switch (this.sm = null, t.storage) {
@@ -6087,7 +6085,7 @@ class Ua {
     success: !1
   }) : await this.sm?.getSeries(t);
 }
-class es {
+class qa {
   storageReader;
   broadcastChannel;
   element;
@@ -6105,7 +6103,7 @@ class es {
     const g = { ...t.dataset };
     delete g.hmr;
     const y = window.__bc.opts;
-    g.presentation = y?.presentation ?? `${u} not found`, this.query = g, Na(t), this.storageReader = new Ua(y), this.broadcastChannel = new BroadcastChannel(g.presentation), this.broadcastListener();
+    g.presentation = y?.presentation ?? `${u} not found`, this.query = g, Na(t), this.storageReader = new Ba(y), this.broadcastChannel = new BroadcastChannel(g.presentation), this.broadcastListener();
   }
   addCallbackListener(t) {
     this.callbacks.push(t);
@@ -6308,7 +6306,7 @@ class es {
   }
 }
 export {
-  qa as BuzzcastingStorageManager,
-  Ua as BuzzcastingStorageReader,
-  es as Widget
+  Za as BuzzcastingStorageManager,
+  Ba as BuzzcastingStorageReader,
+  qa as Widget
 };
