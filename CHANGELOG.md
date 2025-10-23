@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.15.11
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.15.10...v3.15.11)
+
+### 🩹 Fixes
+
+- Log channel ([927d80b](https://github.com/TouchFlows/buzzcasting-storage/commit/927d80b))
+
+### 🏡 Chore
+
+- **release:** V3.15.10 ([bc50504](https://github.com/TouchFlows/buzzcasting-storage/commit/bc50504))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.15.10
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.15.9...v3.15.10)
