@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v3.15.13
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.15.12...v3.15.13)
+
+### 🏡 Chore
+
+- **release:** V3.15.12 ([0bd591e](https://github.com/TouchFlows/buzzcasting-storage/commit/0bd591e))
+- Dexie,  clear card hashes added ([1af443b](https://github.com/TouchFlows/buzzcasting-storage/commit/1af443b))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.15.12
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.15.11...v3.15.12)
