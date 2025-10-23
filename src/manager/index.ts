@@ -440,6 +440,18 @@ export class BuzzcastingStorageManager {
 				]);
 				await this.update(messageEvent.data.data);
 				break;
+			case "stream": //EVENTS.STREAM
+				log(3, [
+					"%cupdate%c %capi%c %cstorage",
+					CSS.BROADCAST,
+					CSS.NONE,
+					CSS.API,
+					CSS.NONE,
+					CSS.STORAGE,
+					messageEvent.data,
+				]);
+				await this.stream();
+				break;
 			default:
 		}
 	};
