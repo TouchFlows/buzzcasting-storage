@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.15.14
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.15.13...v3.15.14)
+
+### 🩹 Fixes
+
+- DlearCards to all storages ([4b47d88](https://github.com/TouchFlows/buzzcasting-storage/commit/4b47d88))
+
+### 🏡 Chore
+
+- **release:** V3.15.13 ([83d48a7](https://github.com/TouchFlows/buzzcasting-storage/commit/83d48a7))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.15.13
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.15.12...v3.15.13)
