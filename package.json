@@ -1,7 +1,7 @@
 {
 	"name": "buzzcasting-storage",
 	"type": "module",
-	"version": "3.15.11",
+	"version": "3.15.12",
 	"private": false,
 	"author": {
 		"name": "Mark Tamis, TouchFlows SAS",
@@ -42,8 +42,8 @@
 		"@types/node": "^22.18.12",
 		"@typescript-eslint/eslint-plugin": "^8.46.2",
 		"@typescript-eslint/parser": "^8.46.2",
-		"@vitest/coverage-v8": "^4.0.1",
-		"buzzcasting-utils": "^1.9.6",
+		"@vitest/coverage-v8": "^4.0.2",
+		"buzzcasting-utils": "^1.10.0",
 		"camelcase": "^8.0.0",
 		"changelogen": "^0.6.2",
 		"eslint": "^9.38.0",
@@ -51,7 +51,7 @@
 		"typescript": "^5.9.3",
 		"vite": "^7.1.12",
 		"vite-plugin-dts": "^4.5.4",
-		"vitest": "^4.0.1"
+		"vitest": "^4.0.2"
 	},
 	"lint-staged": {
 		"*.ts": "npm run lint"
