@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v3.15.7
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.15.6...v3.15.7)
+
+### 🏡 Chore
+
+- **release:** V3.15.6 ([f7bdc0c](https://github.com/TouchFlows/buzzcasting-storage/commit/f7bdc0c))
+- Deps utils, api prep for ndjson ([385dedf](https://github.com/TouchFlows/buzzcasting-storage/commit/385dedf))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.15.6
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.15.5...v3.15.6)
