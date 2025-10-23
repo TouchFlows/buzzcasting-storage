@@ -116,7 +116,7 @@ export class BuzzcastingStorageManager {
 		Object.values(this.subscribers).forEach((apiQuery: any) => {
 			subscriberQueries.push(apiQuery);
 		});
-		this.api.stream(subscriberQueries);
+		this.api.ndjson(subscriberQueries);
 	};
 
 	public apiQuery = async (apiQuery: any): Promise<IprocessResponse> => {

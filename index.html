@@ -176,6 +176,10 @@
           data: { presentation: options.presentation },
         });
       }, 50);
+
+      setTimeout(async () => {
+        await sm.stream();
+      }, 100);
     </script>
   </body>
 </html>

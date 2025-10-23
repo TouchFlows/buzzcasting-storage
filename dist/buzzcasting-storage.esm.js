@@ -118,7 +118,7 @@ function _t(f, t) {
   }
   return t;
 }
-const $a = "3.15.12";
+const $a = "3.15.14";
 async function* ja(f) {
   const t = f.pipeThrough(new TextDecoderStream("utf-8")).getReader();
   let o = "";
@@ -203,7 +203,7 @@ class Ga {
       return M;
     }).then((M) => M.json()).then((M) => (M.query = t, M)).catch((M) => ({ success: !1, message: `${M}`, data: null, query: t }));
   }
-  async stream(t) {
+  async ndjson(t) {
     const { version: o } = this.options, l = this.headers(), g = await fetch(
       `${[this.url, "api", o, "stream"].join("/")}`,
       {
@@ -4403,6 +4403,7 @@ class Bn {
   getHash = async (t, o) => "none";
   setHash = async (t, o) => 404;
   setCards = async (t) => 404;
+  clearCards = async () => 404;
   getCloud = async (t) => {
     const o = Y(t);
     return await _e(o).then((l) => l).catch(() => (console.warn("%capi", i.API, _.CLOUD, t.slide, t.widget), { data: null, message: "Cloud Data error", success: !1 }));
@@ -4707,6 +4708,7 @@ class Un {
   getHash = async (t, o) => "none";
   setHash = async (t, o) => 404;
   setCards = async (t) => 404;
+  clearCards = async () => 404;
   getCloud = async (t) => {
     const o = Y(t);
     try {
@@ -5045,6 +5047,7 @@ class Wn {
   getHash = async (t, o) => "none";
   setHash = async (t, o) => 404;
   setCards = async (t) => 404;
+  clearCards = async () => 404;
   getCloud = async (t) => {
     const o = Y(t);
     try {
@@ -5383,6 +5386,7 @@ class Fn {
   getHash = async (t, o) => "none";
   setHash = async (t, o) => 404;
   setCards = async (t) => 404;
+  clearCards = async () => 404;
   getCloud = async (t) => {
     const o = Y(t);
     try {
@@ -5762,7 +5766,7 @@ class rs {
     const t = [];
     Object.values(this.subscribers).forEach((o) => {
       t.push(o);
-    }), this.api.stream(t);
+    }), this.api.ndjson(t);
   };
   apiQuery = async (t) => await this.api.get(t).then(async (o) => await this.processResponse(o)).catch((o) => ({ code: 204, hash: "" }));
   processResponse = async (t) => {
@@ -5976,6 +5980,9 @@ class rs {
       i.MESSAGES,
       `${o} messages hidden`
     ]), await this.api.hideMessage(t);
+  };
+  clearCards = async () => {
+    await this.sm?.clearCards();
   };
   hideLabels = async (t) => await this.api.hideLabels(t);
   getSubscribers = async () => await new Promise((t) => t(this.subscribers));

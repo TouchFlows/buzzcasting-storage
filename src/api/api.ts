@@ -113,7 +113,7 @@ export default class ApiClient {
 			});
 	}
 
-	public async stream(queries: IQuery[]): Promise<any> {
+	public async ndjson(queries: IQuery[]): Promise<any> {
 		const { version }: IStorageOptions = this.options;
 		const headers: { headers: Headers } = this.headers();
 		const response = await fetch(

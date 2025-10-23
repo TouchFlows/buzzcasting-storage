@@ -24,6 +24,7 @@ export declare class BuzzcastingStorageManager {
     private actions;
     cleanMessages: () => Promise<void>;
     hideMessage: (query: IQuery) => Promise<IResponse>;
+    clearCards: () => Promise<void>;
     hideLabels: (query: IQuery) => Promise<IResponse>;
     getSubscribers: () => Promise<any[]>;
     deleteSubscribers: () => Promise<any[]>;
