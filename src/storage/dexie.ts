@@ -101,6 +101,25 @@ export default class DexieClient {
 			});
 	};
 
+	clearCards = async (): Promise<number> => {
+		return await this.db
+			.table("cards")
+			.clear()
+			.then(() => 201)
+			.catch((error: Error) => {
+				log(2, [
+					"%cset%c %cstorage%c %ccards",
+					CSS.KO,
+					CSS.NONE,
+					CSS.STORAGE,
+					CSS.NONE,
+					CSS.MESSAGES,
+					"clear card hashes",
+				]);
+				return 400;
+			});
+	};
+
 	setCards = async (query: IQuery): Promise<number> => {
 		return await this.db
 			.table("cards")

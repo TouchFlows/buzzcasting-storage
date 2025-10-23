@@ -76,52 +76,8 @@ at(
   "checked,compact,declare,defer,disabled,ismap,multiple,nohref,noresize,noshade,nowrap,readonly,selected"
 );
 at("script,style");
-const Ra = new Blob(
-  [
-    `const LOG_LEVELS = new Set([1,2,3,4])
-		self.onmessage = function(e) {
-  switch(e.data.action){
-		case 'add':
-			LOG_LEVELS.add(e.data.level);
-			break;
-		case 'clear':
-			LOG_LEVELS.clear();
-			break;
-		case 'delete':
-			LOG_LEVELS.delete(e.data.level);
-			break;
-		case 'list':
-			e.data.message.push([...LOG_LEVELS])
-			console.log(...e.data.message);
-		break;
-		case 'log':
-			if(LOG_LEVELS.has(e.data.level)) {
-				switch (true) {
-					case e.data.level > 3:
-						console.debug(...e.data.message);
-						break;
-					case e.data.level > 2:
-						console.info(...e.data.message);
-						break;
-					case e.data.level > 1:
-						console.warn(...e.data.message);
-						break;
-					case e.data.level > 0:
-						console.error(...e.data.message);
-						break;
-					default:
-						console.info(...e.data.message);
-				}
-			}
-			break;
-	}
-}`
-  ],
-  { type: "text/javascript" }
-), xa = new Worker(window.URL.createObjectURL(Ra), {
-  name: "logger"
-}), j = async (f = 0, t) => {
-  xa.postMessage({ action: "log", level: f, message: t });
+const Ra = new BroadcastChannel("logging"), j = async (f = 0, t) => {
+  Ra.postMessage({ action: "log", level: f, message: t });
 }, wt = (f) => {
   switch (f?.type) {
     case S.MESSAGES:
@@ -138,7 +94,7 @@ function Y(f) {
   let t = `${f.type}.${f.topics}`;
   return f.order && (t += `.${f.order}`), f.period && (t += `.${f.period}`), t;
 }
-function ka(f) {
+function xa(f) {
   if (f.widget === void 0) {
     const t = f.topics?.split("-");
     t && t.length > 1 ? (f.dashboard = t ? t[0] : "", f.widget = t ? t[1] : "") : (f.widget = f.topics, f.dashboard = f.slide);
@@ -162,8 +118,8 @@ function Ot(f, t) {
   }
   return t;
 }
-const Ca = "3.15.9";
-async function* $a(f) {
+const ka = "3.15.11";
+async function* Ca(f) {
   const t = f.pipeThrough(new TextDecoderStream("utf-8")).getReader();
   let o = "";
   for (; ; ) {
@@ -177,7 +133,7 @@ async function* $a(f) {
       }
   }
 }
-class ja {
+class $a {
   options;
   url;
   constructor(t) {
@@ -256,7 +212,7 @@ class ja {
         method: "post"
       }
     );
-    for await (const y of $a(g.body))
+    for await (const y of Ca(g.body))
       console.log("Received", y);
   }
   async hideMessage(t) {
@@ -520,16 +476,16 @@ class ja {
     }).then((y) => y.json()).catch((y) => ({ succes: !1, message: y, data: [] }));
   }
 }
-var Ga = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : typeof global < "u" ? global : typeof self < "u" ? self : {};
-function Ma(f) {
+var ja = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : typeof global < "u" ? global : typeof self < "u" ? self : {};
+function Ga(f) {
   return f && f.__esModule && Object.prototype.hasOwnProperty.call(f, "default") ? f.default : f;
 }
-var tr = { exports: {} }, Ka = tr.exports, Cn;
-function La() {
+var tr = { exports: {} }, Ma = tr.exports, Cn;
+function Ka() {
   return Cn || (Cn = 1, function(f, t) {
     (function(o, u) {
       f.exports = u();
-    })(Ka, function() {
+    })(Ma, function() {
       var o = function(e, r) {
         return (o = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(n, a) {
           n.__proto__ = a;
@@ -546,7 +502,7 @@ function La() {
         for (var a, s = 0, c = r.length; s < c; s++) !a && s in r || ((a = a || Array.prototype.slice.call(r, 0, s))[s] = r[s]);
         return e.concat(a || Array.prototype.slice.call(r));
       }
-      var y = typeof globalThis < "u" ? globalThis : typeof self < "u" ? self : typeof window < "u" ? window : Ga, I = Object.keys, M = Array.isArray;
+      var y = typeof globalThis < "u" ? globalThis : typeof self < "u" ? self : typeof window < "u" ? window : ja, I = Object.keys, M = Array.isArray;
       function te(e, r) {
         return typeof r != "object" || I(r).forEach(function(n) {
           e[n] = r[n];
@@ -3535,21 +3491,21 @@ function La() {
     });
   }(tr)), tr.exports;
 }
-var Ba = La();
-const Fr = /* @__PURE__ */ Ma(Ba), $n = Symbol.for("Dexie"), St = globalThis[$n] || (globalThis[$n] = Fr);
+var La = Ka();
+const Fr = /* @__PURE__ */ Ga(La), $n = Symbol.for("Dexie"), St = globalThis[$n] || (globalThis[$n] = Fr);
 if (Fr.semVer !== St.semVer)
   throw new Error(`Two different versions of Dexie loaded in the same app: ${Fr.semVer} and ${St.semVer}`);
 const {
-  liveQuery: Fa,
-  mergeRanges: Ha,
-  rangesOverlap: Va,
-  RangeSet: za,
-  cmp: Ya,
-  Entity: Xa,
-  PropModification: Qa,
-  replacePrefix: Ja,
-  add: Za,
-  remove: qa
+  liveQuery: Wa,
+  mergeRanges: Fa,
+  rangesOverlap: Ha,
+  RangeSet: Va,
+  cmp: za,
+  Entity: Ya,
+  PropModification: Xa,
+  replacePrefix: Qa,
+  add: Ja,
+  remove: Za
 } = St;
 class Gn {
   db;
@@ -4094,7 +4050,7 @@ class Gn {
    * @param query IQuery
    * @returns null
    */
-  subscribe = (t) => (t = ka(t), this.subscribers.filter(
+  subscribe = (t) => (t = xa(t), this.subscribers.filter(
     (u) => u.widget === t.widget
   ).length > 0 || (t.type === S.MESSAGES && (t = Ot(this.options, t)), console.info(
     "%cstorage%c %csubscribe",
@@ -4362,7 +4318,7 @@ function Hr(f) {
     f.oncomplete = f.onsuccess = () => t(f.result), f.onabort = f.onerror = () => o(f.error);
   });
 }
-function Ua(f, t) {
+function Ba(f, t) {
   let o;
   const u = () => {
     if (o)
@@ -4377,7 +4333,7 @@ function Ua(f, t) {
 }
 let Wr;
 function Mn() {
-  return Wr || (Wr = Ua("keyval-store", "keyval")), Wr;
+  return Wr || (Wr = Ba("keyval-store", "keyval")), Wr;
 }
 function _e(f, t = Mn()) {
   return t("readonly", (o) => Hr(o.get(f)));
@@ -5699,7 +5655,7 @@ class Un {
     success: !1
   });
 }
-class es {
+class qa {
   sm;
   api;
   bc;
@@ -5712,8 +5668,8 @@ class es {
       i.PRESENTATION,
       t.presentation,
       Q.VERSION,
-      Ca
-    ]), this.options = t, this.sm = null, this.bc = new BroadcastChannel(this.options.presentation), this.api = new ja(t), t.storage) {
+      ka
+    ]), this.options = t, this.sm = null, this.bc = new BroadcastChannel(this.options.presentation), this.api = new $a(t), t.storage) {
       case pe.DEXIE:
         this.sm = new Gn(t);
         break;
@@ -6004,7 +5960,7 @@ class es {
   getHash = async (t, o) => await this.sm?.getHash(t, o);
   setHash = async (t, o) => await this.sm?.setHash(t, o) ?? 400;
 }
-class Wa {
+class Ua {
   sm;
   constructor(t) {
     switch (this.sm = null, t.storage) {
@@ -6086,7 +6042,7 @@ class Wa {
     success: !1
   }) : await this.sm?.getSeries(t);
 }
-class ts {
+class es {
   storageReader;
   broadcastChannel;
   element;
@@ -6104,7 +6060,7 @@ class ts {
     const g = { ...t.dataset };
     delete g.hmr;
     const y = window.__bc.opts;
-    g.presentation = y?.presentation ?? `${u} not found`, this.query = g, Na(t), this.storageReader = new Wa(y), this.broadcastChannel = new BroadcastChannel(g.presentation), this.broadcastListener();
+    g.presentation = y?.presentation ?? `${u} not found`, this.query = g, Na(t), this.storageReader = new Ua(y), this.broadcastChannel = new BroadcastChannel(g.presentation), this.broadcastListener();
   }
   addCallbackListener(t) {
     this.callbacks.push(t);
@@ -6307,7 +6263,7 @@ class ts {
   }
 }
 export {
-  es as BuzzcastingStorageManager,
-  Wa as BuzzcastingStorageReader,
-  ts as Widget
+  qa as BuzzcastingStorageManager,
+  Ua as BuzzcastingStorageReader,
+  es as Widget
 };
