@@ -6,17 +6,16 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
     />
-    <meta
-      name="bearer"
-      content="1|s5IyTY0wOLPfIPg9my4pIAc81LkBHVd0RNJY2KVc959b01b1"
-    />
-    <title>Buzzcasting Common</title>
+    <meta name="bearer" content="%VITE_BEARER%" />
+    <title>Buzzcasting Storage</title>
   </head>
 
   <body>
     <div id="app"></div>
     <buzzcasting-app
-      domain="axagroup.buzzcasting.net"
+      channel="%VITE_CHANNEL%"
+      display="%VITE_DISPLAY%"
+      domain="%VITE_DOMAIN%"
       delay="0"
       moderation="realtime"
       interval="120000"
@@ -26,7 +25,7 @@
     >
       <buzzcasting-presentation>
         <buzzcasting-slide
-          id="01jc6ajqr0cbpjrrvab714f3sq"
+          id="%VITE_PRESENTATION%"
           class="w-[1920px] h-[1080px]"
         >
           <cards-widget
@@ -109,6 +108,7 @@
       const bc = new BroadcastChannel(options.presentation);
       const sm = new BuzzcastingStorageManager(options);
       sm.startBroadcastListener();
+
       const sr = new BuzzcastingStorageReader(options);
 
       //bc.onmessage = (ev) => console.log(options.presentation, ev.data);
@@ -122,11 +122,10 @@
         }
       };
 
-      window.BuzzCasting = {
-        storageManager: sm,
-        storageReader: sr,
-        getOptions: () => options,
-      };
+      window.__bc = window.__bc || {};
+      window.__bc["storageManager"] = sm;
+      window.__bc["storageReader"] = sr;
+      window.__bc["opts"] = options;
 
       const messages = new Widget(document.getElementById("messages"), [
         setData,

@@ -111,6 +111,14 @@ export class BuzzcastingStorageManager {
 		});
 	};
 
+	public stream = () => {
+		const subscriberQueries: any[] = [];
+		Object.values(this.subscribers).forEach((apiQuery: any) => {
+			subscriberQueries.push(apiQuery);
+		});
+		this.api.stream(subscriberQueries);
+	};
+
 	public apiQuery = async (apiQuery: any): Promise<IprocessResponse> => {
 		return await this.api
 			.get(apiQuery)
@@ -120,7 +128,7 @@ export class BuzzcastingStorageManager {
 			});
 	};
 
-	private processResponse = async (apiResp: any): Promise<IprocessResponse> => {
+	public processResponse = async (apiResp: any): Promise<IprocessResponse> => {
 		let data;
 		let status: { code: number; hash: string } = { code: 400, hash: "" };
 		let newHash: string | any = "";
@@ -403,16 +411,22 @@ export class BuzzcastingStorageManager {
 	private actions = async (messageEvent: MessageEvent) => {
 		switch (messageEvent.data.event) {
 			case EVENTS.SUBSCRIBE:
-				log(3, [
-					`%csubscribe%c %cwidget%c %c${messageEvent.data.data.type}`,
-					CSS.BROADCAST,
-					CSS.NONE,
-					CSS.WIDGET,
-					CSS.NONE,
-					typeCss(messageEvent.data.data),
-					messageEvent.data.data,
-				]);
-				this.addSubscriber(messageEvent.data.data);
+				const query = messageEvent.data.data;
+				/**
+				 * Don't subscribre is widget is not set
+				 */
+				if (query.widget !== undefined) {
+					log(3, [
+						`%csubscribe%c %cwidget%c %c${messageEvent.data.data.type}`,
+						CSS.BROADCAST,
+						CSS.NONE,
+						CSS.WIDGET,
+						CSS.NONE,
+						typeCss(query),
+						query,
+					]);
+					this.addSubscriber(query);
+				}
 				break;
 			case EVENTS.UPDATE:
 				log(3, [
@@ -444,7 +458,7 @@ export class BuzzcastingStorageManager {
 			return;
 		}
 
-		const retentionDuration = this.options?.retention || 86400 * 4;
+		const retentionDuration = this.options?.retention || 86400 * 40; // 40 days
 
 		const count: number | undefined = await this.sm?.cleanMessages(
 			retentionDuration

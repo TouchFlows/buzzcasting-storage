@@ -7,6 +7,7 @@ export default antfu({
     'node_modules',
   ],
   rules: {
+    'style/semi': "never",
     'style/no-tabs': 0,
     'style/no-mixed-spaces-and-tabs': 0,
     'no-console': 0,

@@ -113,23 +113,6 @@ export default class Widget {
 	 * This takes place when the container indicates it has finished loading (ready)
 	 */
 	subscribe() {
-		log(3, [
-			`%csubscribe%c %cwidget%c %c${this.query.type}`,
-			CSS.SUBSCRIBE,
-			CSS.NONE,
-			CSS.WIDGET,
-			CSS.NONE,
-			typeCss(this.query),
-			this.query.widget,
-		]);
-
-		log(4, [
-			"%cdebug%c %cwidget",
-			CSS.NO_UPDATES,
-			CSS.NONE,
-			CSS.WIDGET,
-			this.query,
-		]);
 		/**
 		 * Subscribe only when below three parameters are set
 		 */
@@ -142,6 +125,23 @@ export default class Widget {
 				event: EVENTS.SUBSCRIBE,
 				data: this.query,
 			});
+			log(3, [
+				`%csubscribe%c %cwidget%c %c${this.query.type}`,
+				CSS.SUBSCRIBE,
+				CSS.NONE,
+				CSS.WIDGET,
+				CSS.NONE,
+				typeCss(this.query),
+				this.query.widget,
+			]);
+
+			log(4, [
+				"%cdebug%c %cwidget",
+				CSS.NO_UPDATES,
+				CSS.NONE,
+				CSS.WIDGET,
+				this.query,
+			]);
 		}
 	}
 

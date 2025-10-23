@@ -7,7 +7,9 @@ import type {
 	IResponse,
 	IStorageOptions,
 } from "buzzcasting-utils";
+
 import { API, CSS, EVENTS, log } from "buzzcasting-utils";
+import readNDJSONStream from "ndjson-readablestream";
 
 export default class ApiClient {
 	private options: IStorageOptions;
@@ -111,19 +113,36 @@ export default class ApiClient {
 			});
 	}
 
+	public async stream(queries: IQuery[]): Promise<any> {
+		const { version }: IStorageOptions = this.options;
+		const headers: { headers: Headers } = this.headers();
+		const response = await fetch(
+			`${[this.url, "api", version, "stream"].join("/")}`,
+			{
+				...headers,
+				body: JSON.stringify({ data: queries }),
+				method: "post",
+			}
+		);
+		//@ts-ignore
+		for await (const event of readNDJSONStream(response.body)) {
+			console.log("Received", event);
+		}
+	}
+
 	public async hideMessage(query: IQuery): Promise<any> {
 		const { version }: IStorageOptions = this.options;
-		const headers = this.headers();
+		const headers: { headers: Headers } = this.headers();
 		const params = "?action=visible";
-		console.info(
+		log(3, [
 			"%capi%c %cput",
 			CSS.API,
 			CSS.NONE,
 			CSS.GET_DATA,
 			EVENTS.HIDE_MESSAGE,
 			query.widget,
-			query.id
-		);
+			query.id,
+		]);
 		return await fetch(
 			[this.url, "api", version, "messages", query.id].join("/") + params,
 			{ ...headers, method: "put" }
@@ -414,13 +433,13 @@ export default class ApiClient {
 		delete preference.update;
 		const body = JSON.stringify({ data: preference });
 
-		console.info(
+		log(3, [
 			"%capi%c %cstorePreference",
 			CSS.API,
 			CSS.NONE,
 			CSS.APP,
-			preference.id
-		);
+			preference.id,
+		]);
 		return await fetch(
 			[this.url, "api", version, API.PREFERENCES, preference.id].join("/"),
 			{ ...headers, body, method: "put" }
@@ -476,14 +495,14 @@ export default class ApiClient {
 		const { version }: IStorageOptions = this.options;
 		const headers = this.headers();
 
-		console.info(
+		log(3, [
 			"%cload%c %capi%c %cimage",
 			CSS.OK,
 			CSS.NONE,
 			CSS.API,
 			CSS.NONE,
-			CSS.WIDGET
-		);
+			CSS.WIDGET,
+		]);
 		return await fetch(
 			`${[this.url, "api", version, API.IMAGES].join(
 				"/"

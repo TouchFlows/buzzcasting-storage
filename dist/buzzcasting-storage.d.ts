@@ -14,8 +14,9 @@ export declare class BuzzcastingStorageManager {
     addSubscriber(query: IQuery): void;
     deleteSubscriber(query: IQuery): void;
     update: (data: any) => Promise<void>;
+    stream: () => void;
     apiQuery: (apiQuery: any) => Promise<IprocessResponse>;
-    private processResponse;
+    processResponse: (apiResp: any) => Promise<IprocessResponse>;
     startBroadcastListener: () => void;
     broadcastMessage: (eventName: string, detail: any) => void;
     private broadcastUpdate;
@@ -106,6 +107,8 @@ export declare class Widget {
     /**
      * Data received from BroadcastChannel
      * data that is broadcast needs to be a IMessage[] |ICloud or ISeries structure
+     * WIDGET_UPDATE is used to trigger fetching on the broadcast channel,
+     * but also to trigger data retrieval on the widget
      */
     broadcastListener(): void;
     /**
