@@ -24,7 +24,6 @@ export declare class BuzzcastingStorageManager {
     private actions;
     cleanMessages: () => Promise<void>;
     hideMessage: (query: IQuery) => Promise<IResponse>;
-    clearCards: () => Promise<void>;
     hideLabels: (query: IQuery) => Promise<IResponse>;
     getSubscribers: () => Promise<any[]>;
     deleteSubscribers: () => Promise<any[]>;
@@ -57,6 +56,7 @@ export declare class BuzzcastingStorageManager {
     setImage: (query: IQuery) => Promise<IResponse | undefined>;
     getHash: (resource: string, query: IQuery) => Promise<any>;
     setHash: (resource: string, query: IQuery) => Promise<number>;
+    clearHash: () => Promise<number>;
 }
 
 export declare class BuzzcastingStorageReader {

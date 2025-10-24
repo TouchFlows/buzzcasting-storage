@@ -28,6 +28,38 @@
           id="%VITE_PRESENTATION%"
           class="w-[1920px] h-[1080px]"
         >
+          <cloud-widget
+            id="cloud"
+            class="font-sans text-axa-kpi h-inherit w-inherit current"
+            data-dashboard="m014uvvd_1670v2kans4xs"
+            data-widget="54a5137f_8013_4d26_9fb8_d6ef2aa62917"
+            data-type="cloud"
+            interval="30000"
+            size-multiplier="16"
+            width="1300"
+            height="750"
+            word-padding="10"
+            range="0.6,0.7,0.8,0.9"
+            items="50"
+            component="wordcloud-d3"
+            css-highlighted="text-xl text-white upper"
+            css-legend="w-60 mb-1 justify-stretch grid gap-1"
+            css-key="h-3 w-3 center"
+            dimensions-width="1220"
+            dimensions-height="670"
+            words-multiplier="20"
+            words-padding="15"
+            show-hashtags="false"
+            show-emojis="false"
+            css-host="grid font-sans"
+            config-items="35"
+            debug="false"
+            highlight-color="#4976baff"
+            show-gradient="true"
+            words-range="0.6,0.7,0.8,0.9"
+            css-words="font-sans fill-axa-kpi"
+            css-label="text-lg"
+          ></cloud-widget>
           <cards-widget
             id="messages"
             data-type="messages"
@@ -127,6 +159,12 @@
       window.__bc["storageReader"] = sr;
       window.__bc["opts"] = options;
 
+      await sm.clearHash();
+
+      const cloud = new Widget(document.getElementById("cloud"), [setData]);
+
+      await cloud.getCloud().then((response) => setData(response));
+
       const messages = new Widget(document.getElementById("messages"), [
         setData,
       ]);
@@ -175,11 +213,14 @@
           event: "update",
           data: { presentation: options.presentation },
         });
-      }, 50);
+      }, 300);
 
-      setTimeout(async () => {
-        await sm.stream();
-      }, 100);
+      // setTimeout(async () => {
+      //   await sm.stream();
+      // }, 100);
+      // setTimeout(async () => {
+      //   await sm.clearHash();
+      // }, 5000);
     </script>
   </body>
 </html>

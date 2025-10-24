@@ -134,13 +134,14 @@ export class BuzzcastingStorageManager {
 		let newHash: string | any = "";
 		let previousHash;
 		if (apiResp.success === true) {
-			switch (apiResp.query.type) {
+			const query = apiResp.query;
+			switch (query.type) {
 				case API.MESSAGES:
-					previousHash = await this.sm?.getHash("cards", apiResp.query);
+					previousHash = await this.sm?.getHash(query);
 					// initialize cards
 					if (previousHash === "none") {
-						apiResp.query.hash = "none";
-						await this.sm?.setCards(apiResp.query);
+						query.hash = "temp";
+						await this.sm?.createHash(query);
 					}
 					// check and filter that message has an ID
 					apiResp.data.messages = apiResp.data.messages.filter(
@@ -152,7 +153,6 @@ export class BuzzcastingStorageManager {
 						apiResp.data.messages.length > 0
 							? hashSum(apiResp.data.messages[0].utc)
 							: "none";
-
 					if (previousHash === newHash) {
 						log(3, [
 							"%cset%c %cstorage%c %cmessages",
@@ -167,8 +167,8 @@ export class BuzzcastingStorageManager {
 						status.code = 204;
 					} else {
 						if (this.sm !== null) {
-							apiResp.query.hash = newHash;
-							await this.sm?.setHash("cards", apiResp.query);
+							query.hash = newHash;
+							await this.sm?.setHash(query);
 							status.code = await this.sm
 								.setMessages(apiResp.query, apiResp)
 								.then(async (code) => {
@@ -186,7 +186,11 @@ export class BuzzcastingStorageManager {
 					}
 					break;
 				case API.CLOUD:
-					previousHash = await this.sm?.getHash(API.CLOUD, apiResp.query);
+					previousHash = await this.sm?.getHash(query);
+					if (previousHash === "none") {
+						query.hash = "temp";
+						await this.sm?.createHash(query);
+					}
 					newHash = hashSum(apiResp.data.cloud);
 					if (previousHash === newHash) {
 						log(3, [
@@ -196,7 +200,7 @@ export class BuzzcastingStorageManager {
 							CSS.STORAGE,
 							CSS.NONE,
 							CSS.CLOUD,
-							apiResp.data?.title ?? apiResp.query.widget,
+							apiResp.data?.title ?? query.widget,
 							`same hash:${newHash}`,
 						]);
 
@@ -209,8 +213,8 @@ export class BuzzcastingStorageManager {
 						]);
 						status = { code: 204, hash: newHash };
 					} else {
-						apiResp.query.hash = newHash;
-						await this.sm?.setHash(API.CLOUD, apiResp.query);
+						query.hash = newHash;
+						await this.sm?.setHash(query);
 						data = {
 							data: {
 								cloud: apiResp.data,
@@ -235,7 +239,11 @@ export class BuzzcastingStorageManager {
 					}
 					break;
 				case API.SERIES:
-					previousHash = await this.sm?.getHash(API.SERIES, apiResp.query);
+					previousHash = await this.sm?.getHash(query);
+					if (previousHash === "none") {
+						query.hash = "temp";
+						await this.sm?.createHash(query);
+					}
 					newHash = hashSum(apiResp.data.series);
 					if (previousHash === newHash) {
 						log(3, [
@@ -253,12 +261,12 @@ export class BuzzcastingStorageManager {
 							CSS.NO_UPDATES,
 							CSS.NONE,
 							CSS.SERIES,
-							apiResp.query,
+							query,
 						]);
 						status = { code: 204, hash: newHash };
 					} else {
-						apiResp.query.hash = newHash;
-						await this.sm?.setHash(API.SERIES, apiResp.query);
+						query.hash = newHash;
+						await this.sm?.setHash(query);
 						data = {
 							data: apiResp.data,
 							message: apiResp.message,
@@ -267,7 +275,7 @@ export class BuzzcastingStorageManager {
 						};
 						if (this.sm !== null) {
 							status.code = await this.sm
-								?.setSeries(apiResp.query, apiResp.data)
+								?.setSeries(query, apiResp.data)
 								.then((code) => {
 									this.broadcastUpdate(code, apiResp);
 									return code;
@@ -282,13 +290,13 @@ export class BuzzcastingStorageManager {
 					break;
 				default:
 					log(3, [
-						`%cfetch%c %capi% %c${apiResp.query.type} `,
+						`%cfetch%c %capi% %c${query.type} `,
 						CSS.KO,
 						CSS.NONE,
 						CSS.API,
 						CSS.NONE,
 						CSS.NO_UPDATES,
-						`Bad request: type ${apiResp.query.type} unknown`,
+						`Bad request: type ${query.type} unknown`,
 					]);
 					status = { code: 404, hash: newHash };
 			}
@@ -503,10 +511,6 @@ export class BuzzcastingStorageManager {
 		return await this.api.hideMessage(query);
 	};
 
-	public clearCards = async () => {
-		await this.sm?.clearCards();
-	};
-
 	public hideLabels: (query: IQuery) => Promise<IResponse> = async (
 		query: IQuery
 	): Promise<IResponse> => {
@@ -668,10 +672,14 @@ export class BuzzcastingStorageManager {
 	};
 
 	public getHash = async (resource: string, query: IQuery): Promise<any> => {
-		return await this.sm?.getHash(resource, query);
+		return await this.sm?.getHash(query);
 	};
 
 	public setHash = async (resource: string, query: IQuery): Promise<number> => {
-		return (await this.sm?.setHash(resource, query)) ?? 400;
+		return (await this.sm?.setHash(query)) ?? 400;
+	};
+
+	public clearHash = async (): Promise<number> => {
+		return (await this.sm?.clearHash()) ?? 400;
 	};
 }

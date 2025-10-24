@@ -25,12 +25,12 @@ export default class DexieClient {
 		this.options = options;
 
 		this.db = new Dexie(options.app);
-		this.db.version(14).stores({
-			cards: "id,dashboard_id,hash",
+		this.db.version(15).stores({
 			channel: "id,slide_index",
 			cloud: "id,dashboard_id,hash",
 			dashboard: "id,name,update",
 			display: "id,monitor_id,presentation_id,colstart,colend,rowstart,rowend",
+			hash: "id,dashboard_id,hash",
 			images: "id,basename,extension,size,type,url",
 			messages: "id,utc,expires",
 			monitor:
@@ -47,16 +47,16 @@ export default class DexieClient {
 		this.db.open();
 	}
 
-	getHash = async (resource: string, query: IQuery) => {
+	getHash = async (query: IQuery) => {
 		const data = await this.db
-			.table(resource)
+			.table("hash")
 			.where({ id: query.widget })
 			.last()
 			.catch(() => {
-				log(2, [`%chash%c %capi%C %c${resource}`, CSS.API, CSS.NONE, CSS.APP]);
+				log(2, [`%chash%c %capi%C %chash`, CSS.API, CSS.NONE, CSS.APP]);
 			});
 		log(3, [
-			`%cget%c %chash%c %c${resource}`,
+			`%cget%c %chash%c %chash`,
 			CSS.OK,
 			CSS.NONE,
 			CSS.API,
@@ -67,33 +67,33 @@ export default class DexieClient {
 		return data?.hash ?? "none";
 	};
 
-	setHash = async (resource: string, query: IQuery): Promise<number> => {
+	setHash = async (query: IQuery): Promise<number> => {
 		return await this.db
-			.table(resource)
+			.table("hash")
 			.where({
 				id: query.widget,
 			})
 			.modify({ hash: query.hash })
 			.then(() => {
 				log(3, [
-					`%cset%c %chash%c %c${resource}`,
+					`%cset%c %chash%c %chash}`,
 					CSS.OK,
 					CSS.NONE,
 					CSS.API,
 					CSS.NONE,
-					CSS.APP,
+					CSS.WIDGET,
 					query,
 				]);
 				return 201;
 			})
 			.catch((error: Error) => {
 				log(2, [
-					`%cget%c %chash%c %c${resource}`,
+					`%cget%c %chash%c %chash`,
 					CSS.OK,
 					CSS.NONE,
 					CSS.API,
 					CSS.NONE,
-					CSS.APP,
+					CSS.WIDGET,
 					query,
 					error.message,
 				]);
@@ -101,28 +101,28 @@ export default class DexieClient {
 			});
 	};
 
-	clearCards = async (): Promise<number> => {
+	clearHash = async (): Promise<number> => {
 		return await this.db
-			.table("cards")
+			.table("hash")
 			.clear()
 			.then(() => 201)
 			.catch((error: Error) => {
 				log(2, [
-					"%cset%c %cstorage%c %ccards",
+					"%cclear%c %cstorage%c %chash",
 					CSS.KO,
 					CSS.NONE,
 					CSS.STORAGE,
 					CSS.NONE,
-					CSS.MESSAGES,
+					CSS.WIDGET,
 					"clear card hashes",
 				]);
 				return 400;
 			});
 	};
 
-	setCards = async (query: IQuery): Promise<number> => {
+	createHash = async (query: IQuery): Promise<number> => {
 		return await this.db
-			.table("cards")
+			.table("hash")
 			.put({
 				id: query.widget,
 				dashboard_id: query.dashboard,
@@ -131,12 +131,12 @@ export default class DexieClient {
 			.then(() => 201)
 			.catch((error: Error) => {
 				log(2, [
-					"%cset%c %cstorage%c %ccloud",
+					"%cset%c %cstorage%c %chash",
 					CSS.KO,
 					CSS.NONE,
 					CSS.STORAGE,
 					CSS.NONE,
-					CSS.CLOUD,
+					CSS.WIDGET,
 					query,
 					error.message,
 				]);

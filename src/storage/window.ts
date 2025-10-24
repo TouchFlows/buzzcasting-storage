@@ -15,22 +15,19 @@ export default class WindowClient {
 		window.__bc.WidgetData = new Set();
 	}
 
-	getHash = async (resource: string, query: IQuery) => {
+	getHash = async (query: IQuery) => {
 		return "none";
 	};
 
-	setHash = async (
-		resource: string,
-		query: IQuery
-	): Promise<number | undefined> => {
+	setHash = async (query: IQuery): Promise<number | undefined> => {
 		return 404;
 	};
 
-	setCards = async (query: IQuery): Promise<number | undefined> => {
+	createHash = async (query: IQuery): Promise<number | undefined> => {
 		return 404;
 	};
 
-	clearCards = async (): Promise<number | undefined> => {
+	clearHash = async (): Promise<number | undefined> => {
 		return 404;
 	};
 
