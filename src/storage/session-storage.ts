@@ -42,6 +42,10 @@ export default class SessionStorageClient {
 		return 404;
 	};
 
+	deleteHash = async (query: IQuery): Promise<number | undefined> => {
+		return 404;
+	};
+
 	getCloud = async (query: IQuery): Promise<IResponse> => {
 		const key = getKey(query);
 		try {

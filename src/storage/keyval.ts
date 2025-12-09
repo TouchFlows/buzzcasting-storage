@@ -31,6 +31,10 @@ export default class KeyvalClient {
 		return 404;
 	};
 
+	deleteHash = async (query: IQuery): Promise<number | undefined> => {
+		return 404;
+	};
+
 	getCloud = async (query: IQuery) => {
 		const key = getKey(query);
 		return await get(key)

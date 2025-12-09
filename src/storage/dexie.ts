@@ -27,10 +27,10 @@ export default class DexieClient {
 		this.db = new Dexie(options.app);
 		this.db.version(15).stores({
 			channel: "id,slide_index",
-			cloud: "id,dashboard_id,hash",
+			cloud: "id,dashboard_id",
 			dashboard: "id,name,update",
 			display: "id,monitor_id,presentation_id,colstart,colend,rowstart,rowend",
-			hash: "id,dashboard_id,hash",
+			hash: "[presentation_id+id],dashboard_id, hash",
 			images: "id,basename,extension,size,type,url",
 			messages: "id,utc,expires",
 			monitor:
@@ -38,7 +38,7 @@ export default class DexieClient {
 			player: "id,title,name,location",
 			preference: "id,value,update",
 			presentation: "id,name,update",
-			series: "id,dashboard_id,hash",
+			series: "id,dashboard_id",
 			slide: "id,name,presentation_id,order_index,json,html,update",
 			topics:
 				"[widget_id+message_id],message_id,widget_id,dashboard_id,title,engagement,impressions,reach,sentiment,visible,approved,utc,expires",
@@ -47,10 +47,10 @@ export default class DexieClient {
 		this.db.open();
 	}
 
-	getHash = async (query: IQuery) => {
+	getHash = async (query: IQuery): Promise<string> => {
 		const data = await this.db
 			.table("hash")
-			.where({ id: query.widget })
+			.where({ id: query.widget, presentation_id: query.presentation })
 			.last()
 			.catch(() => {
 				log(2, [`%chash%c %capi%C %chash`, CSS.API, CSS.NONE, CSS.APP]);
@@ -72,6 +72,7 @@ export default class DexieClient {
 			.table("hash")
 			.where({
 				id: query.widget,
+				presentation_id: query.presentation,
 			})
 			.modify({ hash: query.hash })
 			.then(() => {
@@ -114,7 +115,28 @@ export default class DexieClient {
 					CSS.STORAGE,
 					CSS.NONE,
 					CSS.WIDGET,
-					"clear card hashes",
+					"clear hashes",
+				]);
+				return 400;
+			});
+	};
+
+	deleteHash = async (query: IQuery): Promise<number> => {
+		return await this.db
+			.table("hash")
+			.where({ presentation_id: query.presentation })
+			.delete()
+			.then(() => 201)
+			.catch((error: Error) => {
+				log(2, [
+					"%cdelete%c %cstorage%c %chash",
+					CSS.KO,
+					CSS.NONE,
+					CSS.STORAGE,
+					CSS.NONE,
+					CSS.WIDGET,
+					"clear presentation hashes",
+					query.presentation,
 				]);
 				return 400;
 			});
