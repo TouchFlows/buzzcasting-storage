@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.17.2
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.17.1...v3.17.2)
+
+### 🩹 Fixes
+
+- Dexie hashing ([d30607b](https://github.com/TouchFlows/buzzcasting-storage/commit/d30607b))
+
+### 🏡 Chore
+
+- **release:** V3.17.1 ([2becb34](https://github.com/TouchFlows/buzzcasting-storage/commit/2becb34))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.17.1
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.17.0...v3.17.1)
