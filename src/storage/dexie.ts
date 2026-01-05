@@ -25,12 +25,12 @@ export default class DexieClient {
 		this.options = options;
 
 		this.db = new Dexie(options.app);
-		this.db.version(15).stores({
+		this.db.version(16).stores({
 			channel: "id,slide_index",
 			cloud: "id,dashboard_id",
 			dashboard: "id,name,update",
 			display: "id,monitor_id,presentation_id,colstart,colend,rowstart,rowend",
-			hash: "[presentation_id+id],dashboard_id, hash",
+			hash: "[id+presentation_id], id, presentation_id, hash",
 			images: "id,basename,extension,size,type,url",
 			messages: "id,utc,expires",
 			monitor:
@@ -135,8 +135,8 @@ export default class DexieClient {
 					CSS.STORAGE,
 					CSS.NONE,
 					CSS.WIDGET,
-					"clear presentation hashes",
-					query.presentation,
+					"clear dashboard hashes",
+					query.dashboard,
 				]);
 				return 400;
 			});
@@ -147,7 +147,7 @@ export default class DexieClient {
 			.table("hash")
 			.put({
 				id: query.widget,
-				dashboard_id: query.dashboard,
+				presentation_id: query.presentation,
 				hash: query.hash,
 			})
 			.then(() => 201)

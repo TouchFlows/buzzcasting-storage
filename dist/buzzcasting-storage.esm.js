@@ -1,4 +1,4 @@
-var _ = /* @__PURE__ */ ((f) => (f.CARDS = "cards", f.CLOUD = "cloud", f.DASHBOARD = "dashboard", f.DASHBOARDS = "dashboards", f.IMAGES = "images", f.MESSAGES = "messages", f.PREFERENCE = "preference", f.PREFERENCES = "preferences", f.PRESENTATION = "presentation", f.PRESENTATIONS = "presentations", f.SERIES = "series", f.SLIDE = "slide", f.SLIDES = "slides", f.TOPICS = "topics", f.WIDGET = "widget", f.WIDGETS = "widgets", f))(_ || {}), o = /* @__PURE__ */ ((f) => (f.API = "color:white;background-color:grey;padding:0 4px 0 4px;border-radius:5px;", f.APP = "color:white;background-color:navy;padding:0 4px 0 4px;border-radius:5px;", f.BROADCAST = "color:navy;background-color:orange;padding:0 4px 0 4px;border-radius:5px;", f.CLOUD = "color:purple;background-color:mistyrose;padding:0 4px 0 4px;border-radius:5px;", f.DATA = "color:grey;background-color:lightskyblue;padding:0 4px 0 4px;border-radius:5px;", f.ERROR = "color:white;background-color:red;padding:0 4px 0 4px;border-radius:5px;", f.GET_DATA = "color:black;background-color:lime;padding:0 4px 0 4px;border-radius:5px;", f.HIDE = "color:white;background-color:red;padding:0 4px 0 4px;border-radius:5px;", f.KO = "color:white;background-color:red;padding:0 4px 0 4px;border-radius:5px;", f.MESSAGES = "color:white;background-color:darkslateblue;padding:0 4px 0 4px;border-radius:5px;", f.NO_UPDATES = "color:grey;border:1px solid grey;padding:0 4px 0 4px;border-radius:5px;", f.NONE = "color:transparent;background-color:transparent;", f.OK = "color:black;background-color:lime;padding:0 4px 0 4px;border-radius:5px;", f.PRESENTATION = "color:white;background-color:darkred;padding:0 4px 0 4px;border-radius:5px;", f.SERIES = "color:purple;background-color:thistle;padding:0 4px 0 4px;border-radius:5px;", f.SLIDE = "color:black;background-color:yellow;padding:0 4px 0 4px;border-radius:5px;", f.STORAGE = "color:black;background-color:cyan;padding:0 4px 0 4px;border-radius:5px;", f.SUBSCRIBE = "color:white;background-color:dodgerblue;padding:0 4px 0 4px;border-radius:5px;", f.WIDGET = "color:black;background-color:lemonchiffon;padding:0 4px 0 4px;border-radius:5px;", f.WS = "color:white;background-color:green;padding:0 4px 0 4px;border-radius:5px;", f))(o || {}), J = /* @__PURE__ */ ((f) => (f.ADD_SLIDE = "addSlide", f.APP_READY = "appReady", f.API_UPDATE = "apiUpdate", f.BACKGROUND_UPDATE = "backgroundUpdate", f.BUILDER_PREVIEW = "builderPreview", f.COMPONENT_UPDATE = "componentUpdate", f.APPROVE_MESSAGE = "approveMessage", f.CHANNEL = "channel", f.CLEAN_MESSAGES = "cleanMessages", f.CLOSE_BUILDER_DIALOG = "closeBuilderDialog", f.CLOSE_BUILDER_MODAL = "closeBuilderModal", f.CLOSE_MODAL = "closeModal", f.COLOR_UPDATE = "colorUpdate", f.COMPONENT_INDEX = "componentIndex", f.CSS_SET = "setCss", f.CSS_STORE = "storeCss", f.DASHBOARD_LOAD = "loadDashboard", f.DASHBOARD_STORE = "storeDashboard", f.DASHBOARD_UPDATED = "dashboardUpdated", f.ERROR = "error", f.HIDE_MESSAGE = "hideMessage", f.HIDE_LABELS = "hideLabels", f.IMAGE_GET = "getImage", f.IMAGE_SET = "setImage", f.IMAGE_STORED = "imageStored", f.LAUPPUT_UPDATE = "layoutUpdate", f.PREV_SLIDE = "prevSlide", f.RELOAD_PRESENTATION = "reloadPresentation", f.STAR_MESSAGE = "starMessage", f.GOTO_SLIDE = "gotoSlide", f.NEXT_SLIDE = "nextSlide", f.PREFERENCE_LOAD = "loadPreference", f.PREFERENCE_STORE = "storePreference", f.PREFERENCE_UPDATED = "preferenceUpdated", f.PAUSE_PRESENTATION = "pausePresentation", f.PRESENTATION_READY = "presentationReady", f.PRESENTATION_LOAD = "loadPresentation", f.PRESENTATION_STORE = "storePresentation", f.PRESENTATION_UPDATED = "presentationUpdated", f.ROW_COL_UPDATE = "rowcolupdate", f.SCREENSHOT_TAKE = "takeScreenshot", f.SCREENSHOT_STORE = "storeScreenshot", f.SECTION_UPDATE = "sectionUpdate", f.SHOW_BUILDER_DIALOG = "showBuilderDialog", f.SHOW_BUILDER_MODAL = "showBuilderModal", f.SHOW_MODAL = "showModal", f.SLIDE_DID_LOAD = "slideDidLoad", f.SLIDE_GET = "getSlide", f.SLIDE_GOTO = "slideGoto", f.SLIDE_LOAD = "loadSlide", f.SLIDE_READY = "slideReady", f.SLIDE_SAVED = "slideSaved", f.SLIDE_SET = "setSlide", f.SLIDE_STORE = "storeSlide", f.SLIDE_STORED = "slideStored", f.SLIDE_TRANSITIONER = "slideTransitioner", f.SLIDE_UPDATED = "slideUpdated", f.START_TRANSITIONER = "startTransitioner", f.STORAGE_INIT = "storageInit", f.SUBSCRIBE = "subscribe", f.SUSPEND_ACCOUNT = "suspendAccount", f.SWITCH_PRESENTATION = "switchPresentation", f.REMOVE_CLOUD = "removeCloud", f.UPDATE = "update", f.UPLOAD_COMPLETED = "uploadCompleted", f.VERSION = "version", f.WIDGETS_CLEAR = "widgetsClear", f.WIDGET_DID_LOAD = "widgetDidLoad", f.WIDGET_DID_UPDATE = "widgetDidUpdate", f.WIDGET_LOAD = "widgetLoad", f.WIDGET_STORE = "widgetStore", f.WIDGET_UPDATE = "widgetUpdate", f.WS_API_REQUEST = "wsApiRequest", f.WS_API_RESPONSE = "wsApiResponse", f.WS_API_UPDATE = "wsApiRUpdate", f))(J || {}), tr = /* @__PURE__ */ ((f) => (f.APPROVED = "approved", f.BEFORE = "before", f.DELAYED = "delayed", f.NONE = "none", f.REALTIME = "realtime", f))(tr || {}), pe = /* @__PURE__ */ ((f) => (f.KEYVAL = "keyval", f.LOCAL = "local", f.SESSION = "session", f.DEXIE = "dexie", f.WINDOW = "window", f))(pe || {});
+var _ = /* @__PURE__ */ ((f) => (f.CARDS = "cards", f.CLOUD = "cloud", f.DASHBOARD = "dashboard", f.DASHBOARDS = "dashboards", f.IMAGES = "images", f.MESSAGES = "messages", f.PREFERENCE = "preference", f.PREFERENCES = "preferences", f.PRESENTATION = "presentation", f.PRESENTATIONS = "presentations", f.SERIES = "series", f.SLIDE = "slide", f.SLIDES = "slides", f.TOPICS = "topics", f.WIDGET = "widget", f.WIDGETS = "widgets", f))(_ || {}), o = /* @__PURE__ */ ((f) => (f.API = "color:white;background-color:grey;padding:0 4px 0 4px;border-radius:5px;", f.APP = "color:white;background-color:navy;padding:0 4px 0 4px;border-radius:5px;", f.BROADCAST = "color:navy;background-color:orange;padding:0 4px 0 4px;border-radius:5px;", f.CLOUD = "color:purple;background-color:mistyrose;padding:0 4px 0 4px;border-radius:5px;", f.DATA = "color:grey;background-color:lightskyblue;padding:0 4px 0 4px;border-radius:5px;", f.ERROR = "color:white;background-color:red;padding:0 4px 0 4px;border-radius:5px;", f.GET_DATA = "color:black;background-color:lime;padding:0 4px 0 4px;border-radius:5px;", f.HIDE = "color:white;background-color:red;padding:0 4px 0 4px;border-radius:5px;", f.KO = "color:white;background-color:red;padding:0 4px 0 4px;border-radius:5px;", f.MESSAGES = "color:white;background-color:darkslateblue;padding:0 4px 0 4px;border-radius:5px;", f.NO_UPDATES = "color:grey;border:1px solid grey;padding:0 4px 0 4px;border-radius:5px;", f.NONE = "color:transparent;background-color:transparent;", f.OK = "color:black;background-color:lime;padding:0 4px 0 4px;border-radius:5px;", f.PRESENTATION = "color:white;background-color:darkred;padding:0 4px 0 4px;border-radius:5px;", f.SERIES = "color:purple;background-color:thistle;padding:0 4px 0 4px;border-radius:5px;", f.SLIDE = "color:black;background-color:yellow;padding:0 4px 0 4px;border-radius:5px;", f.STORAGE = "color:black;background-color:cyan;padding:0 4px 0 4px;border-radius:5px;", f.SUBSCRIBE = "color:white;background-color:dodgerblue;padding:0 4px 0 4px;border-radius:5px;", f.WIDGET = "color:black;background-color:lemonchiffon;padding:0 4px 0 4px;border-radius:5px;", f.WS = "color:white;background-color:green;padding:0 4px 0 4px;border-radius:5px;", f))(o || {}), J = /* @__PURE__ */ ((f) => (f.ADD_SLIDE = "addSlide", f.APP_READY = "appReady", f.API_UPDATE = "apiUpdate", f.BACKGROUND_UPDATE = "backgroundUpdate", f.BUILDER_PREVIEW = "builderPreview", f.COMPONENT_UPDATE = "componentUpdate", f.APPROVE_MESSAGE = "approveMessage", f.CHANNEL = "channel", f.CLEAN_MESSAGES = "cleanMessages", f.CLOSE_BUILDER_DIALOG = "closeBuilderDialog", f.CLOSE_BUILDER_MODAL = "closeBuilderModal", f.CLOSE_MODAL = "closeModal", f.COLOR_UPDATE = "colorUpdate", f.COMPONENT_INDEX = "componentIndex", f.CSS_SET = "setCss", f.CSS_STORE = "storeCss", f.DASHBOARD_LOAD = "loadDashboard", f.DASHBOARD_STORE = "storeDashboard", f.DASHBOARD_UPDATED = "dashboardUpdated", f.ERROR = "error", f.HIDE_MESSAGE = "hideMessage", f.HIDE_LABELS = "hideLabels", f.IMAGE_GET = "getImage", f.IMAGE_SET = "setImage", f.IMAGE_STORED = "imageStored", f.LAUPPUT_UPDATE = "layoutUpdate", f.PREV_SLIDE = "prevSlide", f.RELOAD_PRESENTATION = "reloadPresentation", f.STAR_MESSAGE = "starMessage", f.GOTO_SLIDE = "gotoSlide", f.NEXT_SLIDE = "nextSlide", f.PREFERENCE_LOAD = "loadPreference", f.PREFERENCE_STORE = "storePreference", f.PREFERENCE_UPDATED = "preferenceUpdated", f.PAUSE_PRESENTATION = "pausePresentation", f.PRESENTATION_READY = "presentationReady", f.PRESENTATION_LOAD = "loadPresentation", f.PRESENTATION_STORE = "storePresentation", f.PRESENTATION_UPDATED = "presentationUpdated", f.ROW_COL_UPDATE = "rowcolupdate", f.SCREENSHOT_TAKE = "takeScreenshot", f.SCREENSHOT_STORE = "storeScreenshot", f.SECTION_UPDATE = "sectionUpdate", f.SHOW_BUILDER_DIALOG = "showBuilderDialog", f.SHOW_BUILDER_MODAL = "showBuilderModal", f.SHOW_MODAL = "showModal", f.SLIDE_DID_LOAD = "slideDidLoad", f.SLIDE_GET = "getSlide", f.SLIDE_GOTO = "slideGoto", f.SLIDE_LOAD = "loadSlide", f.SLIDE_READY = "slideReady", f.SLIDE_SAVED = "slideSaved", f.SLIDE_SET = "setSlide", f.SLIDE_STORE = "storeSlide", f.SLIDE_STORED = "slideStored", f.SLIDE_TRANSITIONER = "slideTransitioner", f.SLIDE_UPDATED = "slideUpdated", f.START_TRANSITIONER = "startTransitioner", f.STORAGE_INIT = "storageInit", f.STREAM = "stream", f.SUBSCRIBE = "subscribe", f.SUSPEND_ACCOUNT = "suspendAccount", f.SWITCH_PRESENTATION = "switchPresentation", f.REMOVE_CLOUD = "removeCloud", f.UPDATE = "update", f.UPLOAD_COMPLETED = "uploadCompleted", f.VERSION = "version", f.WIDGETS_CLEAR = "widgetsClear", f.WIDGET_DID_LOAD = "widgetDidLoad", f.WIDGET_DID_UPDATE = "widgetDidUpdate", f.WIDGET_LOAD = "widgetLoad", f.WIDGET_STORE = "widgetStore", f.WIDGET_UPDATE = "widgetUpdate", f.WS_API_REQUEST = "wsApiRequest", f.WS_API_RESPONSE = "wsApiResponse", f.WS_API_UPDATE = "wsApiRUpdate", f))(J || {}), tr = /* @__PURE__ */ ((f) => (f.APPROVED = "approved", f.BEFORE = "before", f.DELAYED = "delayed", f.NONE = "none", f.REALTIME = "realtime", f))(tr || {}), pe = /* @__PURE__ */ ((f) => (f.KEYVAL = "keyval", f.LOCAL = "local", f.SESSION = "session", f.DEXIE = "dexie", f.WINDOW = "window", f))(pe || {});
 function Da(f) {
   const t = {};
   for (let i = 0; i < f.length; i++) {
@@ -118,7 +118,7 @@ function _t(f, t) {
   }
   return t;
 }
-const $a = "3.16.1";
+const $a = "3.17.1";
 async function* ja(f) {
   const t = f.pipeThrough(new TextDecoderStream("utf-8")).getReader();
   let i = "";
@@ -482,7 +482,7 @@ function Ka(f) {
 }
 var rr = { exports: {} }, La = rr.exports, jn;
 function Ba() {
-  return jn || (jn = 1, function(f, t) {
+  return jn || (jn = 1, (function(f, t) {
     (function(i, l) {
       f.exports = l();
     })(La, function() {
@@ -584,7 +584,7 @@ function Ba() {
         return b[e];
       })), it = null;
       function Ce(e) {
-        return it = /* @__PURE__ */ new WeakMap(), e = function r(n) {
+        return it = /* @__PURE__ */ new WeakMap(), e = (function r(n) {
           if (!n || typeof n != "object") return n;
           var a = it.get(n);
           if (a) return a;
@@ -597,7 +597,7 @@ function Ba() {
             for (u in a = d === Object.prototype ? {} : Object.create(d), it.set(n, a), n) re(n, u) && (a[u] = r(n[u]));
           }
           return a;
-        }(e), it = null, e;
+        })(e), it = null, e;
       }
       var Yn = {}.toString;
       function nr(e) {
@@ -735,12 +735,12 @@ function Ba() {
       function en(e) {
         me = e;
       }
-      var ut = {}, tn = 100, Ge = typeof Promise > "u" ? [] : function() {
+      var ut = {}, tn = 100, Ge = typeof Promise > "u" ? [] : (function() {
         var e = Promise.resolve();
         if (typeof crypto > "u" || !crypto.subtle) return [e, se(e), e];
         var r = crypto.subtle.digest("SHA-512", new Uint8Array([0]));
         return [r, se(r), e];
-      }(), lt = Ge[0], fe = Ge[1], Ge = Ge[2], fe = fe && fe.then, Me = lt && lt.constructor, cr = !!Ge, dt = function(e, r) {
+      })(), lt = Ge[0], fe = Ge[1], Ge = Ge[2], fe = fe && fe.then, Me = lt && lt.constructor, cr = !!Ge, dt = function(e, r) {
         ht.push([e, r]), It && (queueMicrotask(aa), It = !1);
       }, ur = !0, It = !0, Ke = [], Tt = [], lr = ct, Pe = { id: "global", global: !0, ref: 0, unhandleds: [], onunhandled: X, pgp: !1, env: {}, finalize: X }, L = Pe, ht = [], Le = 0, Rt = [];
       function M(e) {
@@ -751,7 +751,7 @@ function Ba() {
           if (e !== ut) throw new TypeError("Not a function");
           return this._state = arguments[1], this._value = arguments[2], void (this._state === !1 && hr(this, this._value));
         }
-        this._state = null, this._value = null, ++r.ref, function n(a, s) {
+        this._state = null, this._value = null, ++r.ref, (function n(a, s) {
           try {
             s(function(c) {
               if (a._state === null) {
@@ -765,7 +765,7 @@ function Ba() {
           } catch (c) {
             hr(a, c);
           }
-        }(this, e);
+        })(this, e);
       }
       var dr = { get: function() {
         var e = L, r = $t;
@@ -811,9 +811,9 @@ function Ba() {
           var a, s = r._value;
           !r._state && Tt.length && (Tt = []), a = me && r._consoleTask ? r._consoleTask.run(function() {
             return e(s);
-          }) : e(s), r._state || Tt.indexOf(s) !== -1 || function(c) {
+          }) : e(s), r._state || Tt.indexOf(s) !== -1 || (function(c) {
             for (var u = Ke.length; u; ) if (Ke[--u]._value === c._value) return Ke.splice(u, 1);
-          }(r), n.resolve(a);
+          })(r), n.resolve(a);
         } catch (c) {
           n.reject(c);
         } finally {
@@ -1055,18 +1055,18 @@ function Ba() {
             case "string":
               return r < e ? 1 : e < r ? -1 : 0;
             case "binary":
-              return function(s, c) {
+              return (function(s, c) {
                 for (var u = s.length, d = c.length, p = u < d ? u : d, m = 0; m < p; ++m) if (s[m] !== c[m]) return s[m] < c[m] ? -1 : 1;
                 return u === d ? 0 : u < d ? -1 : 1;
-              }(dn(e), dn(r));
+              })(dn(e), dn(r));
             case "Array":
-              return function(s, c) {
+              return (function(s, c) {
                 for (var u = s.length, d = c.length, p = u < d ? u : d, m = 0; m < p; ++m) {
                   var w = V(s[m], c[m]);
                   if (w !== 0) return w;
                 }
                 return u === d ? 0 : u < d ? -1 : 1;
-              }(e, r);
+              })(e, r);
           }
         } catch {
         }
@@ -1137,7 +1137,7 @@ function Ba() {
         try {
           var p = a && a.db._novip === this.db._novip ? a === L.trans ? a._promise(e, u, n) : Ne(function() {
             return a._promise(e, u, n);
-          }, { trans: a, transless: L.transless || L }) : function m(w, h, O, y) {
+          }, { trans: a, transless: L.transless || L }) : (function m(w, h, O, y) {
             if (w.idbdb && (w._state.openComplete || L.letThrough || w._vip)) {
               var v = w._createTransaction(h, O, w._dbSchema);
               try {
@@ -1169,7 +1169,7 @@ function Ba() {
             return w._state.dbReadyPromise.then(function() {
               return m(w, h, O, y);
             });
-          }(this.db, e, [this.name], u);
+          })(this.db, e, [this.name], u);
           return c && (p._consoleTask = c, p = p.catch(function(m) {
             return console.trace(m), q(m);
           })), p;
@@ -1244,13 +1244,13 @@ function Ba() {
         function s() {
           return r !== null && r.apply(this, arguments) || this;
         }
-        (this.schema.mappedClass = e).prototype instanceof un && (function(p, m) {
+        (this.schema.mappedClass = e).prototype instanceof un && ((function(p, m) {
           if (typeof m != "function" && m !== null) throw new TypeError("Class extends value " + String(m) + " is not a constructor or null");
           function w() {
             this.constructor = p;
           }
           i(p, m), p.prototype = m === null ? Object.create(m) : (w.prototype = m.prototype, new w());
-        }(s, r = e), Object.defineProperty(s.prototype, "db", { get: function() {
+        })(s, r = e), Object.defineProperty(s.prototype, "db", { get: function() {
           return n;
         }, enumerable: !1, configurable: !0 }), s.prototype.table = function() {
           return a;
@@ -1796,14 +1796,14 @@ function Ba() {
           var P = c(A);
           if (r(P, p, y)) return !0;
           for (var N = null, I = y; I < h; ++I) {
-            var R = function($, T, k, j, C, K) {
+            var R = (function($, T, k, j, C, K) {
               for (var W = Math.min($.length, j.length), F = -1, H = 0; H < W; ++H) {
                 var he = T[H];
                 if (he !== j[H]) return C($[H], k[H]) < 0 ? $.substr(0, H) + k[H] + k.substr(H + 1) : C($[H], j[H]) < 0 ? $.substr(0, H) + j[H] + k.substr(H + 1) : 0 <= F ? $.substr(0, F) + T[F] + k.substr(F + 1) : null;
                 C($[H], he) < 0 && (F = H);
               }
               return W < j.length && K === "next" ? $ + k.substr($.length) : W < $.length && K === "prev" ? $.substr(0, k.length) : F < 0 ? null : $.substr(0, F) + j[F] + k.substr(F + 1);
-            }(A, P, d[I], p[I], u, m);
+            })(A, P, d[I], p[I], u, m);
             R === null && N === null ? y = I + 1 : (N === null || 0 < u(N, R)) && (N = R);
           }
           return E(N !== null ? function() {
@@ -2029,10 +2029,10 @@ function Ba() {
         var r, n = this._root(), a = M.resolve(e);
         n._waitingFor ? n._waitingFor = n._waitingFor.then(function() {
           return a;
-        }) : (n._waitingFor = a, n._waitingQueue = [], r = n.idbtrans.objectStore(n.storeNames[0]), function c() {
+        }) : (n._waitingFor = a, n._waitingQueue = [], r = n.idbtrans.objectStore(n.storeNames[0]), (function c() {
           for (++n._spinCount; n._waitingQueue.length; ) n._waitingQueue.shift()();
           n._waitingFor && (r.get(-1 / 0).onsuccess = c);
-        }());
+        })());
         var s = n._waitingFor;
         return new M(function(c, u) {
           a.then(function(d) {
@@ -2257,9 +2257,9 @@ function Ba() {
         n.forEach(function(s) {
           var c = a[s];
           r.forEach(function(u) {
-            var d = function p(m, w) {
+            var d = (function p(m, w) {
               return Hn(m, w) || (m = se(m)) && p(m, w);
-            }(u, s);
+            })(u, s);
             (!d || "value" in d && d.value === void 0) && (u === e.Transaction.prototype || u instanceof e.Transaction ? Ae(u, s, { get: function() {
               return this.table(s);
             }, set: function(p) {
@@ -2331,9 +2331,9 @@ function Ba() {
                   return N !== "$meta";
                 })) : P.objectStore("$meta").put(A._cfg.version, "version"));
               });
-            }), function A() {
+            }), (function A() {
               return E.length ? M.resolve(E.shift()(y.idbtrans)).then(A) : M.resolve();
-            }().then(function() {
+            })().then(function() {
               Sn(S, v);
             })) : M.resolve();
             var h, O, y, v, E, S;
@@ -2350,13 +2350,13 @@ function Ba() {
         var n = Vt(0, e.idbdb, r);
         zt(e, e._dbSchema, r);
         for (var a = 0, s = Ar(n, e._dbSchema).change; a < s.length; a++) {
-          var c = function(u) {
+          var c = (function(u) {
             if (u.change.length || u.recreate) return console.warn("Unable to patch indexes of table ".concat(u.name, " because it has changes on the type of index or primary key.")), { value: void 0 };
             var d = r.objectStore(u.name);
             u.add.forEach(function(p) {
               me && console.debug("Dexie upgrade patch: Creating missing index ".concat(u.name, ".").concat(p.src)), Ht(d, p);
             });
-          }(s[a]);
+          })(s[a]);
           if (typeof c == "object") return c.value;
         }
       }
@@ -2481,10 +2481,10 @@ function Ba() {
         }
       }
       function wt(e, r) {
-        Tr(r) || function n(a, p) {
+        Tr(r) || (function n(a, p) {
           var c = p.from, u = p.to, d = p.l, p = p.r;
           Et(a, c, u), d && n(a, d), p && n(a, p);
-        }(e, r);
+        })(e, r);
       }
       function _n(e, r) {
         var n = Yt(r), a = n.next();
@@ -2525,11 +2525,11 @@ function Ba() {
       }
       function Xt(e, r) {
         return D(r).forEach(function(n) {
-          e[n] ? wt(e[n], r[n]) : e[n] = function a(s) {
+          e[n] ? wt(e[n], r[n]) : e[n] = (function a(s) {
             var c, u, d = {};
             for (c in s) re(s, c) && (u = s[c], d[c] = !u || typeof u != "object" || Jr.has(u.constructor) ? u : a(u));
             return d;
-          }(r[n]);
+          })(r[n]);
         }), e;
       }
       function Rr(e, r) {
@@ -2773,14 +2773,14 @@ function Ba() {
               case "deleteRange":
                 if (d.fire === X) break;
                 return c._promise("readwrite", function() {
-                  return function h(O, y, v) {
+                  return (function h(O, y, v) {
                     return n.query({ trans: O, values: !1, query: { index: a, range: y }, limit: v }).then(function(E) {
                       var S = E.result;
                       return w({ type: "delete", keys: S, trans: O }).then(function(A) {
                         return 0 < A.numFailures ? Promise.reject(A.failures[0]) : S.length < v ? { failures: [], numFailures: 0, lastResult: void 0 } : h(O, l(l({}, y), { lower: S[S.length - 1], lowerOpen: !0 }), v);
                       });
                     });
-                  }(s.trans, s.range, 1e4);
+                  })(s.trans, s.range, 1e4);
                 }, !0);
             }
             return n.mutate(s);
@@ -3003,7 +3003,7 @@ function Ba() {
         return V(e.lower, r.lower) === 0 && V(e.upper, r.upper) === 0 && !!e.lowerOpen == !!r.lowerOpen && !!e.upperOpen == !!r.upperOpen;
       }
       function _a(e, r) {
-        return function(n, a, s, c) {
+        return (function(n, a, s, c) {
           if (n === void 0) return a !== void 0 ? -1 : 0;
           if (a === void 0) return 1;
           if ((a = V(n, a)) === 0) {
@@ -3012,7 +3012,7 @@ function Ba() {
             if (c) return -1;
           }
           return a;
-        }(e.lower, r.lower, e.lowerOpen, r.lowerOpen) <= 0 && 0 <= function(n, a, s, c) {
+        })(e.lower, r.lower, e.lowerOpen, r.lowerOpen) <= 0 && 0 <= (function(n, a, s, c) {
           if (n === void 0) return a !== void 0 ? 1 : 0;
           if (a === void 0) return -1;
           if ((a = V(n, a)) === 0) {
@@ -3021,7 +3021,7 @@ function Ba() {
             if (c) return 1;
           }
           return a;
-        }(e.upper, r.upper, e.upperOpen, r.upperOpen);
+        })(e.upper, r.upper, e.upperOpen, r.upperOpen);
       }
       function Aa(e, r, n, a) {
         e.subscribers.add(n), a.addEventListener("abort", function() {
@@ -3088,7 +3088,7 @@ function Ba() {
             }), u) : a.mutate(c);
           }, query: function(c) {
             if (!In(L, a) || !Tn("query", c)) return a.query(c);
-            var u = ((m = L.trans) === null || m === void 0 ? void 0 : m.db._options.cache) === "immutable", h = L, d = h.requery, p = h.signal, m = function(v, E, S, A) {
+            var u = ((m = L.trans) === null || m === void 0 ? void 0 : m.db._options.cache) === "immutable", h = L, d = h.requery, p = h.signal, m = (function(v, E, S, A) {
               var P = Fe["idb://".concat(v, "/").concat(E)];
               if (!P) return [];
               if (!(E = P.queries[S])) return [null, !1, P, null];
@@ -3107,7 +3107,7 @@ function Ba() {
                     return kn(R.req.query.range, A.query.range);
                   }), [I, !!I, P, N];
               }
-            }(r, n, "query", c), w = m[0], h = m[1], O = m[2], y = m[3];
+            })(r, n, "query", c), w = m[0], h = m[1], O = m[2], y = m[3];
             return w && h ? w.obsSet = c.obsSet : (h = a.query(c).then(function(v) {
               var E = v.result;
               if (w && (w.res = E), u) {
@@ -3402,7 +3402,7 @@ function Ba() {
             Xt(p, E), Rr(m, p) && O();
           }, v = function() {
             var E, S, A;
-            !d && qt.indexedDB && (p = {}, E = {}, u && u.abort(), u = new AbortController(), A = function(P) {
+            !d && qt.indexedDB && (p = {}, E = {}, u && u.abort(), u = new AbortController(), A = (function(P) {
               var N = Je();
               try {
                 c && qe();
@@ -3411,11 +3411,11 @@ function Ba() {
               } finally {
                 N && Ze();
               }
-            }(S = { subscr: E, signal: u.signal, requery: O, querier: e, trans: null }), Promise.resolve(A).then(function(P) {
-              n = !0, r = P, d || S.signal.aborted || (p = {}, function(N) {
+            })(S = { subscr: E, signal: u.signal, requery: O, querier: e, trans: null }), Promise.resolve(A).then(function(P) {
+              n = !0, r = P, d || S.signal.aborted || (p = {}, (function(N) {
                 for (var I in N) if (re(N, I)) return;
                 return 1;
-              }(m = E) || h || (Re(yt, y), h = !0), pr(function() {
+              })(m = E) || h || (Re(yt, y), h = !0), pr(function() {
                 return !d && s.next && s.next(P);
               }));
             }, function(P) {
@@ -3532,10 +3532,10 @@ function Ba() {
         return new ft({ remove: e });
       }, default: Se, RangeSet: oe, mergeRanges: wt, rangesOverlap: _n }), { default: Se }), Se;
     });
-  }(rr)), rr.exports;
+  })(rr)), rr.exports;
 }
 var Ua = Ba();
-const Fr = /* @__PURE__ */ Ka(Ua), Gn = Symbol.for("Dexie"), Ot = globalThis[Gn] || (globalThis[Gn] = Fr);
+const Fr = /* @__PURE__ */ Ka(Ua), Gn = /* @__PURE__ */ Symbol.for("Dexie"), Ot = globalThis[Gn] || (globalThis[Gn] = Fr);
 if (Fr.semVer !== Ot.semVer)
   throw new Error(`Two different versions of Dexie loaded in the same app: ${Fr.semVer} and ${Ot.semVer}`);
 const {
@@ -3556,26 +3556,26 @@ class Kn {
   subscribers = [];
   options;
   constructor(t) {
-    this.options = t, this.db = new Ot(t.app), this.db.version(15).stores({
+    this.options = t, this.db = new Ot(t.app), this.db.version(16).stores({
       channel: "id,slide_index",
-      cloud: "id,dashboard_id,hash",
+      cloud: "id,dashboard_id",
       dashboard: "id,name,update",
       display: "id,monitor_id,presentation_id,colstart,colend,rowstart,rowend",
-      hash: "id,dashboard_id,hash",
+      hash: "[id+presentation_id], id, presentation_id, hash",
       images: "id,basename,extension,size,type,url",
       messages: "id,utc,expires",
       monitor: "id,player_id,cols,rows,order,width,height,physicalwidth,physicalheight,devicePixelRatio,screenLeft,screenTop,orientation,monitor",
       player: "id,title,name,location",
       preference: "id,value,update",
       presentation: "id,name,update",
-      series: "id,dashboard_id,hash",
+      series: "id,dashboard_id",
       slide: "id,name,presentation_id,order_index,json,html,update",
       topics: "[widget_id+message_id],message_id,widget_id,dashboard_id,title,engagement,impressions,reach,sentiment,visible,approved,utc,expires",
       widget: "id,name,dashboard_id,type,update"
     }), this.db.open();
   }
   getHash = async (t) => {
-    const i = await this.db.table("hash").where({ id: t.widget }).last().catch(() => {
+    const i = await this.db.table("hash").where({ id: t.widget, presentation_id: t.presentation }).last().catch(() => {
       G(2, ["%chash%c %capi%C %chash", o.API, o.NONE, o.APP]);
     });
     return G(3, [
@@ -3589,7 +3589,8 @@ class Kn {
     ]), i?.hash ?? "none";
   };
   setHash = async (t) => await this.db.table("hash").where({
-    id: t.widget
+    id: t.widget,
+    presentation_id: t.presentation
   }).modify({ hash: t.hash }).then(() => (G(3, [
     "%cset%c %chash%c %chash}",
     o.OK,
@@ -3615,11 +3616,21 @@ class Kn {
     o.STORAGE,
     o.NONE,
     o.WIDGET,
-    "clear card hashes"
+    "clear hashes"
+  ]), 400));
+  deleteHash = async (t) => await this.db.table("hash").where({ presentation_id: t.presentation }).delete().then(() => 201).catch((i) => (G(2, [
+    "%cdelete%c %cstorage%c %chash",
+    o.KO,
+    o.NONE,
+    o.STORAGE,
+    o.NONE,
+    o.WIDGET,
+    "clear dashboard hashes",
+    t.dashboard
   ]), 400));
   createHash = async (t) => await this.db.table("hash").put({
     id: t.widget,
-    dashboard_id: t.dashboard,
+    presentation_id: t.presentation,
     hash: t.hash
   }).then(() => 201).catch((i) => (G(2, [
     "%cset%c %cstorage%c %chash",
@@ -3794,7 +3805,7 @@ class Kn {
         query: t
       };
     const i = t?.order ?? "utc", l = Math.floor(Date.now() / 1e3);
-    i !== "utc" && (t.since = l - 60 * 60 * 24 * 30), this.options.delay !== 0 ? t.before = l - (this.options.delay || 0) : t.before = l;
+    i !== "utc" && (t.since = l - 3600 * 24 * 30), this.options.delay !== 0 ? t.before = l - (this.options.delay || 0) : t.before = l;
     const g = (D) => D.utc > (t?.since || 0), b = (D) => D.utc < (t?.before || l);
     try {
       const D = this.db.table(_.TOPICS).where("widget_id").equals(t.widget).filter(g).filter(b);
@@ -4404,6 +4415,7 @@ class Bn {
   setHash = async (t) => 404;
   createHash = async (t) => 404;
   clearHash = async () => 404;
+  deleteHash = async (t) => 404;
   getCloud = async (t) => {
     const i = Y(t);
     return await _e(i).then((l) => l).catch(() => (console.warn("%capi", o.API, _.CLOUD, t.slide, t.widget), { data: null, message: "Cloud Data error", success: !1 }));
@@ -4709,6 +4721,7 @@ class Un {
   setHash = async (t) => 404;
   createHash = async (t) => 404;
   clearHash = async () => 404;
+  deleteHash = async (t) => 404;
   getCloud = async (t) => {
     const i = Y(t);
     try {
@@ -5048,6 +5061,7 @@ class Wn {
   setHash = async (t) => 404;
   createHash = async (t) => 404;
   clearHash = async () => 404;
+  deleteHash = async (t) => 404;
   getCloud = async (t) => {
     const i = Y(t);
     try {
@@ -5387,6 +5401,7 @@ class Fn {
   setHash = async (t) => 404;
   createHash = async (t) => 404;
   clearHash = async () => 404;
+  deleteHash = async (t) => 404;
   getCloud = async (t) => {
     const i = Y(t);
     try {

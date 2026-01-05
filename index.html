@@ -1,34 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
-    />
-    <meta name="bearer" content="%VITE_BEARER%" />
-    <title>Buzzcasting Storage</title>
-  </head>
 
-  <body>
-    <div id="app"></div>
-    <buzzcasting-app
-      channel="%VITE_CHANNEL%"
-      display="%VITE_DISPLAY%"
-      domain="%VITE_DOMAIN%"
-      delay="0"
-      moderation="realtime"
-      interval="120000"
-      presentation="01jc6ajqqv7ra88785zct853mm"
-      before-time="00:00:00"
-      storage="dexie"
-    >
-      <buzzcasting-presentation>
-        <buzzcasting-slide
-          id="%VITE_PRESENTATION%"
-          class="w-[1920px] h-[1080px]"
-        >
-          <cloud-widget
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <meta name="bearer" content="%VITE_BEARER%" />
+  <title>Buzzcasting Storage</title>
+</head>
+
+<body>
+  <div id="app"></div>
+  <buzzcasting-app channel="%VITE_CHANNEL%" display="%VITE_DISPLAY%" domain="%VITE_DOMAIN%" delay="0"
+    moderation="realtime" interval="120000" presentation="01jc6ajqqv7ra88785zct853mm" before-time="00:00:00"
+    storage="dexie">
+    <buzzcasting-presentation>
+      <buzzcasting-slide id="%VITE_PRESENTATION%" class="w-[1920px] h-[1080px]">
+        <!--cloud-widget
             id="cloud"
             class="font-sans text-axa-kpi h-inherit w-inherit current"
             data-dashboard="m014uvvd_1670v2kans4xs"
@@ -107,120 +94,153 @@
             css-down="text-white self-end"
             css-up="text-white self-end"
             class="hydrated"
-          ></series-widget>
-        </buzzcasting-slide>
-      </buzzcasting-presentation>
-    </buzzcasting-app>
-    <script type="module" src="/src/index.ts"></script>
+          ></series-widget-->
+        <cards-widget id="messages" brand-size="l" interval="8000" animation="0" delay="3000" parenttag="cards-widget"
+          component="card-linkedin"
+          css-avatar="max-w-12 h-12 max-h-12 w-12 rounded-full bg-contain bg-no-repeat bg-center"
+          css-backdrop="brightness(0.8)" css-body="text-base text-neutral-900 font-sans h-32 dir-ltr overflow-hidden"
+          css-bodylayout="gap-x-2" css-brand="h-6 w-6 text-black bg-white/50 rounded-full text-shadow-none"
+          css-card="font-sans" css-cardbackdrop="rounded-lg bg-cover bg-center bg-no-repeat opacity-50 backdrop-blur-sm"
+          css-cardimage="relative flex h-auto bg-contain bg-center bg-no-repeat" css-date="text-neutral-900"
+          css-dynamics="text-shadow-none" css-handle="text-sm truncate text-nowrap overflow-hidden"
+          css-heading="font-bold" css-image="bg-cover bg-center bg-no-repeat"
+          css-name="font-bold text-base text-ellipsis text-nowrap overflow-hidden text-neutral-900"
+          css-sender="text-ellipsis text-neutral-900" data-limit="1" time-format="short" date-format="medium"
+          locale="en-US" show-approve="false" show-avatar="true" show-brand="false" show-carousel="false"
+          show-date="true" show-dynamics="false" show-handle="false" show-heading="true" show-kpi="false"
+          show-name="false" show-play="false" show-sender="true" show-star="false" show-visible="true"
+          show-debug="false" data-type="messages" css-host="" css-canvas="relative left-12" css-globe="relative -left-8"
+          globe-height="" css-kpi="" data-dashboard="mjsg8fzs_12dqqlskn3y0h"
+          data-widget="e9ecfc9e_6cb3_4c77_9379_998a6bdd666d" index="0" region="is"></cards-widget>
 
-    <script type="module">
-      import {
-        BuzzcastingStorageManager,
-        BuzzcastingStorageReader,
-        Widget,
-      } from ".";
-      let options = {
-        app: import.meta.env.VITE_APP,
-        domain: import.meta.env.VITE_DOMAIN,
-        version: "v4",
-        token: "meta",
-        bearer: import.meta.env.VITE_BEARER,
-        storage: "dexie",
-        channel: import.meta.env.VITE_CHANNEL,
-        display: "",
-        moderation: "realtime",
-        beforeTime: "00:00:00",
-        delay: 0,
-        period: 0,
-        presentation: "01j7h4f0y32njz7bthhqrtyq5s",
-        suspended: true,
-      };
-      console.log(options);
+          
+        <series-widget id="series" colors="#052001 #103214 #1d4622 #2a5b31 #377140 #448751 #529f62 #5fb674 #6dcf87 #7be89a"
+          css-arrowdown="bg-arrow-down-red rounded-full h-6 w-6 bg-white text-red-500 mt-2 ml-3"
+          css-arrowup="bg-arrow-up-green rounded-full h-6 w-6 bg-white text-green-500 mt-2 ml-3"
+          css-body="gap-x-2 font-serif text-neutral-900 mt-12" css-brand="h-6 w-6"
+          css-change="place-self-center font-sans" css-count="text-2xl self-center font-sans" css-down="text-red-400"
+          css-label="text-white text-40 font-light" css-table="grid grid-cols-[120px_32px_1fr] gap-x-1"
+          css-title="text-white text-lg" css-up="text-green-400" css-widget="text-lg text-white font-sans"
+          dimensions-width="300" dimensions-height="300" show-brand="false" show-percentage-count="true"
+          show-percentage-change="true" show-date="false" show-kpi="false" config-fixed="1" config-abbreviate="true"
+          data-type="series" data-dashboard="mjsg8fzs_12dqqlskn3y0h" data-widget="0a3dc357_3789_4cda_bbdf_61782ab8cd8d"
+          animation="0" parenttag="cloud-widget" config-label="" show-debug="false" component="series-echarts-straight"
+          class="font-sans text-lg text-white"><series-echarts-straight data-type="indicator"><template
+              shadowrootmode="open"></template></series-echarts-straight></series-widget>
+      </buzzcasting-slide>
+    </buzzcasting-presentation>
+  </buzzcasting-app>
+  <script type="module" src="/src/index.ts"></script>
 
-      const bc = new BroadcastChannel(options.presentation);
-      const sm = new BuzzcastingStorageManager(options);
-      sm.startBroadcastListener();
+  <script type="module">
+    import {
+      BuzzcastingStorageManager,
+      BuzzcastingStorageReader,
+      Widget,
+    } from ".";
+    let options = {
+      app: import.meta.env.VITE_APP,
+      domain: import.meta.env.VITE_DOMAIN,
+      version: "v4",
+      token: "meta",
+      bearer: import.meta.env.VITE_BEARER,
+      storage: "dexie",
+      channel: import.meta.env.VITE_CHANNEL,
+      display: "",
+      moderation: "realtime",
+      beforeTime: "00:00:00",
+      delay: 0,
+      period: 0,
+      presentation: "01j7h4f0y32njz7bthhqrtyq5s",
+      suspended: true,
+    };
+    console.log(options);
 
-      const sr = new BuzzcastingStorageReader(options);
+    const bc = new BroadcastChannel(options.presentation);
+    const sm = new BuzzcastingStorageManager(options);
+    sm.startBroadcastListener();
 
-      //bc.onmessage = (ev) => console.log(options.presentation, ev.data);
+    const sr = new BuzzcastingStorageReader(options);
 
-      const setData = (data) => {
-        const el = document.querySelector(
-          `[data-widget='${data.query.widget}']`
-        );
-        if (data.data) {
-          el.innerHTML = JSON.stringify(data.data[data.query.type]);
-        }
-      };
+    //bc.onmessage = (ev) => console.log(options.presentation, ev.data);
 
-      window.__bc = window.__bc || {};
-      window.__bc["storageManager"] = sm;
-      window.__bc["storageReader"] = sr;
-      window.__bc["opts"] = options;
+    const setData = (data) => {
+      const el = document.querySelector(
+        `[data-widget='${data.query.widget}']`
+      );
+      if (data.data) {
+        el.innerHTML = JSON.stringify(data.data[data.query.type]);
+      }
+    };
 
-      await sm.clearHash();
+    window.__bc = window.__bc || {};
+    window.__bc["storageManager"] = sm;
+    window.__bc["storageReader"] = sr;
+    window.__bc["opts"] = options;
 
-      const cloud = new Widget(document.getElementById("cloud"), [setData]);
+    await sm.clearHash();
 
-      await cloud.getCloud().then((response) => setData(response));
+    //const cloud = new Widget(document.getElementById("cloud"), [setData]);
 
-      const messages = new Widget(document.getElementById("messages"), [
-        setData,
-      ]);
+    //await cloud.getCloud().then((response) => setData(response));
 
-      await messages.getMessages().then((response) => setData(response));
+    const messages = new Widget(document.getElementById("messages"), [
+      setData,
+    ]);
 
-      const series = new Widget(document.getElementById("series"), [setData]);
+    await messages.getMessages().then((response) => setData(response));
 
-      await series.getSeries().then((response) => setData(response));
+    const series = new Widget(document.getElementById("series"), [setData]);
 
-      // const cards2 = new Widget(document.getElementById("messages"), [setData]);
+    await series.getSeries().then((response) => setData(response));
 
-      // const slides = await sm.getSlides({
-      //   name: "High",
-      // });
-      /*console.log("slides", slides);
-      const slide = await sm.getSlide({ id: "01jc6ajqr0cbpjrrvab714f3sq" });
-      console.log("01jc6ajqr0cbpjrrvab714f3sq", slide);
-      const subscribers = {
-        "859c518e_0bf6_489c_b07d_f28fe3245eec": {
-          type: "messages",
-          moderation: "",
-          dashboard: "lzzzniev_1670v2kaule1j",
-          widget: "859c518e_0bf6_489c_b07d_f28fe3245eec",
-          presentation: options.presentation,
-          before: 1754656173,
-          hash: "18e54848",
-        },
-      };
+    // const cards2 = new Widget(document.getElementById("messages"), [setData]);
 
-      Object.values(subscribers).forEach((apiQuery) => {
-        console.log("call", apiQuery);
-        // Paralelize calls
-        sm.apiQuery(apiQuery);
-      });*/
+    // const slides = await sm.getSlides({
+    //   name: "High",
+    // });
+    /*console.log("slides", slides);
+    const slide = await sm.getSlide({ id: "01jc6ajqr0cbpjrrvab714f3sq" });
+    console.log("01jc6ajqr0cbpjrrvab714f3sq", slide);
+    const subscribers = {
+      "859c518e_0bf6_489c_b07d_f28fe3245eec": {
+        type: "messages",
+        moderation: "",
+        dashboard: "lzzzniev_1670v2kaule1j",
+        widget: "859c518e_0bf6_489c_b07d_f28fe3245eec",
+        presentation: options.presentation,
+        before: 1754656173,
+        hash: "18e54848",
+      },
+    };
 
-      setTimeout(async () => {
-        bc.postMessage({
-          event: "appReady",
-          data: { presentation: options.presentation },
-        });
-      }, 10);
+    Object.values(subscribers).forEach((apiQuery) => {
+      console.log("call", apiQuery);
+      // Paralelize calls
+      sm.apiQuery(apiQuery);
+    });*/
 
-      setTimeout(async () => {
-        await bc.postMessage({
-          event: "update",
-          data: { presentation: options.presentation },
-        });
-      }, 300);
+    setTimeout(async () => {
+      bc.postMessage({
+        event: "appReady",
+        data: { presentation: options.presentation },
+      });
+    }, 10);
 
-      // setTimeout(async () => {
-      //   await sm.stream();
-      // }, 100);
-      // setTimeout(async () => {
-      //   await sm.clearHash();
-      // }, 5000);
-    </script>
-  </body>
+    setTimeout(async () => {
+      await bc.postMessage({
+        event: "update",
+        data: { presentation: options.presentation },
+      });
+    }, 300);
+
+    // setTimeout(async () => {
+    //   await sm.stream();
+    // }, 100);
+    // setTimeout(async () => {
+    //   await sm.clearHash();
+    // }, 5000);
+  </script>
+</body>
+
 </html>
