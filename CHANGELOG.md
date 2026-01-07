@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v3.17.4
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.17.3...v3.17.4)
+
+### 🩹 Fixes
+
+- API enum hashes ([68c9af9](https://github.com/TouchFlows/buzzcasting-storage/commit/68c9af9))
+
+### 🏡 Chore
+
+- **release:** V3.17.3 ([303603c](https://github.com/TouchFlows/buzzcasting-storage/commit/303603c))
+- **release:** V3.17.3 ([7a5047b](https://github.com/TouchFlows/buzzcasting-storage/commit/7a5047b))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.17.3
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.17.3...v3.17.3)
