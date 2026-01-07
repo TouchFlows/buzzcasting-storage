@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.17.5
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.17.4...v3.17.5)
+
+### 🩹 Fixes
+
+- Hashes table as string in dexi ([31c8635](https://github.com/TouchFlows/buzzcasting-storage/commit/31c8635))
+
+### 🏡 Chore
+
+- **release:** V3.17.4 ([c20e26b](https://github.com/TouchFlows/buzzcasting-storage/commit/c20e26b))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.17.4
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.17.3...v3.17.4)
