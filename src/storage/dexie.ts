@@ -30,7 +30,7 @@ export default class DexieClient {
 			cloud: "id,dashboard_id",
 			dashboard: "id,name,update",
 			display: "id,monitor_id,presentation_id,colstart,colend,rowstart,rowend",
-			hash: "[id+presentation_id], id, presentation_id, hash",
+			hashes: "[id+presentation_id], id, presentation_id, hash",
 			images: "id,basename,extension,size,type,url",
 			messages: "id,utc,expires",
 			monitor:
@@ -49,7 +49,7 @@ export default class DexieClient {
 
 	getHash = async (query: IQuery): Promise<string> => {
 		const data = await this.db
-			.table("hash")
+			.table(API.HASH)
 			.where({ id: query.widget, presentation_id: query.presentation })
 			.last()
 			.catch(() => {
@@ -69,7 +69,7 @@ export default class DexieClient {
 
 	setHash = async (query: IQuery): Promise<number> => {
 		return await this.db
-			.table("hash")
+			.table(API.HASH)
 			.where({
 				id: query.widget,
 				presentation_id: query.presentation,
@@ -104,7 +104,7 @@ export default class DexieClient {
 
 	clearHash = async (): Promise<number> => {
 		return await this.db
-			.table("hash")
+			.table(API.HASH)
 			.clear()
 			.then(() => 201)
 			.catch((error: Error) => {
@@ -123,7 +123,7 @@ export default class DexieClient {
 
 	deleteHash = async (query: IQuery): Promise<number> => {
 		return await this.db
-			.table("hash")
+			.table(API.HASH)
 			.where({ presentation_id: query.presentation })
 			.delete()
 			.then(() => 201)
@@ -144,7 +144,7 @@ export default class DexieClient {
 
 	createHash = async (query: IQuery): Promise<number> => {
 		return await this.db
-			.table("hash")
+			.table(API.HASH)
 			.put({
 				id: query.widget,
 				presentation_id: query.presentation,
@@ -386,7 +386,7 @@ export default class DexieClient {
 					CSS.STORAGE,
 					CSS.NONE,
 					CSS.MESSAGES,
-					error.message
+					error.message,
 				);
 				return 0;
 			});
@@ -407,7 +407,7 @@ export default class DexieClient {
 					CSS.STORAGE,
 					CSS.NONE,
 					CSS.MESSAGES,
-					error.message
+					error.message,
 				);
 				return 0;
 			});
@@ -551,7 +551,7 @@ export default class DexieClient {
 					CSS.STORAGE,
 					CSS.NONE,
 					CSS.HIDE,
-					error.message
+					error.message,
 				);
 				return 0;
 			});
@@ -565,7 +565,7 @@ export default class DexieClient {
 	 */
 	setMessages = async (
 		query: IQuery,
-		data: any // { title: any, data: { messages: IMessage[], title: string, topics: string } },
+		data: any, // { title: any, data: { messages: IMessage[], title: string, topics: string } },
 	): Promise<number> => {
 		if (query.type !== API.MESSAGES) {
 			return 400;
@@ -925,7 +925,7 @@ export default class DexieClient {
 					CSS.STORAGE,
 					API.WIDGET,
 					query,
-					error.message
+					error.message,
 				);
 				return {
 					data: null,
@@ -944,7 +944,7 @@ export default class DexieClient {
 		query = widgetParams(query);
 
 		const alreadySubscribed = this.subscribers.filter(
-			(widget) => widget.widget === query.widget
+			(widget) => widget.widget === query.widget,
 		).length;
 		if (alreadySubscribed > 0) {
 			return null;
@@ -958,14 +958,14 @@ export default class DexieClient {
 			CSS.NONE,
 			CSS.SUBSCRIBE,
 			query.slide,
-			query.widget
+			query.widget,
 		);
 		console.debug(
 			"%cstorage%c %csubscribe",
 			CSS.STORAGE,
 			CSS.NONE,
 			CSS.SUBSCRIBE,
-			query
+			query,
 		);
 		this.subscribers.push(query);
 		return null;
@@ -1082,7 +1082,7 @@ export default class DexieClient {
 					CSS.STORAGE,
 					EVENTS.SLIDE_STORE,
 					query,
-					error.message
+					error.message,
 				);
 				return {
 					data: null,
@@ -1107,7 +1107,7 @@ export default class DexieClient {
 					"%cstorage ",
 					CSS.STORAGE,
 					EVENTS.PRESENTATION_LOAD,
-					query.id
+					query.id,
 				);
 			});
 		if (data === undefined) {
@@ -1189,7 +1189,7 @@ export default class DexieClient {
 					CSS.STORAGE,
 					EVENTS.PRESENTATION_STORE,
 					query,
-					error.message
+					error.message,
 				);
 				return {
 					data: null,
@@ -1293,7 +1293,7 @@ export default class DexieClient {
 					CSS.STORAGE,
 					EVENTS.PREFERENCE_STORE,
 					preference,
-					error.message
+					error.message,
 				);
 				return {
 					data: null,
@@ -1366,7 +1366,7 @@ export default class DexieClient {
 					CSS.STORAGE,
 					EVENTS.IMAGE_SET,
 					query,
-					error.message
+					error.message,
 				);
 				return {
 					data: null,
