@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.17.3
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.17.2...v3.17.3)
+
+### 🩹 Fixes
+
+- Hash idb table to hashes for when upgrading ([fc95f9d](https://github.com/TouchFlows/buzzcasting-storage/commit/fc95f9d))
+
+### 🏡 Chore
+
+- **release:** V3.17.2 ([472de41](https://github.com/TouchFlows/buzzcasting-storage/commit/472de41))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.17.2
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.17.1...v3.17.2)
