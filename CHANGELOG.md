@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.18.0
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.17.5...v3.18.0)
+
+### 🚀 Enhancements
+
+- Add period for messages ([7e485a2](https://github.com/TouchFlows/buzzcasting-storage/commit/7e485a2))
+
+### 🏡 Chore
+
+- **release:** V3.17.5 ([a8ad4f7](https://github.com/TouchFlows/buzzcasting-storage/commit/a8ad4f7))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.17.5
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.17.4...v3.17.5)
