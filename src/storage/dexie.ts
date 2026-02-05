@@ -438,11 +438,18 @@ export default class DexieClient {
 			};
 		}
 		const order = query?.order ?? "utc";
-		const now: number = Math.floor(Date.now() / 1000);
 
-		if (order !== "utc") {
-			query.since = now - 60 * 60 * 24 * 30;
-		}
+		const now: number = Math.floor(Date.now() / 1000);
+		const period = query?.period ?? 0;
+		query.since = period === 0 ? now - 60 * 60 * 24 * 30 : now - period;
+
+		// switch(order){
+		// 	case 'utc':
+		// 		break;
+		// }
+		// if (order !== "utc") {
+		// 	query.since = now - 60 * 60 * 24 * 30;
+		// }
 
 		if (this.options.delay !== 0) {
 			query.before = now - (this.options.delay || 0);
