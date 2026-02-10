@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v3.18.2
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.18.0...v3.18.2)
+
+### 🩹 Fixes
+
+- Hashes table remove presentation id ([d5abff1](https://github.com/TouchFlows/buzzcasting-storage/commit/d5abff1))
+
+### 🏡 Chore
+
+- **release:** V3.18.0 ([ac80754](https://github.com/TouchFlows/buzzcasting-storage/commit/ac80754))
+- **release:** V3.18.1 ([b855cda](https://github.com/TouchFlows/buzzcasting-storage/commit/b855cda))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.18.1
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.18.0...v3.18.1)
