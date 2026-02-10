@@ -118,7 +118,7 @@ function Pt(f, t) {
   }
   return t;
 }
-const $a = "3.18.0";
+const $a = "3.18.2";
 async function* ja(f) {
   const t = f.pipeThrough(new TextDecoderStream("utf-8")).getReader();
   let i = "";
@@ -3556,12 +3556,12 @@ class Kn {
   subscribers = [];
   options;
   constructor(t) {
-    this.options = t, this.db = new At(t.app), this.db.version(17).stores({
+    this.options = t, this.db = new At(t.app), this.db.version(18).stores({
       channel: "id,slide_index",
       cloud: "id,dashboard_id",
       dashboard: "id,name,update",
       display: "id,monitor_id,presentation_id,colstart,colend,rowstart,rowend",
-      hashes: "[id+presentation_id], id, presentation_id, hash",
+      hashes: "id, hash",
       images: "id,basename,extension,size,type,url",
       messages: "id,utc,expires",
       monitor: "id,player_id,cols,rows,order,width,height,physicalwidth,physicalheight,devicePixelRatio,screenLeft,screenTop,orientation,monitor",
@@ -3575,7 +3575,7 @@ class Kn {
     }), this.db.open();
   }
   getHash = async (t) => {
-    const i = await this.db.table("hashes").where({ id: t.widget, presentation_id: t.presentation }).last().catch(() => {
+    const i = await this.db.table("hashes").where({ id: t.widget }).last().catch(() => {
       G(2, ["%chash%c %capi%C %chash", o.API, o.NONE, o.APP]);
     });
     return G(3, [
@@ -3589,8 +3589,7 @@ class Kn {
     ]), i?.hash ?? "none";
   };
   setHash = async (t) => await this.db.table("hashes").where({
-    id: t.widget,
-    presentation_id: t.presentation
+    id: t.widget
   }).modify({ hash: t.hash }).then(() => (G(3, [
     "%cset%c %chash%c %chash}",
     o.OK,
@@ -3618,7 +3617,7 @@ class Kn {
     o.WIDGET,
     "clear hashes"
   ]), 400));
-  deleteHash = async (t) => await this.db.table("hashes").where({ presentation_id: t.presentation }).delete().then(() => 201).catch((i) => (G(2, [
+  deleteHash = async (t) => await this.db.table("hashes").where({ id: t.widget }).delete().then(() => 201).catch((i) => (G(2, [
     "%cdelete%c %cstorage%c %chash",
     o.KO,
     o.NONE,
@@ -3630,7 +3629,6 @@ class Kn {
   ]), 400));
   createHash = async (t) => await this.db.table("hashes").put({
     id: t.widget,
-    presentation_id: t.presentation,
     hash: t.hash
   }).then(() => 201).catch((i) => (G(2, [
     "%cset%c %cstorage%c %chash",

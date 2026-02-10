@@ -30,7 +30,7 @@ export default class DexieClient {
 			cloud: "id,dashboard_id",
 			dashboard: "id,name,update",
 			display: "id,monitor_id,presentation_id,colstart,colend,rowstart,rowend",
-			hashes: "id, hash",
+			hashtable: "id, hash",
 			images: "id,basename,extension,size,type,url",
 			messages: "id,utc,expires",
 			monitor:
@@ -49,7 +49,7 @@ export default class DexieClient {
 
 	getHash = async (query: IQuery): Promise<string> => {
 		const data = await this.db
-			.table("hashes")
+			.table("hashtable")
 			.where({ id: query.widget })
 			.last()
 			.catch(() => {
@@ -69,7 +69,7 @@ export default class DexieClient {
 
 	setHash = async (query: IQuery): Promise<number> => {
 		return await this.db
-			.table("hashes")
+			.table("hashtable")
 			.where({
 				id: query.widget
 			})
@@ -103,7 +103,7 @@ export default class DexieClient {
 
 	clearHash = async (): Promise<number> => {
 		return await this.db
-			.table("hashes")
+			.table("hashtable")
 			.clear()
 			.then(() => 201)
 			.catch((error: Error) => {
@@ -122,7 +122,7 @@ export default class DexieClient {
 
 	deleteHash = async (query: IQuery): Promise<number> => {
 		return await this.db
-			.table("hashes")
+			.table("hashtable")
 			.where({ id: query.widget })
 			.delete()
 			.then(() => 201)
@@ -143,7 +143,7 @@ export default class DexieClient {
 
 	createHash = async (query: IQuery): Promise<number> => {
 		return await this.db
-			.table("hashes")
+			.table("hashtable")
 			.put({
 				id: query.widget,
 				hash: query.hash,
