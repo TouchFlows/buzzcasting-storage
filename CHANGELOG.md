@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v3.18.4
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.18.2...v3.18.4)
+
+### 🩹 Fixes
+
+- Rename idb hashes to hashtable ([7bf6112](https://github.com/TouchFlows/buzzcasting-storage/commit/7bf6112))
+
+### 🏡 Chore
+
+- **release:** V3.18.2 ([882a25e](https://github.com/TouchFlows/buzzcasting-storage/commit/882a25e))
+- **release:** V3.18.3 ([1bc5c36](https://github.com/TouchFlows/buzzcasting-storage/commit/1bc5c36))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.18.3
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.18.2...v3.18.3)
