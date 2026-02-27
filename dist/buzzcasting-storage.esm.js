@@ -118,7 +118,7 @@ function Pt(f, t) {
   }
   return t;
 }
-const $a = "3.19.1";
+const $a = "3.19.2";
 async function* Ga(f) {
   const t = f.pipeThrough(new TextDecoderStream("utf-8")).getReader();
   let i = "";
@@ -6180,7 +6180,7 @@ class rs {
   loadPresentation = async (t) => await this.api.loadPresentation(t);
   storePresentation = async (t) => await this.api.storePresentation(t);
   deletePresentation = async (t) => await this.sm?.deletePresentation(t);
-  deleteWPresentations = async () => await this.sm?.deletePresentations();
+  deletePresentations = async () => await this.sm?.deletePresentations();
   getPreference = async (t) => await this.sm?.getPreference(t);
   getPreferences = async (t) => await this.sm?.getPreferences(t);
   setPreference = async (t) => await this.sm?.setPreference(t);

@@ -40,7 +40,7 @@ export declare class BuzzcastingStorageManager {
     loadPresentation: (query: IQuery) => Promise<number>;
     storePresentation: (query: IQuery) => Promise<IResponse | number>;
     deletePresentation: (query: IQuery) => Promise<IResponse | number | undefined>;
-    deleteWPresentations: () => Promise<IResponse | number | undefined>;
+    deletePresentations: () => Promise<IResponse | number | undefined>;
     getPreference: (preference: IPreference) => Promise<IResponse | undefined>;
     getPreferences: (query?: IQuery) => Promise<IResponse | undefined>;
     setPreference: (preference: IPreference) => Promise<IResponse | undefined>;

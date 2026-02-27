@@ -673,7 +673,7 @@ export class BuzzcastingStorageManager {
 		return await this.sm?.deleteDashboard(query);
 	};
 
-	public deleteWDashboards = async (): Promise<
+	public deleteDashboards = async (): Promise<
 		IResponse | number | undefined
 	> => {
 		return await this.sm?.deleteDashboards();
