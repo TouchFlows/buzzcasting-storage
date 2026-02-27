@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v3.19.2
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.19.0...v3.19.2)
+
+### 🩹 Fixes
+
+- Remove query param from deleteXXXs ([af39bde](https://github.com/TouchFlows/buzzcasting-storage/commit/af39bde))
+
+### 🏡 Chore
+
+- **release:** V3.19.0 ([1b3af74](https://github.com/TouchFlows/buzzcasting-storage/commit/1b3af74))
+- **release:** V3.19.1 ([dca50bb](https://github.com/TouchFlows/buzzcasting-storage/commit/dca50bb))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.19.1
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.19.0...v3.19.1)
