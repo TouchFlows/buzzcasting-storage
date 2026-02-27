@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.19.3
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.19.2...v3.19.3)
+
+### 🩹 Fixes
+
+- DeletePresentations typo ([c84b248](https://github.com/TouchFlows/buzzcasting-storage/commit/c84b248))
+
+### 🏡 Chore
+
+- **release:** V3.19.2 ([3aef285](https://github.com/TouchFlows/buzzcasting-storage/commit/3aef285))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.19.2
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.19.0...v3.19.2)
