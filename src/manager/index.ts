@@ -551,9 +551,7 @@ export class BuzzcastingStorageManager {
 		return await this.sm?.deleteSlide(query);
 	};
 
-	public deleteSlidens = async (
-		query: IQuery,
-	): Promise<IResponse | number | undefined> => {
+	public deleteSlides = async (): Promise<IResponse | number | undefined> => {
 		return await this.sm?.deleteSlides();
 	};
 
@@ -591,9 +589,9 @@ export class BuzzcastingStorageManager {
 		return await this.sm?.deletePresentation(query);
 	};
 
-	public deleteWPresentations = async (
-		query: IQuery,
-	): Promise<IResponse | number | undefined> => {
+	public deleteWPresentations = async (): Promise<
+		IResponse | number | undefined
+	> => {
 		return await this.sm?.deletePresentations();
 	};
 
@@ -653,9 +651,7 @@ export class BuzzcastingStorageManager {
 		return await this.sm?.deleteWidget(query);
 	};
 
-	public deleteWidgets = async (
-		query: IQuery,
-	): Promise<IResponse | number | undefined> => {
+	public deleteWidgets = async (): Promise<IResponse | number | undefined> => {
 		return await this.sm?.deleteWidgets();
 	};
 
@@ -677,9 +673,9 @@ export class BuzzcastingStorageManager {
 		return await this.sm?.deleteDashboard(query);
 	};
 
-	public deleteWDashboards = async (
-		query: IQuery,
-	): Promise<IResponse | number | undefined> => {
+	public deleteWDashboards = async (): Promise<
+		IResponse | number | undefined
+	> => {
 		return await this.sm?.deleteDashboards();
 	};
 
