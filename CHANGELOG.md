@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.20.0
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.19.4...v3.20.0)
+
+### 🚀 Enhancements
+
+- Add bulk, set, and get accessors ([70ab887](https://github.com/TouchFlows/buzzcasting-storage/commit/70ab887))
+
+### 🏡 Chore
+
+- **release:** V3.19.4 ([b8c9487](https://github.com/TouchFlows/buzzcasting-storage/commit/b8c9487))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.19.4
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.19.3...v3.19.4)
