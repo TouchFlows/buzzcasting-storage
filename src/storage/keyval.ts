@@ -86,7 +86,7 @@ export default class KeyvalClient {
 					CSS.STORAGE,
 					API.CLOUD,
 					query,
-					error.message
+					error.message,
 				);
 				return 400;
 			});
@@ -113,7 +113,7 @@ export default class KeyvalClient {
 					CSS.STORAGE,
 					API.SERIES,
 					query,
-					error.message
+					error.message,
 				);
 				return 400;
 			});
@@ -140,7 +140,7 @@ export default class KeyvalClient {
 					CSS.STORAGE,
 					API.MESSAGES,
 					query,
-					error.message
+					error.message,
 				);
 				return 400;
 			});
@@ -153,7 +153,7 @@ export default class KeyvalClient {
 
 	hideMessage = async (id: string, visible: number) => {
 		console.debug(
-			`hideMessage ${id} ${visible} not implemented for ${this.options.storage}`
+			`hideMessage ${id} ${visible} not implemented for ${this.options.storage}`,
 		);
 	};
 
@@ -210,7 +210,7 @@ export default class KeyvalClient {
 					CSS.STORAGE,
 					API.WIDGET,
 					query,
-					error.message
+					error.message,
 				);
 				return {
 					data: null,
@@ -270,7 +270,7 @@ export default class KeyvalClient {
 					CSS.STORAGE,
 					API.WIDGET,
 					query,
-					error.message
+					error.message,
 				);
 				return {
 					data: null,
@@ -280,6 +280,57 @@ export default class KeyvalClient {
 			});
 	};
 
+	deleteDashboard = async (query: IQuery): Promise<IResponse> => {
+		// const key = getKey(query);
+		// return await get(key)
+		// 	.then((data) => data)
+		// 	.catch((error) => {
+		// 		console.warn("%capi", CSS.API, API.PRESENTATION);
+		return {
+			data: null,
+			message: `Dashboards delete error: `,
+			success: false,
+		};
+		// });
+	};
+
+	deleteDashboards = async (): Promise<IResponse> => {
+		// const key = getKey(query);
+		// return await get(key)
+		// 	.then((data) => data)
+		// 	.catch((error) => {
+		// 		console.warn("%capi", CSS.API, API.PRESENTATION);
+		return {
+			data: null,
+			message: `Dashboards delete error: `,
+			success: false,
+		};
+		// });
+	};
+
+	deleteWidget = async (query: IQuery): Promise<number | undefined> => {
+		return 404;
+	};
+
+	deleteWidgets = async (): Promise<number | undefined> => {
+		return 404;
+	};
+
+	deleteSlide = async (query: IQuery): Promise<number | undefined> => {
+		return 404;
+	};
+
+	deleteSlides = async (): Promise<number | undefined> => {
+		return 404;
+	};
+
+	deletePresentation = async (query: IQuery): Promise<number | undefined> => {
+		return 404;
+	};
+
+	deletePresentations = async (): Promise<number | undefined> => {
+		return 404;
+	};
 	/**
 	 * Add component subscriber
 	 * @param query IQuery
@@ -291,7 +342,7 @@ export default class KeyvalClient {
 			query = moderation(this.options, query);
 		}
 		const alreadySubscribed = this.subscribers.filter(
-			(widget) => widget.widget === query.widget
+			(widget) => widget.widget === query.widget,
 		).length;
 		if (alreadySubscribed > 0) {
 			return null;
@@ -302,7 +353,7 @@ export default class KeyvalClient {
 			CSS.NONE,
 			CSS.SUBSCRIBE,
 			query.slide,
-			query.widget
+			query.widget,
 		);
 		this.subscribers.push(query);
 		return null;
@@ -366,7 +417,7 @@ export default class KeyvalClient {
 					CSS.STORAGE,
 					API.SLIDE,
 					query,
-					error.message
+					error.message,
 				);
 				return {
 					data: null,
@@ -426,7 +477,7 @@ export default class KeyvalClient {
 					CSS.STORAGE,
 					API.PRESENTATION,
 					query,
-					error.message
+					error.message,
 				);
 				return {
 					data: null,
@@ -482,7 +533,7 @@ export default class KeyvalClient {
 					CSS.STORAGE,
 					API.PREFERENCE,
 					preference,
-					error.message
+					error.message,
 				);
 				return {
 					data: null,

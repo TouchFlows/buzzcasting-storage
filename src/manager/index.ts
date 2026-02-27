@@ -106,7 +106,7 @@ export class BuzzcastingStorageManager {
 
 		subscriberQueries.forEach(async (apiCall) => {
 			await apiCall.then(
-				async (apiResp: any) => await this.processResponse(apiResp)
+				async (apiResp: any) => await this.processResponse(apiResp),
 			);
 		});
 	};
@@ -145,7 +145,7 @@ export class BuzzcastingStorageManager {
 					}
 					// check and filter that message has an ID
 					apiResp.data.messages = apiResp.data.messages.filter(
-						(msg: any) => msg.id !== null
+						(msg: any) => msg.id !== null,
 					);
 
 					// check if any topic dynamics have changed
@@ -480,9 +480,8 @@ export class BuzzcastingStorageManager {
 
 		const retentionDuration = this.options?.retention || 86400 * 40; // 40 days
 
-		const count: number | undefined = await this.sm?.cleanMessages(
-			retentionDuration
-		);
+		const count: number | undefined =
+			await this.sm?.cleanMessages(retentionDuration);
 
 		log(3, [
 			"%cclean%c %cstorage%c %cmessages",
@@ -512,7 +511,7 @@ export class BuzzcastingStorageManager {
 	};
 
 	public hideLabels: (query: IQuery) => Promise<IResponse> = async (
-		query: IQuery
+		query: IQuery,
 	): Promise<IResponse> => {
 		return await this.api.hideLabels(query);
 	};
@@ -546,20 +545,32 @@ export class BuzzcastingStorageManager {
 		return await this.api.storeSlide(query);
 	};
 
+	public deleteSlide = async (
+		query: IQuery,
+	): Promise<IResponse | number | undefined> => {
+		return await this.sm?.deleteSlide(query);
+	};
+
+	public deleteSlidens = async (
+		query: IQuery,
+	): Promise<IResponse | number | undefined> => {
+		return await this.sm?.deleteSlides();
+	};
+
 	public getPresentation = async (
-		query: IQuery
+		query: IQuery,
 	): Promise<IResponse | undefined> => {
 		return await this.sm?.getPresentation(query);
 	};
 
 	public getPresentations = async (
-		query?: IQuery
+		query?: IQuery,
 	): Promise<IResponse | undefined> => {
 		return await this.sm?.getPresentations(query);
 	};
 
 	public setPresentation = async (
-		query: IQuery
+		query: IQuery,
 	): Promise<IResponse | undefined> => {
 		return await this.sm?.setPresentation(query);
 	};
@@ -569,37 +580,49 @@ export class BuzzcastingStorageManager {
 	};
 
 	public storePresentation = async (
-		query: IQuery
+		query: IQuery,
 	): Promise<IResponse | number> => {
 		return await this.api.storePresentation(query);
 	};
 
+	public deletePresentation = async (
+		query: IQuery,
+	): Promise<IResponse | number | undefined> => {
+		return await this.sm?.deletePresentation(query);
+	};
+
+	public deleteWPresentations = async (
+		query: IQuery,
+	): Promise<IResponse | number | undefined> => {
+		return await this.sm?.deletePresentations();
+	};
+
 	public getPreference = async (
-		preference: IPreference
+		preference: IPreference,
 	): Promise<IResponse | undefined> => {
 		return await this.sm?.getPreference(preference);
 	};
 
 	public getPreferences = async (
-		query?: IQuery
+		query?: IQuery,
 	): Promise<IResponse | undefined> => {
 		return await this.sm?.getPreferences(query);
 	};
 
 	public setPreference = async (
-		preference: IPreference
+		preference: IPreference,
 	): Promise<IResponse | undefined> => {
 		return await this.sm?.setPreference(preference);
 	};
 
 	public loadPreference = async (
-		preference: IPreference
+		preference: IPreference,
 	): Promise<IResponse | undefined> => {
 		return await this.api.loadPreference(preference);
 	};
 
 	public storePreference = async (
-		preference: IPreference
+		preference: IPreference,
 	): Promise<IResponse | number> => {
 		return await this.api.storePreference(preference);
 	};
@@ -613,25 +636,51 @@ export class BuzzcastingStorageManager {
 	};
 
 	public getWidgets = async (
-		query?: IQuery
+		query?: IQuery,
 	): Promise<IResponse | undefined> => {
 		return await this.sm?.getWidgets(query);
 	};
 
-	public setWidget = async (query: IQuery): Promise<IResponse | undefined> => {
+	public setWidget = async (
+		query: IQuery,
+	): Promise<IResponse | number | undefined> => {
 		return await this.sm?.setWidget(query);
 	};
 
+	public deleteWidget = async (
+		query: IQuery,
+	): Promise<IResponse | number | undefined> => {
+		return await this.sm?.deleteWidget(query);
+	};
+
+	public deleteWidgets = async (
+		query: IQuery,
+	): Promise<IResponse | number | undefined> => {
+		return await this.sm?.deleteWidgets();
+	};
+
 	public loadDashboards = async (
-		query?: IQuery
+		query?: IQuery,
 	): Promise<IResponse | undefined> => {
 		return await this.api.loadDashboards(query);
 	};
 
 	public getDashboard = async (
-		query: IQuery
+		query: IQuery,
 	): Promise<IResponse | undefined> => {
 		return await this.sm?.getDashboard(query);
+	};
+
+	public deleteDashboard = async (
+		query: IQuery,
+	): Promise<IResponse | number | undefined> => {
+		return await this.sm?.deleteDashboard(query);
+	};
+
+	public deleteWDashboards = async (
+		query: IQuery,
+	): Promise<IResponse | number | undefined> => {
+		return await this.sm?.deleteDashboards();
 	};
 
 	public getDashboards = async (): Promise<IResponse | undefined> => {
@@ -639,26 +688,26 @@ export class BuzzcastingStorageManager {
 	};
 
 	public setDashboard = async (
-		query: IQuery
+		query: IQuery,
 	): Promise<IResponse | undefined> => {
 		return await this.sm?.setDashboard(query);
 	};
 
 	public loadImages = async (
-		folder: string
+		folder: string,
 	): Promise<IResponse | undefined> => {
 		return await this.api.loadImages(folder);
 	};
 
 	public storeImage = async (
-		imageFile: FormData
+		imageFile: FormData,
 	): Promise<IResponse | number> => {
 		return await this.api.storeImage(imageFile);
 	};
 
 	public deleteImage = async (
 		folderName: string,
-		imageName: string
+		imageName: string,
 	): Promise<IResponse | number> => {
 		return await this.api.deleteImage(folderName, imageName);
 	};

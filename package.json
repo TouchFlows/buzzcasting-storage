@@ -36,11 +36,11 @@
 		"ndjson-readablestream": "^1.4.0"
 	},
 	"devDependencies": {
-		"@antfu/eslint-config": "^7.2.0",
+		"@antfu/eslint-config": "^7.4.3",
 		"@commitlint/cli": "^20.4.1",
 		"@commitlint/config-conventional": "^20.4.1",
 		"@types/node": "^24.10.10",
-		"@typescript-eslint/eslint-plugin": "^8.54.0",
+		"@typescript-eslint/eslint-plugin": "^8.56.0",
 		"@typescript-eslint/parser": "^8.54.0",
 		"@vitest/coverage-v8": "^4.0.18",
 		"buzzcasting-utils": "^1.12.2",

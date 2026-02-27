@@ -46,7 +46,7 @@ export default class WindowClient {
 				API.CLOUD,
 				query.slide,
 				query.widget,
-				error
+				error,
 			);
 			return { data: null, message: "Cloud Data error", success: false };
 		}
@@ -63,7 +63,7 @@ export default class WindowClient {
 				API.SERIES,
 				query.slide,
 				query.widget,
-				error
+				error,
 			);
 			return { data: null, message: "Series Data error", success: false };
 		}
@@ -80,7 +80,7 @@ export default class WindowClient {
 				API.MESSAGES,
 				query.slide,
 				query.widget,
-				error
+				error,
 			);
 			return { data: null, message: "Messages Data error", success: false };
 		}
@@ -144,7 +144,7 @@ export default class WindowClient {
 
 	hideMessage = async (id: string, visible: number) => {
 		console.debug(
-			`hideMessage ${id} ${visible} not implemented for ${this.options.storage}`
+			`hideMessage ${id} ${visible} not implemented for ${this.options.storage}`,
 		);
 	};
 
@@ -194,6 +194,14 @@ export default class WindowClient {
 		}
 	};
 
+	deleteDashboard = async (query: IQuery): Promise<number | undefined> => {
+		return 404;
+	};
+
+	deleteDashboards = async (): Promise<number | undefined> => {
+		return 404;
+	};
+
 	getWidget = async (query: IQuery): Promise<IResponse> => {
 		try {
 			return window.__bc.WidgetData[query.id];
@@ -240,6 +248,30 @@ export default class WindowClient {
 		}
 	};
 
+	deleteWidget = async (query: IQuery): Promise<number | undefined> => {
+		return 404;
+	};
+
+	deleteWidgets = async (): Promise<number | undefined> => {
+		return 404;
+	};
+
+	deleteSlide = async (query: IQuery): Promise<number | undefined> => {
+		return 404;
+	};
+
+	deleteSlides = async (): Promise<number | undefined> => {
+		return 404;
+	};
+
+	deletePresentation = async (query: IQuery): Promise<number | undefined> => {
+		return 404;
+	};
+
+	deletePresentations = async (): Promise<number | undefined> => {
+		return 404;
+	};
+
 	/**
 	 * Add component subscriber
 	 * @param query IQuery
@@ -251,7 +283,7 @@ export default class WindowClient {
 			query = moderation(this.options, query);
 		}
 		const widgetExists = this.subscribers.filter(
-			(widget) => widget.widget === query.widget
+			(widget) => widget.widget === query.widget,
 		);
 		if (widgetExists.length) {
 			return null;
@@ -262,7 +294,7 @@ export default class WindowClient {
 			CSS.NONE,
 			CSS.SUBSCRIBE,
 			query.slide,
-			query.widget
+			query.widget,
 		);
 		this.subscribers.push(query);
 		return null;
@@ -292,7 +324,7 @@ export default class WindowClient {
 	getSlides = async (query: IQuery): Promise<IResponse> => {
 		try {
 			return window.__bc.SlideData.filter(
-				(slide: any) => slide.presentation_id === query.presentation
+				(slide: any) => slide.presentation_id === query.presentation,
 			);
 		} catch (error: any) {
 			console.warn(
@@ -300,7 +332,7 @@ export default class WindowClient {
 				CSS.API,
 				API.PRESENTATION,
 				query.presentation_id,
-				error
+				error,
 			);
 			return {
 				data: null,
@@ -343,7 +375,7 @@ export default class WindowClient {
 				CSS.API,
 				API.PRESENTATION,
 				query.presentation,
-				error
+				error,
 			);
 			return {
 				data: null,
@@ -424,7 +456,7 @@ export default class WindowClient {
 				CSS.STORAGE,
 				API.PREFERENCE,
 				preference,
-				error
+				error,
 			);
 			return {
 				data: null,

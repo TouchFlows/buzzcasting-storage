@@ -15,7 +15,7 @@ export default class SessionStorageClient {
 		// extend Storage in order to be able to store / read JSON objects
 		Storage.prototype.setObject = function (
 			key: string,
-			value: string | object
+			value: string | object,
 		) {
 			this.setItem(key, JSON.stringify(value));
 		};
@@ -57,7 +57,7 @@ export default class SessionStorageClient {
 				API.CLOUD,
 				query.slide,
 				query.widget,
-				error
+				error,
 			);
 			return { data: null, message: "Messages Data error", success: false };
 		}
@@ -74,7 +74,7 @@ export default class SessionStorageClient {
 				API.SERIES,
 				query.slide,
 				query.widget,
-				error
+				error,
 			);
 			return { data: null, message: "Messages Data error", success: false };
 		}
@@ -91,7 +91,7 @@ export default class SessionStorageClient {
 				API.MESSAGES,
 				query.slide,
 				query.widget,
-				error
+				error,
 			);
 			return { data: null, message: "Messages Data error", success: false };
 		}
@@ -155,7 +155,7 @@ export default class SessionStorageClient {
 
 	hideMessage = async (id: string, visible: number) => {
 		console.debug(
-			`hideMessage ${id} ${visible} not implemented for ${this.options.storage}`
+			`hideMessage ${id} ${visible} not implemented for ${this.options.storage}`,
 		);
 	};
 
@@ -184,6 +184,14 @@ export default class SessionStorageClient {
 			success: false,
 		};
 		// });
+	};
+
+	deleteDashboard = async (query: IQuery): Promise<number | undefined> => {
+		return 404;
+	};
+
+	deleteDashboards = async (): Promise<number | undefined> => {
+		return 404;
 	};
 
 	setDashboard = async (query: IQuery) => {
@@ -251,6 +259,30 @@ export default class SessionStorageClient {
 		}
 	};
 
+	deleteWidget = async (query: IQuery): Promise<number | undefined> => {
+		return 404;
+	};
+
+	deleteWidgets = async (): Promise<number | undefined> => {
+		return 404;
+	};
+
+	deleteSlide = async (query: IQuery): Promise<number | undefined> => {
+		return 404;
+	};
+
+	deleteSlides = async (): Promise<number | undefined> => {
+		return 404;
+	};
+
+	deletePresentation = async (query: IQuery): Promise<number | undefined> => {
+		return 404;
+	};
+
+	deletePresentations = async (): Promise<number | undefined> => {
+		return 404;
+	};
+
 	/**
 	 * Add component subscriber
 	 * @param query IQuery
@@ -262,7 +294,7 @@ export default class SessionStorageClient {
 			query = moderation(this.options, query);
 		}
 		const widgetExists = this.subscribers.filter(
-			(widget) => widget.widget === query.widget
+			(widget) => widget.widget === query.widget,
 		);
 		if (widgetExists.length) {
 			return null;
@@ -273,7 +305,7 @@ export default class SessionStorageClient {
 			CSS.NONE,
 			CSS.SUBSCRIBE,
 			query.slide,
-			query.widget
+			query.widget,
 		);
 		this.subscribers.push(query);
 		return null;
@@ -344,7 +376,7 @@ export default class SessionStorageClient {
 	getPresentation = async (query: IQuery): Promise<IResponse> => {
 		try {
 			return sessionStorage.getObject(
-				`${API.PRESENTATION}.${query.presentation}`
+				`${API.PRESENTATION}.${query.presentation}`,
 			);
 		} catch (error: any) {
 			console.warn(
@@ -352,7 +384,7 @@ export default class SessionStorageClient {
 				CSS.API,
 				API.PRESENTATION,
 				query.presentation,
-				error
+				error,
 			);
 			return {
 				data: null,
@@ -379,7 +411,7 @@ export default class SessionStorageClient {
 		try {
 			sessionStorage.setObject(
 				`${API.PRESENTATION}.${query.data.id}`,
-				query.data
+				query.data,
 			);
 			return {
 				data: null,
@@ -426,7 +458,7 @@ export default class SessionStorageClient {
 		try {
 			sessionStorage.setObject(
 				`${API.PREFERENCE}.${preference.id}`,
-				preference.value
+				preference.value,
 			);
 			return {
 				data: null,
@@ -439,7 +471,7 @@ export default class SessionStorageClient {
 				CSS.STORAGE,
 				API.PREFERENCE,
 				preference,
-				error
+				error,
 			);
 			return {
 				data: null,

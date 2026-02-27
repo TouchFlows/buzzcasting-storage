@@ -71,7 +71,7 @@ export default class DexieClient {
 		return await this.db
 			.table("hashtable")
 			.where({
-				id: query.widget
+				id: query.widget,
 			})
 			.modify({ hash: query.hash })
 			.then(() => {
@@ -353,6 +353,55 @@ export default class DexieClient {
 				return {
 					data: null,
 					message: `Dashboard ${q.data.id} save error: ${error.message}`,
+					success: false,
+				};
+			});
+	};
+
+	deleteDashboard = async (query: IQuery): Promise<IResponse> => {
+		return await this.db
+			.table(API.DASHBOARD)
+			.where({ id: query.id })
+			.delete()
+			.then(() => {
+				return {
+					data: null,
+					message: `Dashboard ${query.id} deleted`,
+					success: true,
+				};
+			})
+			.catch((error) => {
+				log(4, ["%cstorage", CSS.STORAGE, API.DASHBOARD, query, error.message]);
+				return {
+					data: null,
+					message: `Dashboard ${query.id} delete error: ${error.message}`,
+					success: false,
+				};
+			});
+	};
+
+	deleteDashboards = async (): Promise<IResponse | undefined> => {
+		return await this.db
+			.table(API.DASHBOARD)
+			.delete("id")
+			.then(() => {
+				return {
+					data: null,
+					message: `Dashboard table deleted from storage`,
+					success: true,
+				};
+			})
+			.catch((error: Error) => {
+				console.error(
+					"%cstorage",
+					CSS.STORAGE,
+					API.DASHBOARD,
+					"deleted",
+					error.message,
+				);
+				return {
+					data: null,
+					message: `Dashboard table deleted error: ${error.message}`,
 					success: false,
 				};
 			});
@@ -940,6 +989,63 @@ export default class DexieClient {
 			});
 	};
 
+	deleteWidget = async (query: IQuery): Promise<IResponse | undefined> => {
+		return await this.db
+			.table(API.WIDGET)
+			.where({
+				id: query.id,
+			})
+			.delete()
+			.then(() => {
+				return {
+					data: null,
+					message: `Widget ${query.data.id} deleted from storage`,
+					success: true,
+				};
+			})
+			.catch((error: Error) => {
+				console.error(
+					"%cstorage",
+					CSS.STORAGE,
+					API.WIDGET,
+					query,
+					error.message,
+				);
+				return {
+					data: null,
+					message: `Widget ${query.data.id} save error: ${error.message}`,
+					success: false,
+				};
+			});
+	};
+
+	deleteWidgets = async (): Promise<IResponse | undefined> => {
+		return await this.db
+			.table(API.WIDGET)
+			.delete("id")
+			.then(() => {
+				return {
+					data: null,
+					message: `Widgets table deleted from storage`,
+					success: true,
+				};
+			})
+			.catch((error: Error) => {
+				console.error(
+					"%cstorage",
+					CSS.STORAGE,
+					API.WIDGETS,
+					"deleted",
+					error.message,
+				);
+				return {
+					data: null,
+					message: `Widgets table deleted error: ${error.message}`,
+					success: false,
+				};
+			});
+	};
+
 	/**
 	 * Add component subscriber
 	 * @param query IQuery
@@ -1097,6 +1203,63 @@ export default class DexieClient {
 			});
 	};
 
+	deleteSlide = async (query: IQuery): Promise<IResponse | undefined> => {
+		return await this.db
+			.table(API.SLIDE)
+			.where({
+				id: query.id,
+			})
+			.delete()
+			.then(() => {
+				return {
+					data: null,
+					message: `Slide ${query.data.id} deleted from storage`,
+					success: true,
+				};
+			})
+			.catch((error: Error) => {
+				console.error(
+					"%cstorage",
+					CSS.STORAGE,
+					API.WIDGET,
+					query,
+					error.message,
+				);
+				return {
+					data: null,
+					message: `Widget ${query.data.id} save error: ${error.message}`,
+					success: false,
+				};
+			});
+	};
+
+	deleteSlides = async (): Promise<IResponse | undefined> => {
+		return await this.db
+			.table(API.SLIDE)
+			.delete("id")
+			.then(() => {
+				return {
+					data: null,
+					message: `Slide table deleted from storage`,
+					success: true,
+				};
+			})
+			.catch((error: Error) => {
+				console.error(
+					"%cstorage",
+					CSS.STORAGE,
+					API.SLIDES,
+					"deleted",
+					error.message,
+				);
+				return {
+					data: null,
+					message: `Slide table deleted error: ${error.message}`,
+					success: false,
+				};
+			});
+	};
+
 	/**
 	 * Retrieve Presentation from Storage
 	 * @param query IQuery
@@ -1200,6 +1363,65 @@ export default class DexieClient {
 					data: null,
 					query,
 					message: `Presentation ${query.data.id} save error: ${error.message}`,
+					success: false,
+				};
+			});
+	};
+
+	deletePresentation = async (
+		query: IQuery,
+	): Promise<IResponse | undefined> => {
+		return await this.db
+			.table(API.PRESENTATION)
+			.where({
+				id: query.id,
+			})
+			.delete()
+			.then(() => {
+				return {
+					data: null,
+					message: `Slide ${query.data.id} deleted from storage`,
+					success: true,
+				};
+			})
+			.catch((error: Error) => {
+				console.error(
+					"%cstorage",
+					CSS.STORAGE,
+					API.WIDGET,
+					query,
+					error.message,
+				);
+				return {
+					data: null,
+					message: `Widget ${query.data.id} save error: ${error.message}`,
+					success: false,
+				};
+			});
+	};
+
+	deletePresentations = async (): Promise<IResponse | undefined> => {
+		return await this.db
+			.table(API.PRESENTATION)
+			.delete("id")
+			.then(() => {
+				return {
+					data: null,
+					message: `Presentation table deleted from storage`,
+					success: true,
+				};
+			})
+			.catch((error: Error) => {
+				console.error(
+					"%cstorage",
+					CSS.STORAGE,
+					API.PRESENTATION,
+					"deleted",
+					error.message,
+				);
+				return {
+					data: null,
+					message: `Presentation table deleted error: ${error.message}`,
 					success: false,
 				};
 			});

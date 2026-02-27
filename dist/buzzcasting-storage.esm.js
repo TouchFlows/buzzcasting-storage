@@ -118,7 +118,7 @@ function Pt(f, t) {
   }
   return t;
 }
-const $a = "3.18.2";
+const $a = "3.18.3";
 async function* ja(f) {
   const t = f.pipeThrough(new TextDecoderStream("utf-8")).getReader();
   let i = "";
@@ -3561,7 +3561,7 @@ class Kn {
       cloud: "id,dashboard_id",
       dashboard: "id,name,update",
       display: "id,monitor_id,presentation_id,colstart,colend,rowstart,rowend",
-      hashes: "id, hash",
+      hashtable: "id, hash",
       images: "id,basename,extension,size,type,url",
       messages: "id,utc,expires",
       monitor: "id,player_id,cols,rows,order,width,height,physicalwidth,physicalheight,devicePixelRatio,screenLeft,screenTop,orientation,monitor",
@@ -3575,7 +3575,7 @@ class Kn {
     }), this.db.open();
   }
   getHash = async (t) => {
-    const i = await this.db.table("hashes").where({ id: t.widget }).last().catch(() => {
+    const i = await this.db.table("hashtable").where({ id: t.widget }).last().catch(() => {
       G(2, ["%chash%c %capi%C %chash", o.API, o.NONE, o.APP]);
     });
     return G(3, [
@@ -3588,7 +3588,7 @@ class Kn {
       t
     ]), i?.hash ?? "none";
   };
-  setHash = async (t) => await this.db.table("hashes").where({
+  setHash = async (t) => await this.db.table("hashtable").where({
     id: t.widget
   }).modify({ hash: t.hash }).then(() => (G(3, [
     "%cset%c %chash%c %chash}",
@@ -3608,7 +3608,7 @@ class Kn {
     t,
     i.message
   ]), 400));
-  clearHash = async () => await this.db.table("hashes").clear().then(() => 201).catch((t) => (G(2, [
+  clearHash = async () => await this.db.table("hashtable").clear().then(() => 201).catch((t) => (G(2, [
     "%cclear%c %cstorage%c %chash",
     o.KO,
     o.NONE,
@@ -3617,7 +3617,7 @@ class Kn {
     o.WIDGET,
     "clear hashes"
   ]), 400));
-  deleteHash = async (t) => await this.db.table("hashes").where({ id: t.widget }).delete().then(() => 201).catch((i) => (G(2, [
+  deleteHash = async (t) => await this.db.table("hashtable").where({ id: t.widget }).delete().then(() => 201).catch((i) => (G(2, [
     "%cdelete%c %cstorage%c %chash",
     o.KO,
     o.NONE,
@@ -3627,7 +3627,7 @@ class Kn {
     "clear dashboard hashes",
     t.dashboard
   ]), 400));
-  createHash = async (t) => await this.db.table("hashes").put({
+  createHash = async (t) => await this.db.table("hashtable").put({
     id: t.widget,
     hash: t.hash
   }).then(() => 201).catch((i) => (G(2, [
