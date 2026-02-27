@@ -589,7 +589,7 @@ export class BuzzcastingStorageManager {
 		return await this.sm?.deletePresentation(query);
 	};
 
-	public deleteWPresentations = async (): Promise<
+	public deletePresentations = async (): Promise<
 		IResponse | number | undefined
 	> => {
 		return await this.sm?.deletePresentations();

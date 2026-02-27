@@ -118,7 +118,7 @@ function Pt(f, t) {
   }
   return t;
 }
-const $a = "3.19.0";
+const $a = "3.19.1";
 async function* Ga(f) {
   const t = f.pipeThrough(new TextDecoderStream("utf-8")).getReader();
   let i = "";
@@ -6173,14 +6173,14 @@ class rs {
   loadSlide = async (t) => await this.api.loadSlide(t);
   storeSlide = async (t) => await this.api.storeSlide(t);
   deleteSlide = async (t) => await this.sm?.deleteSlide(t);
-  deleteSlidens = async (t) => await this.sm?.deleteSlides();
+  deleteSlides = async () => await this.sm?.deleteSlides();
   getPresentation = async (t) => await this.sm?.getPresentation(t);
   getPresentations = async (t) => await this.sm?.getPresentations(t);
   setPresentation = async (t) => await this.sm?.setPresentation(t);
   loadPresentation = async (t) => await this.api.loadPresentation(t);
   storePresentation = async (t) => await this.api.storePresentation(t);
   deletePresentation = async (t) => await this.sm?.deletePresentation(t);
-  deleteWPresentations = async (t) => await this.sm?.deletePresentations();
+  deleteWPresentations = async () => await this.sm?.deletePresentations();
   getPreference = async (t) => await this.sm?.getPreference(t);
   getPreferences = async (t) => await this.sm?.getPreferences(t);
   setPreference = async (t) => await this.sm?.setPreference(t);
@@ -6193,11 +6193,11 @@ class rs {
   getWidgets = async (t) => await this.sm?.getWidgets(t);
   setWidget = async (t) => await this.sm?.setWidget(t);
   deleteWidget = async (t) => await this.sm?.deleteWidget(t);
-  deleteWidgets = async (t) => await this.sm?.deleteWidgets();
+  deleteWidgets = async () => await this.sm?.deleteWidgets();
   loadDashboards = async (t) => await this.api.loadDashboards(t);
   getDashboard = async (t) => await this.sm?.getDashboard(t);
   deleteDashboard = async (t) => await this.sm?.deleteDashboard(t);
-  deleteWDashboards = async (t) => await this.sm?.deleteDashboards();
+  deleteWDashboards = async () => await this.sm?.deleteDashboards();
   getDashboards = async () => await this.sm?.getDashboards();
   setDashboard = async (t) => await this.sm?.setDashboard(t);
   loadImages = async (t) => await this.api.loadImages(t);
