@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.19.4
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.19.3...v3.19.4)
+
+### 🩹 Fixes
+
+- Typo deleteDashboards ([f366cf6](https://github.com/TouchFlows/buzzcasting-storage/commit/f366cf6))
+
+### 🏡 Chore
+
+- **release:** V3.19.3 ([72be14d](https://github.com/TouchFlows/buzzcasting-storage/commit/72be14d))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.19.3
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.19.2...v3.19.3)
