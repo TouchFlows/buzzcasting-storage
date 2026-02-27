@@ -525,6 +525,27 @@ export class BuzzcastingStorageManager {
 		return await new Promise<any[]>((resolve) => resolve(this.subscribers));
 	};
 
+	public bulk = async (
+		table: string,
+		queries: IQuery[],
+	): Promise<IResponse | number | undefined> => {
+		return await this.sm?.bulk(table, queries);
+	};
+
+	public get = async (
+		table: string,
+		query: IQuery,
+	): Promise<IResponse | number | undefined> => {
+		return await this.sm?.get(table, query);
+	};
+
+	public set = async (
+		table: string,
+		query: IQuery,
+	): Promise<IResponse | number | undefined> => {
+		return await this.sm?.set(table, query);
+	};
+
 	public getSlide = async (query: IQuery): Promise<IResponse | undefined> => {
 		return await this.sm?.getSlide(query);
 	};

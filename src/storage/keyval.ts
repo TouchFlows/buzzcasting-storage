@@ -308,6 +308,21 @@ export default class KeyvalClient {
 		// });
 	};
 
+	bulk = async (
+		table: string,
+		queries: IQuery[],
+	): Promise<number | undefined> => {
+		return 404;
+	};
+
+	get = async (table: string, query: IQuery): Promise<number | undefined> => {
+		return 404;
+	};
+
+	set = async (table: string, query: IQuery): Promise<number | undefined> => {
+		return 404;
+	};
+
 	deleteWidget = async (query: IQuery): Promise<number | undefined> => {
 		return 404;
 	};

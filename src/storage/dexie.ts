@@ -262,6 +262,74 @@ export default class DexieClient {
 		return 400;
 	};
 
+	bulk = async (table: string, queries: IQuery[]): Promise<IResponse> => {
+		return await this.db
+			.table(table)
+			.bulkPut(queries)
+			.then(() => {
+				return {
+					data: null,
+					message: `Bulk add ${queries.length} items to ${table}`,
+					success: true,
+				};
+			})
+			.catch((error: Error) => {
+				log(4, [
+					"%cstorage",
+					CSS.STORAGE,
+					table,
+					queries.length,
+					error.message,
+				]);
+				return {
+					data: null,
+					message: `Bulk add to ${table}:  ${error.message}`,
+					success: false,
+				};
+			});
+	};
+
+	get = async (table: string, query: IQuery): Promise<IResponse> => {
+		const data = await this.db
+			.table(table)
+			.where({ id: query.id })
+			.last()
+			.catch(() => {
+				log(2, ["%cstorage", CSS.STORAGE, `loading ${table}`, query.id]);
+			});
+		if (data === undefined) {
+			return {
+				data: null,
+				message: `${table} ${query.id} Load error`,
+				success: false,
+			};
+		}
+		data.message = `${table} ${query.id} retrieved from storage`;
+		data.success = true;
+		return data;
+	};
+
+	set = async (table: string, query: IQuery): Promise<IResponse> => {
+		return await this.db
+			.table(table)
+			.put(query)
+			.then(() => {
+				return {
+					data: null,
+					message: `${table} ${query.id} saved to storage`,
+					success: true,
+				};
+			})
+			.catch((error: Error) => {
+				log(4, ["%cstorage", CSS.STORAGE, table, query, error.message]);
+				return {
+					data: null,
+					message: `${table} ${query.id} save error: ${error.message}`,
+					success: false,
+				};
+			});
+	};
+
 	getDashboard = async (query: IQuery): Promise<IResponse> => {
 		const data = await this.db
 			.table(API.DASHBOARD)
@@ -326,7 +394,7 @@ export default class DexieClient {
 	};
 
 	/**
-	 * Update Cloud
+	 * Update Dashboard
 	 * @param query IQuery
 	 * @returns number
 	 */

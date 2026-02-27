@@ -148,6 +148,21 @@ export default class WindowClient {
 		);
 	};
 
+	bulk = async (
+		table: string,
+		queries: IQuery[],
+	): Promise<number | undefined> => {
+		return 404;
+	};
+
+	get = async (table: string, query: IQuery): Promise<number | undefined> => {
+		return 404;
+	};
+
+	set = async (table: string, query: IQuery): Promise<number | undefined> => {
+		return 404;
+	};
+
 	getDashboard = async (query: IQuery): Promise<IResponse> => {
 		try {
 			return window.__bc.DashboardData[query.id];
