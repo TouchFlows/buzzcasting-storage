@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.19.0
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.18.4...v3.19.0)
+
+### 🚀 Enhancements
+
+- Add delete methods ([e192221](https://github.com/TouchFlows/buzzcasting-storage/commit/e192221))
+
+### 🏡 Chore
+
+- **release:** V3.18.4 ([07944ee](https://github.com/TouchFlows/buzzcasting-storage/commit/07944ee))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.18.4
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.18.2...v3.18.4)
