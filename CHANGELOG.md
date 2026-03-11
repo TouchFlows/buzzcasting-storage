@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.21.1
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.21.0...v3.21.1)
+
+### 🩹 Fixes
+
+- Force code 201 when refresh is true  so that widget data is broadcast ([e0fbff7](https://github.com/TouchFlows/buzzcasting-storage/commit/e0fbff7))
+
+### 🏡 Chore
+
+- **release:** V3.21.0 ([0e6cb2e](https://github.com/TouchFlows/buzzcasting-storage/commit/0e6cb2e))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.21.0
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.20.0...v3.21.0)
