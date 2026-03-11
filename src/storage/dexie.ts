@@ -25,7 +25,7 @@ export default class DexieClient {
 		this.options = options;
 
 		this.db = new Dexie(options.app);
-		this.db.version(18).stores({
+		this.db.version(19).stores({
 			channel: "id,slide_index",
 			cloud: "id,dashboard_id",
 			dashboard: "id,name,update",
@@ -40,6 +40,7 @@ export default class DexieClient {
 			presentation: "id,name,update",
 			series: "id,dashboard_id",
 			slide: "id,name,presentation_id,order_index,json,html,update",
+			template: "id,name,json,update",
 			topics:
 				"[widget_id+message_id],message_id,widget_id,dashboard_id,title,engagement,impressions,reach,sentiment,visible,approved,utc,expires",
 			widget: "id,name,dashboard_id,type,update",
@@ -451,7 +452,7 @@ export default class DexieClient {
 	deleteDashboards = async (): Promise<IResponse | undefined> => {
 		return await this.db
 			.table(API.DASHBOARD)
-			.delete("id")
+			.clear()
 			.then(() => {
 				return {
 					data: null,
@@ -1037,7 +1038,7 @@ export default class DexieClient {
 			.then(() => {
 				return {
 					data: null,
-					message: `Widget ${query.data.id} saved to storage`,
+					message: `Widget ${query.id} saved to storage`,
 					success: true,
 				};
 			})
@@ -1051,7 +1052,7 @@ export default class DexieClient {
 				);
 				return {
 					data: null,
-					message: `Widget ${query.data.id} save error: ${error.message}`,
+					message: `Widget ${query.id} save error: ${error.message}`,
 					success: false,
 				};
 			});
@@ -1067,7 +1068,7 @@ export default class DexieClient {
 			.then(() => {
 				return {
 					data: null,
-					message: `Widget ${query.data.id} deleted from storage`,
+					message: `Widget ${query.id} deleted from storage`,
 					success: true,
 				};
 			})
@@ -1081,7 +1082,7 @@ export default class DexieClient {
 				);
 				return {
 					data: null,
-					message: `Widget ${query.data.id} save error: ${error.message}`,
+					message: `Widget ${query.id} save error: ${error.message}`,
 					success: false,
 				};
 			});
@@ -1090,7 +1091,7 @@ export default class DexieClient {
 	deleteWidgets = async (): Promise<IResponse | undefined> => {
 		return await this.db
 			.table(API.WIDGET)
-			.delete("id")
+			.clear()
 			.then(() => {
 				return {
 					data: null,
@@ -1281,7 +1282,7 @@ export default class DexieClient {
 			.then(() => {
 				return {
 					data: null,
-					message: `Slide ${query.data.id} deleted from storage`,
+					message: `Slide ${query.id} deleted from storage`,
 					success: true,
 				};
 			})
@@ -1295,7 +1296,7 @@ export default class DexieClient {
 				);
 				return {
 					data: null,
-					message: `Widget ${query.data.id} save error: ${error.message}`,
+					message: `Widget ${query.id} save error: ${error.message}`,
 					success: false,
 				};
 			});
@@ -1304,7 +1305,7 @@ export default class DexieClient {
 	deleteSlides = async (): Promise<IResponse | undefined> => {
 		return await this.db
 			.table(API.SLIDE)
-			.delete("id")
+			.clear()
 			.then(() => {
 				return {
 					data: null,
@@ -1316,7 +1317,7 @@ export default class DexieClient {
 				console.error(
 					"%cstorage",
 					CSS.STORAGE,
-					API.SLIDES,
+					API.SLIDE,
 					"deleted",
 					error.message,
 				);
@@ -1448,7 +1449,7 @@ export default class DexieClient {
 			.then(() => {
 				return {
 					data: null,
-					message: `Slide ${query.data.id} deleted from storage`,
+					message: `Presentation ${query.id} deleted from storage`,
 					success: true,
 				};
 			})
@@ -1456,13 +1457,13 @@ export default class DexieClient {
 				console.error(
 					"%cstorage",
 					CSS.STORAGE,
-					API.WIDGET,
+					API.PRESENTATION,
 					query,
 					error.message,
 				);
 				return {
 					data: null,
-					message: `Widget ${query.data.id} save error: ${error.message}`,
+					message: `Presentation ${query.id} save error: ${error.message}`,
 					success: false,
 				};
 			});
@@ -1471,7 +1472,7 @@ export default class DexieClient {
 	deletePresentations = async (): Promise<IResponse | undefined> => {
 		return await this.db
 			.table(API.PRESENTATION)
-			.delete("id")
+			.clear()
 			.then(() => {
 				return {
 					data: null,
@@ -1593,6 +1594,36 @@ export default class DexieClient {
 				return {
 					data: null,
 					message: `Preference ${preference.id} save error: ${error.message}`,
+					success: false,
+				};
+			});
+	};
+
+	deletePreference = async (query: IQuery): Promise<IResponse | undefined> => {
+		return await this.db
+			.table(API.PREFERENCE)
+			.where({
+				id: query.id,
+			})
+			.delete()
+			.then(() => {
+				return {
+					data: null,
+					message: `Preference ${query.id} deleted from storage`,
+					success: true,
+				};
+			})
+			.catch((error: Error) => {
+				console.error(
+					"%cstorage",
+					CSS.STORAGE,
+					API.PREFERENCE,
+					query,
+					error.message,
+				);
+				return {
+					data: null,
+					message: `Preference ${query.id} save error: ${error.message}`,
 					success: false,
 				};
 			});

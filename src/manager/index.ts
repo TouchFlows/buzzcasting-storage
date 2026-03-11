@@ -82,8 +82,14 @@ export class BuzzcastingStorageManager {
 		delete this.subscribers[query.widget];
 	}
 
-	public update = async (data: any) => {
-		log(3, ["%cupdate%c %cdata", CSS.NO_UPDATES, CSS.NONE, CSS.MESSAGES, data]);
+	public update = async (params: any) => {
+		log(3, [
+			"%cupdate%c %cdata",
+			CSS.NO_UPDATES,
+			CSS.NONE,
+			CSS.MESSAGES,
+			params,
+		]);
 		if (this.sm === null || Object.keys(this.subscribers).length === 0) {
 			return;
 		}
@@ -106,7 +112,7 @@ export class BuzzcastingStorageManager {
 
 		subscriberQueries.forEach(async (apiCall) => {
 			await apiCall.then(
-				async (apiResp: any) => await this.processResponse(apiResp),
+				async (apiResp: any) => await this.processResponse(apiResp, params),
 			);
 		});
 	};
@@ -122,13 +128,19 @@ export class BuzzcastingStorageManager {
 	public apiQuery = async (apiQuery: any): Promise<IprocessResponse> => {
 		return await this.api
 			.get(apiQuery)
-			.then(async (apiResp: any) => await this.processResponse(apiResp))
+			.then(
+				async (apiResp: any) =>
+					await this.processResponse(apiResp, { refresh: false }),
+			)
 			.catch((e: unknown) => {
 				return { code: 204, hash: "" };
 			});
 	};
 
-	public processResponse = async (apiResp: any): Promise<IprocessResponse> => {
+	public processResponse = async (
+		apiResp: any,
+		params: any,
+	): Promise<IprocessResponse> => {
 		let data;
 		let status: { code: number; hash: string } = { code: 400, hash: "" };
 		let newHash: string | any = "";
@@ -153,7 +165,7 @@ export class BuzzcastingStorageManager {
 						apiResp.data.messages.length > 0
 							? hashSum(apiResp.data.messages[0].utc)
 							: "none";
-					if (previousHash === newHash) {
+					if (previousHash === newHash && params.refresh === false) {
 						log(3, [
 							"%cset%c %cstorage%c %cmessages",
 							CSS.NO_UPDATES,
@@ -192,7 +204,7 @@ export class BuzzcastingStorageManager {
 						await this.sm?.createHash(query);
 					}
 					newHash = hashSum(apiResp.data.cloud);
-					if (previousHash === newHash) {
+					if (previousHash === newHash && params.refresh === false) {
 						log(3, [
 							"%cset%c %cstorage%c %ccloud",
 							CSS.NO_UPDATES,
@@ -245,7 +257,7 @@ export class BuzzcastingStorageManager {
 						await this.sm?.createHash(query);
 					}
 					newHash = hashSum(apiResp.data.series);
-					if (previousHash === newHash) {
+					if (previousHash === newHash && params.refresh === false) {
 						log(3, [
 							"%cset%c %cstorage%c %cseries",
 							CSS.NO_UPDATES,

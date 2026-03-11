@@ -27,6 +27,9 @@ export declare class BuzzcastingStorageManager {
     hideLabels: (query: IQuery) => Promise<IResponse>;
     getSubscribers: () => Promise<any[]>;
     deleteSubscribers: () => Promise<any[]>;
+    bulk: (table: string, queries: IQuery[]) => Promise<IResponse | number | undefined>;
+    get: (table: string, query: IQuery) => Promise<IResponse | number | undefined>;
+    set: (table: string, query: IQuery) => Promise<IResponse | number | undefined>;
     getSlide: (query: IQuery) => Promise<IResponse | undefined>;
     getSlides: (query: IQuery) => Promise<IResponse | undefined>;
     setSlide: (query: IQuery) => Promise<IResponse | undefined>;
