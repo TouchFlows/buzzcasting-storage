@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v3.21.0
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.20.0...v3.21.0)
+
+### 🚀 Enhancements
+
+- Force refresh updates, table clear methods ([aa44bd4](https://github.com/TouchFlows/buzzcasting-storage/commit/aa44bd4))
+
+### 🏡 Chore
+
+- **release:** V3.20.0 ([9bc666a](https://github.com/TouchFlows/buzzcasting-storage/commit/9bc666a))
+
+### ❤️ Contributors
+
+- Mark Tamis <mark.tamis@gmail.com>
+
 ## v3.20.0
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.19.4...v3.20.0)
