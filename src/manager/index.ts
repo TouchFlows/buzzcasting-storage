@@ -185,6 +185,7 @@ export class BuzzcastingStorageManager {
 								.setMessages(apiResp.query, apiResp)
 								.then(async (code) => {
 									// setTimeout(() => {
+									if (params.refresh && code === 204) code = 201;
 									this.broadcastUpdate(code, apiResp);
 									return code;
 									// }, 500); // MTM allow tuning thru options
@@ -239,6 +240,7 @@ export class BuzzcastingStorageManager {
 							status.code = await this.sm
 								.setCloud(apiResp.query, data.data)
 								.then((code) => {
+									if (params.refresh && code === 204) code = 201;
 									this.broadcastUpdate(code, apiResp);
 									return code;
 								})
@@ -287,8 +289,9 @@ export class BuzzcastingStorageManager {
 						};
 						if (this.sm !== null) {
 							status.code = await this.sm
-								?.setSeries(query, apiResp.data)
+								.setSeries(query, apiResp.data)
 								.then((code) => {
+									if (params.refresh && code === 204) code = 201;
 									this.broadcastUpdate(code, apiResp);
 									return code;
 								})

@@ -13,10 +13,10 @@ export declare class BuzzcastingStorageManager {
     constructor(options: IStorageOptions);
     addSubscriber(query: IQuery): void;
     deleteSubscriber(query: IQuery): void;
-    update: (data: any) => Promise<void>;
+    update: (params: any) => Promise<void>;
     stream: () => void;
     apiQuery: (apiQuery: any) => Promise<IprocessResponse>;
-    processResponse: (apiResp: any) => Promise<IprocessResponse>;
+    processResponse: (apiResp: any, params: any) => Promise<IprocessResponse>;
     startBroadcastListener: () => void;
     broadcastMessage: (eventName: string, detail: any) => void;
     private broadcastUpdate;
