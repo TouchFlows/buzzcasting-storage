@@ -1,7 +1,7 @@
 {
 	"name": "buzzcasting-storage",
 	"type": "module",
-	"version": "3.21.1",
+	"version": "3.21.2",
 	"private": false,
 	"author": {
 		"name": "Mark Tamis, TouchFlows SAS",
@@ -49,8 +49,8 @@
 		"changelogen": "^0.6.2",
 		"eslint": "^9.39.4",
 		"lint-staged": "^16.4.0",
-    "typedoc": "^0.28.17",
-    "typedoc-plugin-markdown": "^4.11.0",
+		"typedoc": "^0.28.17",
+		"typedoc-plugin-markdown": "^4.11.0",
 		"typescript": "^5.9.3",
 		"vite": "^8.0.1",
 		"vite-plugin-dts": "^4.5.4",

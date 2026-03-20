@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v3.21.2
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.21.1...v3.21.2)
+
+### 🏡 Chore
+
+- **release:** V3.21.1 ([81388d6](https://github.com/TouchFlows/buzzcasting-storage/commit/81388d6))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.21.1
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.21.0...v3.21.1)
