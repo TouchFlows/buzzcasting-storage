@@ -1,6 +1,10 @@
 # Changelog
 
 
+## v3.21.4
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.21.2...v3.21.4)
+
 ## v3.21.2
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.21.1...v3.21.2)
