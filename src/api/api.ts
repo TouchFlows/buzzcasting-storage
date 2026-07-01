@@ -93,7 +93,7 @@ export default class ApiClient {
 
 		return await fetch(
 			[this.url, "api", version, query.type].join("/") + params,
-			{ ...headers, method: "get" }
+			{ ...headers, method: "get" },
 		)
 			.then(async (response: Response) => {
 				if (!response.ok) {
@@ -122,7 +122,7 @@ export default class ApiClient {
 				...headers,
 				body: JSON.stringify({ data: queries }),
 				method: "post",
-			}
+			},
 		);
 		//@ts-ignore
 		for await (const event of readNDJSONStream(response.body)) {
@@ -145,7 +145,7 @@ export default class ApiClient {
 		]);
 		return await fetch(
 			[this.url, "api", version, "messages", query.id].join("/") + params,
-			{ ...headers, method: "put" }
+			{ ...headers, method: "put" },
 		)
 			.then((response) => {
 				if (!response.ok) {
@@ -178,11 +178,11 @@ export default class ApiClient {
 			CSS.GET_DATA,
 			EVENTS.HIDE_LABELS,
 			query.widget,
-			labels
+			labels,
 		);
 		return await fetch(
 			[this.url, "api", version, query.type, query.widget].join("/"),
-			{ ...headers, body: urlencoded, method: "put" }
+			{ ...headers, body: urlencoded, method: "put" },
 		)
 			.then((response) => {
 				if (!response.ok) {
@@ -220,7 +220,7 @@ export default class ApiClient {
 		]);
 		return await fetch(
 			[this.url, "api", version, "slides", query.id].join("/"),
-			{ ...headers, method: "get" }
+			{ ...headers, method: "get" },
 		)
 			.then(async (response: Response) => {
 				if (!response.ok) {
@@ -271,10 +271,10 @@ export default class ApiClient {
 		const { version }: IStorageOptions = this.options;
 		const headers = this.formHeaders();
 		/* const urlencoded = new URLSearchParams()
-    const labels = query.labels || []
-    for (const [i, value] of labels.entries()) {
-      urlencoded.append(`custom_filters[${i}]`, value)
-    } */
+		const labels = query.labels || []
+		for (const [i, value] of labels.entries()) {
+			urlencoded.append(`custom_filters[${i}]`, value)
+		} */
 		delete query.update;
 		delete query.type;
 		const body = JSON.stringify(query);
@@ -291,7 +291,7 @@ export default class ApiClient {
 		]);
 		return await fetch(
 			[this.url, "api", version, "slides", query.id].join("/"),
-			{ ...headers, body, method: "put" }
+			{ ...headers, body, method: "put" },
 		)
 			.then((response) => {
 				if (!response.ok) {
@@ -323,7 +323,7 @@ export default class ApiClient {
 		]);
 		return await fetch(
 			[this.url, "api", version, API.PRESENTATIONS, query.id].join("/"),
-			{ ...headers, method: "get" }
+			{ ...headers, method: "get" },
 		)
 			.then(async (response: Response) => {
 				if (!response.ok) {
@@ -368,7 +368,7 @@ export default class ApiClient {
 		log(2, ["%capi%c %cput", CSS.API, CSS.NONE, CSS.PRESENTATION, query.name]);
 		return await fetch(
 			[this.url, "api", version, API.PRESENTATIONS, query.id].join("/"),
-			{ ...headers, body, method: "put" }
+			{ ...headers, body, method: "put" },
 		)
 			.then((response) => {
 				if (!response.ok) {
@@ -403,7 +403,7 @@ export default class ApiClient {
 		]);
 		return await fetch(
 			[this.url, "api", version, API.PREFERENCES, preference.id].join("/"),
-			{ ...headers, method: "get" }
+			{ ...headers, method: "get" },
 		)
 			.then(async (response: Response) => {
 				if (!response.ok) {
@@ -442,7 +442,7 @@ export default class ApiClient {
 		]);
 		return await fetch(
 			[this.url, "api", version, API.PREFERENCES, preference.id].join("/"),
-			{ ...headers, body, method: "put" }
+			{ ...headers, body, method: "post" },
 		)
 			.then((response) => {
 				if (!response.ok) {
@@ -468,7 +468,7 @@ export default class ApiClient {
 			{
 				...headers,
 				method: "get",
-			}
+			},
 		)
 			.then(async (response: Response) => {
 				if (!response.ok) {
@@ -505,12 +505,12 @@ export default class ApiClient {
 		]);
 		return await fetch(
 			`${[this.url, "api", version, API.IMAGES].join(
-				"/"
+				"/",
 			)}?folder=${folderName}`,
 			{
 				...headers,
 				method: "get",
-			}
+			},
 		)
 			.then(async (response: Response) => {
 				if (!response.ok) {
@@ -547,17 +547,17 @@ export default class ApiClient {
 			CSS.API,
 			CSS.NONE,
 			CSS.WIDGET,
-			imageFile.get("name")
+			imageFile.get("name"),
 		);
 		return await fetch(
 			`${[this.url, "api", version, API.IMAGES].join(
-				"/"
+				"/",
 			)}?folder=${imageFile.get("folder")}`,
 			{
 				...headers,
 				body,
 				method: "post",
-			}
+			},
 		)
 			.then((response) => {
 				if (!response.ok) {
@@ -575,7 +575,7 @@ export default class ApiClient {
 
 	public async deleteImage(
 		folderName: string,
-		imageName: string
+		imageName: string,
 	): Promise<any> {
 		const { version }: IStorageOptions = this.options;
 		const headers = this.formHeaders();
@@ -585,13 +585,13 @@ export default class ApiClient {
 			CSS.API,
 			CSS.NONE,
 			CSS.WIDGET,
-			imageName
+			imageName,
 		);
 		return await fetch(
 			`${[this.url, "api", version, API.IMAGES, imageName].join(
-				"/"
+				"/",
 			)}?folder=${folderName}`,
-			{ ...headers, method: "delete" }
+			{ ...headers, method: "delete" },
 		)
 			.then((response) => {
 				if (!response.ok) {

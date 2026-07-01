@@ -1,5 +1,5 @@
 //#region \0rolldown/runtime.js
-var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescriptor, r = Object.getOwnPropertyNames, i = Object.getPrototypeOf, a = Object.prototype.hasOwnProperty, o = (e, t) => () => (t || e((t = { exports: {} }).exports, t), t.exports), s = (e, i, o, s) => {
+var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescriptor, r = Object.getOwnPropertyNames, i = Object.getPrototypeOf, a = Object.prototype.hasOwnProperty, o = (e, t) => () => (t || (e((t = { exports: {} }).exports, t), e = null), t.exports), s = (e, i, o, s) => {
 	if (i && typeof i == "object" || typeof i == "function") for (var c = r(i), l = 0, u = c.length, d; l < u; l++) d = c[l], !a.call(e, d) && d !== o && t(e, d, {
 		get: ((e) => i[e]).bind(null, d),
 		enumerable: !(s = n(i, d)) || s.enumerable
@@ -118,7 +118,42 @@ var ee = (e) => {
 		level: e,
 		message: t
 	});
-}, E = (e) => {
+};
+(class e {
+	static EPOCH = Date.UTC(1970, 0, 1).valueOf();
+	static SHARD_ID = 1;
+	static SEQUENCE = 1;
+	static generate({ timestamp: t = Date.now(), shard_id: n = e.SHARD_ID } = {}) {
+		t = t instanceof Date ? t.valueOf() : new Date(t).valueOf();
+		let r = BigInt(t) - BigInt(e.EPOCH) << BigInt(22);
+		return r |= BigInt(n % 1024) << BigInt(12), r |= BigInt(e.SEQUENCE++ % 4096), r.toString();
+	}
+	static parse(t) {
+		let n = e.binary(t);
+		return {
+			timestamp: e.extractBits(t, 1, 41),
+			shard_id: e.extractBits(t, 42, 10),
+			sequence: e.extractBits(t, 52),
+			binary: n
+		};
+	}
+	static isValid(t) {
+		if (!/^[\d]{19}$/.test(t)) return !1;
+		try {
+			return e.parse(t), !0;
+		} catch {
+			return !1;
+		}
+	}
+	static extractBits(t, n, r) {
+		return parseInt(r ? e.binary(t).substring(n, n + r) : e.binary(t).substring(n), 2);
+	}
+	static binary(e) {
+		let t = BigInt(e).toString(2);
+		return t.length < 64 ? "0000000000000000000000000000000000000000000000000000000000000000".substring(0, 64 - t.length) + t : t;
+	}
+});
+var E = (e) => {
 	switch (e?.type) {
 		case l.MESSAGES: return u.MESSAGES;
 		case l.SERIES: return u.SERIES;
@@ -160,7 +195,7 @@ function ne(e, t) {
 }({});
 //#endregion
 //#region package.json
-var re = "3.21.1", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
+var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 	(function(n, r) {
 		typeof e == "object" && t !== void 0 ? t.exports = r() : typeof define == "function" && define.amd ? define(r) : (n = typeof globalThis < "u" ? globalThis : n || self, n.readNDJSONStream = r());
 	})(e, (function() {
@@ -478,7 +513,7 @@ var re = "3.21.1", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 		].join("/"), {
 			...n,
 			body: r,
-			method: "put"
+			method: "post"
 		}).then((e) => {
 			if (!e.ok) throw Error(e.statusText);
 			return e;
@@ -4651,7 +4686,7 @@ var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, E
 		}
 	};
 	hideMessage = async (e, t) => {
-		await this.db.table(l.TOPICS).where("message_id").equals(e).modify({ visible: t ? 1 : 0 }).catch((e) => (console.error("%chide%c %cstorage%c %cmessage", u.KO, u.NONE, u.STORAGE, u.NONE, u.HIDE, e.message), 0));
+		await this.db.table(l.TOPICS).where("message_id").equals(e).modify({ visible: +!!t }).catch((e) => (console.error("%chide%c %cstorage%c %cmessage", u.KO, u.NONE, u.STORAGE, u.NONE, u.HIDE, e.message), 0));
 	};
 	setMessages = async (e, t) => {
 		if (e.type !== l.MESSAGES) return 400;
@@ -4672,7 +4707,7 @@ var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, E
 					impressions: i.topics[0]?.impressions || i.dynamics?.semrush_visits || 0,
 					reach: i.topics[0]?.reach || i.dynamics?.potential_reach || 0,
 					sentiment: i.topics[0]?.sentiment || 0,
-					approved: i.topics[0]?.approved ? 1 : 0
+					approved: +!!i.topics[0]?.approved
 				}, await this.db.table(l.MESSAGES).put({
 					id: i.id,
 					utc: i.utc,
@@ -4716,7 +4751,7 @@ var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, E
 						e.message
 					]);
 				}), await t.data.topics.forEach(async (e) => {
-					let t = e.message_id, n = e.visible ? 1 : 0, i = e.approve ? 1 : 0, a = e.title;
+					let t = e.message_id, n = +!!e.visible, i = +!!e.approve, a = e.title;
 					await this.db.table(l.TOPICS).where("message_id").equals(t).modify({
 						visible: n,
 						approve: i
