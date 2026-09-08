@@ -159,6 +159,12 @@ export default class SessionStorageClient {
 		);
 	};
 
+	approveMessage = async (id: string, approved: number) => {
+		console.debug(
+			`approveMessage ${id} ${approved} not implemented for ${this.options.storage}`,
+		);
+	};
+
 	bulk = async (
 		table: string,
 		queries: IQuery[],

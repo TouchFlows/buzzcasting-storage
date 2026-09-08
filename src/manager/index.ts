@@ -531,6 +531,22 @@ export class BuzzcastingStorageManager {
 		return await this.api.hideLabels(query);
 	};
 
+	// Local-only for now: there's no known remote endpoint for this yet, unlike
+	// hideMessage, which also syncs to the API. Sets the existing topics.approved
+	// field (already read by getMessages() in MODERATION.APPROVED mode).
+	public approveMessage = async (query: IQuery): Promise<void> => {
+		const count = await this.sm?.approveMessage(query.id, query.approved ? 1 : 0);
+		log(3, [
+			"%capprove%c %cstorage%c %cmessages",
+			CSS.OK,
+			CSS.NONE,
+			CSS.STORAGE,
+			CSS.NONE,
+			CSS.MESSAGES,
+			`${count} messages approved`,
+		]);
+	};
+
 	public getSubscribers = async () => {
 		return await new Promise<any[]>((resolve) => resolve(this.subscribers));
 	};

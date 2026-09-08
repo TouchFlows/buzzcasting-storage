@@ -174,6 +174,12 @@ export default class LocalStorageClient {
 		);
 	};
 
+	approveMessage = async (id: string, approved: number) => {
+		console.debug(
+			`approveMessage ${id} ${approved} not implemented for ${this.options.storage}`,
+		);
+	};
+
 	getDashboard = async (query: IQuery): Promise<IResponse> => {
 		try {
 			return localStorage.getObject(`${API.DASHBOARD}.${query.id}`);

@@ -13,6 +13,7 @@ Currently supported are: Local Storage, Session Storage, IDB Keyval, Dexie, Wind
 - [documentation/architecture.md](documentation/architecture.md) — the `BuzzcastingStorageManager`/`Widget`/`BuzzcastingStorageReader` pipeline, the subscribe → fetch → hash-diff → broadcast → re-read data flow, and why a `Widget` can only ever render `cloud`/`series`/`messages` data.
 - [documentation/storage-backends.md](documentation/storage-backends.md) — the five interchangeable storage backends, the Dexie schema, and the staleness/expiry model (there isn't much of one).
 - [documentation/known-issues.md](documentation/known-issues.md) — confirmed bugs and inconsistencies in the current codebase (e.g. `ApiClient.loadDashboards` actually fetching the widgets endpoint, not a dashboards one) worth knowing about before you hit them yourself.
+- [documentation/moderation.md](documentation/moderation.md) — `hideMessage`/`hideLabels`: a soft `visible` flag in Dexie plus a remote call for messages, a remote-only call with no local implementation at all for cloud labels, and the separate, deployment-time `MODERATION` enum that gates which messages are ever fetched in the first place.
 
 ## Features
 

@@ -13,7 +13,7 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 }({}), u = function(e) {
 	return e.API = "color:white;background-color:grey;padding:0 4px 0 4px;border-radius:5px;", e.APP = "color:white;background-color:navy;padding:0 4px 0 4px;border-radius:5px;", e.BROADCAST = "color:navy;background-color:orange;padding:0 4px 0 4px;border-radius:5px;", e.CLOUD = "color:purple;background-color:mistyrose;padding:0 4px 0 4px;border-radius:5px;", e.DATA = "color:grey;background-color:lightskyblue;padding:0 4px 0 4px;border-radius:5px;", e.ERROR = "color:white;background-color:red;padding:0 4px 0 4px;border-radius:5px;", e.GET_DATA = "color:black;background-color:lime;padding:0 4px 0 4px;border-radius:5px;", e.HIDE = "color:white;background-color:red;padding:0 4px 0 4px;border-radius:5px;", e.KO = "color:white;background-color:red;padding:0 4px 0 4px;border-radius:5px;", e.MESSAGES = "color:white;background-color:darkslateblue;padding:0 4px 0 4px;border-radius:5px;", e.NO_UPDATES = "color:grey;border:1px solid grey;padding:0 4px 0 4px;border-radius:5px;", e.NONE = "color:transparent;background-color:transparent;", e.OK = "color:black;background-color:lime;padding:0 4px 0 4px;border-radius:5px;", e.PRESENTATION = "color:white;background-color:darkred;padding:0 4px 0 4px;border-radius:5px;", e.SERIES = "color:purple;background-color:thistle;padding:0 4px 0 4px;border-radius:5px;", e.SLIDE = "color:black;background-color:yellow;padding:0 4px 0 4px;border-radius:5px;", e.STORAGE = "color:black;background-color:cyan;padding:0 4px 0 4px;border-radius:5px;", e.SUBSCRIBE = "color:white;background-color:dodgerblue;padding:0 4px 0 4px;border-radius:5px;", e.WIDGET = "color:black;background-color:lemonchiffon;padding:0 4px 0 4px;border-radius:5px;", e.WS = "color:white;background-color:green;padding:0 4px 0 4px;border-radius:5px;", e;
 }({}), d = function(e) {
-	return e.ADD_SLIDE = "addSlide", e.APP_READY = "appReady", e.API_UPDATE = "apiUpdate", e.BACKGROUND_UPDATE = "backgroundUpdate", e.BUILDER_PREVIEW = "builderPreview", e.COMPONENT_UPDATE = "componentUpdate", e.APPROVE_MESSAGE = "approveMessage", e.CHANNEL = "channel", e.CLEAN_MESSAGES = "cleanMessages", e.CLOSE_BUILDER_DIALOG = "closeBuilderDialog", e.CLOSE_BUILDER_MODAL = "closeBuilderModal", e.CLOSE_MODAL = "closeModal", e.COLOR_UPDATE = "colorUpdate", e.COMPONENT_INDEX = "componentIndex", e.CSS_SET = "setCss", e.CSS_STORE = "storeCss", e.DASHBOARD_LOAD = "loadDashboard", e.DASHBOARD_STORE = "storeDashboard", e.DASHBOARD_UPDATED = "dashboardUpdated", e.ERROR = "error", e.HIDE_MESSAGE = "hideMessage", e.HIDE_LABELS = "hideLabels", e.IMAGE_GET = "getImage", e.IMAGE_SET = "setImage", e.IMAGE_STORED = "imageStored", e.LAYOUT_UPDATE = "layoutUpdate", e.PREV_SLIDE = "prevSlide", e.RELOAD_PRESENTATION = "reloadPresentation", e.STAR_MESSAGE = "starMessage", e.GOTO_SLIDE = "gotoSlide", e.NEXT_SLIDE = "nextSlide", e.PREFERENCE_LOAD = "loadPreference", e.PREFERENCE_STORE = "storePreference", e.PREFERENCE_UPDATED = "preferenceUpdated", e.PAUSE_PRESENTATION = "pausePresentation", e.PRESENTATION_READY = "presentationReady", e.PRESENTATION_LOAD = "loadPresentation", e.PRESENTATION_STORE = "storePresentation", e.PRESENTATION_UPDATED = "presentationUpdated", e.ROW_COL_UPDATE = "rowcolupdate", e.SCREENSHOT_TAKE = "takeScreenshot", e.SCREENSHOT_STORE = "storeScreenshot", e.SECTION_UPDATE = "sectionUpdate", e.SHOW_BUILDER_DIALOG = "showBuilderDialog", e.SHOW_BUILDER_MODAL = "showBuilderModal", e.SHOW_MODAL = "showModal", e.SLIDE_DID_LOAD = "slideDidLoad", e.SLIDE_GET = "getSlide", e.SLIDE_GOTO = "slideGoto", e.SLIDE_LOAD = "loadSlide", e.SLIDE_READY = "slideReady", e.SLIDE_SAVED = "slideSaved", e.SLIDE_SET = "setSlide", e.SLIDE_STORE = "storeSlide", e.SLIDE_STORED = "slideStored", e.SLIDE_TRANSITIONER = "slideTransitioner", e.SLIDE_UPDATED = "slideUpdated", e.START_TRANSITIONER = "startTransitioner", e.STORAGE_INIT = "storageInit", e.STREAM = "stream", e.SUBSCRIBE = "subscribe", e.SUSPEND_ACCOUNT = "suspendAccount", e.SWITCH_PRESENTATION = "switchPresentation", e.REMOVE_CLOUD = "removeCloud", e.UPDATE = "update", e.UPLOAD_COMPLETED = "uploadCompleted", e.VERSION = "version", e.WIDGETS_CLEAR = "widgetsClear", e.WIDGET_DID_LOAD = "widgetDidLoad", e.WIDGET_DID_UPDATE = "widgetDidUpdate", e.WIDGET_LOAD = "widgetLoad", e.WIDGET_STORE = "widgetStore", e.WIDGET_UPDATE = "widgetUpdate", e.WS_API_REQUEST = "wsApiRequest", e.WS_API_RESPONSE = "wsApiResponse", e.WS_API_UPDATE = "wsApiUpdate", e;
+	return e.ADD_SLIDE = "addSlide", e.APP_READY = "appReady", e.API_UPDATE = "apiUpdate", e.BACKGROUND_UPDATE = "backgroundUpdate", e.BUILDER_PREVIEW = "builderPreview", e.COMPONENT_UPDATE = "componentUpdate", e.APPROVE_MESSAGE = "approveMessage", e.CHANNEL = "channel", e.CLEAN_MESSAGES = "cleanMessages", e.CLOSE_BUILDER_DIALOG = "closeBuilderDialog", e.CLOSE_BUILDER_MODAL = "closeBuilderModal", e.CLOSE_MODAL = "closeModal", e.COLOR_UPDATE = "colorUpdate", e.COMPONENT_INDEX = "componentIndex", e.CSS_SET = "setCss", e.CSS_STORE = "storeCss", e.DASHBOARD_LOAD = "loadDashboard", e.DASHBOARD_STORE = "storeDashboard", e.DASHBOARD_UPDATED = "dashboardUpdated", e.ERROR = "error", e.HIDE_MESSAGE = "hideMessage", e.IMAGE_GET = "getImage", e.IMAGE_SET = "setImage", e.IMAGE_STORED = "imageStored", e.LAYOUT_UPDATE = "layoutUpdate", e.PREV_SLIDE = "prevSlide", e.RELOAD_PRESENTATION = "reloadPresentation", e.STAR_MESSAGE = "starMessage", e.GOTO_SLIDE = "gotoSlide", e.NEXT_SLIDE = "nextSlide", e.PREFERENCE_LOAD = "loadPreference", e.PREFERENCE_STORE = "storePreference", e.PREFERENCE_UPDATED = "preferenceUpdated", e.PAUSE_PRESENTATION = "pausePresentation", e.PRESENTATION_READY = "presentationReady", e.PRESENTATION_LOAD = "loadPresentation", e.PRESENTATION_STORE = "storePresentation", e.PRESENTATION_UPDATED = "presentationUpdated", e.ROW_COL_UPDATE = "rowcolupdate", e.SCREENSHOT_TAKE = "takeScreenshot", e.SCREENSHOT_STORE = "storeScreenshot", e.SECTION_UPDATE = "sectionUpdate", e.SHOW_BUILDER_DIALOG = "showBuilderDialog", e.SHOW_BUILDER_MODAL = "showBuilderModal", e.SHOW_MODAL = "showModal", e.SLIDE_DID_LOAD = "slideDidLoad", e.SLIDE_GET = "getSlide", e.SLIDE_GOTO = "slideGoto", e.SLIDE_LOAD = "loadSlide", e.SLIDE_READY = "slideReady", e.SLIDE_SAVED = "slideSaved", e.SLIDE_SET = "setSlide", e.SLIDE_STORE = "storeSlide", e.SLIDE_STORED = "slideStored", e.SLIDE_TRANSITIONER = "slideTransitioner", e.SLIDE_UPDATED = "slideUpdated", e.START_TRANSITIONER = "startTransitioner", e.STORAGE_INIT = "storageInit", e.STREAM = "stream", e.SUBSCRIBE = "subscribe", e.SUSPEND_ACCOUNT = "suspendAccount", e.SWITCH_PRESENTATION = "switchPresentation", e.REMOVE_CLOUD = "removeCloud", e.UPDATE = "update", e.UPLOAD_COMPLETED = "uploadCompleted", e.VERSION = "version", e.WIDGETS_CLEAR = "widgetsClear", e.WIDGET_DID_LOAD = "widgetDidLoad", e.WIDGET_DID_UPDATE = "widgetDidUpdate", e.WIDGET_LOAD = "widgetLoad", e.WIDGET_STORE = "widgetStore", e.WIDGET_UPDATE = "widgetUpdate", e.WS_API_REQUEST = "wsApiRequest", e.WS_API_RESPONSE = "wsApiResponse", e.WS_API_UPDATE = "wsApiUpdate", e;
 }({}), f = function(e) {
 	return e.APPROVED = "approved", e.BEFORE = "before", e.DELAYED = "delayed", e.NONE = "none", e.REALTIME = "realtime", e;
 }({}), p = function(e) {
@@ -284,7 +284,7 @@ var te = "3.21.6", ne = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 	async hideLabels(e) {
 		let { version: t } = this.options, n = this.formHeaders(), r = new URLSearchParams(), i = e.labels || [];
 		for (let [e, t] of i.entries()) r.append(`custom_filters[${e}]`, t);
-		return console.info("%capi%c %cput", u.API, u.NONE, u.GET_DATA, d.HIDE_LABELS, e.widget, i), await fetch([
+		return console.info("%capi%c %cput", u.API, u.NONE, u.GET_DATA, d.REMOVE_CLOUD, e.widget, i), await fetch([
 			this.url,
 			"api",
 			t,
@@ -4600,11 +4600,11 @@ var { liveQuery: A, mergeRanges: ae, rangesOverlap: j, RangeSet: oe, cmp: se, En
 			query: e
 		};
 		let t = e?.order ?? "utc", n = Math.floor(Date.now() / 1e3), r = e?.period ?? 0;
-		e.since = r === 0 ? n - 2592e3 : n - r, e.before = this.options.delay === 0 ? n : n - (this.options.delay || 0);
+		e.since = r === 0 ? n - 2592e3 : n - r, e.before = this.options.moderation === f.DELAYED && this.options.delay ? n - this.options.delay : n;
 		let i = (t) => t.utc > (e?.since || 0), a = (t) => t.utc < (e?.before || n);
 		try {
 			let n = this.db.table(l.TOPICS).where("widget_id").equals(e.widget).filter(i).filter(a);
-			e?.approved === "true" ? n.and((e) => e.approved === 1) : n.and((e) => e.visible === 1), n.reverse();
+			this.options.moderation === f.APPROVED ? n.and((e) => e.approved === 1) : n.and((e) => e.visible === 1), n.reverse();
 			let r = await n.limit(e?.limit ?? 25).sortBy(t);
 			if (r.length === 0) return {
 				data: null,
@@ -4651,6 +4651,9 @@ var { liveQuery: A, mergeRanges: ae, rangesOverlap: j, RangeSet: oe, cmp: se, En
 	};
 	hideMessage = async (e, t) => {
 		await this.db.table(l.TOPICS).where("message_id").equals(e).modify({ visible: +!!t }).catch((e) => (console.error("%chide%c %cstorage%c %cmessage", u.KO, u.NONE, u.STORAGE, u.NONE, u.HIDE, e.message), 0));
+	};
+	approveMessage = async (e, t) => {
+		await this.db.table(l.TOPICS).where("message_id").equals(e).modify({ approved: +!!t }).catch((e) => (console.error("%capprove%c %cstorage%c %cmessage", u.KO, u.NONE, u.STORAGE, u.NONE, u.OK, e.message), 0));
 	};
 	setMessages = async (e, t) => {
 		if (e.type !== l.MESSAGES) return 400;
@@ -5173,6 +5176,9 @@ var ge = class {
 	hideMessage = async (e, t) => {
 		console.debug(`hideMessage ${e} ${t} not implemented for ${this.options.storage}`);
 	};
+	approveMessage = async (e, t) => {
+		console.debug(`approveMessage ${e} ${t} not implemented for ${this.options.storage}`);
+	};
 	getDashboard = async (e) => await F(E(e)).then((e) => e).catch((t) => (console.warn("%capi", u.API, l.SLIDE, e.id), {
 		data: null,
 		message: `Widget ${e.data.id} load error: ${t.message}`,
@@ -5397,6 +5403,9 @@ var ge = class {
 	cleanMessages = async (e) => (console.log("cleanMessages not implemented for ", this.options.storage), await new Promise((e) => e(0)));
 	hideMessage = async (e, t) => {
 		console.debug(`hideMessage ${e} ${t} not implemented for ${this.options.storage}`);
+	};
+	approveMessage = async (e, t) => {
+		console.debug(`approveMessage ${e} ${t} not implemented for ${this.options.storage}`);
 	};
 	getDashboard = async (e) => {
 		try {
@@ -5678,6 +5687,9 @@ var ge = class {
 	hideMessage = async (e, t) => {
 		console.debug(`hideMessage ${e} ${t} not implemented for ${this.options.storage}`);
 	};
+	approveMessage = async (e, t) => {
+		console.debug(`approveMessage ${e} ${t} not implemented for ${this.options.storage}`);
+	};
 	bulk = async (e, t) => 404;
 	get = async (e, t) => 404;
 	set = async (e, t) => 404;
@@ -5955,6 +5967,9 @@ var ge = class {
 	cleanMessages = async (e) => (console.log("cleanMessages not implemented for ", this.options.storage), await new Promise((e) => e(0)));
 	hideMessage = async (e, t) => {
 		console.debug(`hideMessage ${e} ${t} not implemented for ${this.options.storage}`);
+	};
+	approveMessage = async (e, t) => {
+		console.debug(`approveMessage ${e} ${t} not implemented for ${this.options.storage}`);
 	};
 	bulk = async (e, t) => 404;
 	get = async (e, t) => 404;
@@ -6470,6 +6485,18 @@ var ge = class {
 		]), await this.api.hideMessage(e);
 	};
 	hideLabels = async (e) => await this.api.hideLabels(e);
+	approveMessage = async (e) => {
+		let t = await this.sm?.approveMessage(e.id, +!!e.approved);
+		w(3, [
+			"%capprove%c %cstorage%c %cmessages",
+			u.OK,
+			u.NONE,
+			u.STORAGE,
+			u.NONE,
+			u.MESSAGES,
+			`${t} messages approved`
+		]);
+	};
 	getSubscribers = async () => await new Promise((e) => e(this.subscribers));
 	deleteSubscribers = async () => (this.subscribers = [], await new Promise((e) => e(this.subscribers)));
 	bulk = async (e, t) => await this.sm?.bulk(e, t);

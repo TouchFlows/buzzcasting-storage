@@ -11,6 +11,7 @@ import {
 	CSS,
 	EVENTS,
 	log,
+	MODERATION,
 	moderation,
 	widgetParams,
 } from "buzzcasting-utils";
@@ -567,8 +568,8 @@ export default class DexieClient {
 		// 	query.since = now - 60 * 60 * 24 * 30;
 		// }
 
-		if (this.options.delay !== 0) {
-			query.before = now - (this.options.delay || 0);
+		if (this.options.moderation === MODERATION.DELAYED && this.options.delay) {
+			query.before = now - this.options.delay;
 		} else {
 			query.before = now;
 		}
@@ -594,7 +595,7 @@ export default class DexieClient {
 				.filter(sinceFilter)
 				.filter(beforeFilter);
 
-			if (query?.approved === "true") {
+			if (this.options.moderation === MODERATION.APPROVED) {
 				// @ts-expect-error
 				topicMessagesCollection.and((topic) => topic.approved === 1);
 			} else {
@@ -674,6 +675,26 @@ export default class DexieClient {
 					CSS.STORAGE,
 					CSS.NONE,
 					CSS.HIDE,
+					error.message,
+				);
+				return 0;
+			});
+	};
+
+	approveMessage = async (id: string, approved: number) => {
+		await this.db
+			.table(API.TOPICS)
+			.where("message_id")
+			.equals(id)
+			.modify({ approved: approved ? 1 : 0 })
+			.catch((error) => {
+				console.error(
+					"%capprove%c %cstorage%c %cmessage",
+					CSS.KO,
+					CSS.NONE,
+					CSS.STORAGE,
+					CSS.NONE,
+					CSS.OK,
 					error.message,
 				);
 				return 0;

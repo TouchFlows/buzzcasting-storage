@@ -176,7 +176,7 @@ export default class ApiClient {
 			CSS.API,
 			CSS.NONE,
 			CSS.GET_DATA,
-			EVENTS.HIDE_LABELS,
+			EVENTS.REMOVE_CLOUD,
 			query.widget,
 			labels,
 		);

@@ -157,6 +157,12 @@ export default class KeyvalClient {
 		);
 	};
 
+	approveMessage = async (id: string, approved: number) => {
+		console.debug(
+			`approveMessage ${id} ${approved} not implemented for ${this.options.storage}`,
+		);
+	};
+
 	getDashboard = async (query: IQuery): Promise<IResponse> => {
 		const key = getKey(query);
 		return await get(key)
