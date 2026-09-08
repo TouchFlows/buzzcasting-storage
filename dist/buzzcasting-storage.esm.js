@@ -5,15 +5,15 @@ var e = Object.create, t = Object.defineProperty, n = Object.getOwnPropertyDescr
 		enumerable: !(s = n(i, d)) || s.enumerable
 	});
 	return e;
-}, c = (n, r, a) => (a = n == null ? {} : e(i(n)), s(r || !n || !n.__esModule ? t(a, "default", {
+}, c = (n, r, o) => (o = n == null ? {} : e(i(n)), s(r || !n || !n.__esModule || !a.call(n, "default") ? t(o, "default", {
 	value: n,
 	enumerable: !0
-}) : a, n)), l = function(e) {
+}) : o, n)), l = function(e) {
 	return e.CARDS = "cards", e.CLOUD = "cloud", e.DASHBOARD = "dashboard", e.DASHBOARDS = "dashboards", e.IMAGES = "images", e.MESSAGES = "messages", e.PREFERENCE = "preference", e.PREFERENCES = "preferences", e.PRESENTATION = "presentation", e.PRESENTATIONS = "presentations", e.SERIES = "series", e.SLIDE = "slide", e.SLIDES = "slides", e.TEMPLATES = "templates", e.TOPICS = "topics", e.WIDGET = "widget", e.WIDGETS = "widgets", e;
 }({}), u = function(e) {
 	return e.API = "color:white;background-color:grey;padding:0 4px 0 4px;border-radius:5px;", e.APP = "color:white;background-color:navy;padding:0 4px 0 4px;border-radius:5px;", e.BROADCAST = "color:navy;background-color:orange;padding:0 4px 0 4px;border-radius:5px;", e.CLOUD = "color:purple;background-color:mistyrose;padding:0 4px 0 4px;border-radius:5px;", e.DATA = "color:grey;background-color:lightskyblue;padding:0 4px 0 4px;border-radius:5px;", e.ERROR = "color:white;background-color:red;padding:0 4px 0 4px;border-radius:5px;", e.GET_DATA = "color:black;background-color:lime;padding:0 4px 0 4px;border-radius:5px;", e.HIDE = "color:white;background-color:red;padding:0 4px 0 4px;border-radius:5px;", e.KO = "color:white;background-color:red;padding:0 4px 0 4px;border-radius:5px;", e.MESSAGES = "color:white;background-color:darkslateblue;padding:0 4px 0 4px;border-radius:5px;", e.NO_UPDATES = "color:grey;border:1px solid grey;padding:0 4px 0 4px;border-radius:5px;", e.NONE = "color:transparent;background-color:transparent;", e.OK = "color:black;background-color:lime;padding:0 4px 0 4px;border-radius:5px;", e.PRESENTATION = "color:white;background-color:darkred;padding:0 4px 0 4px;border-radius:5px;", e.SERIES = "color:purple;background-color:thistle;padding:0 4px 0 4px;border-radius:5px;", e.SLIDE = "color:black;background-color:yellow;padding:0 4px 0 4px;border-radius:5px;", e.STORAGE = "color:black;background-color:cyan;padding:0 4px 0 4px;border-radius:5px;", e.SUBSCRIBE = "color:white;background-color:dodgerblue;padding:0 4px 0 4px;border-radius:5px;", e.WIDGET = "color:black;background-color:lemonchiffon;padding:0 4px 0 4px;border-radius:5px;", e.WS = "color:white;background-color:green;padding:0 4px 0 4px;border-radius:5px;", e;
 }({}), d = function(e) {
-	return e.ADD_SLIDE = "addSlide", e.APP_READY = "appReady", e.API_UPDATE = "apiUpdate", e.BACKGROUND_UPDATE = "backgroundUpdate", e.BUILDER_PREVIEW = "builderPreview", e.COMPONENT_UPDATE = "componentUpdate", e.APPROVE_MESSAGE = "approveMessage", e.CHANNEL = "channel", e.CLEAN_MESSAGES = "cleanMessages", e.CLOSE_BUILDER_DIALOG = "closeBuilderDialog", e.CLOSE_BUILDER_MODAL = "closeBuilderModal", e.CLOSE_MODAL = "closeModal", e.COLOR_UPDATE = "colorUpdate", e.COMPONENT_INDEX = "componentIndex", e.CSS_SET = "setCss", e.CSS_STORE = "storeCss", e.DASHBOARD_LOAD = "loadDashboard", e.DASHBOARD_STORE = "storeDashboard", e.DASHBOARD_UPDATED = "dashboardUpdated", e.ERROR = "error", e.HIDE_MESSAGE = "hideMessage", e.HIDE_LABELS = "hideLabels", e.IMAGE_GET = "getImage", e.IMAGE_SET = "setImage", e.IMAGE_STORED = "imageStored", e.LAUPPUT_UPDATE = "layoutUpdate", e.PREV_SLIDE = "prevSlide", e.RELOAD_PRESENTATION = "reloadPresentation", e.STAR_MESSAGE = "starMessage", e.GOTO_SLIDE = "gotoSlide", e.NEXT_SLIDE = "nextSlide", e.PREFERENCE_LOAD = "loadPreference", e.PREFERENCE_STORE = "storePreference", e.PREFERENCE_UPDATED = "preferenceUpdated", e.PAUSE_PRESENTATION = "pausePresentation", e.PRESENTATION_READY = "presentationReady", e.PRESENTATION_LOAD = "loadPresentation", e.PRESENTATION_STORE = "storePresentation", e.PRESENTATION_UPDATED = "presentationUpdated", e.ROW_COL_UPDATE = "rowcolupdate", e.SCREENSHOT_TAKE = "takeScreenshot", e.SCREENSHOT_STORE = "storeScreenshot", e.SECTION_UPDATE = "sectionUpdate", e.SHOW_BUILDER_DIALOG = "showBuilderDialog", e.SHOW_BUILDER_MODAL = "showBuilderModal", e.SHOW_MODAL = "showModal", e.SLIDE_DID_LOAD = "slideDidLoad", e.SLIDE_GET = "getSlide", e.SLIDE_GOTO = "slideGoto", e.SLIDE_LOAD = "loadSlide", e.SLIDE_READY = "slideReady", e.SLIDE_SAVED = "slideSaved", e.SLIDE_SET = "setSlide", e.SLIDE_STORE = "storeSlide", e.SLIDE_STORED = "slideStored", e.SLIDE_TRANSITIONER = "slideTransitioner", e.SLIDE_UPDATED = "slideUpdated", e.START_TRANSITIONER = "startTransitioner", e.STORAGE_INIT = "storageInit", e.STREAM = "stream", e.SUBSCRIBE = "subscribe", e.SUSPEND_ACCOUNT = "suspendAccount", e.SWITCH_PRESENTATION = "switchPresentation", e.REMOVE_CLOUD = "removeCloud", e.UPDATE = "update", e.UPLOAD_COMPLETED = "uploadCompleted", e.VERSION = "version", e.WIDGETS_CLEAR = "widgetsClear", e.WIDGET_DID_LOAD = "widgetDidLoad", e.WIDGET_DID_UPDATE = "widgetDidUpdate", e.WIDGET_LOAD = "widgetLoad", e.WIDGET_STORE = "widgetStore", e.WIDGET_UPDATE = "widgetUpdate", e.WS_API_REQUEST = "wsApiRequest", e.WS_API_RESPONSE = "wsApiResponse", e.WS_API_UPDATE = "wsApiRUpdate", e;
+	return e.ADD_SLIDE = "addSlide", e.APP_READY = "appReady", e.API_UPDATE = "apiUpdate", e.BACKGROUND_UPDATE = "backgroundUpdate", e.BUILDER_PREVIEW = "builderPreview", e.COMPONENT_UPDATE = "componentUpdate", e.APPROVE_MESSAGE = "approveMessage", e.CHANNEL = "channel", e.CLEAN_MESSAGES = "cleanMessages", e.CLOSE_BUILDER_DIALOG = "closeBuilderDialog", e.CLOSE_BUILDER_MODAL = "closeBuilderModal", e.CLOSE_MODAL = "closeModal", e.COLOR_UPDATE = "colorUpdate", e.COMPONENT_INDEX = "componentIndex", e.CSS_SET = "setCss", e.CSS_STORE = "storeCss", e.DASHBOARD_LOAD = "loadDashboard", e.DASHBOARD_STORE = "storeDashboard", e.DASHBOARD_UPDATED = "dashboardUpdated", e.ERROR = "error", e.HIDE_MESSAGE = "hideMessage", e.HIDE_LABELS = "hideLabels", e.IMAGE_GET = "getImage", e.IMAGE_SET = "setImage", e.IMAGE_STORED = "imageStored", e.LAYOUT_UPDATE = "layoutUpdate", e.PREV_SLIDE = "prevSlide", e.RELOAD_PRESENTATION = "reloadPresentation", e.STAR_MESSAGE = "starMessage", e.GOTO_SLIDE = "gotoSlide", e.NEXT_SLIDE = "nextSlide", e.PREFERENCE_LOAD = "loadPreference", e.PREFERENCE_STORE = "storePreference", e.PREFERENCE_UPDATED = "preferenceUpdated", e.PAUSE_PRESENTATION = "pausePresentation", e.PRESENTATION_READY = "presentationReady", e.PRESENTATION_LOAD = "loadPresentation", e.PRESENTATION_STORE = "storePresentation", e.PRESENTATION_UPDATED = "presentationUpdated", e.ROW_COL_UPDATE = "rowcolupdate", e.SCREENSHOT_TAKE = "takeScreenshot", e.SCREENSHOT_STORE = "storeScreenshot", e.SECTION_UPDATE = "sectionUpdate", e.SHOW_BUILDER_DIALOG = "showBuilderDialog", e.SHOW_BUILDER_MODAL = "showBuilderModal", e.SHOW_MODAL = "showModal", e.SLIDE_DID_LOAD = "slideDidLoad", e.SLIDE_GET = "getSlide", e.SLIDE_GOTO = "slideGoto", e.SLIDE_LOAD = "loadSlide", e.SLIDE_READY = "slideReady", e.SLIDE_SAVED = "slideSaved", e.SLIDE_SET = "setSlide", e.SLIDE_STORE = "storeSlide", e.SLIDE_STORED = "slideStored", e.SLIDE_TRANSITIONER = "slideTransitioner", e.SLIDE_UPDATED = "slideUpdated", e.START_TRANSITIONER = "startTransitioner", e.STORAGE_INIT = "storageInit", e.STREAM = "stream", e.SUBSCRIBE = "subscribe", e.SUSPEND_ACCOUNT = "suspendAccount", e.SWITCH_PRESENTATION = "switchPresentation", e.REMOVE_CLOUD = "removeCloud", e.UPDATE = "update", e.UPLOAD_COMPLETED = "uploadCompleted", e.VERSION = "version", e.WIDGETS_CLEAR = "widgetsClear", e.WIDGET_DID_LOAD = "widgetDidLoad", e.WIDGET_DID_UPDATE = "widgetDidUpdate", e.WIDGET_LOAD = "widgetLoad", e.WIDGET_STORE = "widgetStore", e.WIDGET_UPDATE = "widgetUpdate", e.WS_API_REQUEST = "wsApiRequest", e.WS_API_RESPONSE = "wsApiResponse", e.WS_API_UPDATE = "wsApiUpdate", e;
 }({}), f = function(e) {
 	return e.APPROVED = "approved", e.BEFORE = "before", e.DELAYED = "delayed", e.NONE = "none", e.REALTIME = "realtime", e;
 }({}), p = function(e) {
@@ -76,44 +76,8 @@ var S = (e) => {
 	return t;
 };
 S("area,base,basefont,br,col,frame,hr,img,input,link,meta,param,embed,command,keygen,source,track,wbr"), S("a,address,article,applet,aside,audio,blockquote,button,canvas,center,dd,del,dir,div,dl,dt,fieldset,figcaption,figure,footer,form,frameset,h1,h2,h3,h4,h5,h6,header,hgroup,hr,iframe,ins,isindex,li,map,menu,noframes,noscript,object,ol,output,p,pre,section,script,table,tbody,td,tfoot,th,thead,tr,ul,video"), S("abbr,acronym,applet,b,basefont,bdo,big,br,button,cite,code,del,dfn,em,font,i,iframe,img,input,ins,kbd,label,map,object,q,s,samp,script,select,small,span,strike,strong,sub,sup,textarea,tt,u,var"), S("colgroup,dd,dt,li,options,p,td,tfoot,th,thead,tr"), S("checked,compact,declare,defer,disabled,ismap,multiple,nohref,noresize,noshade,nowrap,readonly,selected"), S("script,style");
-function C(e) {
-	return `"${e}"`;
-}
-var ee = (e) => {
-	let t = [
-		"area",
-		"base",
-		"basefont",
-		"br",
-		"col",
-		"frame",
-		"hr",
-		"img",
-		"input",
-		"isindex",
-		"link",
-		"meta",
-		"param",
-		"embed"
-	], n = "";
-	e.child && (n = e.child.map(function(e) {
-		return ee(e);
-	}).join(""));
-	let r = "";
-	if (e.attr && (r = Object.keys(e.attr).map(function(t) {
-		let n = e.attr[t];
-		return Array.isArray(n) && (n = n.join(" ")), `${t}=${C(n)}`;
-	}).join(" "), r !== "" && (r = ` ${r}`)), e.node === "element") {
-		let i = e.tag;
-		if (t.indexOf(i) > -1) return `<${e.tag}${r}/>`;
-		let a = `<${e.tag}${r}>`, o = `</${e.tag}>`;
-		return `${a}${n}${o}`;
-	}
-	if (e.node === "text") return e.text;
-	if (e.node === "comment") return `<!-- ${e.text} -->`;
-	if (e.node === "root") return n;
-}, w = new BroadcastChannel("logging"), T = async (e = 0, t) => {
-	w.postMessage({
+var C = new BroadcastChannel("logging"), w = async (e = 0, t) => {
+	C.postMessage({
 		action: "log",
 		level: e,
 		message: t
@@ -153,7 +117,7 @@ var ee = (e) => {
 		return t.length < 64 ? "0000000000000000000000000000000000000000000000000000000000000000".substring(0, 64 - t.length) + t : t;
 	}
 });
-var E = (e) => {
+var T = (e) => {
 	switch (e?.type) {
 		case l.MESSAGES: return u.MESSAGES;
 		case l.SERIES: return u.SERIES;
@@ -161,18 +125,18 @@ var E = (e) => {
 		default: return u.NO_UPDATES;
 	}
 };
-function D(e) {
+function E(e) {
 	let t = `${e.type}.${e.topics}`;
 	return e.order && (t += `.${e.order}`), e.period && (t += `.${e.period}`), t;
 }
-function te(e) {
+function ee(e) {
 	if (e.widget === void 0) {
 		let t = e.topics?.split("-");
 		t && t.length > 1 ? (e.dashboard = t ? t[0] : "", e.widget = t ? t[1] : "") : (e.widget = e.topics, e.dashboard = e.slide);
 	}
 	return e;
 }
-function ne(e, t) {
+function D(e, t) {
 	let n, r, i, a, o;
 	switch (e.moderation) {
 		case f.BEFORE:
@@ -195,7 +159,7 @@ function ne(e, t) {
 }({});
 //#endregion
 //#region package.json
-var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
+var te = "3.21.6", ne = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 	(function(n, r) {
 		typeof e == "object" && t !== void 0 ? t.exports = r() : typeof define == "function" && define.amd ? define(r) : (n = typeof globalThis < "u" ? globalThis : n || self, n.readNDJSONStream = r());
 	})(e, (function() {
@@ -211,7 +175,7 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 		}
 		return e;
 	}));
-})))(), 1), ae = class {
+})))(), 1), re = class {
 	options;
 	url;
 	constructor(e) {
@@ -247,11 +211,9 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 			case l.SERIES:
 				a = u.SERIES;
 				break;
-			case l.CLOUD:
-				a = u.CLOUD;
-				break;
+			case l.CLOUD: a = u.CLOUD;
 		}
-		return T(3, [
+		return w(3, [
 			`%cfetch%c %capi%c %c${e.type}`,
 			u.OK,
 			u.NONE,
@@ -289,11 +251,11 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 			body: JSON.stringify({ data: e }),
 			method: "post"
 		});
-		for await (let e of (0, ie.default)(r.body)) console.log("Received", e);
+		for await (let e of (0, ne.default)(r.body)) console.log("Received", e);
 	}
 	async hideMessage(e) {
 		let { version: t } = this.options, n = this.headers();
-		return T(3, [
+		return w(3, [
 			"%capi%c %cput",
 			u.API,
 			u.NONE,
@@ -343,7 +305,7 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 	}
 	async loadSlide(e) {
 		let { version: t } = this.options, n = this.headers(), r = Object.assign({}, e);
-		return delete r.type, delete r.hash, T(3, [
+		return delete r.type, delete r.hash, w(3, [
 			"%cload%c %capi%c %cslide",
 			u.OK,
 			u.NONE,
@@ -378,7 +340,7 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 		let { version: t } = this.options, n = this.formHeaders();
 		delete e.update, delete e.type;
 		let r = JSON.stringify(e);
-		return T(3, [
+		return w(3, [
 			"%cput%c %capi%c %cslide",
 			u.OK,
 			u.NONE,
@@ -408,7 +370,7 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 	}
 	async loadPresentation(e) {
 		let { version: t } = this.options, n = this.headers();
-		return delete e.update, T(3, [
+		return delete e.update, w(3, [
 			"%cload%c %capi%c %cpresentation",
 			u.OK,
 			u.NONE,
@@ -441,7 +403,7 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 		let { version: t } = this.options, n = this.formHeaders();
 		delete e.update;
 		let r = JSON.stringify(e);
-		return T(2, [
+		return w(2, [
 			"%capi%c %cput",
 			u.API,
 			u.NONE,
@@ -468,7 +430,7 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 	}
 	async loadPreference(e) {
 		let { version: t } = this.options, n = this.headers();
-		return T(3, [
+		return w(3, [
 			"%cload%c %capi%c %cpreference",
 			u.OK,
 			u.NONE,
@@ -498,7 +460,7 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 		let { version: t } = this.options, n = this.formHeaders();
 		delete e.update;
 		let r = JSON.stringify({ data: e });
-		return T(3, [
+		return w(3, [
 			"%capi%c %cstorePreference",
 			u.API,
 			u.NONE,
@@ -525,7 +487,7 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 	}
 	async loadDashboards(e) {
 		let { version: t } = this.options, n = this.headers();
-		return T(3, [
+		return w(3, [
 			"%capi%c %cdashboards",
 			u.API,
 			u.NONE,
@@ -554,7 +516,7 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 	}
 	async loadImages(e) {
 		let { version: t } = this.options, n = this.headers();
-		return T(3, [
+		return w(3, [
 			"%cload%c %capi%c %cimage",
 			u.OK,
 			u.NONE,
@@ -622,7 +584,7 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 			data: []
 		}));
 	}
-}, O = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
+}, ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 	((n, r) => {
 		typeof e == "object" && t !== void 0 ? t.exports = r() : typeof define == "function" && define.amd ? define(r) : (n = typeof globalThis < "u" ? globalThis : n || self).Dexie = r();
 	})(e, function() {
@@ -702,12 +664,14 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 			return s === -1 || (o = e[t.substr(0, s)]) == null ? void 0 : b(o, t.substr(s + 1));
 		}
 		function x(e, t, n) {
-			if (e && t !== void 0 && !("isFrozen" in Object && Object.isFrozen(e))) if (typeof t != "string" && "length" in t) {
-				v(typeof n != "string" && "length" in n);
-				for (var r = 0, i = t.length; r < i; ++r) x(e, t[r], n[r]);
-			} else {
-				var o, s, c = t.indexOf(".");
-				c === -1 ? n === void 0 ? a(e) && !isNaN(parseInt(t)) ? e.splice(t, 1) : delete e[t] : e[t] = n : (o = t.substr(0, c), (c = t.substr(c + 1)) === "" ? n === void 0 ? a(e) && !isNaN(parseInt(o)) ? e.splice(o, 1) : delete e[o] : e[o] = n : x(s = (s = e[o]) && l(e, o) ? s : e[o] = {}, c, n));
+			if (e && t !== void 0 && !("isFrozen" in Object && Object.isFrozen(e))) {
+				if (typeof t != "string" && "length" in t) {
+					v(typeof n != "string" && "length" in n);
+					for (var r = 0, i = t.length; r < i; ++r) x(e, t[r], n[r]);
+				} else {
+					var o, s, c = t.indexOf(".");
+					c === -1 ? n === void 0 ? a(e) && !isNaN(parseInt(t)) ? e.splice(t, 1) : delete e[t] : e[t] = n : (o = t.substr(0, c), (c = t.substr(c + 1)) === "" ? n === void 0 ? a(e) && !isNaN(parseInt(o)) ? e.splice(o, 1) : delete e[o] : e[o] = n : x(s = (s = e[o]) && l(e, o) ? s : e[o] = {}, c, n));
+				}
 			}
 		}
 		function S(e) {
@@ -716,10 +680,10 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 			return n;
 		}
 		var C = [].concat;
-		function ee(e) {
+		function w(e) {
 			return C.apply([], e);
 		}
-		var w = "BigUint64Array,BigInt64Array,Array,Boolean,String,Date,RegExp,Blob,File,FileList,FileSystemFileHandle,FileSystemDirectoryHandle,ArrayBuffer,DataView,Uint8ClampedArray,ImageBitmap,ImageData,Map,Set,CryptoKey".split(",").concat(ee([
+		var T = "BigUint64Array,BigInt64Array,Array,Boolean,String,Date,RegExp,Blob,File,FileList,FileSystemFileHandle,FileSystemDirectoryHandle,ArrayBuffer,DataView,Uint8ClampedArray,ImageBitmap,ImageData,Map,Set,CryptoKey".split(",").concat(w([
 			8,
 			16,
 			32,
@@ -734,24 +698,24 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 			});
 		}))).filter(function(e) {
 			return r[e];
-		}), T = new Set(w.map(function(e) {
+		}), E = new Set(T.map(function(e) {
 			return r[e];
-		})), E = null;
+		})), ee = null;
 		function D(e) {
-			return E = /* @__PURE__ */ new WeakMap(), e = function e(t) {
+			return ee = /* @__PURE__ */ new WeakMap(), e = function e(t) {
 				if (!t || typeof t != "object") return t;
-				var n = E.get(t);
+				var n = ee.get(t);
 				if (n) return n;
 				if (a(t)) {
-					n = [], E.set(t, n);
+					n = [], ee.set(t, n);
 					for (var r = 0, i = t.length; r < i; ++r) n.push(e(t[r]));
-				} else if (T.has(t.constructor)) n = t;
+				} else if (E.has(t.constructor)) n = t;
 				else {
 					var o, c = s(t);
-					for (o in n = c === Object.prototype ? {} : Object.create(c), E.set(t, n), t) l(t, o) && (n[o] = e(t[o]));
+					for (o in n = c === Object.prototype ? {} : Object.create(c), ee.set(t, n), t) l(t, o) && (n[o] = e(t[o]));
 				}
 				return n;
-			}(e), E = null, e;
+			}(e), ee = null, e;
 		}
 		var te = {}.toString;
 		function ne(e) {
@@ -763,15 +727,15 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 		} : function() {
 			return null;
 		};
-		function ae(e, t) {
+		function O(e, t) {
 			t = e.indexOf(t), 0 <= t && e.splice(t, 1);
 		}
-		var O = {};
-		function k(e) {
+		var k = {};
+		function A(e) {
 			var t, n, r, i;
 			if (arguments.length === 1) {
 				if (a(e)) return e.slice();
-				if (this === O && typeof e == "string") return [e];
+				if (this === k && typeof e == "string") return [e];
 				if (i = ie(e)) for (n = []; !(r = i.next()).done;) n.push(r.value);
 				else {
 					if (e == null || typeof (t = e.length) != "number") return [e];
@@ -780,11 +744,11 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 			} else for (t = arguments.length, n = Array(t); t--;) n[t] = arguments[t];
 			return n;
 		}
-		var A = typeof Symbol < "u" ? function(e) {
+		var ae = typeof Symbol < "u" ? function(e) {
 			return e[Symbol.toStringTag] === "AsyncFunction";
 		} : function() {
 			return !1;
-		}, w = [
+		}, T = [
 			"Unknown",
 			"Constraint",
 			"Data",
@@ -816,7 +780,7 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 			"DatabaseClosed",
 			"PrematureCommit",
 			"ForeignAwait"
-		].concat(w), oe = {
+		].concat(T), oe = {
 			VersionChanged: "Database version changed by other database connection",
 			DatabaseClosed: "Database has been closed",
 			Abort: "Transaction aborted",
@@ -852,10 +816,10 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 				this.name = n, e ? typeof e == "string" ? (this.message = `${e}${r ? "\n " + r : ""}`, this.inner = r || null) : typeof e == "object" && (this.message = `${e.name} ${e.message}`, this.inner = e) : (this.message = oe[t] || n, this.inner = null);
 			}
 			return p(r).from(fe), e[t] = r, e;
-		}, {}), pe = (M.Syntax = SyntaxError, M.Type = TypeError, M.Range = RangeError, w.reduce(function(e, t) {
+		}, {}), pe = (M.Syntax = SyntaxError, M.Type = TypeError, M.Range = RangeError, T.reduce(function(e, t) {
 			return e[t + "Error"] = M[t], e;
 		}, {}));
-		w = j.reduce(function(e, t) {
+		T = j.reduce(function(e, t) {
 			return [
 				"Syntax",
 				"Type",
@@ -876,26 +840,26 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 				e.apply(this, arguments), t.apply(this, arguments);
 			};
 		}
-		function ge(e, t) {
+		function F(e, t) {
 			return e === N ? t : function() {
 				var n = e.apply(this, arguments), r = (n !== void 0 && (arguments[0] = n), this.onsuccess), i = this.onerror, a = (this.onsuccess = null, this.onerror = null, t.apply(this, arguments));
 				return r && (this.onsuccess = this.onsuccess ? P(r, this.onsuccess) : r), i && (this.onerror = this.onerror ? P(i, this.onerror) : i), a === void 0 ? n : a;
 			};
 		}
-		function _e(e, t) {
+		function I(e, t) {
 			return e === N ? t : function() {
 				e.apply(this, arguments);
 				var n = this.onsuccess, r = this.onerror;
 				this.onsuccess = this.onerror = null, t.apply(this, arguments), n && (this.onsuccess = this.onsuccess ? P(n, this.onsuccess) : n), r && (this.onerror = this.onerror ? P(r, this.onerror) : r);
 			};
 		}
-		function F(e, t) {
+		function ge(e, t) {
 			return e === N ? t : function(n) {
 				var r = e.apply(this, arguments), n = (o(n, r), this.onsuccess), i = this.onerror, a = (this.onsuccess = null, this.onerror = null, t.apply(this, arguments));
 				return n && (this.onsuccess = this.onsuccess ? P(n, this.onsuccess) : n), i && (this.onerror = this.onerror ? P(i, this.onerror) : i), r === void 0 ? a === void 0 ? void 0 : a : o(r, a);
 			};
 		}
-		function I(e, t) {
+		function _e(e, t) {
 			return e === N ? t : function() {
 				return !1 !== t.apply(this, arguments) && e.apply(this, arguments);
 			};
@@ -912,7 +876,7 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 				return t.apply(this, arguments);
 			};
 		}
-		w.ModifyError = le, w.DexieError = se, w.BulkError = ue;
+		T.ModifyError = le, T.DexieError = se, T.BulkError = ue;
 		var L = typeof location < "u" && /^(http|https):\/\/(localhost|127\.0\.0\.1)/.test(location.href);
 		function ye(e) {
 			L = e;
@@ -1090,7 +1054,7 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 			},
 			timeout: function(e, t) {
 				var n = this;
-				return e < Infinity ? new z(function(r, i) {
+				return e < 1 / 0 ? new z(function(r, i) {
 					var a = setTimeout(function() {
 						return i(new M.Timeout(t));
 					}, e);
@@ -1099,7 +1063,7 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 			}
 		}), typeof Symbol < "u" && Symbol.toStringTag && f(z.prototype, Symbol.toStringTag, "Dexie.Promise"), Me.env = it(), u(z, {
 			all: function() {
-				var e = k.apply(null, arguments).map(tt);
+				var e = A.apply(null, arguments).map(tt);
 				return new z(function(t, n) {
 					e.length === 0 && t([]);
 					var r = e.length;
@@ -1117,7 +1081,7 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 			},
 			reject: Ke,
 			race: function() {
-				var e = k.apply(null, arguments).map(tt);
+				var e = A.apply(null, arguments).map(tt);
 				return new z(function(t, n) {
 					e.map(function(e) {
 						return z.resolve(e).then(t, n);
@@ -1171,7 +1135,7 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 				});
 			}
 		}), we && (we.allSettled && f(z, "allSettled", function() {
-			var e = k.apply(null, arguments).map(tt);
+			var e = A.apply(null, arguments).map(tt);
 			return new z(function(t) {
 				e.length === 0 && t([]);
 				var n = e.length, r = Array(n);
@@ -1192,7 +1156,7 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 				});
 			});
 		}), we.any && typeof AggregateError < "u" && f(z, "any", function() {
-			var e = k.apply(null, arguments).map(tt);
+			var e = A.apply(null, arguments).map(tt);
 			return new z(function(t, n) {
 				e.length === 0 && n(/* @__PURE__ */ AggregateError([]));
 				var r = e.length, i = Array(r);
@@ -1296,7 +1260,7 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 		}
 		var ht = {
 			type: 3,
-			lower: -Infinity,
+			lower: -1 / 0,
 			lowerOpen: !1,
 			upper: [[]],
 			upperOpen: !1
@@ -1748,7 +1712,7 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 			return t;
 			function s(e, r, o) {
 				var c, l;
-				if (typeof e != "object") return r ||= I, l = {
+				if (typeof e != "object") return r ||= _e, l = {
 					subscribers: [],
 					fire: o ||= N,
 					subscribe: function(e) {
@@ -2081,7 +2045,7 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 							});
 						});
 					}
-					var c = Dt(n) && n.limit === Infinity && (typeof e != "function" || h) && {
+					var c = Dt(n) && n.limit === 1 / 0 && (typeof e != "function" || h) && {
 						index: n.index,
 						range: n.range
 					};
@@ -2255,19 +2219,19 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 				return e === t[0];
 			}, [e], "");
 		}, J.prototype.anyOfIgnoreCase = function() {
-			var e = k.apply(O, arguments);
+			var e = A.apply(k, arguments);
 			return e.length === 0 ? Rt(this) : zt(this, function(e, t) {
 				return t.indexOf(e) !== -1;
 			}, e, "");
 		}, J.prototype.startsWithAnyOfIgnoreCase = function() {
-			var e = k.apply(O, arguments);
+			var e = A.apply(k, arguments);
 			return e.length === 0 ? Rt(this) : zt(this, function(e, t) {
 				return t.some(function(t) {
 					return e.indexOf(t) === 0;
 				});
 			}, e, ct);
 		}, J.prototype.anyOf = function() {
-			var e, t, n = this, r = k.apply(O, arguments), i = this._cmp;
+			var e, t, n = this, r = A.apply(k, arguments), i = this._cmp;
 			try {
 				r.sort(i);
 			} catch {
@@ -2284,12 +2248,12 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 				}), !1);
 			}), e);
 		}, J.prototype.notEqual = function(e) {
-			return this.inAnyRange([[-Infinity, e], [e, this.db._maxKey]], {
+			return this.inAnyRange([[-1 / 0, e], [e, this.db._maxKey]], {
 				includeLowers: !1,
 				includeUppers: !1
 			});
 		}, J.prototype.noneOf = function() {
-			var e = k.apply(O, arguments);
+			var e = A.apply(k, arguments);
 			if (e.length === 0) return new this.Collection(this);
 			try {
 				e.sort(this._ascending);
@@ -2297,7 +2261,7 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 				return q(this, U);
 			}
 			var t = e.reduce(function(e, t) {
-				return e ? e.concat([[e[e.length - 1][1], t]]) : [[-Infinity, t]];
+				return e ? e.concat([[e[e.length - 1][1], t]]) : [[-1 / 0, t]];
 			}, null);
 			return t.push([e[e.length - 1], this.db._maxKey]), this.inAnyRange(t, {
 				includeLowers: !1,
@@ -2347,7 +2311,7 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 				}), !1);
 			}), t;
 		}, J.prototype.startsWithAnyOf = function() {
-			var e = k.apply(O, arguments);
+			var e = A.apply(k, arguments);
 			return e.every(function(e) {
 				return typeof e == "string";
 			}) ? e.length === 0 ? Rt(this) : this.inAnyRange(e.map(function(e) {
@@ -2421,7 +2385,7 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 				return r;
 			}) : (n._waitingFor = r, n._waitingQueue = [], t = n.idbtrans.objectStore(n.storeNames[0]), function e() {
 				for (++n._spinCount; n._waitingQueue.length;) n._waitingQueue.shift()();
-				n._waitingFor && (t.get(-Infinity).onsuccess = e);
+				n._waitingFor && (t.get(-1 / 0).onsuccess = e);
 			}()), n._waitingFor);
 			return new z(function(e, t) {
 				r.then(function(t) {
@@ -2582,7 +2546,7 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 					query: (t = c, function(e) {
 						return new Promise(function(i, a) {
 							i = B(i);
-							var o, s, c, l = e.trans, u = e.values, d = e.limit, f = e.query, p = d === Infinity ? void 0 : d, m = f.index, f = f.range, l = l.objectStore(n), l = m.isPrimaryKey ? l : l.index(m.name), m = r(f);
+							var o, s, c, l = e.trans, u = e.values, d = e.limit, f = e.query, p = d === 1 / 0 ? void 0 : d, m = f.index, f = f.range, l = l.objectStore(n), l = m.isPrimaryKey ? l : l.index(m.name), m = r(f);
 							if (d === 0) return i({ result: [] });
 							t ? ((f = u ? l.getAll(m, p) : l.getAllKeys(m, p)).onsuccess = function(e) {
 								return i({ result: e.target.result });
@@ -2694,7 +2658,7 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 					if (l[e]) return l[e];
 					throw Error(`Table '${e}' not found`);
 				},
-				MIN_KEY: -Infinity,
+				MIN_KEY: -1 / 0,
 				MAX_KEY: Zt(t),
 				schema: s
 			};
@@ -2770,7 +2734,7 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 							}), e._cfg.contentUpgrade);
 							if (p && e._cfg.version > a) return an(r, c), s._memoizedTables = {}, t = S(d), f.del.forEach(function(e) {
 								t[e] = l[e];
-							}), sn(r, [r.Transaction.prototype]), on(r, [r.Transaction.prototype], i(t), t), s.schema = t, (n = A(p)) && $e(), d = z.follow(function() {
+							}), sn(r, [r.Transaction.prototype]), on(r, [r.Transaction.prototype], i(t), t), s.schema = t, (n = ae(p)) && $e(), d = z.follow(function() {
 								var e;
 								(o = p(s)) && n && (e = et.bind(null, null), o.then(e, e));
 							}), o && typeof o.then == "function" ? z.resolve(o) : d.then(function() {
@@ -3041,7 +3005,7 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 			return i(t).forEach(function(n) {
 				e[n] ? Tn(e[n], t[n]) : e[n] = function e(t) {
 					var n, r, i = {};
-					for (n in t) l(t, n) && (r = t[n], i[n] = !r || typeof r != "object" || T.has(r.constructor) ? r : e(r));
+					for (n in t) l(t, n) && (r = t[n], i[n] = !r || typeof r != "object" || E.has(r.constructor) ? r : e(r));
 					return i;
 				}(t[n]);
 			}), e;
@@ -3182,8 +3146,8 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 				var t;
 				return f && (t = {}, e.tables.forEach(function(n) {
 					n.schema.indexes.forEach(function(r) {
-						r.name && (t[`idb://${e.name}/${n.name}/${r.name}`] = new Z(-Infinity, [[[]]]));
-					}), t[`idb://${e.name}/${n.name}/`] = t[`idb://${e.name}/${n.name}/:dels`] = new Z(-Infinity, [[[]]]);
+						r.name && (t[`idb://${e.name}/${n.name}/${r.name}`] = new Z(-1 / 0, [[[]]]));
+					}), t[`idb://${e.name}/${n.name}/`] = t[`idb://${e.name}/${n.name}/:dels`] = new Z(-1 / 0, [[[]]]);
 				}), Kt(Wt).fire(t), In(t, !0)), e;
 			});
 		}
@@ -3361,7 +3325,7 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 						return i.mutate(e);
 						function f(e) {
 							var r, o, s, f = R.trans, p = e.keys || Un(a, e);
-							if (p) return (e = e.type === "add" || e.type === "put" ? t(t({}, e), { keys: p }) : t({}, e)).type !== "delete" && (e.values = n([], e.values, !0)), e.keys &&= n([], e.keys, !0), r = i, s = p, ((o = e).type === "add" ? Promise.resolve([]) : r.getMany({
+							if (p) return (e = e.type === "add" || e.type === "put" ? t(t({}, e), { keys: p }) : t({}, e)).type !== "delete" && (e.values = n([], e.values, !0)), e.keys && (e.keys = n([], e.keys, !0)), r = i, s = p, ((o = e).type === "add" ? Promise.resolve([]) : r.getMany({
 								trans: o.trans,
 								keys: s,
 								cache: "immutable"
@@ -3608,7 +3572,7 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 				return r;
 			}, e)) === e) ? e : (r.sort(function(e, t) {
 				return W(f(e), f(t)) || W(u(e), u(t));
-			}), t.limit && t.limit < Infinity && (r.length > t.limit ? r.length = t.limit : e.length === t.limit && r.length < t.limit && (i.dirty = !0)), o ? Object.freeze(r) : r);
+			}), t.limit && t.limit < 1 / 0 && (r.length > t.limit ? r.length = t.limit : e.length === t.limit && r.length < t.limit && (i.dirty = !0)), o ? Object.freeze(r) : r);
 		}
 		function $n(e, t) {
 			return W(e.lower, t.lower) === 0 && W(e.upper, t.upper) === 0 && !!e.lowerOpen == !!t.lowerOpen && !!e.upperOpen == !!t.upperOpen;
@@ -3638,7 +3602,7 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 			e.subscribers.add(n), r.addEventListener("abort", function() {
 				var r, i;
 				e.subscribers.delete(n), e.subscribers.size === 0 && (r = e, i = t, setTimeout(function() {
-					r.subscribers.size === 0 && ae(i, r);
+					r.subscribers.size === 0 && O(i, r);
 				}, 3e3));
 			});
 		}
@@ -3660,16 +3624,16 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 											var f = e.table(u), p = d.optimisticOps.filter(function(e) {
 												return e.trans === s;
 											});
-											if (s._explicit && i && s.mutatedParts) for (var m = 0, h = Object.values(d.queries.query); m < h.length; m++) for (var g = 0, _ = (b = h[m]).slice(); g < _.length; g++) jn((x = _[g]).obsSet, s.mutatedParts) && (ae(b, x), x.subscribers.forEach(function(e) {
+											if (s._explicit && i && s.mutatedParts) for (var m = 0, h = Object.values(d.queries.query); m < h.length; m++) for (var g = 0, _ = (b = h[m]).slice(); g < _.length; g++) jn((x = _[g]).obsSet, s.mutatedParts) && (O(b, x), x.subscribers.forEach(function(e) {
 												return o.add(e);
 											}));
 											else if (0 < p.length) {
 												d.optimisticOps = d.optimisticOps.filter(function(e) {
 													return e.trans !== s;
 												});
-												for (var v = 0, y = Object.values(d.queries.query); v < y.length; v++) for (var b, x, S, C = 0, ee = (b = y[v]).slice(); C < ee.length; C++) (x = ee[C]).res != null && s.mutatedParts && (i && !x.dirty ? (S = Object.isFrozen(x.res), S = Qn(x.res, x.req, p, f, x, S), x.dirty ? (ae(b, x), x.subscribers.forEach(function(e) {
+												for (var v = 0, y = Object.values(d.queries.query); v < y.length; v++) for (var b, x, S, C = 0, w = (b = y[v]).slice(); C < w.length; C++) (x = w[C]).res != null && s.mutatedParts && (i && !x.dirty ? (S = Object.isFrozen(x.res), S = Qn(x.res, x.req, p, f, x, S), x.dirty ? (O(b, x), x.subscribers.forEach(function(e) {
 													return o.add(e);
-												})) : S !== x.res && (x.res = S, x.promise = z.resolve({ result: S }))) : (x.dirty && ae(b, x), x.subscribers.forEach(function(e) {
+												})) : S !== x.res && (x.res = S, x.promise = z.resolve({ result: S }))) : (x.dirty && O(b, x), x.subscribers.forEach(function(e) {
 													return o.add(e);
 												})));
 											}
@@ -3690,9 +3654,9 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 								return !a.outbound && s.db._options.cache !== "disabled" && !s.explicit && s.idbtrans.mode === "readwrite" && (o = Mn[`idb://${n}/${r}`]) ? (s = i.mutate(e), e.type !== "add" && e.type !== "put" || !(50 <= e.values.length || Un(a, e).some(function(e) {
 									return e == null;
 								})) ? (o.optimisticOps.push(e), e.mutatedParts && Fn(e.mutatedParts), s.then(function(t) {
-									0 < t.numFailures && (ae(o.optimisticOps, e), (t = Xn(0, e, t)) && o.optimisticOps.push(t), e.mutatedParts) && Fn(e.mutatedParts);
+									0 < t.numFailures && (O(o.optimisticOps, e), (t = Xn(0, e, t)) && o.optimisticOps.push(t), e.mutatedParts) && Fn(e.mutatedParts);
 								}), s.catch(function() {
-									ae(o.optimisticOps, e), e.mutatedParts && Fn(e.mutatedParts);
+									O(o.optimisticOps, e), e.mutatedParts && Fn(e.mutatedParts);
 								})) : s.then(function(n) {
 									var r = Xn(0, t(t({}, e), { values: e.values.map(function(e, r) {
 										var i;
@@ -3733,7 +3697,7 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 												a
 											] : [
 												a.find(function(e) {
-													return ("limit" in e.req ? e.req.limit : Infinity) >= r.limit && (!r.values || e.req.values) && er(e.req.query.range, r.query.range);
+													return ("limit" in e.req ? e.req.limit : 1 / 0) >= r.limit && (!r.values || e.req.values) && er(e.req.query.range, r.query.range);
 												}),
 												!1,
 												i,
@@ -3756,7 +3720,7 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 									} else e.result = D(n);
 									return e;
 								}).catch(function(e) {
-									return c && u && ae(c, u), Promise.reject(e);
+									return c && u && O(c, u), Promise.reject(e);
 								}), u = {
 									obsSet: e.obsSet,
 									promise: l,
@@ -3885,7 +3849,7 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 				for (var i = Array(r - 1); --r;) i[r - 1] = arguments[r];
 				return n = i.pop(), [
 					e,
-					ee(i),
+					w(i),
 					n
 				];
 			}.apply(this, arguments);
@@ -3933,7 +3897,7 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 							return e(t, n, r, null, a);
 						})) : H(i);
 					}
-					var c, l = A(a), o = (l && $e(), z.follow(function() {
+					var c, l = ae(a), o = (l && $e(), z.follow(function() {
 						var e;
 						(c = a.call(s, s)) && (l ? (e = et.bind(null, null), c.then(e, e)) : typeof c.next == "function" && typeof c.throw == "function" && (c = zn(c)));
 					}, o));
@@ -4022,17 +3986,17 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 					justLimit: !0,
 					isMatch: null,
 					offset: 0,
-					limit: Infinity,
+					limit: 1 / 0,
 					error: i,
 					or: t.or,
 					valueMapper: a === me ? null : a
 				};
 			})), this.Table = (i = this, Et(wt.prototype, function(e, t, n) {
 				this.db = i, this._tx = n, this.name = e, this.schema = t, this.hook = i._allTables[e] ? i._allTables[e].hook : Tt(null, {
-					creating: [ge, N],
+					creating: [F, N],
 					reading: [he, me],
-					updating: [F, N],
-					deleting: [_e, N]
+					updating: [ge, N],
+					deleting: [I, N]
 				});
 			})), this.Transaction = (a = this, Et(qt.prototype, function(e, t, n, r, i) {
 				var o = this;
@@ -4119,7 +4083,7 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 		}
 		function sr(e) {
 			var t, n = !1, r = new ar(function(r) {
-				var i = A(e), a, o = !1, s = {}, c = {}, u = {
+				var i = ae(e), a, o = !1, s = {}, c = {}, u = {
 					get closed() {
 						return o;
 					},
@@ -4177,7 +4141,7 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 				dr = t;
 			}
 		}
-		u(cr, t(t({}, w), {
+		u(cr, t(t({}, T), {
 			delete: function(e) {
 				return new cr(e, { addons: [] }).delete();
 			},
@@ -4264,7 +4228,7 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 			getObjectDiff: Hn,
 			cmp: W,
 			asap: y,
-			minKey: -Infinity,
+			minKey: -1 / 0,
 			addons: [],
 			connections: ut,
 			errnames: de,
@@ -4294,7 +4258,7 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 				for (var t = 0, n = ut; t < n.length; t++) n[t].close({ disableAutoOpen: !1 });
 			}
 		}), addEventListener("pageshow", function(e) {
-			!Q.disableBfCache && e.persisted && (L && console.debug("Dexie: handling persisted pageshow"), fr(), lr({ all: new Z(-Infinity, [[]]) }));
+			!Q.disableBfCache && e.persisted && (L && console.debug("Dexie: handling persisted pageshow"), fr(), lr({ all: new Z(-1 / 0, [[]]) }));
 		})), z.rejectionMapper = function(e, t) {
 			return !e || e instanceof se || e instanceof TypeError || e instanceof SyntaxError || !e.name || !pe[e.name] ? e : (t = new pe[e.name](t || e.message, e), "stack" in e && f(t, "stack", { get: function() {
 				return this.inner.stack;
@@ -4321,14 +4285,14 @@ var re = "3.21.3", ie = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 			}
 		}), { default: Q }), Q;
 	});
-})))(), 1), k = Symbol.for("Dexie"), A = globalThis[k] || (globalThis[k] = O.default);
-if (O.default.semVer !== A.semVer) throw Error(`Two different versions of Dexie loaded in the same app: ${O.default.semVer} and ${A.semVer}`);
-var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, Entity: ue, PropModification: de, replacePrefix: fe, add: M, remove: pe, DexieYProvider: N } = A, me = class {
+})))(), 1), O = Symbol.for("Dexie"), k = globalThis[O] || (globalThis[O] = ie.default);
+if (ie.default.semVer !== k.semVer) throw Error(`Two different versions of Dexie loaded in the same app: ${ie.default.semVer} and ${k.semVer}`);
+var { liveQuery: A, mergeRanges: ae, rangesOverlap: j, RangeSet: oe, cmp: se, Entity: ce, PropModification: le, replacePrefix: ue, add: de, remove: fe, DexieYProvider: M } = k, pe = class {
 	db;
 	subscribers = [];
 	options;
 	constructor(e) {
-		this.options = e, this.db = new A(e.app), this.db.version(19).stores({
+		this.options = e, this.db = new k(e.app), this.db.version(19).stores({
 			channel: "id,slide_index",
 			cloud: "id,dashboard_id",
 			dashboard: "id,name,update",
@@ -4349,14 +4313,14 @@ var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, E
 	}
 	getHash = async (e) => {
 		let t = await this.db.table("hashtable").where({ id: e.widget }).last().catch(() => {
-			T(2, [
+			w(2, [
 				"%chash%c %capi%C %chash",
 				u.API,
 				u.NONE,
 				u.APP
 			]);
 		});
-		return T(3, [
+		return w(3, [
 			"%cget%c %chash%c %chash",
 			u.OK,
 			u.NONE,
@@ -4366,7 +4330,7 @@ var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, E
 			e
 		]), t?.hash ?? "none";
 	};
-	setHash = async (e) => await this.db.table("hashtable").where({ id: e.widget }).modify({ hash: e.hash }).then(() => (T(3, [
+	setHash = async (e) => await this.db.table("hashtable").where({ id: e.widget }).modify({ hash: e.hash }).then(() => (w(3, [
 		"%cset%c %chash%c %chash}",
 		u.OK,
 		u.NONE,
@@ -4374,7 +4338,7 @@ var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, E
 		u.NONE,
 		u.WIDGET,
 		e
-	]), 201)).catch((t) => (T(2, [
+	]), 201)).catch((t) => (w(2, [
 		"%cget%c %chash%c %chash",
 		u.OK,
 		u.NONE,
@@ -4384,7 +4348,7 @@ var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, E
 		e,
 		t.message
 	]), 400));
-	clearHash = async () => await this.db.table("hashtable").clear().then(() => 201).catch((e) => (T(2, [
+	clearHash = async () => await this.db.table("hashtable").clear().then(() => 201).catch((e) => (w(2, [
 		"%cclear%c %cstorage%c %chash",
 		u.KO,
 		u.NONE,
@@ -4393,7 +4357,7 @@ var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, E
 		u.WIDGET,
 		"clear hashes"
 	]), 400));
-	deleteHash = async (e) => await this.db.table("hashtable").where({ id: e.widget }).delete().then(() => 201).catch((t) => (T(2, [
+	deleteHash = async (e) => await this.db.table("hashtable").where({ id: e.widget }).delete().then(() => 201).catch((t) => (w(2, [
 		"%cdelete%c %cstorage%c %chash",
 		u.KO,
 		u.NONE,
@@ -4406,7 +4370,7 @@ var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, E
 	createHash = async (e) => await this.db.table("hashtable").put({
 		id: e.widget,
 		hash: e.hash
-	}).then(() => 201).catch((t) => (T(2, [
+	}).then(() => 201).catch((t) => (w(2, [
 		"%cset%c %cstorage%c %chash",
 		u.KO,
 		u.NONE,
@@ -4417,7 +4381,7 @@ var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, E
 		t.message
 	]), 400));
 	getCloud = async (e) => {
-		if (e.widget === "") return T(3, [
+		if (e.widget === "") return w(3, [
 			"%cget%c %cstorage%c %ccloud",
 			u.NO_UPDATES,
 			u.NONE,
@@ -4432,7 +4396,7 @@ var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, E
 			query: e
 		};
 		let t = await this.db.table(l.CLOUD).where({ id: e.widget }).last().catch(() => {
-			T(2, [
+			w(2, [
 				"%capi%C %ccloud",
 				u.API,
 				u.NONE,
@@ -4452,7 +4416,7 @@ var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, E
 			success: t !== void 0,
 			query: e
 		};
-		return T(3, [
+		return w(3, [
 			"%cget%c %cstorage%c %ccloud",
 			u.OK,
 			u.NONE,
@@ -4462,7 +4426,7 @@ var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, E
 			n
 		]), n;
 	};
-	setCloud = async (e, t) => e.type === l.CLOUD && t !== "" ? (T(3, [
+	setCloud = async (e, t) => e.type === l.CLOUD && t !== "" ? (w(3, [
 		"%cset%c %cstorage%c %ccloud",
 		u.OK,
 		u.NONE,
@@ -4475,7 +4439,7 @@ var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, E
 		dashboard_id: e.dashboard,
 		hash: e.hash,
 		data: t
-	}).then(() => 201).catch((t) => (T(2, [
+	}).then(() => 201).catch((t) => (w(2, [
 		"%cset%c %cstorage%c %ccloud",
 		u.KO,
 		u.NONE,
@@ -4489,7 +4453,7 @@ var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, E
 		data: null,
 		message: `Bulk add ${t.length} items to ${e}`,
 		success: !0
-	})).catch((n) => (T(4, [
+	})).catch((n) => (w(4, [
 		"%cstorage",
 		u.STORAGE,
 		e,
@@ -4502,7 +4466,7 @@ var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, E
 	}));
 	get = async (e, t) => {
 		let n = await this.db.table(e).where({ id: t.id }).last().catch(() => {
-			T(2, [
+			w(2, [
 				"%cstorage",
 				u.STORAGE,
 				`loading ${e}`,
@@ -4519,7 +4483,7 @@ var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, E
 		data: null,
 		message: `${e} ${t.id} saved to storage`,
 		success: !0
-	})).catch((n) => (T(4, [
+	})).catch((n) => (w(4, [
 		"%cstorage",
 		u.STORAGE,
 		e,
@@ -4532,7 +4496,7 @@ var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, E
 	}));
 	getDashboard = async (e) => {
 		let t = await this.db.table(l.DASHBOARD).where({ id: e.id }).last().catch(() => {
-			T(2, [
+			w(2, [
 				"%cstorage",
 				u.STORAGE,
 				d.DASHBOARD_LOAD,
@@ -4547,14 +4511,14 @@ var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, E
 	};
 	getDashboards = async (e) => {
 		let t = (t) => e?.id === t.id, n = (t) => e?.name ? t.name.includes(e?.name) : !1, r = await this.db.table(l.DASHBOARD).toArray().then((n) => e?.id ? n.filter(t) : n).then((t) => e?.name ? t.filter(n) : t).catch(() => {
-			T(2, [
+			w(2, [
 				"%cstorage",
 				u.STORAGE,
 				d.DASHBOARD_LOAD,
 				e
 			]);
 		});
-		return r !== void 0 && T(3, [
+		return r !== void 0 && w(3, [
 			"%cstorage%c %cdashboards",
 			u.STORAGE,
 			u.NONE,
@@ -4580,7 +4544,7 @@ var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, E
 			data: null,
 			message: `Dashboard ${t.data.id} saved to storage`,
 			success: !0
-		})).catch((n) => (T(4, [
+		})).catch((n) => (w(4, [
 			"%cstorage",
 			u.STORAGE,
 			l.WIDGET,
@@ -4596,7 +4560,7 @@ var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, E
 		data: null,
 		message: `Dashboard ${e.id} deleted`,
 		success: !0
-	})).catch((t) => (T(4, [
+	})).catch((t) => (w(4, [
 		"%cstorage",
 		u.STORAGE,
 		l.DASHBOARD,
@@ -4621,7 +4585,7 @@ var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, E
 		return await this.db.table(l.TOPICS).orderBy("expires").filter((t) => t.expires < e).delete().catch((e) => (console.error("%cstorage%c %cclean", u.STORAGE, u.NONE, u.MESSAGES, e.message), 0)), await this.db.table(l.MESSAGES).orderBy("expires").filter((t) => t.expires < e).delete().catch((e) => (console.error("%clean%c %cstorage%c %cmessages", u.OK, u.NONE, u.STORAGE, u.NONE, u.MESSAGES, e.message), 0));
 	};
 	getMessages = async (e) => {
-		if (e.widget === "") return T(3, [
+		if (e.widget === "") return w(3, [
 			"%cget%c %cstorage%c %cmessages",
 			u.NO_UPDATES,
 			u.NONE,
@@ -4636,7 +4600,7 @@ var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, E
 			query: e
 		};
 		let t = e?.order ?? "utc", n = Math.floor(Date.now() / 1e3), r = e?.period ?? 0;
-		e.since = r === 0 ? n - 3600 * 24 * 30 : n - r, this.options.delay === 0 ? e.before = n : e.before = n - (this.options.delay || 0);
+		e.since = r === 0 ? n - 2592e3 : n - r, e.before = this.options.delay === 0 ? n : n - (this.options.delay || 0);
 		let i = (t) => t.utc > (e?.since || 0), a = (t) => t.utc < (e?.before || n);
 		try {
 			let n = this.db.table(l.TOPICS).where("widget_id").equals(e.widget).filter(i).filter(a);
@@ -4649,7 +4613,7 @@ var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, E
 				query: e
 			};
 			let o = r.map((e) => this.db.table(l.MESSAGES).get({ id: e.message_id }));
-			return A.Promise.all(o).then(async (t) => {
+			return k.Promise.all(o).then(async (t) => {
 				let n = {
 					data: { messages: t.map((e) => {
 						if (e !== void 0) return e.data;
@@ -4658,7 +4622,7 @@ var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, E
 					message: "Messages retrieved successfully",
 					success: !0
 				};
-				return T(3, [
+				return w(3, [
 					"%cget%c %cstorage%c %cmessages",
 					u.OK,
 					u.NONE,
@@ -4669,7 +4633,7 @@ var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, E
 				]), n;
 			});
 		} catch (t) {
-			return T(2, [
+			return w(2, [
 				"%cget%c %cstorage%c %cmessages",
 				u.OK,
 				u.NONE,
@@ -4691,7 +4655,7 @@ var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, E
 	setMessages = async (e, t) => {
 		if (e.type !== l.MESSAGES) return 400;
 		let n = t.data.title, r = 0;
-		return T(3, [
+		return w(3, [
 			"%cset%c %cstorage%c %cmessages",
 			u.OK,
 			u.NONE,
@@ -4714,7 +4678,7 @@ var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, E
 					data: i,
 					expires: i.expires
 				}).catch((e) => {
-					r++, T(4, [
+					r++, w(4, [
 						"%cset%c %cstorage",
 						u.KO,
 						u.NONE,
@@ -4740,7 +4704,7 @@ var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, E
 					expires: i.expires
 				};
 				await this.db.table(l.TOPICS).put(a).catch((e) => {
-					r++, T(4, [
+					r++, w(4, [
 						"%cset%c %cstorage",
 						u.KO,
 						u.NONE,
@@ -4756,7 +4720,7 @@ var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, E
 						visible: n,
 						approve: i
 					}).catch((t) => {
-						r++, T(4, [
+						r++, w(4, [
 							"%cset%c %cstorage",
 							u.KO,
 							u.NONE,
@@ -4772,7 +4736,7 @@ var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, E
 		}), r === 0 ? 201 : 400;
 	};
 	getSeries = async (e) => {
-		if (e.widget === "") return T(3, [
+		if (e.widget === "") return w(3, [
 			"%cget%c %cstorage%c %cseries",
 			u.NO_UPDATES,
 			u.NONE,
@@ -4787,7 +4751,7 @@ var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, E
 			query: e
 		};
 		let t = await this.db.table(l.SERIES).where({ id: e.widget }).last().catch(() => {
-			T(2, [
+			w(2, [
 				"%cget%c %cstorage%c %cseries",
 				u.KO,
 				u.NONE,
@@ -4802,7 +4766,7 @@ var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, E
 			success: t !== void 0,
 			query: e
 		};
-		return T(3, [
+		return w(3, [
 			"%cget%c %cstorage%c %cseries",
 			u.OK,
 			u.NONE,
@@ -4812,7 +4776,7 @@ var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, E
 			n
 		]), n;
 	};
-	setSeries = async (e, t) => (delete t?.query, e.type === l.SERIES && t !== "" ? (T(3, [
+	setSeries = async (e, t) => (delete t?.query, e.type === l.SERIES && t !== "" ? (w(3, [
 		"%cset%c %cstorage%c %cseries",
 		u.OK,
 		u.NONE,
@@ -4825,7 +4789,7 @@ var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, E
 		dashboard_id: e.dashboard,
 		hash: e.hash,
 		data: t
-	}).then(() => 201).catch((t) => (T(2, [
+	}).then(() => 201).catch((t) => (w(2, [
 		"%cset%c %cstorage%c %cseries",
 		u.KO,
 		u.NONE,
@@ -4836,7 +4800,7 @@ var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, E
 		t.message
 	]), 400))) : 400);
 	getWidget = async (e) => {
-		if (e.id === "") return T(3, [
+		if (e.id === "") return w(3, [
 			"%cget%c %cstorage%c %cwidget",
 			u.KO,
 			u.NONE,
@@ -4861,14 +4825,14 @@ var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, E
 	};
 	getWidgets = async (e) => {
 		let t = (t) => e?.dashboard === t.dashboard_id, n = (t) => e?.type === t.type, r = (t) => e?.name ? t.name.includes(e?.name) : !1, i = await this.db.table(l.WIDGET).toArray().then((n) => e?.dashboard ? n.filter(t) : n).then((t) => e?.type ? t.filter(n) : t).then((t) => e?.name ? t.filter(r) : t).catch(() => {
-			T(2, [
+			w(2, [
 				"%cstorage",
 				u.STORAGE,
 				d.WIDGET_LOAD,
 				e
 			]);
 		});
-		return i !== void 0 && T(3, [
+		return i !== void 0 && w(3, [
 			"%cstorage%c %cwidgets",
 			u.STORAGE,
 			u.NONE,
@@ -4916,11 +4880,11 @@ var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, E
 		message: `Widgets table deleted error: ${e.message}`,
 		success: !1
 	}));
-	subscribe = (e) => (e = te(e), this.subscribers.filter((t) => t.widget === e.widget).length > 0 ? null : (e.type === l.MESSAGES && (e = ne(this.options, e)), console.info("%cstorage%c %csubscribe", u.STORAGE, u.NONE, u.SUBSCRIBE, e.slide, e.widget), console.debug("%cstorage%c %csubscribe", u.STORAGE, u.NONE, u.SUBSCRIBE, e), this.subscribers.push(e), null));
+	subscribe = (e) => (e = ee(e), this.subscribers.filter((t) => t.widget === e.widget).length > 0 ? null : (e.type === l.MESSAGES && (e = D(this.options, e)), console.info("%cstorage%c %csubscribe", u.STORAGE, u.NONE, u.SUBSCRIBE, e.slide, e.widget), console.debug("%cstorage%c %csubscribe", u.STORAGE, u.NONE, u.SUBSCRIBE, e), this.subscribers.push(e), null));
 	getSubscribers = async () => await new Promise((e) => e(this.subscribers));
 	getSlide = async (e) => {
 		let t = await this.db.table(l.SLIDE).where({ id: e.id }).last().catch(() => {
-			T(2, [
+			w(2, [
 				"%cstorage",
 				u.STORAGE,
 				d.SLIDE_LOAD,
@@ -4936,7 +4900,7 @@ var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, E
 	};
 	getSlides = async (e) => {
 		let t = (t) => e?.id ? t.id === e.id : !1, n = (t) => e?.name ? t.name.includes(e?.name) : !1, r = (t) => e?.presentation_id ? t.presentation_id === e.presentation_id : !1, i = await this.db.table(l.SLIDE).toArray().then((t) => e?.presentation_id ? t.filter(r) : t).then((n) => e?.id ? n.filter(t) : n).then((t) => e?.name ? t.filter(n) : t);
-		return i && i.sort((e, t) => e.order_index - t.order_index), i !== void 0 && T(3, [
+		return i && i.sort((e, t) => e.order_index - t.order_index), i !== void 0 && w(3, [
 			"%cstorage%c %cslides",
 			u.STORAGE,
 			u.NONE,
@@ -4996,7 +4960,7 @@ var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, E
 	};
 	getPresentations = async (e) => {
 		let t = (t) => e?.name ? t.name.includes(e?.name) : !1, n = await this.db.table(l.PRESENTATION).toArray().then((n) => e?.name ? n.filter(t) : n);
-		return n !== void 0 && T(3, [
+		return n !== void 0 && w(3, [
 			"%cstorage%c %cpresentations",
 			u.STORAGE,
 			u.NONE,
@@ -5045,7 +5009,7 @@ var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, E
 	}));
 	getPreference = async (e) => {
 		let t = await this.db.table(l.PREFERENCE).where({ id: e.id }).last().catch(() => {
-			T(2, [
+			w(2, [
 				"%cstorage",
 				u.STORAGE,
 				d.PREFERENCE_LOAD,
@@ -5064,7 +5028,7 @@ var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, E
 	};
 	getPreferences = async (e) => {
 		let t = (t) => e?.id ? e.id = t.id : !1, n = await this.db.table(l.PREFERENCE).toArray().then((n) => e?.id ? n.filter(t) : n);
-		return n !== void 0 && T(3, [
+		return n !== void 0 && w(3, [
 			"%cstorage%c %cpreferences",
 			u.STORAGE,
 			u.NONE,
@@ -5103,7 +5067,7 @@ var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, E
 	}));
 	getImages = async (e) => {
 		let t = (t) => e?.id ? t.includes(e.id) : !1, n = await this.db.table(l.IMAGES).toArray().then((n) => e?.id ? n.filter(t) : n);
-		return n !== void 0 && T(3, [
+		return n !== void 0 && w(3, [
 			"%cstorage%c %cimages",
 			u.STORAGE,
 			u.NONE,
@@ -5137,34 +5101,34 @@ var { liveQuery: j, mergeRanges: oe, rangesOverlap: se, RangeSet: ce, cmp: le, E
 };
 //#endregion
 //#region node_modules/idb-keyval/dist/index.js
-function he(e) {
+function N(e) {
 	return new Promise((t, n) => {
 		e.oncomplete = e.onsuccess = () => t(e.result), e.onabort = e.onerror = () => n(e.error);
 	});
 }
-function P(e, t) {
+function me(e, t) {
 	let n, r = () => {
 		if (n) return n;
 		let r = indexedDB.open(e);
-		return r.onupgradeneeded = () => r.result.createObjectStore(t), n = he(r), n.then((e) => {
+		return r.onupgradeneeded = () => r.result.createObjectStore(t), n = N(r), n.then((e) => {
 			e.onclose = () => n = void 0;
 		}, () => {}), n;
 	};
 	return (e, n) => r().then((r) => n(r.transaction(t, e).objectStore(t)));
 }
-var ge;
-function _e() {
-	return ge ||= P("keyval-store", "keyval"), ge;
+var he;
+function P() {
+	return he ||= me("keyval-store", "keyval"), he;
 }
-function F(e, t = _e()) {
-	return t("readonly", (t) => he(t.get(e)));
+function F(e, t = P()) {
+	return t("readonly", (t) => N(t.get(e)));
 }
-function I(e, t, n = _e()) {
-	return n("readwrite", (n) => (n.put(t, e), he(n.transaction)));
+function I(e, t, n = P()) {
+	return n("readwrite", (n) => (n.put(t, e), N(n.transaction)));
 }
 //#endregion
 //#region src/storage/keyval.ts
-var ve = class {
+var ge = class {
 	subscribers = [];
 	options;
 	constructor(e) {
@@ -5175,41 +5139,41 @@ var ve = class {
 	createHash = async (e) => 404;
 	clearHash = async () => 404;
 	deleteHash = async (e) => 404;
-	getCloud = async (e) => await F(D(e)).then((e) => e).catch(() => (console.warn("%capi", u.API, l.CLOUD, e.slide, e.widget), {
+	getCloud = async (e) => await F(E(e)).then((e) => e).catch(() => (console.warn("%capi", u.API, l.CLOUD, e.slide, e.widget), {
 		data: null,
 		message: "Cloud Data error",
 		success: !1
 	}));
-	getSeries = async (e) => await F(D(e)).then((e) => e).catch(() => (console.warn("%capi", u.API, l.SERIES, e.slide, e.widget), {
+	getSeries = async (e) => await F(E(e)).then((e) => e).catch(() => (console.warn("%capi", u.API, l.SERIES, e.slide, e.widget), {
 		data: null,
 		message: "Series Data error",
 		success: !1
 	}));
-	getMessages = async (e) => await F(D(e)).then((e) => e).catch(() => (console.warn("%capi", u.API, l.MESSAGES, e.slide, e.widget), {
+	getMessages = async (e) => await F(E(e)).then((e) => e).catch(() => (console.warn("%capi", u.API, l.MESSAGES, e.slide, e.widget), {
 		data: null,
 		message: "Messages Data error",
 		success: !1
 	}));
 	setCloud = async (e, t) => {
 		if (!t.success) return 400;
-		let n = D(e);
+		let n = E(e);
 		return delete t.success, delete t.message, await I(n, t).then(() => 201).catch((t) => (console.error("%cstorage", u.STORAGE, l.CLOUD, e, t.message), 400));
 	};
 	setSeries = async (e, t) => {
 		if (!t.success) return 400;
-		let n = D(e);
+		let n = E(e);
 		return delete t.success, delete t.message, await I(n, t).then(() => 201).catch((t) => (console.error("%cstorage", u.STORAGE, l.SERIES, e, t.message), 400));
 	};
 	setMessages = async (e, t) => {
 		if (!t.success) return 400;
-		let n = D(e);
+		let n = E(e);
 		return delete t.success, delete t.message, await I(n, t).then(() => 201).catch((t) => (console.error("%cstorage", u.STORAGE, l.MESSAGES, e, t.message), 400));
 	};
 	cleanMessages = async (e) => (console.log("cleanMessages not implemented for ", this.options.storage), await new Promise((e) => e(0)));
 	hideMessage = async (e, t) => {
 		console.debug(`hideMessage ${e} ${t} not implemented for ${this.options.storage}`);
 	};
-	getDashboard = async (e) => await F(D(e)).then((e) => e).catch((t) => (console.warn("%capi", u.API, l.SLIDE, e.id), {
+	getDashboard = async (e) => await F(E(e)).then((e) => e).catch((t) => (console.warn("%capi", u.API, l.SLIDE, e.id), {
 		data: null,
 		message: `Widget ${e.data.id} load error: ${t.message}`,
 		success: !1
@@ -5219,7 +5183,7 @@ var ve = class {
 		message: "Dashboards get error: ",
 		success: !1
 	});
-	setDashboard = async (e) => await I(D(e), {
+	setDashboard = async (e) => await I(E(e), {
 		id: e.dashboard,
 		name: e.name
 	}).then(() => ({
@@ -5231,7 +5195,7 @@ var ve = class {
 		message: `Slide ${e.data.id} save error: ${t.message}`,
 		success: !1
 	}));
-	getWidget = async (e) => await F(D(e)).then((e) => e).catch((t) => (console.warn("%capi", u.API, l.SLIDE, e.id), {
+	getWidget = async (e) => await F(E(e)).then((e) => e).catch((t) => (console.warn("%capi", u.API, l.SLIDE, e.id), {
 		data: null,
 		message: `Widget ${e.data.id} load error: ${t.message}`,
 		success: !1
@@ -5241,7 +5205,7 @@ var ve = class {
 		message: "Widgets load error: ",
 		success: !1
 	});
-	setWidget = async (e) => await I(D(e), {
+	setWidget = async (e) => await I(E(e), {
 		id: e.widget,
 		name: e.name,
 		dashboard_id: e.dashboard,
@@ -5274,9 +5238,9 @@ var ve = class {
 	deleteSlides = async () => 404;
 	deletePresentation = async (e) => 404;
 	deletePresentations = async () => 404;
-	subscribe = (e) => (e.type === l.MESSAGES && (e = ne(this.options, e)), this.subscribers.filter((t) => t.widget === e.widget).length > 0 ? null : (console.debug("%cstorage%c %csubscribe", u.STORAGE, u.NONE, u.SUBSCRIBE, e.slide, e.widget), this.subscribers.push(e), null));
+	subscribe = (e) => (e.type === l.MESSAGES && (e = D(this.options, e)), this.subscribers.filter((t) => t.widget === e.widget).length > 0 ? null : (console.debug("%cstorage%c %csubscribe", u.STORAGE, u.NONE, u.SUBSCRIBE, e.slide, e.widget), this.subscribers.push(e), null));
 	getSubscribers = async () => await new Promise((e) => e(this.subscribers));
-	getSlide = async (e) => await F(D(e)).then((e) => e).catch((t) => (console.warn("%capi", u.API, l.SLIDE, e.id), {
+	getSlide = async (e) => await F(E(e)).then((e) => e).catch((t) => (console.warn("%capi", u.API, l.SLIDE, e.id), {
 		data: null,
 		message: `Slide ${e.data.id} load error: ${t.message}`,
 		success: !1
@@ -5286,7 +5250,7 @@ var ve = class {
 		message: `Slided ${e.presentation} load error: `,
 		success: !1
 	});
-	setSlide = async (e) => await I(D(e), {
+	setSlide = async (e) => await I(E(e), {
 		id: e.data.id,
 		title: e.data.title || "Not set",
 		json: e.data.json || {},
@@ -5300,7 +5264,7 @@ var ve = class {
 		message: `Slide ${e.data.id} save error: ${t.message}`,
 		success: !1
 	}));
-	getPresentation = async (e) => await F(D(e)).then((e) => e).catch((t) => (console.warn("%capi", u.API, l.PRESENTATION, e.id), {
+	getPresentation = async (e) => await F(E(e)).then((e) => e).catch((t) => (console.warn("%capi", u.API, l.PRESENTATION, e.id), {
 		data: null,
 		message: `Slide ${e.data.id} load error: ${t.message}`,
 		success: !1
@@ -5311,7 +5275,7 @@ var ve = class {
 		success: !1
 	});
 	setPresentation = async (e) => {
-		let t = D(e), n = e.data;
+		let t = E(e), n = e.data;
 		return await I(t, n).then(() => ({
 			data: null,
 			message: `Presentation ${e.data.id} saved to storage`,
@@ -5351,14 +5315,14 @@ var ve = class {
 		message: `Image ${e.id} saved`,
 		success: !1
 	});
-}, L = class {
+}, _e = class {
 	subscribers = [];
 	options;
 	constructor(e) {
 		this.options = e, Storage.prototype.setObject = function(e, t) {
-			this.setObject(e, JSON.stringify(t));
+			this.setItem(e, JSON.stringify(t));
 		}, Storage.prototype.getObject = function(e) {
-			let t = this.getObject(e);
+			let t = this.getItem(e);
 			return t && JSON.parse(t);
 		};
 	}
@@ -5368,7 +5332,7 @@ var ve = class {
 	clearHash = async () => 404;
 	deleteHash = async (e) => 404;
 	getCloud = async (e) => {
-		let t = D(e);
+		let t = E(e);
 		try {
 			return localStorage.getObject(t);
 		} catch (t) {
@@ -5380,7 +5344,7 @@ var ve = class {
 		}
 	};
 	getSeries = async (e) => {
-		let t = D(e);
+		let t = E(e);
 		try {
 			return localStorage.getObject(t);
 		} catch (t) {
@@ -5392,7 +5356,7 @@ var ve = class {
 		}
 	};
 	getMessages = async (e) => {
-		let t = D(e);
+		let t = E(e);
 		try {
 			return localStorage.getObject(t);
 		} catch (t) {
@@ -5407,7 +5371,7 @@ var ve = class {
 	get = async (e, t) => 404;
 	set = async (e, t) => 404;
 	setCloud = async (e, t) => {
-		let n = D(e);
+		let n = E(e);
 		try {
 			return localStorage.setObject(n, t), 201;
 		} catch (t) {
@@ -5415,7 +5379,7 @@ var ve = class {
 		}
 	};
 	setSeries = async (e, t) => {
-		let n = D(e);
+		let n = E(e);
 		try {
 			return localStorage.setObject(n, t), 201;
 		} catch (t) {
@@ -5423,7 +5387,7 @@ var ve = class {
 		}
 	};
 	setMessages = async (e, t) => {
-		let n = D(e);
+		let n = E(e);
 		try {
 			return localStorage.setObject(n, t), 200;
 		} catch (t) {
@@ -5506,7 +5470,7 @@ var ve = class {
 	deleteSlides = async () => 404;
 	deletePresentation = async (e) => 404;
 	deletePresentations = async () => 404;
-	subscribe = (e) => (e.type === l.MESSAGES && (e = ne(this.options, e)), this.subscribers.filter((t) => t.widget === e.widget).length ? null : (console.debug("%cstorage%c %csubscribe", u.STORAGE, u.NONE, u.SUBSCRIBE, e.slide, e.widget), this.subscribers.push(e), null));
+	subscribe = (e) => (e.type === l.MESSAGES && (e = D(this.options, e)), this.subscribers.filter((t) => t.widget === e.widget).length ? null : (console.debug("%cstorage%c %csubscribe", u.STORAGE, u.NONE, u.SUBSCRIBE, e.slide, e.widget), this.subscribers.push(e), null));
 	getSubscribers = async () => await new Promise((e) => e(this.subscribers));
 	getSlide = async (e) => {
 		try {
@@ -5634,7 +5598,7 @@ var ve = class {
 		message: `Image ${e.id} saved `,
 		success: !1
 	});
-}, ye = class {
+}, ve = class {
 	subscribers = [];
 	options;
 	constructor(e) {
@@ -5651,7 +5615,7 @@ var ve = class {
 	clearHash = async () => 404;
 	deleteHash = async (e) => 404;
 	getCloud = async (e) => {
-		let t = D(e);
+		let t = E(e);
 		try {
 			return sessionStorage.getObject(t);
 		} catch (t) {
@@ -5663,7 +5627,7 @@ var ve = class {
 		}
 	};
 	getSeries = async (e) => {
-		let t = D(e);
+		let t = E(e);
 		try {
 			return sessionStorage.getObject(t);
 		} catch (t) {
@@ -5675,7 +5639,7 @@ var ve = class {
 		}
 	};
 	getMessages = async (e) => {
-		let t = D(e);
+		let t = E(e);
 		try {
 			return sessionStorage.getObject(t);
 		} catch (t) {
@@ -5687,7 +5651,7 @@ var ve = class {
 		}
 	};
 	setCloud = async (e, t) => {
-		let n = D(e);
+		let n = E(e);
 		try {
 			return sessionStorage.setObject(n, t), 201;
 		} catch (t) {
@@ -5695,7 +5659,7 @@ var ve = class {
 		}
 	};
 	setSeries = async (e, t) => {
-		let n = D(e);
+		let n = E(e);
 		try {
 			return sessionStorage.setObject(n, t), 201;
 		} catch (t) {
@@ -5703,7 +5667,7 @@ var ve = class {
 		}
 	};
 	setMessages = async (e, t) => {
-		let n = D(e);
+		let n = E(e);
 		try {
 			return sessionStorage.setObject(n, t), 200;
 		} catch (t) {
@@ -5789,7 +5753,7 @@ var ve = class {
 	deleteSlides = async () => 404;
 	deletePresentation = async (e) => 404;
 	deletePresentations = async () => 404;
-	subscribe = (e) => (e.type === l.MESSAGES && (e = ne(this.options, e)), this.subscribers.filter((t) => t.widget === e.widget).length ? null : (console.debug("%cstorage%c %csubscribe", u.STORAGE, u.NONE, u.SUBSCRIBE, e.slide, e.widget), this.subscribers.push(e), null));
+	subscribe = (e) => (e.type === l.MESSAGES && (e = D(this.options, e)), this.subscribers.filter((t) => t.widget === e.widget).length ? null : (console.debug("%cstorage%c %csubscribe", u.STORAGE, u.NONE, u.SUBSCRIBE, e.slide, e.widget), this.subscribers.push(e), null));
 	getSubscribers = async () => await new Promise((e) => e(this.subscribers));
 	getSlide = async (e) => {
 		try {
@@ -5917,7 +5881,7 @@ var ve = class {
 		message: `Image ${e.id} saved`,
 		success: !1
 	});
-}, be = class {
+}, L = class {
 	subscribers = [];
 	options;
 	constructor(e) {
@@ -5929,7 +5893,7 @@ var ve = class {
 	clearHash = async () => 404;
 	deleteHash = async (e) => 404;
 	getCloud = async (e) => {
-		let t = D(e);
+		let t = E(e);
 		try {
 			return window.__bc.WidgetData[t];
 		} catch (t) {
@@ -5941,7 +5905,7 @@ var ve = class {
 		}
 	};
 	getSeries = async (e) => {
-		let t = D(e);
+		let t = E(e);
 		try {
 			return window.__bc.WidgetData[t];
 		} catch (t) {
@@ -5953,7 +5917,7 @@ var ve = class {
 		}
 	};
 	getMessages = async (e) => {
-		let t = D(e);
+		let t = E(e);
 		try {
 			return window.__bc.WidgetData[t];
 		} catch (t) {
@@ -5965,7 +5929,7 @@ var ve = class {
 		}
 	};
 	setCloud = async (e, t) => {
-		let n = D(e);
+		let n = E(e);
 		try {
 			return window.__bc.WidgetData[n] = t, 201;
 		} catch (t) {
@@ -5973,7 +5937,7 @@ var ve = class {
 		}
 	};
 	setSeries = async (e, t) => {
-		let n = D(e);
+		let n = E(e);
 		try {
 			return window.__bc.WidgetData[n] = t, 201;
 		} catch (t) {
@@ -5981,7 +5945,7 @@ var ve = class {
 		}
 	};
 	setMessages = async (e, t) => {
-		let n = D(e);
+		let n = E(e);
 		try {
 			return window.__bc.WidgetData[n] = t, 201;
 		} catch (t) {
@@ -6067,7 +6031,7 @@ var ve = class {
 	deleteSlides = async () => 404;
 	deletePresentation = async (e) => 404;
 	deletePresentations = async () => 404;
-	subscribe = (e) => (e.type === l.MESSAGES && (e = ne(this.options, e)), this.subscribers.filter((t) => t.widget === e.widget).length ? null : (console.debug("%cstorage%c %csubscribe", u.STORAGE, u.NONE, u.SUBSCRIBE, e.slide, e.widget), this.subscribers.push(e), null));
+	subscribe = (e) => (e.type === l.MESSAGES && (e = D(this.options, e)), this.subscribers.filter((t) => t.widget === e.widget).length ? null : (console.debug("%cstorage%c %csubscribe", u.STORAGE, u.NONE, u.SUBSCRIBE, e.slide, e.widget), this.subscribers.push(e), null));
 	getSubscribers = async () => await new Promise((e) => e(this.subscribers));
 	getSlide = async (e) => {
 		try {
@@ -6196,36 +6160,33 @@ var ve = class {
 		message: `Image ${e.name} saved`,
 		success: !1
 	});
-}, xe = class {
+}, ye = class {
 	sm;
 	api;
 	bc;
 	options;
 	subscribers = [];
 	constructor(e) {
-		switch (T(3, [
+		switch (w(3, [
 			"%cpresentation",
 			u.PRESENTATION,
 			e.presentation,
 			d.VERSION,
-			re
-		]), this.options = e, this.sm = null, this.bc = new BroadcastChannel(this.options.presentation), this.api = new ae(e), e.storage) {
+			te
+		]), this.options = e, this.sm = null, this.bc = new BroadcastChannel(this.options.presentation), this.api = new re(e), e.storage) {
 			case p.DEXIE:
-				this.sm = new me(e);
+				this.sm = new pe(e);
 				break;
 			case p.LOCAL:
-				this.sm = new ye(e);
+				this.sm = new _e(e);
 				break;
 			case p.SESSION:
-				this.sm = new L(e);
-				break;
-			case p.KEYVAL:
 				this.sm = new ve(e);
 				break;
-			case p.WINDOW:
-				this.sm = new be(e);
+			case p.KEYVAL:
+				this.sm = new ge(e);
 				break;
-			default:
+			case p.WINDOW: this.sm = new L(e);
 		}
 	}
 	addSubscriber(e) {
@@ -6235,7 +6196,7 @@ var ve = class {
 		delete this.subscribers[e.widget];
 	}
 	update = async (e) => {
-		if (T(3, [
+		if (w(3, [
 			"%cupdate%c %cdata",
 			u.NO_UPDATES,
 			u.NONE,
@@ -6268,7 +6229,7 @@ var ve = class {
 			let o = e.query;
 			switch (o.type) {
 				case l.MESSAGES:
-					a = await this.sm?.getHash(o), a === "none" && (o.hash = "temp", await this.sm?.createHash(o)), e.data.messages = e.data.messages.filter((e) => e.id !== null), i = e.data.messages.length > 0 ? x(e.data.messages[0].utc) : "none", a === i && t.refresh === !1 ? (T(3, [
+					a = await this.sm?.getHash(o), a === "none" && (o.hash = "temp", await this.sm?.createHash(o)), e.data.messages = e.data.messages.filter((e) => e.id !== null), i = e.data.messages.length > 0 ? x(e.data.messages[0].utc) : "none", a === i && t.refresh === !1 ? (w(3, [
 						"%cset%c %cstorage%c %cmessages",
 						u.NO_UPDATES,
 						u.NONE,
@@ -6280,7 +6241,7 @@ var ve = class {
 					]), r.code = 204) : this.sm === null ? r.code = 500 : (o.hash = i, await this.sm?.setHash(o), r.code = await this.sm.setMessages(e.query, e).then(async (n) => (t.refresh && n === 204 && (n = 201), this.broadcastUpdate(n, e), n)).catch((e) => 500));
 					break;
 				case l.CLOUD:
-					a = await this.sm?.getHash(o), a === "none" && (o.hash = "temp", await this.sm?.createHash(o)), i = x(e.data.cloud), a === i && t.refresh === !1 ? (T(3, [
+					a = await this.sm?.getHash(o), a === "none" && (o.hash = "temp", await this.sm?.createHash(o)), i = x(e.data.cloud), a === i && t.refresh === !1 ? (w(3, [
 						"%cset%c %cstorage%c %ccloud",
 						u.NO_UPDATES,
 						u.NONE,
@@ -6289,7 +6250,7 @@ var ve = class {
 						u.CLOUD,
 						e.data?.title ?? o.widget,
 						`same hash:${i}`
-					]), T(4, [
+					]), w(4, [
 						"%cdebug%c %ccloud",
 						u.NO_UPDATES,
 						u.NONE,
@@ -6306,7 +6267,7 @@ var ve = class {
 					}, this.sm === null ? r.code = 500 : r.code = await this.sm.setCloud(e.query, n.data).then((n) => (t.refresh && n === 204 && (n = 201), this.broadcastUpdate(n, e), n)).catch((e) => 500));
 					break;
 				case l.SERIES:
-					a = await this.sm?.getHash(o), a === "none" && (o.hash = "temp", await this.sm?.createHash(o)), i = x(e.data.series), a === i && t.refresh === !1 ? (T(3, [
+					a = await this.sm?.getHash(o), a === "none" && (o.hash = "temp", await this.sm?.createHash(o)), i = x(e.data.series), a === i && t.refresh === !1 ? (w(3, [
 						"%cset%c %cstorage%c %cseries",
 						u.NO_UPDATES,
 						u.NONE,
@@ -6315,7 +6276,7 @@ var ve = class {
 						u.SERIES,
 						e.data?.title ?? e.query.widget,
 						`same hash:${i}`
-					]), T(4, [
+					]), w(4, [
 						"%cdebug%c %cseries",
 						u.NO_UPDATES,
 						u.NONE,
@@ -6331,7 +6292,7 @@ var ve = class {
 						query: e.query
 					}, this.sm === null ? r.code = 500 : r.code = await this.sm.setSeries(o, e.data).then((n) => (t.refresh && n === 204 && (n = 201), this.broadcastUpdate(n, e), n)).catch((e) => 500));
 					break;
-				default: T(3, [
+				default: w(3, [
 					`%cfetch%c %capi% %c${o.type} `,
 					u.KO,
 					u.NONE,
@@ -6344,7 +6305,7 @@ var ve = class {
 					hash: i
 				};
 			}
-		} else switch (T(3, [
+		} else switch (w(3, [
 			`%cset%c %c${e.query.type}%c %cunauthorized`,
 			u.KO,
 			u.NONE,
@@ -6379,7 +6340,7 @@ var ve = class {
 	};
 	startBroadcastListener = () => {
 		let e = this.options.presentation;
-		T(3, [
+		w(3, [
 			"%cchannel%c %capi",
 			u.BROADCAST,
 			u.NONE,
@@ -6401,15 +6362,15 @@ var ve = class {
 	broadcastUpdate = (e, t) => {
 		switch (e) {
 			case 201:
-				T(3, [
+				w(3, [
 					`%cupdate%c %cwidget%c %c${t.query?.type}`,
 					u.BROADCAST,
 					u.NONE,
 					u.WIDGET,
 					u.NONE,
-					E(t.query),
+					T(t.query),
 					`${t?.data?.title ?? ""} ${t.query.widget}`
-				]), T(4, [
+				]), w(4, [
 					"%cdebug%c %cevent",
 					u.NO_UPDATES,
 					u.NONE,
@@ -6421,18 +6382,16 @@ var ve = class {
 				});
 				break;
 			case 204: break;
-			default:
-				T(2, [
-					`%cupdate%c %cwidget%c %c${t.query?.type}`,
-					u.KO,
-					u.NONE,
-					u.WIDGET,
-					u.NONE,
-					E(t.query),
-					"Fetch error",
-					t.query
-				]);
-				break;
+			default: w(2, [
+				`%cupdate%c %cwidget%c %c${t.query?.type}`,
+				u.KO,
+				u.NONE,
+				u.WIDGET,
+				u.NONE,
+				T(t.query),
+				"Fetch error",
+				t.query
+			]);
 		}
 	};
 	hide = (e) => {
@@ -6442,18 +6401,18 @@ var ve = class {
 		switch (e.data.event) {
 			case d.SUBSCRIBE:
 				let t = e.data.data;
-				t.widget !== void 0 && (T(3, [
+				t.widget !== void 0 && (w(3, [
 					`%csubscribe%c %cwidget%c %c${e.data.data.type}`,
 					u.BROADCAST,
 					u.NONE,
 					u.WIDGET,
 					u.NONE,
-					E(t),
+					T(t),
 					t
 				]), this.addSubscriber(t));
 				break;
 			case d.UPDATE:
-				T(3, [
+				w(3, [
 					"%cupdate%c %capi%c %cstorage",
 					u.BROADCAST,
 					u.NONE,
@@ -6463,23 +6422,20 @@ var ve = class {
 					e.data
 				]), await this.update(e.data.data);
 				break;
-			case "stream":
-				T(3, [
-					"%cupdate%c %capi%c %cstorage",
-					u.BROADCAST,
-					u.NONE,
-					u.API,
-					u.NONE,
-					u.STORAGE,
-					e.data
-				]), await this.stream();
-				break;
-			default:
+			case "stream": w(3, [
+				"%cupdate%c %capi%c %cstorage",
+				u.BROADCAST,
+				u.NONE,
+				u.API,
+				u.NONE,
+				u.STORAGE,
+				e.data
+			]), await this.stream();
 		}
 	};
 	cleanMessages = async () => {
 		if (this.options?.suspended) {
-			T(2, [
+			w(2, [
 				"%cclean%c %cstorage%c %cmessages",
 				u.KO,
 				u.NONE,
@@ -6490,8 +6446,8 @@ var ve = class {
 			]);
 			return;
 		}
-		let e = this.options?.retention || 86400 * 40, t = await this.sm?.cleanMessages(e);
-		T(3, [
+		let e = this.options?.retention || 3456e3, t = await this.sm?.cleanMessages(e);
+		w(3, [
 			"%cclean%c %cstorage%c %cmessages",
 			u.OK,
 			u.NONE,
@@ -6503,7 +6459,7 @@ var ve = class {
 	};
 	hideMessage = async (e) => {
 		let t = await this.sm?.hideMessage(e.id, 0);
-		return T(3, [
+		return w(3, [
 			"%chide%c %cstorage%c %cmessages",
 			u.OK,
 			u.NONE,
@@ -6557,26 +6513,23 @@ var ve = class {
 	getHash = async (e, t) => await this.sm?.getHash(t);
 	setHash = async (e, t) => await this.sm?.setHash(t) ?? 400;
 	clearHash = async () => await this.sm?.clearHash() ?? 400;
-}, Se = class {
+}, be = class {
 	sm;
 	constructor(e) {
 		switch (this.sm = null, e.storage) {
 			case p.DEXIE:
-				this.sm = new me(e);
+				this.sm = new pe(e);
 				break;
 			case p.LOCAL:
-				this.sm = new ye(e);
+				this.sm = new _e(e);
 				break;
 			case p.SESSION:
-				this.sm = new L(e);
-				break;
-			case p.KEYVAL:
 				this.sm = new ve(e);
 				break;
-			case p.WINDOW:
-				this.sm = new be(e);
+			case p.KEYVAL:
+				this.sm = new ge(e);
 				break;
-			default:
+			case p.WINDOW: this.sm = new L(e);
 		}
 	}
 	getCloud = async (e) => e.type === l.CLOUD ? await this.sm?.getCloud(e) : (console.warn("%cget%c %cstorage%c %ccloud", u.KO, u.NONE, u.STORAGE, u.NONE, u.CLOUD, e.widget, "wrong method call for getCloud, type used is", e.type), {
@@ -6594,7 +6547,7 @@ var ve = class {
 		message: `'wrong method call for getSeries, type used is ${e.type}`,
 		success: !1
 	});
-}, Ce = class {
+}, xe = class {
 	storageReader;
 	broadcastChannel;
 	element;
@@ -6605,7 +6558,7 @@ var ve = class {
 		let r = { ...e.dataset };
 		delete r.hmr;
 		let i = window.__bc.opts;
-		r.presentation = i?.presentation ?? `${n} not found`, this.query = r, h(e), this.storageReader = new Se(i), this.broadcastChannel = new BroadcastChannel(r.presentation), this.broadcastListener();
+		r.presentation = i?.presentation ?? `${n} not found`, this.query = r, h(e), this.storageReader = new be(i), this.broadcastChannel = new BroadcastChannel(r.presentation), this.broadcastListener();
 	}
 	addCallbackListener(e) {
 		this.callbacks.push(e);
@@ -6619,20 +6572,20 @@ var ve = class {
 					try {
 						if (n.dashboard === e.dashboard && n.widget === e.widget) {
 							let e = await this.getData();
-							e?.success && (T(4, [
+							e?.success && (w(4, [
 								`%cset%c %cwidget%c %c${this.query.type}`,
 								u.OK,
 								u.NONE,
 								u.WIDGET,
 								u.NONE,
-								E(this.query),
+								T(this.query),
 								this.query
 							]), this.callbacks.forEach(async (t) => {
 								t(e);
 							}));
 						}
 					} catch (e) {
-						T(4, [
+						w(4, [
 							d.WIDGET_UPDATE,
 							n,
 							e.message,
@@ -6640,10 +6593,7 @@ var ve = class {
 						]);
 					}
 					break;
-				case d.APP_READY:
-					this.subscribe();
-					break;
-				default:
+				case d.APP_READY: this.subscribe();
 			}
 		};
 	}
@@ -6651,15 +6601,15 @@ var ve = class {
 		this.query.dashboard?.length && this.query.widget?.length && this.query.type?.length && (this.broadcastChannel.postMessage({
 			event: d.SUBSCRIBE,
 			data: this.query
-		}), T(3, [
+		}), w(3, [
 			`%csubscribe%c %cwidget%c %c${this.query.type}`,
 			u.SUBSCRIBE,
 			u.NONE,
 			u.WIDGET,
 			u.NONE,
-			E(this.query),
+			T(this.query),
 			this.query.widget
-		]), T(4, [
+		]), w(4, [
 			"%cdebug%c %cwidget",
 			u.NO_UPDATES,
 			u.NONE,
@@ -6680,7 +6630,7 @@ var ve = class {
 			query: this.query
 		};
 	};
-	getCloud = async () => this.query.type === l.CLOUD ? await this.storageReader.getCloud(this.query) : (T(3, [
+	getCloud = async () => this.query.type === l.CLOUD ? await this.storageReader.getCloud(this.query) : (w(3, [
 		"%cget%c %cstorage%c %cwidget",
 		u.KO,
 		u.NONE,
@@ -6690,7 +6640,7 @@ var ve = class {
 		this.query.widget,
 		"Wrong method call for getCloud, expected type is",
 		this.query.type
-	]), T(4, [
+	]), w(4, [
 		"%cdebug%c %ccloud",
 		u.NO_UPDATES,
 		u.NONE,
@@ -6702,7 +6652,7 @@ var ve = class {
 		success: !1,
 		query: this.query
 	});
-	getMessages = async () => this.query.type === l.MESSAGES ? await this.storageReader.getMessages(this.query) : (T(3, [
+	getMessages = async () => this.query.type === l.MESSAGES ? await this.storageReader.getMessages(this.query) : (w(3, [
 		"%cget%c %cstorage%c %cwidget",
 		u.KO,
 		u.NONE,
@@ -6712,7 +6662,7 @@ var ve = class {
 		this.query.widget,
 		"Wrong method call for getMessages, expected type is",
 		this.query.type
-	]), T(4, [
+	]), w(4, [
 		"%debug%c %cmessages",
 		u.NO_UPDATES,
 		u.NONE,
@@ -6723,7 +6673,7 @@ var ve = class {
 		message: `wrong method call for getMessages, expected type is '${this.query.type}'`,
 		success: !1
 	});
-	getSeries = async () => this.query.type === l.SERIES ? await this.storageReader.getSeries(this.query) : (T(3, [
+	getSeries = async () => this.query.type === l.SERIES ? await this.storageReader.getSeries(this.query) : (w(3, [
 		"%cget%c %cstorage%c %cwidget",
 		u.KO,
 		u.NONE,
@@ -6733,7 +6683,7 @@ var ve = class {
 		this.query.widget,
 		"Wrong method call for getSeries, expected type is",
 		this.query.type
-	]), T(4, [
+	]), w(4, [
 		"%cdebug%c %cseries",
 		u.NO_UPDATES,
 		u.NONE,
@@ -6746,7 +6696,7 @@ var ve = class {
 		query: this.query
 	});
 	showModal = (e) => {
-		T(3, [
+		w(3, [
 			"%cmodal%c %cwidget",
 			u.OK,
 			u.NONE,
@@ -6772,4 +6722,4 @@ var ve = class {
 	}
 };
 //#endregion
-export { xe as BuzzcastingStorageManager, Se as BuzzcastingStorageReader, Ce as Widget };
+export { ye as BuzzcastingStorageManager, be as BuzzcastingStorageReader, xe as Widget };

@@ -58,10 +58,10 @@ export class BuzzcastingStorageManager {
 				this.sm = new DexieClient(options);
 				break;
 			case STORAGE.LOCAL:
-				this.sm = new SessionStorageClient(options);
+				this.sm = new LocalStorageClient(options);
 				break;
 			case STORAGE.SESSION:
-				this.sm = new LocalStorageClient(options);
+				this.sm = new SessionStorageClient(options);
 				break;
 			case STORAGE.KEYVAL:
 				this.sm = new KeyvalClient(options);

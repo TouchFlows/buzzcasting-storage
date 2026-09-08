@@ -17,11 +17,11 @@ export default class LocalStorageClient {
 			key: string,
 			value: string | object,
 		) {
-			this.setObject(key, JSON.stringify(value));
+			this.setItem(key, JSON.stringify(value));
 		};
 
 		Storage.prototype.getObject = function (key: string) {
-			const value = this.getObject(key);
+			const value = this.getItem(key);
 			return value && JSON.parse(value);
 		};
 	}
