@@ -457,9 +457,13 @@ var te = "3.21.6", ne = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 		}));
 	}
 	async storePreference(e) {
-		let { version: t } = this.options, n = this.formHeaders();
+		let { version: t } = this.options, n = `Bearer ${this.options.bearer}`, r = { headers: new Headers({
+			Authorization: n,
+			"Content-Type": "application/json",
+			Accept: "application/json"
+		}) };
 		delete e.update;
-		let r = JSON.stringify({ data: e });
+		let i = JSON.stringify({ data: e });
 		return w(3, [
 			"%capi%c %cstorePreference",
 			u.API,
@@ -470,11 +474,10 @@ var te = "3.21.6", ne = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 			this.url,
 			"api",
 			t,
-			l.PREFERENCES,
-			e.id
-		].join("/"), {
-			...n,
-			body: r,
+			l.PREFERENCES
+		].join("/") + "/", {
+			...r,
+			body: i,
 			method: "post"
 		}).then((e) => {
 			if (!e.ok) throw Error(e.statusText);

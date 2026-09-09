@@ -428,7 +428,23 @@ export default class ApiClient {
 
 	public async storePreference(preference: IPreference): Promise<any> {
 		const { version }: IStorageOptions = this.options;
-		const headers = this.formHeaders();
+		// formHeaders() declares application/x-www-form-urlencoded, but the body
+		// below is a JSON string - PreferencesController::store validates the
+		// request assuming a JSON content type, so with the mismatched header it
+		// never sees a `data` field at all (confirmed via the 422 this used to
+		// return: "The data field is required", even though a `data` key was
+		// genuinely being sent). storeSlide()/storePresentation() send the same
+		// mismatched header and still work, so their controllers apparently don't
+		// care - this override is scoped to just this one call, not a claim that
+		// every endpoint needs it.
+		const token = `Bearer ${this.options.bearer}`;
+		const headers = {
+			headers: new Headers({
+				Authorization: token,
+				"Content-Type": "application/json",
+				Accept: "application/json",
+			}),
+		};
 
 		delete preference.update;
 		const body = JSON.stringify({ data: preference });
@@ -441,7 +457,7 @@ export default class ApiClient {
 			preference.id,
 		]);
 		return await fetch(
-			[this.url, "api", version, API.PREFERENCES, preference.id].join("/"),
+			[this.url, "api", version, API.PREFERENCES].join("/") + "/",
 			{ ...headers, body, method: "post" },
 		)
 			.then((response) => {
