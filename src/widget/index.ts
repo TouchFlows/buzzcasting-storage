@@ -146,6 +146,32 @@ export default class Widget {
 	}
 
 	/**
+	 * Tell the container to drop this widget from its subscriber list - the
+	 * counterpart to subscribe(), called from destroy() when the widget's own
+	 * component unmounts (e.g. the builder switches to a different slide).
+	 * Without this, the container's subscriber list only ever grows: every
+	 * widget ever mounted in the session stays in it, and every periodic
+	 * refresh re-fetches all of them, not just the ones actually on screen.
+	 */
+	unsubscribe() {
+		if (this.query.widget?.length) {
+			this.broadcastChannel.postMessage({
+				event: EVENTS.UNSUBSCRIBE,
+				data: this.query,
+			});
+			log(3, [
+				`%cunsubscribe%c %cwidget%c %c${this.query.type}`,
+				CSS.SUBSCRIBE,
+				CSS.NONE,
+				CSS.WIDGET,
+				CSS.NONE,
+				typeCss(this.query),
+				this.query.widget,
+			]);
+		}
+	}
+
+	/**
 	 * Generic call to any query type
 	 *
 	 * @returns IResponse
@@ -301,6 +327,7 @@ export default class Widget {
 	};
 
 	public destroy() {
+		this.unsubscribe();
 		this.broadcastChannel.close();
 	}
 }

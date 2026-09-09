@@ -451,6 +451,11 @@ export class BuzzcastingStorageManager {
 					this.addSubscriber(query);
 				}
 				break;
+			case EVENTS.UNSUBSCRIBE:
+				if (messageEvent.data.data.widget !== undefined) {
+					this.deleteSubscriber(messageEvent.data.data);
+				}
+				break;
 			case EVENTS.UPDATE:
 				log(3, [
 					"%cupdate%c %capi%c %cstorage",
