@@ -32,6 +32,7 @@
 		"test:coverage": "vitest --coverage"
 	},
 	"dependencies": {
+		"buzzcasting-utils": "^1.13.9",
 		"dexie": "^4.3.0",
 		"idb-keyval": "^6.2.2",
 		"ndjson-readablestream": "^1.4.0"
@@ -44,7 +45,6 @@
 		"@typescript-eslint/eslint-plugin": "^8.66.0",
 		"@typescript-eslint/parser": "^8.66.0",
 		"@vitest/coverage-v8": "^4.1.10",
-		"buzzcasting-utils": "^1.13.9",
 		"camelcase": "^9.0.0",
 		"changelogen": "^0.6.2",
 		"eslint": "^9.39.5",
