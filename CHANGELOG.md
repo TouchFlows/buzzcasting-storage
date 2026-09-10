@@ -1,6 +1,26 @@
 # Changelog
 
 
+## v3.21.8
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.21.5...v3.21.8)
+
+### 🩹 Fixes
+
+- Local/session storage backends swapped, LocalStorageClient recursion bug ([02001cd](https://github.com/TouchFlows/buzzcasting-storage/commit/02001cd))
+- Moderation gating dead code, add local-only message approve ([be4a1e2](https://github.com/TouchFlows/buzzcasting-storage/commit/be4a1e2))
+- Widget never unsubscribed from BuzzcastingStorageManager's subscribers map ([aa267a1](https://github.com/TouchFlows/buzzcasting-storage/commit/aa267a1))
+- StorePreference() never actually reached the backoffice ([c5a2fcf](https://github.com/TouchFlows/buzzcasting-storage/commit/c5a2fcf))
+- Bump buzzcasting-utils range to ^1.13.9 to pick up EVENTS.UNSUBSCRIBE ([4a383e5](https://github.com/TouchFlows/buzzcasting-storage/commit/4a383e5))
+
+### 📖 Documentation
+
+- Mark the buzzcasting-app subscribers duplicate as removed, not just found ([23396a8](https://github.com/TouchFlows/buzzcasting-storage/commit/23396a8))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.21.5
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.21.4...v3.21.5)
