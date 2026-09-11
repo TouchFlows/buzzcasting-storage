@@ -260,6 +260,58 @@ export default class ApiClient {
 			});
 	}
 	/**
+	 * Create a brand-new slide (as opposed to storeSlide(), which PUTs an
+	 * update to an already-existing id). POSTs to the slides collection
+	 * rather than an :id resource, and - unlike storeSlide() - takes no id at
+	 * all: every real slide id observed (e.g. "01kfgn8bsyc74j4eyg6h3j8dj7") is
+	 * a ULID, almost certainly generated server-side on insert, so the
+	 * created record's real id comes back in the response instead. The
+	 * backoffice route this expects does not exist yet at time of writing
+	 * (see documentation/adding-slides.md in buzzcasting-app), so this call
+	 * is expected to fail (404/405) until that route is added.
+	 *
+	 * ex: window.__bc.storage.createSlide({data: {json: {...}, html:'', title:'New Slide', presentation_id:'01...'}})
+	 *
+	 * @param query
+	 * @returns
+	 */
+	public async createSlide(query: IQuery): Promise<any> {
+		const { version }: IStorageOptions = this.options;
+		const headers = this.formHeaders();
+		delete query.update;
+		delete query.type;
+		delete query.id;
+		const body = JSON.stringify(query);
+
+		log(3, [
+			"%cpost%c %capi%c %ccreate slide",
+			CSS.OK,
+			CSS.NONE,
+			CSS.API,
+			CSS.NONE,
+			CSS.SLIDE,
+			query,
+		]);
+		return await fetch([this.url, "api", version, "slides"].join("/"), {
+			...headers,
+			body,
+			method: "post",
+		})
+			.then((response) => {
+				if (!response.ok) {
+					throw new Error(response.statusText);
+				}
+				return response;
+			})
+			.then((response) => {
+				return response.json();
+			})
+			.catch((message) => {
+				return { succes: false, message, data: [] };
+			});
+	}
+
+	/**
 	 * Store slide definition
 	 * ex: window.__bc.storage.storeSlide({id:'1',type:'slide', data: {json: {a:'b'},html:'<div/>',css:'abc'}, update: true}) // update: stockage sur le serveur
 	 *

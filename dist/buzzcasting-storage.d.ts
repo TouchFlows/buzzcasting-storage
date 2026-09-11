@@ -36,6 +36,7 @@ export declare class BuzzcastingStorageManager {
     setSlide: (query: IQuery) => Promise<IResponse | undefined>;
     loadSlide: (query: IQuery) => Promise<number>;
     storeSlide: (query: IQuery) => Promise<IResponse | number>;
+    createSlide: (query: IQuery) => Promise<IResponse | number>;
     deleteSlide: (query: IQuery) => Promise<IResponse | number | undefined>;
     deleteSlides: () => Promise<IResponse | number | undefined>;
     getPresentation: (query: IQuery) => Promise<IResponse | undefined>;

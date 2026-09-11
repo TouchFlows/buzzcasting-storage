@@ -602,6 +602,10 @@ export class BuzzcastingStorageManager {
 		return await this.api.storeSlide(query);
 	};
 
+	public createSlide = async (query: IQuery): Promise<IResponse | number> => {
+		return await this.api.createSlide(query);
+	};
+
 	public deleteSlide = async (
 		query: IQuery,
 	): Promise<IResponse | number | undefined> => {

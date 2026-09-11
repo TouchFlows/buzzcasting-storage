@@ -336,6 +336,36 @@ var te = "3.21.8", ne = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 			data: null
 		}));
 	}
+	async createSlide(e) {
+		let { version: t } = this.options, n = this.formHeaders();
+		delete e.update, delete e.type, delete e.id;
+		let r = JSON.stringify(e);
+		return w(3, [
+			"%cpost%c %capi%c %ccreate slide",
+			u.OK,
+			u.NONE,
+			u.API,
+			u.NONE,
+			u.SLIDE,
+			e
+		]), await fetch([
+			this.url,
+			"api",
+			t,
+			"slides"
+		].join("/"), {
+			...n,
+			body: r,
+			method: "post"
+		}).then((e) => {
+			if (!e.ok) throw Error(e.statusText);
+			return e;
+		}).then((e) => e.json()).catch((e) => ({
+			succes: !1,
+			message: e,
+			data: []
+		}));
+	}
 	async storeSlide(e) {
 		let { version: t } = this.options, n = this.formHeaders();
 		delete e.update, delete e.type;
@@ -6513,6 +6543,7 @@ var ge = class {
 	setSlide = async (e) => await this.sm?.setSlide(e);
 	loadSlide = async (e) => await this.api.loadSlide(e);
 	storeSlide = async (e) => await this.api.storeSlide(e);
+	createSlide = async (e) => await this.api.createSlide(e);
 	deleteSlide = async (e) => await this.sm?.deleteSlide(e);
 	deleteSlides = async () => await this.sm?.deleteSlides();
 	getPresentation = async (e) => await this.sm?.getPresentation(e);
