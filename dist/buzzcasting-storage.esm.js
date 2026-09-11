@@ -159,7 +159,7 @@ function D(e, t) {
 }({});
 //#endregion
 //#region package.json
-var te = "3.21.6", ne = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
+var te = "3.21.8", ne = /* @__PURE__ */ c((/* @__PURE__ */ o(((e, t) => {
 	(function(n, r) {
 		typeof e == "object" && t !== void 0 ? t.exports = r() : typeof define == "function" && define.amd ? define(r) : (n = typeof globalThis < "u" ? globalThis : n || self, n.readNDJSONStream = r());
 	})(e, (function() {

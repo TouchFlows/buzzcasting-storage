@@ -14,6 +14,7 @@ Currently supported are: Local Storage, Session Storage, IDB Keyval, Dexie, Wind
 - [documentation/storage-backends.md](documentation/storage-backends.md) — the five interchangeable storage backends, the Dexie schema, and the staleness/expiry model (there isn't much of one).
 - [documentation/known-issues.md](documentation/known-issues.md) — confirmed bugs and inconsistencies in the current codebase (e.g. `ApiClient.loadDashboards` actually fetching the widgets endpoint, not a dashboards one) worth knowing about before you hit them yourself.
 - [documentation/moderation.md](documentation/moderation.md) — `hideMessage`/`hideLabels`: a soft `visible` flag in Dexie plus a remote call for messages, a remote-only call with no local implementation at all for cloud labels, and the separate, deployment-time `MODERATION` enum that gates which messages are ever fetched in the first place.
+- [documentation/release-process.md](documentation/release-process.md) — `npm run release` bumps/tags/pushes locally, but the actual `npm publish` now happens in CI on that tag push (via npm Trusted Publishing/OIDC, no stored token) - what to do if a release run fails.
 
 ## Features
 
@@ -84,7 +85,7 @@ The project contains the following scripts:
 
 - `dev` - Start the development server
 - `build` - Build for production
-- `release` - Generate changelog and npm publish
+- `release` - Generate changelog, bump the version, tag, and push - the pushed tag triggers CI to actually run `npm publish` (see [documentation/release-process.md](documentation/release-process.md))
 - `lint` - Checks your code for any linting errors
 - `test` - Run all tests
 - `test:watch` - Run all tests with watch mode
