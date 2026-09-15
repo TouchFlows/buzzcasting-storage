@@ -1,6 +1,37 @@
 # Changelog
 
 
+## v3.22.0
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.21.8...v3.22.0)
+
+### 🚀 Enhancements
+
+- Add createSlide() client method (backend route not built yet) ([36ea11a](https://github.com/TouchFlows/buzzcasting-storage/commit/36ea11a))
+
+### 🩹 Fixes
+
+- Move buzzcasting-utils from devDependencies to dependencies ([18a1fb3](https://github.com/TouchFlows/buzzcasting-storage/commit/18a1fb3))
+
+### 📖 Documentation
+
+- Note Trusted Publisher link is now configured on npmjs.com ([168b6f7](https://github.com/TouchFlows/buzzcasting-storage/commit/168b6f7))
+
+### 🏡 Chore
+
+- Bump dev-tooling deps to close Dependabot-class vulnerabilities ([003756f](https://github.com/TouchFlows/buzzcasting-storage/commit/003756f))
+- Migrate to pnpm ([a874bf5](https://github.com/TouchFlows/buzzcasting-storage/commit/a874bf5))
+- Use pnpm in the release script, not npm ([d3f89f1](https://github.com/TouchFlows/buzzcasting-storage/commit/d3f89f1))
+
+### 🤖 CI
+
+- Move npm publish into CI, triggered by tag push, via OIDC trusted publishing ([69f1d7f](https://github.com/TouchFlows/buzzcasting-storage/commit/69f1d7f))
+- Bump main.yml to Node 22 for pnpm 11.5.2's minimum version ([03af48c](https://github.com/TouchFlows/buzzcasting-storage/commit/03af48c))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.21.8
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.21.5...v3.21.8)
