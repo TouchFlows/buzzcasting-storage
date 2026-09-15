@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v3.22.2
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.22.1...v3.22.2)
+
+### 🩹 Fixes
+
+- Add the repository field npm's provenance verification requires ([34780d4](https://github.com/TouchFlows/buzzcasting-storage/commit/34780d4))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.22.1
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.22.0...v3.22.1)
