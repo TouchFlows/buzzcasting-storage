@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v3.22.1
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.22.0...v3.22.1)
+
+### 🩹 Fixes
+
+- Upgrade npm before publish so OIDC Trusted Publishing actually works ([085ce3c](https://github.com/TouchFlows/buzzcasting-storage/commit/085ce3c))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.22.0
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.21.8...v3.22.0)

@@ -1,7 +1,7 @@
 {
 	"name": "buzzcasting-storage",
 	"type": "module",
-	"version": "3.22.0",
+	"version": "3.22.1",
 	"packageManager": "pnpm@11.5.2",
 	"private": false,
 	"author": {
