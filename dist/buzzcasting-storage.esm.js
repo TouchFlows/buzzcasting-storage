@@ -5136,7 +5136,7 @@ var { liveQuery: A, mergeRanges: ae, rangesOverlap: j, RangeSet: oe, cmp: se, En
 	}));
 };
 //#endregion
-//#region node_modules/idb-keyval/dist/index.js
+//#region node_modules/.pnpm/idb-keyval@6.2.2/node_modules/idb-keyval/dist/index.js
 function N(e) {
 	return new Promise((t, n) => {
 		e.oncomplete = e.onsuccess = () => t(e.result), e.onabort = e.onerror = () => n(e.error);
