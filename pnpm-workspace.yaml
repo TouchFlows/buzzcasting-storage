@@ -1,0 +1,19 @@
+minimumReleaseAgeExcludePrune: true
+trustPolicy: no-downgrade
+
+# Vetted trust-policy exception, pinned to the exact version.
+# chokidar@4.0.3 is reached only through changelogen -> c12 (dev-only release
+# tooling, nothing in the published bundle). It is published by paulmillr, the
+# canonical maintainer of paulmillr/chokidar, but predates their provenance
+# attestation, which is what no-downgrade flags. Review again if the lockfile
+# ever resolves a different chokidar version.
+trustPolicyExclude:
+  - 'chokidar@4.0.3'
+
+shellEmulator: true
+
+globalShims:
+  bun: auto
+  deno: auto
+  node: auto
+  pnpm: auto
