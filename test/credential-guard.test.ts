@@ -152,6 +152,29 @@ describe.skipIf(process.platform === "win32")("credential guard", () => {
 		expect(live.stderr).not.toContain("matches no tracked file");
 	});
 
+	// The same warning has to appear where python3 is absent or older than 3.11,
+	// otherwise a stale exemption lingers on exactly the machine missing tomllib.
+	it("warns about a stale allowlist without python3 or tomllib", () => {
+		const { root, repo } = workspace(false);
+		writeFileSync(join(repo, "keep.txt"), "nothing secret here\n");
+		execFileSync("git", ["-C", repo, "add", "-A"], { stdio: "ignore" });
+		// Two quote styles, so the fallback parser is exercised on both.
+		writeFileSync(
+			join(repo, ".gitleaks-allowlist.toml"),
+			"[allowlist]\npaths = ['''^assets/removed/''', \"^also/gone/\"]\n",
+		);
+
+		const result = spawnSync("bash", [guard, root], {
+			encoding: "utf8",
+			env: { ...process.env, CHECK_CREDENTIALS_NO_PYTHON: "1" },
+		});
+
+		expect(result.status).toBe(0);
+		expect(result.stderr).toContain("^assets/removed/");
+		expect(result.stderr).toContain("^also/gone/");
+		expect(result.stderr).toContain("matches no tracked file");
+	});
+
 	// A token in .git/config never leaves the machine; one committed into a file
 	// is published with the next push, and no review will see it in a diff.
 	it("exits 1 and redacts a token committed into a tracked file", () => {

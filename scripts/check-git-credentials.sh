@@ -77,10 +77,8 @@ repos=0
 # it covered was moved or deleted, and the pattern now protects nothing while
 # looking active. Warn instead of blocking - the push is still scanned, and a
 # pattern may legitimately arrive before the file it covers.
-warn_stale_allowlist() {
-	local repo="$1" fragment="$repo/.gitleaks-allowlist.toml"
-	[ -f "$fragment" ] || return 0
-	command -v python3 >/dev/null 2>&1 || return 0
+warn_stale_allowlist_python() {
+	local repo="$1" fragment="$2"
 	python3 - "$fragment" "$repo" <<'PY' >&2
 import re, subprocess, sys, tomllib
 
@@ -103,6 +101,55 @@ for pattern in config.get('allowlist', {}).get('paths', []):
     if not any(match.search(name) for name in files):
         print(f"check-git-credentials: warning: allowlist pattern {pattern!r} matches no tracked file in {repo}; the exemption is stale", file=sys.stderr)
 PY
+}
+
+# Fallback for machines with no python3, or one older than 3.11 (no tomllib), so
+# the warning cannot silently disappear. Reads the paths list with awk/grep and
+# matches with bash's =~ instead of Python's re; both paths must warn, or a stale
+# exemption lingers on whichever machine happens to lack the interpreter.
+warn_stale_allowlist_bash() {
+	local repo="$1" fragment="$2"
+	local block patterns pattern name matched
+
+	block=$(awk '/^[[:space:]]*paths[[:space:]]*=/{flag=1} flag{print} flag&&/\]/{exit}' "$fragment")
+	[ -n "$block" ] || return 0
+	patterns=$(printf '%s\n' "$block" |
+		grep -oE "'''[^']*'''|\"\"\"[^\"]*\"\"\"|\"[^\"]*\"|'[^']*'" |
+		sed -E "s/^\"\"\"//; s/\"\"\"$//; s/^'''//; s/'{3}$//; s/^\"//; s/\"$//; s/^'//; s/'$//")
+
+	local -a files=()
+	while IFS= read -r name; do
+		[ -n "$name" ] && files+=("$name")
+	done < <(git -C "$repo" ls-files)
+
+	while IFS= read -r pattern; do
+		[ -n "$pattern" ] || continue
+		matched=0
+		for name in "${files[@]}"; do
+			if [[ "$name" =~ $pattern ]]; then
+				matched=1
+				break
+			fi
+			done
+		if [ "$matched" -eq 0 ]; then
+			echo "check-git-credentials: warning: allowlist pattern '$pattern' matches no tracked file in $repo; the exemption is stale" >&2
+		fi
+	done <<< "$patterns"
+}
+
+warn_stale_allowlist() {
+	local repo="$1" fragment="$repo/.gitleaks-allowlist.toml"
+	[ -f "$fragment" ] || return 0
+
+	# tomllib lands in 3.11; below that the python path would parse nothing and
+	# exit without a word, which is the failure mode this warning exists to avoid.
+	if [ -z "${CHECK_CREDENTIALS_NO_PYTHON:-}" ] &&
+		command -v python3 >/dev/null 2>&1 &&
+		python3 -c 'import tomllib' >/dev/null 2>&1; then
+		warn_stale_allowlist_python "$repo" "$fragment"
+	else
+		warn_stale_allowlist_bash "$repo" "$fragment"
+	fi
 }
 
 # Scan one repository's index - exactly the content a push publishes - by
