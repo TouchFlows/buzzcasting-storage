@@ -3,7 +3,7 @@ import p from "ndjson-readablestream";
 import m from "dexie";
 import { get as h, set as g } from "idb-keyval";
 // package.json
-var _ = "3.22.2", v = class {
+var _ = "4.0.0", v = class {
 	options;
 	url;
 	constructor(e) {

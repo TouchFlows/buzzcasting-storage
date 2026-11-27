@@ -1,6 +1,34 @@
 # Changelog
 
 
+## v4.0.0
+
+[compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.22.2...v4.0.0)
+
+### 🚀 Enhancements
+
+- ⚠️  Drop the local and session storage backends ([5ce51ed](https://github.com/TouchFlows/buzzcasting-storage/commit/5ce51ed))
+
+### 🔥 Performance
+
+- Externalize the runtime dependencies from the library build ([d4e4ecc](https://github.com/TouchFlows/buzzcasting-storage/commit/d4e4ecc))
+
+### 🩹 Fixes
+
+- Keep the window globals out of the published types ([eec4753](https://github.com/TouchFlows/buzzcasting-storage/commit/eec4753))
+
+### 🏡 Chore
+
+- Align eslint config with the codebase and run the formatter ([ce5b822](https://github.com/TouchFlows/buzzcasting-storage/commit/ce5b822))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  Drop the local and session storage backends ([5ce51ed](https://github.com/TouchFlows/buzzcasting-storage/commit/5ce51ed))
+
+### ❤️ Contributors
+
+- Mark Tamis ([@marktamis](https://github.com/marktamis))
+
 ## v3.22.2
 
 [compare changes](https://github.com/TouchFlows/buzzcasting-storage/compare/v3.22.1...v3.22.2)
