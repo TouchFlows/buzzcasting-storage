@@ -1,27 +1,40 @@
 #!/usr/bin/env bash
-# Pre-push guard: refuse to push from a repository whose .git/config embeds
-# credentials in a remote URL.
+# Pre-push guard: a thin wrapper around check-git-credentials.sh, so the token
+# pattern and the redaction live in exactly one place.
 #
-# Installed as a symlink in each workspace repo's .git/hooks/pre-push (see
-# install-hooks.sh). Git passes the refs being pushed on stdin; this hook never
-# reads them, it only inspects the config, so it cannot interfere with a push
-# that has nothing to hide.
+# Installed as a symlink into each repository's .git/hooks/pre-push by
+# install-hooks.sh, so the script's own location is resolved through the symlink
+# before the checker is looked for next to it. Git passes the refs being pushed
+# on stdin; this hook never reads them, it only inspects config, so it cannot
+# interfere with a push that has nothing to hide.
 
 set -uo pipefail
 
-# user:password@host, token-as-user@host, x-access-token style, and raw PATs.
-pattern='https?://[^/@[:space:]]+@|gh[pousr]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|x-access-token:'
+self=$(readlink -f "${BASH_SOURCE[0]}" 2>/dev/null) || exit 0
+script_dir=$(dirname "$self")
+checker="$script_dir/check-git-credentials.sh"
 
-git_dir=$(git rev-parse --absolute-git-dir 2>/dev/null) || exit 0
-config="$git_dir/config"
-[ -f "$config" ] || exit 0
-
-if hits=$(grep -nE "$pattern" "$config"); then
-	echo "pre-push: refusing to push - $config embeds credentials:" >&2
-	printf '%s\n' "$hits" |
-		sed -E 's#(https?://)[^/@[:space:]]+@#\1<redacted>@#g; s#(gh[pousr]_|github_pat_)[A-Za-z0-9_]+#\1<redacted>#g' >&2
-	echo "pre-push: rewrite the remote as https://github.com/<owner>/<repo>.git (auth comes from 'gh auth git-credential'), then revoke the token." >&2
-	exit 1
+if [ ! -f "$checker" ]; then
+	echo "pre-push: cannot find $checker - credential check skipped" >&2
+	exit 0
 fi
 
-exit 0
+# Scan the workspace that holds this repository, not just this one: a token in a
+# sibling repository is the same exposure, and the scan costs milliseconds.
+top=$(git rev-parse --show-toplevel 2>/dev/null) || exit 0
+root=$(dirname "$top")
+
+rc=0
+bash "$checker" "$root" || rc=$?
+
+case "$rc" in
+0) exit 0 ;;
+1)
+	echo "pre-push: push blocked. Rewrite the remote as https://github.com/<owner>/<repo>.git (auth comes from 'gh auth git-credential'), then revoke the token." >&2
+	exit 1
+	;;
+*)
+	echo "pre-push: credential check could not run (exit $rc) - push allowed without it" >&2
+	exit 0
+	;;
+esac
