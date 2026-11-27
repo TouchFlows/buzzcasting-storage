@@ -6,6 +6,29 @@ import packageJson from "./package.json" with { type: "json" };
 
 const packageName = packageJson.name.split("/").pop() || packageJson.name;
 
+/**
+ * Runtime dependencies stay imports in the output instead of being inlined.
+ *
+ * Bundling them used to put a private copy of Dexie (and of the rest) inside
+ * `dist/`. Dexie refuses to coexist with a different version of itself - it
+ * throws "Two different versions of Dexie loaded in the same app" at import
+ * time - so the moment a consumer (or anything else in their graph) imports
+ * `dexie` directly, the bundled copy collides with it. Keeping them external
+ * also means one copy of every dependency: the one the consumer resolves.
+ */
+const externalDependencies = [
+	...Object.keys(packageJson.dependencies ?? {}),
+	...Object.keys(packageJson.peerDependencies ?? {}),
+];
+
+/** `dexie` and `dexie/live-query` both have to remain imports. */
+const external = [
+	...externalDependencies,
+	...externalDependencies.map(
+		(name) => new RegExp(`^${name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}/`),
+	),
+];
+
 export default defineConfig({
 	build: {
 		target: "esnext",
@@ -24,6 +47,9 @@ export default defineConfig({
 			},
 		},
 		// minify: "esbuild",
+		rollupOptions: {
+			external,
+		},
 	},
 	plugins: [
 		// `rollupTypes` was renamed to `bundleTypes` in vite-plugin-dts 5, and
