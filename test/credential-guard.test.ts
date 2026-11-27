@@ -175,6 +175,40 @@ describe.skipIf(process.platform === "win32")("credential guard", () => {
 		expect(result.stderr).toContain("matches no tracked file");
 	});
 
+	// Stopping the parse at the first "]" truncated patterns like [^/]+, and a
+	// multi-line list lost everything after the first bracketed entry - silently,
+	// so a stale exemption could sit there unreported.
+	it("reads bracketed patterns and multi-line lists in the bash fallback", () => {
+		const { root, repo } = workspace(false);
+		mkdirSync(join(repo, "public/vendor"), { recursive: true });
+		writeFileSync(join(repo, "public/vendor/app.js"), "nothing secret here\n");
+		execFileSync("git", ["-C", repo, "add", "-A"], { stdio: "ignore" });
+		writeFileSync(
+			join(repo, ".gitleaks-allowlist.toml"),
+			[
+				"[allowlist]",
+				"paths = [",
+				"  '''^public/vendor/[^/]+\\.js$''',",
+				"  '''^assets/[a-z]+/''',",
+				"]",
+				"",
+			].join("\n"),
+		);
+
+		const result = spawnSync("bash", [guard, root], {
+			encoding: "utf8",
+			env: { ...process.env, CHECK_CREDENTIALS_NO_PYTHON: "1" },
+		});
+
+		expect(result.status).toBe(0);
+		// The live pattern has brackets of its own and must be read whole: a
+		// truncated one would not match and would be reported as stale.
+		expect(result.stderr).not.toContain("^public/vendor/");
+		// The stale entry sits on a later line of the same array.
+		expect(result.stderr).toContain("^assets/[a-z]+/");
+		expect(result.stderr).toContain("matches no tracked file");
+	});
+
 	// A token in .git/config never leaves the machine; one committed into a file
 	// is published with the next push, and no review will see it in a diff.
 	it("exits 1 and redacts a token committed into a tracked file", () => {

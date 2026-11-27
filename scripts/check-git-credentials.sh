@@ -109,23 +109,88 @@ PY
 # exemption lingers on whichever machine happens to lack the interpreter.
 warn_stale_allowlist_bash() {
 	local repo="$1" fragment="$2"
-	local block patterns pattern name matched
-
-	block=$(awk '/^[[:space:]]*paths[[:space:]]*=/{flag=1} flag{print} flag&&/\]/{exit}' "$fragment")
-	[ -n "$block" ] || return 0
-	patterns=$(printf '%s\n' "$block" |
-		grep -oE "'''[^']*'''|\"\"\"[^\"]*\"\"\"|\"[^\"]*\"|'[^']*'" |
-		sed -E "s/^\"\"\"//; s/\"\"\"$//; s/^'''//; s/'{3}$//; s/^\"//; s/\"$//; s/^'//; s/'$//")
-
+	local patterns pattern name matched rc i count
 	local -a files=()
+
+	# Walk the `paths` array character by character, honouring quotes, instead of
+	# stopping at the first "]": a pattern like [^/]+ carries brackets of its own,
+	# which used to end the array early and drop every pattern after it without a
+	# word. Depth counting keeps a multi-line list intact for the same reason.
+	patterns=$(awk '
+		function scan(s, n, i, c, depth, delim, value) {
+			i = 1
+			depth = 1
+			while (i <= n && depth > 0) {
+				if (substr(s, i, 3) == "\"\"\"" || substr(s, i, 3) == "\047\047\047") {
+					delim = substr(s, i, 3)
+					i += 3
+					value = ""
+					while (i <= n && substr(s, i, 3) != delim) {
+						# A backslash escapes the next character inside a basic string.
+						if (delim == "\"\"\"" && substr(s, i, 1) == "\\") {
+							value = value substr(s, i, 2)
+							i += 2
+							continue
+						}
+						value = value substr(s, i, 1)
+						i++
+					}
+					i += 3
+					print value
+					continue
+				}
+				c = substr(s, i, 1)
+				if (c == "\"" || c == "\047") {
+					delim = c
+					i++
+					value = ""
+					while (i <= n && substr(s, i, 1) != delim) {
+						if (c == "\"" && substr(s, i, 1) == "\\" && i < n) {
+							value = value substr(s, i, 1)
+							i++
+						}
+						value = value substr(s, i, 1)
+						i++
+					}
+					i++
+					print value
+					continue
+				}
+				if (c == "[") depth++
+				else if (c == "]") depth--
+				i++
+			}
+		}
+		{ text = text $0 "\n" }
+		END {
+			if (!match(text, /paths[ \t]*=[ \t]*\[/)) exit 0
+			start = RSTART + RLENGTH
+			scan(substr(text, start), length(text) - start + 1)
+		}
+	' "$fragment")
+
+	if [ -z "$patterns" ]; then
+		echo "check-git-credentials: warning: $fragment has no readable paths list, so no exemption was checked" >&2
+		return 0
+	fi
+
 	while IFS= read -r name; do
 		[ -n "$name" ] && files+=("$name")
 	done < <(git -C "$repo" ls-files)
+	count=${#files[@]}
 
 	while IFS= read -r pattern; do
 		[ -n "$pattern" ] || continue
+		# An invalid regex would otherwise be reported as "matches nothing".
+		[[ "" =~ $pattern ]]
+		rc=$?
+		if [ "$rc" -eq 2 ]; then
+			echo "check-git-credentials: warning: allowlist pattern '$pattern' in $repo is not a valid regex" >&2
+			continue
+		fi
 		matched=0
-		for name in "${files[@]}"; do
+		for ((i = 0; i < count; i++)); do
+			name=${files[i]}
 			if [[ "$name" =~ $pattern ]]; then
 				matched=1
 				break
