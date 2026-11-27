@@ -94,6 +94,41 @@ describe.skipIf(process.platform === "win32")("credential guard", () => {
 		expect(output).not.toContain(aws);
 	});
 
+	// A pattern can legitimately cover a file that only ever existed in history.
+	// Judging that against the index calls it stale and teaches people to ignore
+	// the warning, which defeats it.
+	it("judges allowlist staleness against history in history mode", () => {
+		const { root, repo } = workspace(false);
+		const commitAll = (message: string) => {
+			execFileSync("git", ["-C", repo, "add", "-A"], { stdio: "ignore" });
+			execFileSync(
+				"git",
+				["-C", repo, "-c", "user.email=t@e.com", "-c", "user.name=t", "commit", "-q", "-m", message],
+				{ stdio: "ignore" },
+			);
+		};
+
+		mkdirSync(join(repo, "old"), { recursive: true });
+		writeFileSync(join(repo, "old/vendor.js"), "var version = 1;\n");
+		commitAll("add vendored bundle");
+		execFileSync("git", ["-C", repo, "rm", "-q", "-r", "old"], { stdio: "ignore" });
+		commitAll("drop vendored bundle");
+		writeFileSync(
+			join(repo, ".gitleaks-allowlist.toml"),
+			"[allowlist]\npaths = ['''^old/''']\n",
+		);
+
+		// Index mode: nothing tracked under old/, so the warning is correct there.
+		const index = spawnSync("bash", [guard, root, repo], { encoding: "utf8" });
+		expect(index.stderr).toContain("matches no tracked file");
+
+		// History mode: the file exists in a commit, so the exemption is live.
+		const history = spawnSync("bash", [guard, "--history", root, repo], {
+			encoding: "utf8",
+		});
+		expect(history.stderr).not.toContain("matches no");
+	});
+
 	// One sweep, every repository, each keeping its own allowlist. Without --all a
 	// full audit is a shell loop, and that is how a repository gets skipped.
 	it("sweeps every repository's history with --history --all", () => {

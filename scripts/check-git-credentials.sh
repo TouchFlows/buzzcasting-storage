@@ -116,19 +116,27 @@ scanned=0
 # looking active. Warn instead of blocking - the push is still scanned, and a
 # pattern may legitimately arrive before the file it covers.
 warn_stale_allowlist_python() {
-	local repo="$1" fragment="$2"
-	python3 - "$fragment" "$repo" <<'PY' >&2
+	local repo="$1" fragment="$2" mode="${3:-index}"
+	python3 - "$fragment" "$repo" "$mode" <<'PY' >&2
 import re, subprocess, sys, tomllib
 
-fragment, repo = sys.argv[1], sys.argv[2]
+fragment, repo, mode = sys.argv[1], sys.argv[2], sys.argv[3]
 try:
     config = tomllib.load(open(fragment, 'rb'))
 except Exception as error:
     print(f"check-git-credentials: cannot parse {fragment}: {error}", file=sys.stderr)
     raise SystemExit(0)
 
-files = [f for f in subprocess.run(
-    ['git', '-C', repo, 'ls-files'], capture_output=True, text=True).stdout.split('\n') if f]
+# In history mode a pattern may legitimately cover a file that has since been
+# deleted, so judge against every path that ever existed, not against the index.
+if mode == 'history':
+    listing = subprocess.run(
+        ['git', '-C', repo, 'log', '--all', '--pretty=format:', '--name-only'],
+        capture_output=True, text=True).stdout
+else:
+    listing = subprocess.run(
+        ['git', '-C', repo, 'ls-files'], capture_output=True, text=True).stdout
+files = sorted({f for f in listing.split('\n') if f})
 
 for pattern in config.get('allowlist', {}).get('paths', []):
     try:
@@ -137,7 +145,9 @@ for pattern in config.get('allowlist', {}).get('paths', []):
         print(f"check-git-credentials: allowlist pattern {pattern!r} is not a valid regex: {error}", file=sys.stderr)
         continue
     if not any(match.search(name) for name in files):
-        print(f"check-git-credentials: warning: allowlist pattern {pattern!r} matches no tracked file in {repo}; the exemption is stale", file=sys.stderr)
+        where = (f"file in the history of {repo}" if mode == 'history'
+                 else f"tracked file in {repo}")
+        print(f"check-git-credentials: warning: allowlist pattern {pattern!r} matches no {where}; the exemption is stale", file=sys.stderr)
 PY
 }
 
@@ -146,7 +156,7 @@ PY
 # matches with bash's =~ instead of Python's re; both paths must warn, or a stale
 # exemption lingers on whichever machine happens to lack the interpreter.
 warn_stale_allowlist_bash() {
-	local repo="$1" fragment="$2"
+	local repo="$1" fragment="$2" mode="${3:-index}"
 	local patterns pattern name matched rc i count
 	local -a files=()
 
@@ -212,9 +222,15 @@ warn_stale_allowlist_bash() {
 		return 0
 	fi
 
-	while IFS= read -r name; do
-		[ -n "$name" ] && files+=("$name")
-	done < <(git -C "$repo" ls-files)
+	if [ "$mode" = "history" ]; then
+		while IFS= read -r name; do
+			[ -n "$name" ] && files+=("$name")
+		done < <(git -C "$repo" log --all --pretty=format: --name-only 2>/dev/null | grep -v '^$' | sort -u)
+	else
+		while IFS= read -r name; do
+			[ -n "$name" ] && files+=("$name")
+		done < <(git -C "$repo" ls-files)
+	fi
 	count=${#files[@]}
 
 	while IFS= read -r pattern; do
@@ -235,13 +251,18 @@ warn_stale_allowlist_bash() {
 			fi
 			done
 		if [ "$matched" -eq 0 ]; then
-			echo "check-git-credentials: warning: allowlist pattern '$pattern' matches no tracked file in $repo; the exemption is stale" >&2
+			if [ "$mode" = "history" ]; then
+				echo "check-git-credentials: warning: allowlist pattern '$pattern' matches no file in the history of $repo; the exemption is stale" >&2
+			else
+				echo "check-git-credentials: warning: allowlist pattern '$pattern' matches no tracked file in $repo; the exemption is stale" >&2
+			fi
 		fi
 	done <<< "$patterns"
 }
 
 warn_stale_allowlist() {
-	local repo="$1" fragment="$repo/.gitleaks-allowlist.toml"
+	local repo="$1" mode="${2:-index}"
+	local fragment="$repo/.gitleaks-allowlist.toml"
 	[ -f "$fragment" ] || return 0
 
 	# tomllib lands in 3.11; below that the python path would parse nothing and
@@ -249,9 +270,9 @@ warn_stale_allowlist() {
 	if [ -z "${CHECK_CREDENTIALS_NO_PYTHON:-}" ] &&
 		command -v python3 >/dev/null 2>&1 &&
 		python3 -c 'import tomllib' >/dev/null 2>&1; then
-		warn_stale_allowlist_python "$repo" "$fragment"
+		warn_stale_allowlist_python "$repo" "$fragment" "$mode"
 	else
-		warn_stale_allowlist_bash "$repo" "$fragment"
+		warn_stale_allowlist_bash "$repo" "$fragment" "$mode"
 	fi
 }
 
@@ -368,7 +389,11 @@ while IFS= read -r config_path; do
 	fi
 
 	if [ -z "$only_repo" ] || [ "$(cd "$repo" 2>/dev/null && pwd -P)" = "$(cd "$only_repo" 2>/dev/null && pwd -P)" ]; then
-		warn_stale_allowlist "$repo"
+		if [ "$history" -eq 1 ]; then
+			warn_stale_allowlist "$repo" history
+		else
+			warn_stale_allowlist "$repo" index
+		fi
 		scanned=$((scanned + 1))
 		if [ "$history" -eq 1 ]; then
 			scan_history "$repo" || exit 3
