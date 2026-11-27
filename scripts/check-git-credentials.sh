@@ -94,6 +94,9 @@ fi
 
 found=0
 repos=0
+# Repositories whose content was actually scanned; `repos` counts every config
+# that was checked, which is all of them even when one repository is targeted.
+scanned=0
 
 # An allowlist pattern that matches no tracked file is a stale exemption: the file
 # it covered was moved or deleted, and the pattern now protects nothing while
@@ -353,6 +356,7 @@ while IFS= read -r config_path; do
 
 	if [ -z "$only_repo" ] || [ "$(cd "$repo" 2>/dev/null && pwd -P)" = "$(cd "$only_repo" 2>/dev/null && pwd -P)" ]; then
 		warn_stale_allowlist "$repo"
+		scanned=$((scanned + 1))
 		if [ "$history" -eq 1 ]; then
 			scan_history "$repo" || exit 3
 		else
@@ -367,8 +371,12 @@ if [ "$repos" -eq 0 ]; then
 fi
 
 if [ "$found" -gt 0 ]; then
-	echo "check-git-credentials: $found leak(s) across $repos repositories; remove them and revoke the tokens." >&2
+	echo "check-git-credentials: $found leak(s) in $scanned of $repos repositories content-scanned; remove them and revoke the tokens." >&2
 	exit 1
 fi
 
-echo "check-git-credentials: clean ($repos repositories checked)"
+if [ "$scanned" -eq "$repos" ]; then
+	echo "check-git-credentials: clean ($repos repositories checked)"
+else
+	echo "check-git-credentials: clean ($scanned of $repos repositories content-scanned, all $repos configs checked)"
+fi

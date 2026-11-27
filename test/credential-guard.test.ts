@@ -94,6 +94,24 @@ describe.skipIf(process.platform === "win32")("credential guard", () => {
 		expect(output).not.toContain(aws);
 	});
 
+	// The summary has to say what it looked at: "clean (21 repositories checked)"
+	// after scanning one repository's content reads as full coverage.
+	it("reports only the repositories it content-scanned", () => {
+		const { root, repo } = workspace(false);
+		const other = join(root, "other");
+		execFileSync("git", ["init", "-q", other], { stdio: "ignore" });
+		writeFileSync(join(repo, "keep.txt"), "nothing secret here\n");
+		execFileSync("git", ["-C", repo, "add", "-A"], { stdio: "ignore" });
+
+		const scoped = spawnSync("bash", [guard, root, repo], { encoding: "utf8" });
+		expect(scoped.status).toBe(0);
+		expect(scoped.stdout).toContain("1 of 2 repositories content-scanned");
+
+		const full = spawnSync("bash", [guard, root], { encoding: "utf8" });
+		expect(full.status).toBe(0);
+		expect(full.stdout).toContain("clean (2 repositories checked)");
+	});
+
 	// History mode reads the same merged config, so a repository's allowlist has to
 	// apply there too - otherwise a commit that was triaged as noise comes back on
 	// every audit, and people stop reading the output.
