@@ -34,13 +34,21 @@ fi
 top=$(git rev-parse --show-toplevel 2>/dev/null) || exit 0
 root=$(dirname "$top")
 
+# Only this repository's content matters here: that is what the push publishes.
+# The config scan still covers the whole workspace, since a token in a sibling
+# repository's remote is the same exposure, and it costs milliseconds.
 rc=0
-bash "$checker" "$root" || rc=$?
+bash "$checker" "$root" "$top" || rc=$?
 
 case "$rc" in
 0) exit 0 ;;
 1)
 	echo "pre-push: push blocked. Remove the credential shown above (a remote URL, or a tracked file) and revoke the token." >&2
+	exit 1
+	;;
+3)
+	echo "pre-push: push blocked. The secret scanner is unavailable, so tracked files cannot be checked." >&2
+	echo "  install gitleaks (https://github.com/gitleaks/gitleaks/releases) or set GITLEAKS_BIN." >&2
 	exit 1
 	;;
 *)

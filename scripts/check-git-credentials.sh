@@ -1,22 +1,28 @@
 #!/usr/bin/env bash
 # Fail if a repository in the workspace carries credentials.
 #
-# Two places a token hides where review never looks:
-#   - .git/config is untracked, so a token in a remote URL leaks silently and
-#     survives in shell history and backups;
-#   - tracked file contents travel with every clone and every published package,
-#     so a committed token is public the moment it is pushed.
-# Both are scanned, and both reports redact the secret: a check that echoes the
-# token into a terminal or CI log would spread the very thing it is guarding.
+# Three layers, cheapest first:
+#   1. .git/config: a token in a remote URL is untracked, so it leaks silently
+#      and survives in shell history and backups;
+#   2. token shapes in the index: what a push publishes, matched with a plain
+#      grep so an obvious PAT is reported even if gitleaks is broken;
+#   3. gitleaks over a snapshot of the index: provider keys and generic
+#      high-entropy assignments the shape patterns cannot know about.
+# Every report either redacts or omits the value, because a check that echoes the
+# secret spreads the very thing it guards.
 #
-# Usage: scripts/check-git-credentials.sh [workspace-root]
+# Usage: scripts/check-git-credentials.sh [workspace-root] [repository]
 #   default root: the parent of this repository (the workspace holding the repos)
-# Exit: 0 clean, 1 credentials found, 2 no .git/config found at all (bad root).
+#   repository:   content-scan only this one. The hook passes the repository
+#                 being pushed, since that is what this push publishes; without
+#                 it every repository under root is scanned.
+# Exit: 0 clean, 1 credentials found, 2 bad root, 3 scanner unavailable.
 
 set -uo pipefail
 
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 root="${1:-$(cd "$script_dir/../.." && pwd)}"
+only_repo="${2:-}"
 
 if [ ! -d "$root" ]; then
 	echo "check-git-credentials: no such directory: $root" >&2
@@ -24,26 +30,90 @@ if [ ! -d "$root" ]; then
 fi
 
 # user:password@host, token-as-user@host, x-access-token style, and raw PATs.
-#
 # Written so the pattern does not match its own source: a check that flags this
-# file cannot scan its own repository. `x[-]access[-]token:` matches the literal
-# in a URL but not the bracketed text below, and the same holds for the classes.
+# file cannot scan its own repository.
 pattern='https?://[^/@[:space:]]+@|gh[pousr]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|x[-]access[-]token:'
 
-# One redaction rule for both sources, so neither can drift into echoing a value.
+# One redaction rule for every textual report, so none can drift into echoing.
 redact() {
 	sed -E 's#(https?://)[^/@[:space:]]+@#\1<redacted>@#g; s#(gh[pousr]_|github_pat_)[A-Za-z0-9_]+#\1<redacted>#g'
 }
 
+# Resolve gitleaks: an explicit override, then PATH, then the copy this machine
+# keeps untracked inside the repository.
+gitleaks_bin="${GITLEAKS_BIN:-}"
+if [ -z "$gitleaks_bin" ]; then
+	gitleaks_bin=$(command -v gitleaks 2>/dev/null || true)
+fi
+if [ -z "$gitleaks_bin" ] && [ -x "$script_dir/../.tools/gitleaks" ]; then
+	gitleaks_bin="$script_dir/../.tools/gitleaks"
+fi
+
+config="$script_dir/gitleaks.toml"
+
+# Fail closed. A secret scan that quietly disables itself when its tool is absent
+# is the failure this check exists to prevent.
+if [ -z "$gitleaks_bin" ] || [ ! -x "$gitleaks_bin" ] || [ ! -f "$config" ]; then
+	echo "check-git-credentials: gitleaks or its config is missing; cannot scan tracked files." >&2
+	echo "  install: https://github.com/gitleaks/gitleaks/releases (or set GITLEAKS_BIN)" >&2
+	echo "  expected config: $config" >&2
+	exit 3
+fi
+
 found=0
 repos=0
-while IFS= read -r config; do
-	repos=$((repos + 1))
-	repo=$(dirname "$(dirname "$config")")
 
-	if hits=$(grep -nE "$pattern" "$config"); then
+# Scan one repository's index - exactly the content a push publishes - by
+# extracting it and running gitleaks over the files. The working tree is not
+# scanned: untracked scratch files are not published, and node_modules would
+# bury the signal.
+scan_repo() {
+	local repo="$1" tree work report rc
+	tree=$(git -C "$repo" write-tree 2>/dev/null) ||
+		tree=$(git -C "$repo" rev-parse --verify -q 'HEAD^{tree}' 2>/dev/null) ||
+		return 0
+
+	work=$(mktemp -d)
+	report=$(mktemp)
+	if ! git -C "$repo" archive --format=tar "$tree" 2>/dev/null | tar -x -C "$work" 2>/dev/null; then
+		rm -rf "$work" "$report"
+		return 0
+	fi
+
+	( cd "$work" && "$gitleaks_bin" dir . --no-banner --redact --config "$config" \
+		--report-format json --report-path "$report" >/dev/null 2>&1 )
+	rc=$?
+
+	if [ "$rc" -eq 1 ]; then
 		found=$((found + 1))
-		echo "credential in ${config}:" >&2
+		echo "credential in tracked files of ${repo}:" >&2
+		if command -v python3 >/dev/null 2>&1; then
+			python3 - "$report" <<'PY' >&2
+import json, sys
+for finding in json.load(open(sys.argv[1])):
+    print(f"  {finding['File']}:{finding['StartLine']}: {finding['RuleID']}")
+PY
+		else
+			echo "  $(grep -c '"RuleID"' "$report") finding(s); install python3 to list them" >&2
+		fi
+	elif [ "$rc" -gt 1 ]; then
+		echo "check-git-credentials: gitleaks failed on ${repo} (exit $rc); doing it manually:" >&2
+		echo "  $gitleaks_bin dir ${repo} --config ${config}" >&2
+		rm -rf "$work" "$report"
+		return 3
+	fi
+
+	rm -rf "$work" "$report"
+	return 0
+}
+
+while IFS= read -r config_path; do
+	repos=$((repos + 1))
+	repo=$(dirname "$(dirname "$config_path")")
+
+	if hits=$(grep -nE "$pattern" "$config_path"); then
+		found=$((found + 1))
+		echo "credential in ${config_path}:" >&2
 		printf '%s\n' "$hits" | redact >&2
 	fi
 
@@ -54,6 +124,10 @@ while IFS= read -r config; do
 		found=$((found + 1))
 		echo "credential in tracked files of ${repo}:" >&2
 		printf '%s\n' "$hits" | redact >&2
+	fi
+
+	if [ -z "$only_repo" ] || [ "$(cd "$repo" 2>/dev/null && pwd -P)" = "$(cd "$only_repo" 2>/dev/null && pwd -P)" ]; then
+		scan_repo "$repo" || exit 3
 	fi
 done < <(find "$root" -maxdepth 4 -type f -path '*/.git/config' 2>/dev/null | sort)
 

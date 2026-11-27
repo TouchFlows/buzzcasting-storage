@@ -1,0 +1,35 @@
+# Rules for the committed-file scan in check-git-credentials.sh.
+#
+# gitleaks 8.30's bundled config covers Stripe, Slack, private keys and generic
+# high-entropy assignments, but ships no working rule for AWS access key IDs or
+# classic GitHub PATs - verified by scanning both with `--enable-rule`, which
+# found nothing. Those are the shapes most likely to be pasted into a config
+# file, so they are defined here. `useDefault` keeps everything the bundled
+# config already catches.
+#
+# Written so no rule matches this file's own source: the regex text contains
+# bracket classes where a real key would have the literal characters.
+[extend]
+useDefault = true
+
+[[rules]]
+id = "aws-access-key-id"
+description = "AWS access key ID"
+regex = '''(AKIA|ASIA|ABIA|ACCA|A3T[A-Z0-9])[A-Z0-9]{16}'''
+[rules.allowlist]
+regexes = ['''AKIAIOSFODNN7EXAMPLE''']
+
+[[rules]]
+id = "github-classic-pat"
+description = "GitHub personal access token (classic)"
+regex = '''gh[pousr]_[A-Za-z0-9]{36,}'''
+
+[[rules]]
+id = "github-fine-grained-pat"
+description = "GitHub fine-grained personal access token"
+regex = '''github_pat_[A-Za-z0-9_]{30,}'''
+
+[[rules]]
+id = "stripe-live-secret"
+description = "Stripe live secret key"
+regex = '''sk_live_[0-9a-zA-Z]{20,}'''

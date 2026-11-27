@@ -68,6 +68,31 @@ describe.skipIf(process.platform === "win32")("credential guard", () => {
 		expect(result.stderr).not.toContain(token);
 	});
 
+	// The shape grep only knows GitHub prefixes. Provider keys have their own
+	// formats, which is what the gitleaks layer over the index snapshot is for.
+	it("exits 1 for a Stripe and an AWS key committed into a tracked file", () => {
+		const { root, repo } = workspace(false);
+		// Fragments, not literals: a real-looking key in this file would make the
+		// guard fail on its own repository, which is the point of the scan.
+		const stripe = ["sk_live_", "51H8xQ2eZv", "KYlo2C9mNpQ", "rStUvWx"].join("");
+		const aws = ["AKIA", "Z7Q2LM4X", "N8PT3RVC"].join("");
+		writeFileSync(
+			join(repo, "secrets.env"),
+			`STRIPE_KEY=${stripe}\nAWS_KEY=${aws}\n`,
+		);
+		execFileSync("git", ["-C", repo, "add", "secrets.env"], { stdio: "ignore" });
+
+		const result = spawnSync("bash", [guard, root], { encoding: "utf8" });
+		const output = `${result.stdout}${result.stderr}`;
+
+		expect(result.status).toBe(1);
+		expect(output).toContain("secrets.env");
+		expect(output).toContain("stripe-live-secret");
+		expect(output).toContain("aws-access-key-id");
+		expect(output).not.toContain(stripe);
+		expect(output).not.toContain(aws);
+	});
+
 	// A token in .git/config never leaves the machine; one committed into a file
 	// is published with the next push, and no review will see it in a diff.
 	it("exits 1 and redacts a token committed into a tracked file", () => {

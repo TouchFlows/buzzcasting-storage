@@ -11,6 +11,9 @@ node_modules
 coverage
 *.local
 
+# Untracked local tools (gitleaks for the credential guard)
+.tools/
+
 # Editor directories and files
 .env
 .vscode/*
