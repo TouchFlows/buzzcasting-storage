@@ -38,7 +38,10 @@ function workspace(withToken: boolean): { root: string; repo: string } {
 				"remote",
 				"add",
 				"origin",
-				`https://${token}@github.com/owner/repo.git`,
+				// Joined, not interpolated: a literal credentials-in-URL string in a
+				// tracked file is exactly what the content scan has to flag, and this
+				// fixture would otherwise make the guard fail on its own repository.
+				["https://", token, "@github.com/owner/repo.git"].join(""),
 			],
 			{ stdio: "ignore" },
 		);
@@ -62,6 +65,22 @@ describe.skipIf(process.platform === "win32")("credential guard", () => {
 		expect(result.stderr).toContain("credential in");
 		expect(result.stderr).toContain("<redacted>");
 		// The point of the guard is to report a leak without repeating it.
+		expect(result.stderr).not.toContain(token);
+	});
+
+	// A token in .git/config never leaves the machine; one committed into a file
+	// is published with the next push, and no review will see it in a diff.
+	it("exits 1 and redacts a token committed into a tracked file", () => {
+		const { root, repo } = workspace(false);
+		writeFileSync(join(repo, "config.ts"), `const key = "${token}";\n`);
+		execFileSync("git", ["-C", repo, "add", "config.ts"], { stdio: "ignore" });
+
+		const result = spawnSync("bash", [guard, root], { encoding: "utf8" });
+
+		expect(result.status).toBe(1);
+		expect(result.stderr).toContain("tracked files");
+		expect(result.stderr).toContain("config.ts");
+		expect(result.stderr).toContain("<redacted>");
 		expect(result.stderr).not.toContain(token);
 	});
 
