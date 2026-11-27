@@ -94,6 +94,61 @@ describe.skipIf(process.platform === "win32")("credential guard", () => {
 		expect(output).not.toContain(aws);
 	});
 
+	// One sweep, every repository, each keeping its own allowlist. Without --all a
+	// full audit is a shell loop, and that is how a repository gets skipped.
+	it("sweeps every repository's history with --history --all", () => {
+		const { root, repo } = workspace(false);
+		const stripe = ["sk_live_", "51H8xQ2eZv", "KYlo2C9mNpQ", "rStUvWx"].join("");
+		const commitAll = (dir: string) => {
+			execFileSync("git", ["-C", dir, "add", "-A"], { stdio: "ignore" });
+			execFileSync(
+				"git",
+				[
+					"-C",
+					dir,
+					"-c",
+					"user.email=test@example.com",
+					"-c",
+					"user.name=test",
+					"commit",
+					"-q",
+					"-m",
+					"add vendored file",
+				],
+				{ stdio: "ignore" },
+			);
+		};
+
+		// Repo one: the key is in an allowlisted vendor path.
+		mkdirSync(join(repo, "vendor"), { recursive: true });
+		writeFileSync(join(repo, "vendor/leak.js"), `var key = "${stripe}";\n`);
+		commitAll(repo);
+		writeFileSync(
+			join(repo, ".gitleaks-allowlist.toml"),
+			"[allowlist]\npaths = ['''^vendor/''']\n",
+		);
+
+		// Repo two: same key, no exemption.
+		const other = join(root, "other");
+		execFileSync("git", ["init", "-q", other], { stdio: "ignore" });
+		writeFileSync(join(other, "leak.js"), `var key = "${stripe}";\n`);
+		commitAll(other);
+
+		const result = spawnSync("bash", [guard, "--history", "--all", root], {
+			encoding: "utf8",
+		});
+
+		expect(result.status).toBe(1);
+		expect(`${result.stdout}${result.stderr}`).toContain("2 of 2 repositories content-scanned");
+		// History findings are reported per repository, with paths relative to it,
+		// so the header is what identifies which repository leaked.
+		expect(result.stderr).toContain(other);
+		expect(result.stderr).toContain("leak.js:1");
+		// The allowlisted repository contributes no header and no finding.
+		expect(result.stderr).not.toContain("vendor/leak.js");
+		expect(result.stderr).not.toContain(`${repo}:`);
+	});
+
 	// The summary has to say what it looked at: "clean (21 repositories checked)"
 	// after scanning one repository's content reads as full coverage.
 	it("reports only the repositories it content-scanned", () => {

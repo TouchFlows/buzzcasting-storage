@@ -11,7 +11,7 @@
 # Every report either redacts or omits the value, because a check that echoes the
 # secret spreads the very thing it guards.
 #
-# Usage: scripts/check-git-credentials.sh [--history] [workspace-root] [repository]
+# Usage: scripts/check-git-credentials.sh [--history] [--all] [workspace-root] [repository]
 #   default root: the parent of this repository (the workspace holding the repos)
 #   repository:   content-scan only this one. The hook passes the repository
 #                 being pushed, since that is what this push publishes; without
@@ -19,6 +19,9 @@
 #   --history:    scan the repository's whole history with gitleaks instead of
 #                 its index. Defaults to the repository containing the current
 #                 directory. Committed-then-deleted files only show up this way.
+#   --all:        sweep every repository under root instead of just one. Each is
+#                 scanned with its own allowlist, since that is the only way one
+#                 command covers a whole workspace without losing exemptions.
 # Exit: 0 clean, 1 credentials found, 2 bad root, 3 scanner unavailable.
 
 set -uo pipefail
@@ -26,17 +29,27 @@ set -uo pipefail
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 history=0
-if [ "${1:-}" = "--history" ]; then
-	history=1
+all=0
+while [ "${1:-}" = "--history" ] || [ "${1:-}" = "--all" ]; do
+	case "$1" in
+	--history) history=1 ;;
+	--all) all=1 ;;
+	esac
 	shift
-fi
+
+done
 
 root_given=0
 [ "$#" -ge 1 ] && root_given=1
 root="${1:-$(cd "$script_dir/../.." && pwd)}"
 only_repo="${2:-}"
 
-if [ "$history" -eq 1 ] && [ -z "$only_repo" ]; then
+if [ "$all" -eq 1 ] && [ -n "$only_repo" ]; then
+	echo "check-git-credentials: --all cannot be combined with a single repository" >&2
+	exit 2
+fi
+
+if [ "$history" -eq 1 ] && [ -z "$only_repo" ] && [ "$all" -eq 0 ]; then
 	only_repo=$(git rev-parse --show-toplevel 2>/dev/null) || {
 		echo "check-git-credentials: --history needs a repository; run it inside one or pass one" >&2
 		exit 2
@@ -371,7 +384,7 @@ if [ "$repos" -eq 0 ]; then
 fi
 
 if [ "$found" -gt 0 ]; then
-	echo "check-git-credentials: $found leak(s) in $scanned of $repos repositories content-scanned; remove them and revoke the tokens." >&2
+	echo "check-git-credentials: $found leak(s) found; $scanned of $repos repositories content-scanned. Remove them and revoke the tokens." >&2
 	exit 1
 fi
 
