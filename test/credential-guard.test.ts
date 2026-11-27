@@ -121,6 +121,37 @@ describe.skipIf(process.platform === "win32")("credential guard", () => {
 		expect(scan().status).toBe(0);
 	});
 
+	// An exemption for a path that no longer exists protects nothing while looking
+	// active, so it has to be visible. It warns rather than blocking: the scan
+	// still runs, and a pattern may arrive before the file it covers.
+	it("warns when an allowlist pattern matches no tracked file", () => {
+		const { root, repo } = workspace(false);
+		mkdirSync(join(repo, "assets/kept"), { recursive: true });
+		writeFileSync(join(repo, "assets/kept/keep.txt"), "nothing secret here\n");
+		execFileSync("git", ["-C", repo, "add", "-A"], { stdio: "ignore" });
+		const run = () => {
+			execFileSync("git", ["-C", repo, "add", "-A"], { stdio: "ignore" });
+			return spawnSync("bash", [guard, root], { encoding: "utf8" });
+		};
+
+		writeFileSync(
+			join(repo, ".gitleaks-allowlist.toml"),
+			"[allowlist]\npaths = ['''^assets/removed/''']\n",
+		);
+		const stale = run();
+		expect(stale.status).toBe(0);
+		expect(stale.stderr).toContain("matches no tracked file");
+		expect(stale.stderr).toContain("^assets/removed/");
+
+		writeFileSync(
+			join(repo, ".gitleaks-allowlist.toml"),
+			"[allowlist]\npaths = ['''^assets/kept/''']\n",
+		);
+		const live = run();
+		expect(live.status).toBe(0);
+		expect(live.stderr).not.toContain("matches no tracked file");
+	});
+
 	// A token in .git/config never leaves the machine; one committed into a file
 	// is published with the next push, and no review will see it in a diff.
 	it("exits 1 and redacts a token committed into a tracked file", () => {

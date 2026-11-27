@@ -73,6 +73,38 @@ fi
 found=0
 repos=0
 
+# An allowlist pattern that matches no tracked file is a stale exemption: the file
+# it covered was moved or deleted, and the pattern now protects nothing while
+# looking active. Warn instead of blocking - the push is still scanned, and a
+# pattern may legitimately arrive before the file it covers.
+warn_stale_allowlist() {
+	local repo="$1" fragment="$repo/.gitleaks-allowlist.toml"
+	[ -f "$fragment" ] || return 0
+	command -v python3 >/dev/null 2>&1 || return 0
+	python3 - "$fragment" "$repo" <<'PY' >&2
+import re, subprocess, sys, tomllib
+
+fragment, repo = sys.argv[1], sys.argv[2]
+try:
+    config = tomllib.load(open(fragment, 'rb'))
+except Exception as error:
+    print(f"check-git-credentials: cannot parse {fragment}: {error}", file=sys.stderr)
+    raise SystemExit(0)
+
+files = [f for f in subprocess.run(
+    ['git', '-C', repo, 'ls-files'], capture_output=True, text=True).stdout.split('\n') if f]
+
+for pattern in config.get('allowlist', {}).get('paths', []):
+    try:
+        match = re.compile(pattern)
+    except re.error as error:
+        print(f"check-git-credentials: allowlist pattern {pattern!r} is not a valid regex: {error}", file=sys.stderr)
+        continue
+    if not any(match.search(name) for name in files):
+        print(f"check-git-credentials: warning: allowlist pattern {pattern!r} matches no tracked file in {repo}; the exemption is stale", file=sys.stderr)
+PY
+}
+
 # Scan one repository's index - exactly the content a push publishes - by
 # extracting it and running gitleaks over the files. The working tree is not
 # scanned: untracked scratch files are not published, and node_modules would
@@ -147,6 +179,7 @@ while IFS= read -r config_path; do
 	fi
 
 	if [ -z "$only_repo" ] || [ "$(cd "$repo" 2>/dev/null && pwd -P)" = "$(cd "$only_repo" 2>/dev/null && pwd -P)" ]; then
+		warn_stale_allowlist "$repo"
 		scan_repo "$repo" || exit 3
 	fi
 done < <(find "$root" -maxdepth 4 -type f -path '*/.git/config' 2>/dev/null | sort)
