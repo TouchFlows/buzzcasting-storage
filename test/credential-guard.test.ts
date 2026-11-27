@@ -1,10 +1,12 @@
 import { execFileSync, spawnSync } from "node:child_process";
 import {
+	existsSync,
 	lstatSync,
 	mkdtempSync,
 	realpathSync,
 	rmSync,
 	symlinkSync,
+	writeFileSync,
 } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
@@ -116,5 +118,41 @@ describe.skipIf(process.platform === "win32")("install-hooks", () => {
 		const installed = join(repo, ".git", "hooks", "pre-push");
 		expect(lstatSync(installed).isSymbolicLink()).toBe(true);
 		expect(realpathSync(installed)).toBe(realpathSync(hook));
+	});
+
+	// A repository that really runs husky owns core.hooksPath. Clearing it would
+	// break their hooks, and linking .git/hooks would look installed while doing
+	// nothing, so the installer must skip loudly and leave the value alone.
+	it("skips a husky-owned hooksPath instead of linking a hook that would not run", () => {
+		const { root, repo } = workspace(false);
+		const plain = join(root, "plain");
+		execFileSync("git", ["init", "-q", plain], { stdio: "ignore" });
+		writeFileSync(
+			join(repo, "package.json"),
+			JSON.stringify({ devDependencies: { husky: "^9.0.0" } }),
+		);
+		execFileSync("git", ["-C", repo, "config", "core.hooksPath", ".husky/_"], {
+			stdio: "ignore",
+		});
+
+		const result = spawnSync("bash", [installer, root], { encoding: "utf8" });
+
+		expect(result.status).toBe(0);
+		expect(result.stderr).toContain("SKIP");
+		expect(result.stderr).toContain("husky");
+		// The value is untouched, so husky's own hooks keep running.
+		const kept = spawnSync(
+			"git",
+			["-C", repo, "config", "--get", "core.hooksPath"],
+			{ encoding: "utf8" },
+		);
+		expect(kept.status).toBe(0);
+		expect(kept.stdout.trim()).toBe(".husky/_");
+		// Nothing is dropped into a directory git is not reading.
+		expect(existsSync(join(repo, ".git", "hooks", "pre-push"))).toBe(false);
+		// The skip is targeted: the sibling repository is still linked.
+		expect(
+			lstatSync(join(plain, ".git", "hooks", "pre-push")).isSymbolicLink(),
+		).toBe(true);
 	});
 });
