@@ -376,14 +376,14 @@ export default class DexieClient {
 				log(2, ["%cstorage", CSS.STORAGE, EVENTS.DASHBOARD_LOAD, query]);
 			});
 
-		data !== undefined &&
-			log(3, [
-				"%cstorage%c %cdashboards",
-				CSS.STORAGE,
-				CSS.NONE,
-				CSS.WIDGET,
-				query,
-			]);
+		data !== undefined
+		&& log(3, [
+			"%cstorage%c %cdashboards",
+			CSS.STORAGE,
+			CSS.NONE,
+			CSS.WIDGET,
+			query,
+		]);
 
 		return {
 			data: data !== undefined ? { dashboards: data, query } : null,
@@ -624,7 +624,9 @@ export default class DexieClient {
 
 			return Dexie.Promise.all(getMessages).then(async (messages) => {
 				const filtered = messages.map((message: any) => {
-					if (message !== undefined) return message.data;
+					if (message !== undefined) {
+						return message.data;
+					}
 				});
 				const data = {
 					data: {
@@ -734,9 +736,9 @@ export default class DexieClient {
 					engagement:
 						message.topics[0]?.engagement || message.dynamics?.engagement || 0,
 					impressions:
-						message.topics[0]?.impressions ||
-						message.dynamics?.semrush_visits ||
-						0,
+						message.topics[0]?.impressions
+						|| message.dynamics?.semrush_visits
+						|| 0,
 					reach:
 						message.topics[0]?.reach || message.dynamics?.potential_reach || 0,
 					sentiment: message.topics[0]?.sentiment || 0,
@@ -780,9 +782,9 @@ export default class DexieClient {
 					engagement:
 						message.topics[0]?.engagement || message.dynamics?.engagement || 0,
 					impressions:
-						message.topics[0]?.impressions ||
-						message.dynamics?.semrush_visits ||
-						0,
+						message.topics[0]?.impressions
+						|| message.dynamics?.semrush_visits
+						|| 0,
 					reach:
 						message.topics[0]?.reach || message.dynamics?.potential_reach || 0,
 					sentiment: message.topics[0]?.sentiment || 0,
@@ -1021,14 +1023,14 @@ export default class DexieClient {
 				log(2, ["%cstorage", CSS.STORAGE, EVENTS.WIDGET_LOAD, query]);
 			});
 
-		data !== undefined &&
-			log(3, [
-				"%cstorage%c %cwidgets",
-				CSS.STORAGE,
-				CSS.NONE,
-				CSS.MESSAGES,
-				query,
-			]);
+		data !== undefined
+		&& log(3, [
+			"%cstorage%c %cwidgets",
+			CSS.STORAGE,
+			CSS.NONE,
+			CSS.MESSAGES,
+			query,
+		]);
 
 		return {
 			// @ts-ignore
@@ -1235,13 +1237,13 @@ export default class DexieClient {
 			.then((res: any) => {
 				return query?.name ? res.filter(nameFilter) : res;
 			});
-		data &&
-			data.sort((a: any, b: any) => {
-				return a.order_index - b.order_index;
-			});
+		data
+		&& data.sort((a: any, b: any) => {
+			return a.order_index - b.order_index;
+		});
 
-		data !== undefined &&
-			log(3, ["%cstorage%c %cslides", CSS.STORAGE, CSS.NONE, CSS.SLIDE, query]);
+		data !== undefined
+		&& log(3, ["%cstorage%c %cslides", CSS.STORAGE, CSS.NONE, CSS.SLIDE, query]);
 
 		return {
 			// @ts-ignore
@@ -1399,14 +1401,14 @@ export default class DexieClient {
 				return query?.name ? res.filter(nameFilter) : res;
 			});
 
-		data !== undefined &&
-			log(3, [
-				"%cstorage%c %cpresentations",
-				CSS.STORAGE,
-				CSS.NONE,
-				CSS.PRESENTATION,
-				query,
-			]);
+		data !== undefined
+		&& log(3, [
+			"%cstorage%c %cpresentations",
+			CSS.STORAGE,
+			CSS.NONE,
+			CSS.PRESENTATION,
+			query,
+		]);
 
 		return {
 			data,
@@ -1564,14 +1566,14 @@ export default class DexieClient {
 			return query?.id ? res.filter(idFilter) : res;
 		});
 
-		data !== undefined &&
-			log(3, [
-				"%cstorage%c %cpreferences",
-				CSS.STORAGE,
-				CSS.NONE,
-				CSS.PRESENTATION,
-				query,
-			]);
+		data !== undefined
+		&& log(3, [
+			"%cstorage%c %cpreferences",
+			CSS.STORAGE,
+			CSS.NONE,
+			CSS.PRESENTATION,
+			query,
+		]);
 
 		return {
 			// @ts-ignore
@@ -1666,14 +1668,14 @@ export default class DexieClient {
 			return query?.id ? res.filter(idFilter) : res;
 		});
 
-		data !== undefined &&
-			log(3, [
-				"%cstorage%c %cimages",
-				CSS.STORAGE,
-				CSS.NONE,
-				CSS.PRESENTATION,
-				query,
-			]);
+		data !== undefined
+		&& log(3, [
+			"%cstorage%c %cimages",
+			CSS.STORAGE,
+			CSS.NONE,
+			CSS.PRESENTATION,
+			query,
+		]);
 
 		return {
 			// @ts-expect-error query.widget is obligatory but not always

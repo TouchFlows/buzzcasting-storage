@@ -56,7 +56,7 @@ export class BuzzcastingStorageReader {
 				CSS.CLOUD,
 				query.widget,
 				"wrong method call for getCloud, type used is",
-				query.type
+				query.type,
 			);
 			return {
 				data: null,
@@ -83,7 +83,7 @@ export class BuzzcastingStorageReader {
 				CSS.MESSAGES,
 				query.widget,
 				"wrong method call for getMessages, type used is",
-				query.type
+				query.type,
 			);
 			return {
 				data: null,
@@ -110,7 +110,7 @@ export class BuzzcastingStorageReader {
 				CSS.SERIES,
 				query.widget,
 				"wrong method call for getSeries, type used is",
-				query.type
+				query.type,
 			);
 			return {
 				data: null,

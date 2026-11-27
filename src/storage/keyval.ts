@@ -352,6 +352,7 @@ export default class KeyvalClient {
 	deletePresentations = async (): Promise<number | undefined> => {
 		return 404;
 	};
+
 	/**
 	 * Add component subscriber
 	 * @param query IQuery

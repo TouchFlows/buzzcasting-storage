@@ -45,9 +45,9 @@ export default class ApiClient {
 		const token = `Bearer ${this.options.bearer}`;
 		return {
 			headers: new Headers({
-				Authorization: token,
+				"Authorization": token,
 				"Content-Type": "application/x-www-form-urlencoded",
-				Accept: "application/json",
+				"Accept": "application/json",
 				// 'X-Session-Key': localStorage.getItem('guid') || 'invalid',
 			}),
 		};
@@ -64,8 +64,8 @@ export default class ApiClient {
 		search.topics = `${search.dashboard}-${search.widget}`;
 		// delete search.period;
 		delete search.presentation;
-		const params =
-			Object.keys(search).length > 0
+		const params
+			= Object.keys(search).length > 0
 				? `?${new URLSearchParams(search).toString()}`
 				: "";
 		let color: string = "";
@@ -124,7 +124,7 @@ export default class ApiClient {
 				method: "post",
 			},
 		);
-		//@ts-ignore
+		// @ts-ignore
 		for await (const event of readNDJSONStream(response.body)) {
 			console.log("Received", event);
 		}
@@ -259,6 +259,7 @@ export default class ApiClient {
 				return { success: false, message: `${code}`, data: null };
 			});
 	}
+
 	/**
 	 * Create a brand-new slide (as opposed to storeSlide(), which PUTs an
 	 * update to an already-existing id). POSTs to the slides collection
@@ -492,9 +493,9 @@ export default class ApiClient {
 		const token = `Bearer ${this.options.bearer}`;
 		const headers = {
 			headers: new Headers({
-				Authorization: token,
+				"Authorization": token,
 				"Content-Type": "application/json",
-				Accept: "application/json",
+				"Accept": "application/json",
 			}),
 		};
 
@@ -509,7 +510,7 @@ export default class ApiClient {
 			preference.id,
 		]);
 		return await fetch(
-			[this.url, "api", version, API.PREFERENCES].join("/") + "/",
+			`${[this.url, "api", version, API.PREFERENCES].join("/")}/`,
 			{ ...headers, body, method: "post" },
 		)
 			.then((response) => {

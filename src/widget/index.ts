@@ -31,7 +31,7 @@ export default class Widget {
 	constructor(
 		element: HTMLElement,
 		callbacks: Array<(arg: IResponse) => void>,
-		selector?: string
+		selector?: string,
 	) {
 		this.element = element;
 
@@ -76,8 +76,8 @@ export default class Widget {
 				case EVENTS.WIDGET_UPDATE:
 					try {
 						if (
-							update.dashboard === query.dashboard &&
-							update.widget === query.widget
+							update.dashboard === query.dashboard
+							&& update.widget === query.widget
 						) {
 							const response = await this.getData();
 							if (response?.success) {
@@ -87,7 +87,7 @@ export default class Widget {
 									CSS.NONE,
 									CSS.WIDGET,
 									CSS.NONE,
-									//@ts-ignore
+									// @ts-ignore
 									typeCss(this.query),
 									this.query,
 								]);
@@ -117,9 +117,9 @@ export default class Widget {
 		 * Subscribe only when below three parameters are set
 		 */
 		if (
-			this.query.dashboard?.length &&
-			this.query.widget?.length &&
-			this.query.type?.length
+			this.query.dashboard?.length
+			&& this.query.widget?.length
+			&& this.query.type?.length
 		) {
 			this.broadcastChannel.postMessage({
 				event: EVENTS.SUBSCRIBE,

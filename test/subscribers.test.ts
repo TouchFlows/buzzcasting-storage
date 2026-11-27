@@ -6,22 +6,25 @@ import { BuzzcastingStorageManager } from "../src/manager";
 // 'none' isn't a real backend (see the constructor's storage switch) so `sm`
 // stays null - keeps construction light, since these tests only exercise the
 // subscribers list itself, not actual storage reads/writes.
-const makeManager = () =>
-	new BuzzcastingStorageManager({
+function makeManager() {
+	return new BuzzcastingStorageManager({
 		app: "test",
 		locale: "en",
 		presentation: `test-${Math.random()}`,
 		// @ts-expect-error - deliberately not a real backend, see comment above
 		storage: "none",
 	});
+}
 
-const query = (widget: string) => ({
-	dashboard: "d1",
-	type: "messages",
-	widget,
-});
+function query(widget: string) {
+	return {
+		dashboard: "d1",
+		type: "messages",
+		widget,
+	};
+}
 
-describe("BuzzcastingStorageManager subscribers", () => {
+describe("buzzcastingStorageManager subscribers", () => {
 	it("addSubscriber adds an entry keyed by widget id", () => {
 		const manager = makeManager();
 		manager.addSubscriber(query("w1"));

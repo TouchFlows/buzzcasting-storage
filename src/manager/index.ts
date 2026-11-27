@@ -101,9 +101,9 @@ export class BuzzcastingStorageManager {
 			 * Only query when we have the minimum parameters
 			 */
 			if (
-				apiQuery.dashboard?.length &&
-				apiQuery.widget?.length &&
-				apiQuery.type?.length
+				apiQuery.dashboard?.length
+				&& apiQuery.widget?.length
+				&& apiQuery.type?.length
 			) {
 				// Paralelize calls
 				subscriberQueries.push(this.api.get(apiQuery));
@@ -161,8 +161,8 @@ export class BuzzcastingStorageManager {
 					);
 
 					// check if any topic dynamics have changed
-					newHash =
-						apiResp.data.messages.length > 0
+					newHash
+						= apiResp.data.messages.length > 0
 							? hashSum(apiResp.data.messages[0].utc)
 							: "none";
 					if (previousHash === newHash && params.refresh === false) {
@@ -185,7 +185,9 @@ export class BuzzcastingStorageManager {
 								.setMessages(apiResp.query, apiResp)
 								.then(async (code) => {
 									// setTimeout(() => {
-									if (params.refresh && code === 204) code = 201;
+									if (params.refresh && code === 204) {
+										code = 201;
+									}
 									this.broadcastUpdate(code, apiResp);
 									return code;
 									// }, 500); // MTM allow tuning thru options
@@ -240,7 +242,9 @@ export class BuzzcastingStorageManager {
 							status.code = await this.sm
 								.setCloud(apiResp.query, data.data)
 								.then((code) => {
-									if (params.refresh && code === 204) code = 201;
+									if (params.refresh && code === 204) {
+										code = 201;
+									}
 									this.broadcastUpdate(code, apiResp);
 									return code;
 								})
@@ -291,7 +295,9 @@ export class BuzzcastingStorageManager {
 							status.code = await this.sm
 								.setSeries(query, apiResp.data)
 								.then((code) => {
-									if (params.refresh && code === 204) code = 201;
+									if (params.refresh && code === 204) {
+										code = 201;
+									}
 									this.broadcastUpdate(code, apiResp);
 									return code;
 								})
@@ -468,7 +474,7 @@ export class BuzzcastingStorageManager {
 				]);
 				await this.update(messageEvent.data.data);
 				break;
-			case "stream": //EVENTS.STREAM
+			case "stream": // EVENTS.STREAM
 				log(3, [
 					"%cupdate%c %capi%c %cstorage",
 					CSS.BROADCAST,
@@ -500,8 +506,8 @@ export class BuzzcastingStorageManager {
 
 		const retentionDuration = this.options?.retention || 86400 * 40; // 40 days
 
-		const count: number | undefined =
-			await this.sm?.cleanMessages(retentionDuration);
+		const count: number | undefined
+			= await this.sm?.cleanMessages(retentionDuration);
 
 		log(3, [
 			"%cclean%c %cstorage%c %cmessages",
