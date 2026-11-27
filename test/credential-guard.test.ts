@@ -94,6 +94,46 @@ describe.skipIf(process.platform === "win32")("credential guard", () => {
 		expect(output).not.toContain(aws);
 	});
 
+	// History mode reads the same merged config, so a repository's allowlist has to
+	// apply there too - otherwise a commit that was triaged as noise comes back on
+	// every audit, and people stop reading the output.
+	it("applies the repository allowlist to a history scan", () => {
+		const { root, repo } = workspace(false);
+		const stripe = ["sk_live_", "51H8xQ2eZv", "KYlo2C9mNpQ", "rStUvWx"].join("");
+		mkdirSync(join(repo, "public/vendor"), { recursive: true });
+		writeFileSync(join(repo, "public/vendor/legacy.js"), `var key = "${stripe}";\n`);
+		execFileSync("git", ["-C", repo, "add", "-A"], { stdio: "ignore" });
+		execFileSync(
+			"git",
+			[
+				"-C",
+				repo,
+				"-c",
+				"user.email=test@example.com",
+				"-c",
+				"user.name=test",
+				"commit",
+				"-q",
+				"-m",
+				"add vendored file",
+			],
+			{ stdio: "ignore" },
+		);
+		const history = () => spawnSync("bash", [guard, "--history", root, repo], { encoding: "utf8" });
+
+		const caught = history();
+		expect(caught.status).toBe(1);
+		expect(caught.stderr).toContain("legacy.js");
+		expect(caught.stderr).toContain("stripe-live-secret");
+		expect(caught.stderr).not.toContain(stripe);
+
+		writeFileSync(
+			join(repo, ".gitleaks-allowlist.toml"),
+			"[allowlist]\npaths = ['''^public/vendor/''']\n",
+		);
+		expect(history().status).toBe(0);
+	});
+
 	// A fingerprint allowlist pins a rule and a line, so upgrading the vendored
 	// file moves the line and the finding silently returns. A path allowlist has
 	// to keep working when the file shifts underneath it.

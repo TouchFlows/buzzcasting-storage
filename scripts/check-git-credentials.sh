@@ -11,18 +11,40 @@
 # Every report either redacts or omits the value, because a check that echoes the
 # secret spreads the very thing it guards.
 #
-# Usage: scripts/check-git-credentials.sh [workspace-root] [repository]
+# Usage: scripts/check-git-credentials.sh [--history] [workspace-root] [repository]
 #   default root: the parent of this repository (the workspace holding the repos)
 #   repository:   content-scan only this one. The hook passes the repository
 #                 being pushed, since that is what this push publishes; without
 #                 it every repository under root is scanned.
+#   --history:    scan the repository's whole history with gitleaks instead of
+#                 its index. Defaults to the repository containing the current
+#                 directory. Committed-then-deleted files only show up this way.
 # Exit: 0 clean, 1 credentials found, 2 bad root, 3 scanner unavailable.
 
 set -uo pipefail
 
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+history=0
+if [ "${1:-}" = "--history" ]; then
+	history=1
+	shift
+fi
+
+root_given=0
+[ "$#" -ge 1 ] && root_given=1
 root="${1:-$(cd "$script_dir/../.." && pwd)}"
 only_repo="${2:-}"
+
+if [ "$history" -eq 1 ] && [ -z "$only_repo" ]; then
+	only_repo=$(git rev-parse --show-toplevel 2>/dev/null) || {
+		echo "check-git-credentials: --history needs a repository; run it inside one or pass one" >&2
+		exit 2
+	}
+	# Untouched default root came from the script's location; derive it from the
+	# repository actually being scanned instead.
+	[ "$root_given" -eq 1 ] || root=$(dirname "$only_repo")
+fi
 
 if [ ! -d "$root" ]; then
 	echo "check-git-credentials: no such directory: $root" >&2
@@ -271,6 +293,45 @@ PY
 	return 0
 }
 
+# History scanning: the same config the index scan uses, with the repository's
+# allowlist appended. `git` mode walks commits, so a file that was committed and
+# later deleted is still checked - and its allowlist still applies, which is the
+# point: otherwise a known-noisy commit returns on every audit.
+scan_history() {
+	local repo="$1" scan_config report rc
+	scan_config=$(mktemp)
+	report=$(mktemp)
+	cat "$config" > "$scan_config"
+	if [ -f "$repo/.gitleaks-allowlist.toml" ]; then
+		cat "$repo/.gitleaks-allowlist.toml" >> "$scan_config"
+	fi
+
+	( cd "$repo" && "$gitleaks_bin" git . --no-banner --redact --config "$scan_config" \
+		--report-format json --report-path "$report" >/dev/null 2>&1 )
+	rc=$?
+
+	if [ "$rc" -eq 1 ]; then
+		found=$((found + 1))
+		echo "credential in history of ${repo}:" >&2
+		if command -v python3 >/dev/null 2>&1; then
+			python3 - "$report" <<'PY' >&2
+import json, sys
+for finding in json.load(open(sys.argv[1])):
+    print(f"  {finding['File']}:{finding['StartLine']}: {finding['RuleID']} (commit {finding['Commit'][:7]})")
+PY
+		else
+			echo "  $(grep -c '\"RuleID\"' "$report") finding(s); install python3 to list them" >&2
+		fi
+	elif [ "$rc" -gt 1 ]; then
+		echo "check-git-credentials: gitleaks history scan failed on ${repo} (exit $rc)" >&2
+		rm -f "$report" "$scan_config"
+		return 3
+	fi
+
+	rm -f "$report" "$scan_config"
+	return 0
+}
+
 while IFS= read -r config_path; do
 	repos=$((repos + 1))
 	repo=$(dirname "$(dirname "$config_path")")
@@ -292,7 +353,11 @@ while IFS= read -r config_path; do
 
 	if [ -z "$only_repo" ] || [ "$(cd "$repo" 2>/dev/null && pwd -P)" = "$(cd "$only_repo" 2>/dev/null && pwd -P)" ]; then
 		warn_stale_allowlist "$repo"
-		scan_repo "$repo" || exit 3
+		if [ "$history" -eq 1 ]; then
+			scan_history "$repo" || exit 3
+		else
+			scan_repo "$repo" || exit 3
+		fi
 	fi
 done < <(find "$root" -maxdepth 4 -type f -path '*/.git/config' 2>/dev/null | sort)
 
