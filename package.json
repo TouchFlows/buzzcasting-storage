@@ -33,6 +33,7 @@
 		"release": "pnpm test && pnpm run build && changelogen --release && git push --follow-tags",
 		"lint": "eslint . --fix",
 		"check:credentials": "bash scripts/check-git-credentials.sh",
+		"install:gitleaks": "bash scripts/install-gitleaks.sh",
 		"test": "vitest --run",
 		"test:watch": "vitest",
 		"test:coverage": "vitest --coverage"

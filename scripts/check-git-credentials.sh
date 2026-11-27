@@ -49,6 +49,16 @@ if [ -z "$gitleaks_bin" ] && [ -x "$script_dir/../.tools/gitleaks" ]; then
 	gitleaks_bin="$script_dir/../.tools/gitleaks"
 fi
 
+# A fresh clone has no scanner. Install the pinned build rather than blocking the
+# first push: the script verifies the release checksum, and CI installs through
+# the same script, so every machine ends up with the same binary.
+if [ -z "$gitleaks_bin" ] && [ -f "$script_dir/install-gitleaks.sh" ]; then
+	echo "check-git-credentials: gitleaks not found; installing the pinned version" >&2
+	if bash "$script_dir/install-gitleaks.sh" >&2; then
+		gitleaks_bin="$script_dir/../.tools/gitleaks"
+	fi
+fi
+
 config="$script_dir/gitleaks.toml"
 
 # Fail closed. A secret scan that quietly disables itself when its tool is absent
