@@ -90,7 +90,17 @@ scan_repo() {
 		return 0
 	fi
 
-	( cd "$work" && "$gitleaks_bin" dir . --no-banner --redact --config "$config" \
+	# A repository can allowlist paths it does not own - vendored bundles, fixtures
+	# - by dropping a `[allowlist]` fragment next to its code. Path allowlists
+	# survive an upgrade of the vendored file; `.gitleaksignore` fingerprints pin a
+	# line number and silently stop matching when the file shifts.
+	scan_config=$(mktemp)
+	cat "$config" > "$scan_config"
+	if [ -f "$repo/.gitleaks-allowlist.toml" ]; then
+		cat "$repo/.gitleaks-allowlist.toml" >> "$scan_config"
+	fi
+
+	( cd "$work" && "$gitleaks_bin" dir . --no-banner --redact --config "$scan_config" \
 		--report-format json --report-path "$report" >/dev/null 2>&1 )
 	rc=$?
 
@@ -108,12 +118,12 @@ PY
 		fi
 	elif [ "$rc" -gt 1 ]; then
 		echo "check-git-credentials: gitleaks failed on ${repo} (exit $rc); doing it manually:" >&2
-		echo "  $gitleaks_bin dir ${repo} --config ${config}" >&2
-		rm -rf "$work" "$report"
+		echo "  $gitleaks_bin dir ${repo} --config ${scan_config}" >&2
+		rm -rf "$work" "$report" "$scan_config"
 		return 3
 	fi
 
-	rm -rf "$work" "$report"
+	rm -rf "$work" "$report" "$scan_config"
 	return 0
 }
 

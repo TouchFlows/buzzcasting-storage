@@ -2,6 +2,7 @@ import { execFileSync, spawnSync } from "node:child_process";
 import {
 	existsSync,
 	lstatSync,
+	mkdirSync,
 	mkdtempSync,
 	realpathSync,
 	rmSync,
@@ -91,6 +92,33 @@ describe.skipIf(process.platform === "win32")("credential guard", () => {
 		expect(output).toContain("aws-access-key-id");
 		expect(output).not.toContain(stripe);
 		expect(output).not.toContain(aws);
+	});
+
+	// A fingerprint allowlist pins a rule and a line, so upgrading the vendored
+	// file moves the line and the finding silently returns. A path allowlist has
+	// to keep working when the file shifts underneath it.
+	it("keeps a repository path allowlist across a line shift", () => {
+		const { root, repo } = workspace(false);
+		const stripe = ["sk_live_", "51H8xQ2eZv", "KYlo2C9mNpQ", "rStUvWx"].join("");
+		const allowlist = "[allowlist]\npaths = ['''^public/vendor/''']\n";
+		const vendor = join(repo, "public/vendor/bundle.js");
+		mkdirSync(join(repo, "public/vendor"), { recursive: true });
+		writeFileSync(vendor, `var key = "${stripe}";\n`);
+
+		const scan = () => {
+			execFileSync("git", ["-C", repo, "add", "-A"], { stdio: "ignore" });
+			return spawnSync("bash", [guard, root], { encoding: "utf8" });
+		};
+
+		// Without the allowlist the key is caught, so the exemption does real work.
+		expect(scan().status).toBe(1);
+
+		writeFileSync(join(repo, ".gitleaks-allowlist.toml"), allowlist);
+		expect(scan().status).toBe(0);
+
+		// Same file, finding 27 lines further down: a fingerprint would miss it.
+		writeFileSync(vendor, `${"\n".repeat(27)}var key = "${stripe}";\n`);
+		expect(scan().status).toBe(0);
 	});
 
 	// A token in .git/config never leaves the machine; one committed into a file
