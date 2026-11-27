@@ -209,6 +209,37 @@ describe.skipIf(process.platform === "win32")("credential guard", () => {
 		expect(result.stderr).toContain("matches no tracked file");
 	});
 
+	// The fallback is covered above; the tomllib path needs the same guarantees or
+	// the two readers drift and only one of them gets exercised. Skipped where
+	// tomllib is missing, since there the guard correctly falls back.
+	it.skipIf(
+		spawnSync("python3", ["-c", "import tomllib"]).status !== 0,
+	)("reads bracketed patterns and multi-line lists through tomllib", () => {
+		const { root, repo } = workspace(false);
+		mkdirSync(join(repo, "public/vendor"), { recursive: true });
+		writeFileSync(join(repo, "public/vendor/app.js"), "nothing secret here\n");
+		execFileSync("git", ["-C", repo, "add", "-A"], { stdio: "ignore" });
+		writeFileSync(
+			join(repo, ".gitleaks-allowlist.toml"),
+			[
+				"[allowlist]",
+				"paths = [",
+				"  '''^public/vendor/[^/]+\\.js$''',",
+				"  '''^assets/[a-z]+/''',",
+				"]",
+				"",
+			].join("\n"),
+		);
+
+		const env = { ...process.env };
+		delete env.CHECK_CREDENTIALS_NO_PYTHON;
+		const result = spawnSync("bash", [guard, root], { encoding: "utf8", env });
+
+		expect(result.status).toBe(0);
+		expect(result.stderr).not.toContain("^public/vendor/");
+		expect(result.stderr).toContain("^assets/[a-z]+/");
+	});
+
 	// A token in .git/config never leaves the machine; one committed into a file
 	// is published with the next push, and no review will see it in a diff.
 	it("exits 1 and redacts a token committed into a tracked file", () => {
