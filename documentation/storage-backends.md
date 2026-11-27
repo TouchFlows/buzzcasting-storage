@@ -1,6 +1,6 @@
 # Storage backends
 
-`IStorageOptions.storage` (a plain `string`, not literally typed to the `STORAGE` enum — nothing stops passing a garbage value, which silently leaves the backend client `null` and turns every `sm?.xxx()` call into a no-op) selects one of five backend clients, constructed identically — and independently — inside both `BuzzcastingStorageManager` and `BuzzcastingStorageReader`'s constructors (`src/manager/index.ts`, `src/reader/index.ts`):
+`IStorageOptions.storage` (a plain `string`, not literally typed to the `STORAGE` enum — nothing stops passing a garbage value, which silently leaves the backend client `null` and turns every `sm?.xxx()` call into a no-op) selects one of five backend clients. Both `BuzzcastingStorageManager` and `BuzzcastingStorageReader` build their own instance via `createStorageClient()` (`src/storage/factory.ts`), so the mapping below exists in exactly one place:
 
 | `STORAGE` value | Client | Persistence |
 | --- | --- | --- |
@@ -22,10 +22,19 @@ Independent of the swap above, `LocalStorageClient`'s constructor (`src/storage/
 
 ## No shared interface, only duck typing
 
-There's no common TypeScript interface or abstract base class for the backend contract — `DexieClient`/`KeyvalClient`/`LocalStorageClient`/`SessionStorageClient`/`WindowClient` are five structurally-similar but independently-typed classes, held in a plain union:
+There's no common TypeScript interface or abstract base class for the backend contract — `DexieClient`/`KeyvalClient`/`LocalStorageClient`/`SessionStorageClient`/`WindowClient` are five structurally-similar but independently-typed classes, held in a plain union exported from the factory:
 
 ```ts
-private sm: WindowClient | LocalStorageClient | SessionStorageClient | KeyvalClient | DexieClient | null;
+// src/storage/factory.ts
+export type StorageClient =
+	| DexieClient
+	| KeyvalClient
+	| LocalStorageClient
+	| SessionStorageClient
+	| WindowClient;
+
+// both BuzzcastingStorageManager and BuzzcastingStorageReader
+private sm: StorageClient | null;
 ```
 
 Only `DexieClient` has genuine hash support (`getHash`/`setHash`/`createHash`/`clearHash` backed by a real `hashtable`). **Every other backend stubs these to `"none"`/`404`** — meaning the change-detection/de-dup optimization in `processResponse` (see [architecture.md](./architecture.md)) simply never triggers on `keyval`, `local`, `session`, or `window`: every fetch is treated as new data. `cleanMessages`/`hideMessage` are similarly no-ops (just `console.log`/`console.debug`) on every non-Dexie backend.

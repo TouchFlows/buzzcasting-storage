@@ -23,7 +23,7 @@ Covered in depth in [architecture.md](./architecture.md) — cloud is double-wra
 
 - **`BuzzcastingStorageManager.actions()`'s broadcast-message switch mixes enum members and a raw string literal**: `case "stream": //EVENTS.STREAM` — `EVENTS.STREAM` does exist and equals `"stream"`, but the raw string is used instead of the enum member, so a future rename of that enum value wouldn't be caught by the type system here.
 - **`BuzzcastingStorageReader`'s type-mismatch warnings use `console.warn` directly**, bypassing the shared `log()` utility (from `buzzcasting-utils`) that every other file in this package uses — meaning these particular warnings aren't subject to whatever log-level gating `log()`/`options.loglevel` provides elsewhere.
-- **The storage-backend selection `switch` is duplicated verbatim** in both `BuzzcastingStorageManager`'s and `BuzzcastingStorageReader`'s constructors (see [storage-backends.md](./storage-backends.md)) — no shared factory function exists, so any future backend addition or bug fix (like the `local`/`session` swap) has to be applied in two places.
+- ✅ **The storage-backend selection `switch` used to be duplicated verbatim** in both `BuzzcastingStorageManager`'s and `BuzzcastingStorageReader`'s constructors (see [storage-backends.md](./storage-backends.md)), so any backend addition or fix (like the `local`/`session` swap) had to be applied twice. Both now call `createStorageClient()` from `src/storage/factory.ts`, which is the only place the `STORAGE` → client mapping exists.
 - **`Widget` imports `BuzzcastingStorageReader` from `".."`** — i.e. through this package's own `src/index.ts` barrel — rather than a direct relative import from `../reader`. Works today, but couples `Widget`'s module resolution to the barrel continuing to re-export `BuzzcastingStorageReader`.
 
 ### ✅ `Widget.destroy()` never unsubscribed from the manager's `subscribers` map — fixed
@@ -32,7 +32,16 @@ Used to only close its `BroadcastChannel`, with no way for `BuzzcastingStorageMa
 
 ## Test coverage
 
-`test/constants.test.ts` is still a tautology (hardcodes both the expected and actual value) and should either be fixed to import the real `STORAGE` enum or removed. `test/subscribers.test.ts` (added alongside the `Widget.destroy()`/unsubscribe fix above) is the first real coverage in the package — of `BuzzcastingStorageManager.addSubscriber`/`deleteSubscriber` and the `actions()` broadcast-message routing, driven through a real second `BroadcastChannel` instance rather than calling private methods directly. Everything else — `Widget`, `BuzzcastingStorageReader`, `ApiClient`, every storage backend — still has no test coverage; `subscribers.test.ts`'s pattern (a lightweight `storage: 'none'` options object to skip real backend construction) is a reasonable starting point for extending coverage incrementally as those areas get touched.
+`test/constants.test.ts` used to be a tautology (it hardcoded both the expected and actual value); it now imports the real `STORAGE` enum and pins the string values `createStorageClient` switches on. Current coverage:
+
+| Area | Test file |
+| --- | --- |
+| `STORAGE` enum wire values | `constants.test.ts` |
+| `createStorageClient` backend selection + unknown-backend fallback | `storage-factory.test.ts` |
+| `BuzzcastingStorageReader` type guards | `reader.test.ts` |
+| `addSubscriber`/`deleteSubscriber`, `actions()` broadcast routing, `processResponse` routing and its no-backend branches | `subscribers.test.ts`, `manager.test.ts` |
+
+Everything else — `Widget`, `ApiClient`, every storage backend's actual reads/writes — still has no test coverage. The blocker for backend tests is IndexedDB: `DexieClient`'s constructor calls `db.open()`, and plain Node has no `indexedDB`, so a Dexie test needs `fake-indexeddb` (or Vitest's browser mode). `storage: 'none'` (which makes `createStorageClient` return `null`) is the pattern the existing tests use to avoid constructing a real backend.
 
 ## README usage example is stale
 

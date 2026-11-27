@@ -1,43 +1,13 @@
 import type { IQuery, IResponse, IStorageOptions } from "buzzcasting-utils";
-import { API, CSS, STORAGE } from "buzzcasting-utils";
-import DexieClient from "../storage/dexie";
-import KeyvalClient from "../storage/keyval";
-import LocalStorageClient from "../storage/local-storage";
-import SessionStorageClient from "../storage/session-storage";
-
-import WindowClient from "../storage/window";
+import type { StorageClient } from "../storage/factory.js";
+import { API, CSS } from "buzzcasting-utils";
+import { createStorageClient } from "../storage/factory.js";
 
 export class BuzzcastingStorageReader {
-	private sm:
-		| WindowClient
-		| LocalStorageClient
-		| SessionStorageClient
-		| KeyvalClient
-		| DexieClient
-		| null;
+	private sm: StorageClient | null;
 
 	constructor(options: IStorageOptions) {
-		this.sm = null;
-
-		switch (options.storage) {
-			case STORAGE.DEXIE:
-				this.sm = new DexieClient(options);
-				break;
-			case STORAGE.LOCAL:
-				this.sm = new LocalStorageClient(options);
-				break;
-			case STORAGE.SESSION:
-				this.sm = new SessionStorageClient(options);
-				break;
-			case STORAGE.KEYVAL:
-				this.sm = new KeyvalClient(options);
-				break;
-			case STORAGE.WINDOW:
-				this.sm = new WindowClient(options);
-				break;
-			default:
-			// this.sm = null
-		}
+		this.sm = createStorageClient(options);
 	}
 
 	/**

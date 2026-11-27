@@ -68,12 +68,18 @@ describe("buzzcastingStorageManager subscribers", () => {
 		// not the manager's. A channel never receives its own posted messages.
 		const widgetSide = new BroadcastChannel(presentation);
 
-		widgetSide.postMessage({ event: EVENTS.SUBSCRIBE, data: query("w1") });
+		widgetSide.postMessage({
+			event: EVENTS.SUBSCRIBE,
+			data: query("w1"),
+		});
 		await new Promise((r) => setTimeout(r, 10));
 		// @ts-expect-error - subscribers is private, read directly for the test
 		expect(Object.keys(manager.subscribers)).toEqual(["w1"]);
 
-		widgetSide.postMessage({ event: EVENTS.UNSUBSCRIBE, data: query("w1") });
+		widgetSide.postMessage({
+			event: EVENTS.UNSUBSCRIBE,
+			data: query("w1"),
+		});
 		await new Promise((r) => setTimeout(r, 10));
 		// @ts-expect-error - subscribers is private, read directly for the test
 		expect(Object.keys(manager.subscribers)).toEqual([]);

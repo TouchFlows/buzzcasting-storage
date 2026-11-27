@@ -1,13 +1,15 @@
+import { STORAGE } from "buzzcasting-utils";
 import { describe, expect, it } from "vitest";
 
-describe("sTORAGE_DEXIE", () => {
-	it("the constant STORAGE_DEXIE should equal \"dexie\"", () => {
-		expect("dexie").toEqual("dexie");
-	});
-});
-
-describe("sTORAGE_KEYVAL", () => {
-	it("the constant STORAGE_KEYVAL should equal \"keyval\"", () => {
-		expect("keyval").toEqual("keyval");
+// `IStorageOptions.storage` is a plain string, so these wire values are the
+// only thing tying `options.storage` to a backend. Pin them: createStorageClient
+// compares against exactly these, and `STORAGE` lives in another package.
+describe("storage enum values", () => {
+	it("keeps the backend keys the storage factory switches on", () => {
+		expect(STORAGE.DEXIE).toBe("dexie");
+		expect(STORAGE.KEYVAL).toBe("keyval");
+		expect(STORAGE.LOCAL).toBe("local");
+		expect(STORAGE.SESSION).toBe("session");
+		expect(STORAGE.WINDOW).toBe("window");
 	});
 });

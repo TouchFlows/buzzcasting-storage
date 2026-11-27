@@ -1,6 +1,6 @@
-import { BuzzcastingStorageManager } from "./manager";
-import { BuzzcastingStorageReader } from "./reader";
-import Widget from "./widget";
+import { BuzzcastingStorageManager } from "./manager/index.js";
+import { BuzzcastingStorageReader } from "./reader/index.js";
+import Widget from "./widget/index.js";
 
 declare global {
 	interface Window {

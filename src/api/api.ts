@@ -109,7 +109,12 @@ export default class ApiClient {
 				return json;
 			})
 			.catch((code) => {
-				return { success: false, message: `${code}`, data: null, query };
+				return {
+					success: false,
+					message: `${code}`,
+					data: null,
+					query,
+				};
 			});
 	}
 
@@ -124,7 +129,7 @@ export default class ApiClient {
 				method: "post",
 			},
 		);
-		// @ts-ignore
+		// @ts-expect-error response.body is nullable, which readNDJSONStream's types reject
 		for await (const event of readNDJSONStream(response.body)) {
 			console.log("Received", event);
 		}
@@ -144,7 +149,13 @@ export default class ApiClient {
 			query.id,
 		]);
 		return await fetch(
-			[this.url, "api", version, "messages", query.id].join("/") + params,
+			[
+				this.url,
+				"api",
+				version,
+				"messages",
+				query.id,
+			].join("/") + params,
 			{ ...headers, method: "put" },
 		)
 			.then((response) => {
@@ -181,7 +192,13 @@ export default class ApiClient {
 			labels,
 		);
 		return await fetch(
-			[this.url, "api", version, query.type, query.widget].join("/"),
+			[
+				this.url,
+				"api",
+				version,
+				query.type,
+				query.widget,
+			].join("/"),
 			{ ...headers, body: urlencoded, method: "put" },
 		)
 			.then((response) => {
@@ -219,7 +236,13 @@ export default class ApiClient {
 			query.id,
 		]);
 		return await fetch(
-			[this.url, "api", version, "slides", query.id].join("/"),
+			[
+				this.url,
+				"api",
+				version,
+				"slides",
+				query.id,
+			].join("/"),
 			{ ...headers, method: "get" },
 		)
 			.then(async (response: Response) => {
@@ -274,7 +297,7 @@ export default class ApiClient {
 	 * ex: window.__bc.storage.createSlide({data: {json: {...}, html:'', title:'New Slide', presentation_id:'01...'}})
 	 *
 	 * @param query
-	 * @returns
+	 * @returns the created slide, or a `{success: false}` envelope on failure
 	 */
 	public async createSlide(query: IQuery): Promise<any> {
 		const { version }: IStorageOptions = this.options;
@@ -343,7 +366,13 @@ export default class ApiClient {
 			query.id,
 		]);
 		return await fetch(
-			[this.url, "api", version, "slides", query.id].join("/"),
+			[
+				this.url,
+				"api",
+				version,
+				"slides",
+				query.id,
+			].join("/"),
 			{ ...headers, body, method: "put" },
 		)
 			.then((response) => {
@@ -375,7 +404,13 @@ export default class ApiClient {
 			query.id,
 		]);
 		return await fetch(
-			[this.url, "api", version, API.PRESENTATIONS, query.id].join("/"),
+			[
+				this.url,
+				"api",
+				version,
+				API.PRESENTATIONS,
+				query.id,
+			].join("/"),
 			{ ...headers, method: "get" },
 		)
 			.then(async (response: Response) => {
@@ -418,9 +453,21 @@ export default class ApiClient {
 		delete query.update;
 		const body = JSON.stringify(query);
 
-		log(2, ["%capi%c %cput", CSS.API, CSS.NONE, CSS.PRESENTATION, query.name]);
+		log(2, [
+			"%capi%c %cput",
+			CSS.API,
+			CSS.NONE,
+			CSS.PRESENTATION,
+			query.name,
+		]);
 		return await fetch(
-			[this.url, "api", version, API.PRESENTATIONS, query.id].join("/"),
+			[
+				this.url,
+				"api",
+				version,
+				API.PRESENTATIONS,
+				query.id,
+			].join("/"),
 			{ ...headers, body, method: "put" },
 		)
 			.then((response) => {
@@ -455,7 +502,13 @@ export default class ApiClient {
 			preference.id,
 		]);
 		return await fetch(
-			[this.url, "api", version, API.PREFERENCES, preference.id].join("/"),
+			[
+				this.url,
+				"api",
+				version,
+				API.PREFERENCES,
+				preference.id,
+			].join("/"),
 			{ ...headers, method: "get" },
 		)
 			.then(async (response: Response) => {
@@ -468,9 +521,8 @@ export default class ApiClient {
 				return response.json();
 			})
 			.then((json: IResponse): IResponse => {
-				// @ts-ignore
 				preference.type = "preference";
-				// @ts-ignore
+				// @ts-expect-error IResponse.query is an IQuery, not an IPreference
 				json.query = preference;
 				return json;
 			})
@@ -510,7 +562,12 @@ export default class ApiClient {
 			preference.id,
 		]);
 		return await fetch(
-			`${[this.url, "api", version, API.PREFERENCES].join("/")}/`,
+			`${[
+				this.url,
+				"api",
+				version,
+				API.PREFERENCES,
+			].join("/")}/`,
 			{ ...headers, body, method: "post" },
 		)
 			.then((response) => {
@@ -531,9 +588,20 @@ export default class ApiClient {
 		const { version }: IStorageOptions = this.options;
 		const headers = this.headers();
 
-		log(3, ["%capi%c %cdashboards", CSS.API, CSS.NONE, CSS.WIDGET]);
+		log(3, [
+			"%capi%c %cdashboards",
+			CSS.API,
+			CSS.NONE,
+			CSS.WIDGET,
+		]);
 		return await fetch(
-			[this.url, "api", version, API.WIDGETS, query?.id || ""].join("/"),
+			[
+				this.url,
+				"api",
+				version,
+				API.WIDGETS,
+				query?.id || "",
+			].join("/"),
 			{
 				...headers,
 				method: "get",
@@ -657,7 +725,13 @@ export default class ApiClient {
 			imageName,
 		);
 		return await fetch(
-			`${[this.url, "api", version, API.IMAGES, imageName].join(
+			`${[
+				this.url,
+				"api",
+				version,
+				API.IMAGES,
+				imageName,
+			].join(
 				"/",
 			)}?folder=${folderName}`,
 			{ ...headers, method: "delete" },

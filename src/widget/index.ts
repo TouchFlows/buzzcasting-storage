@@ -8,7 +8,7 @@ import {
 	log,
 	typeCss,
 } from "buzzcasting-utils";
-import { BuzzcastingStorageReader } from "..";
+import { BuzzcastingStorageReader } from "../index.js";
 
 /**
  * Main class for managing widgets and data updates
@@ -37,7 +37,9 @@ export default class Widget {
 
 		this.callbacks = callbacks;
 
-		selector = typeof selector !== "undefined" ? selector : "buzzcasting-app";
+		selector = typeof selector !== "undefined"
+			? selector
+			: "buzzcasting-app";
 
 		// @ts-expect-error query.widget is obligatory but not always
 		const query: IQuery = { ...element.dataset };
@@ -87,7 +89,6 @@ export default class Widget {
 									CSS.NONE,
 									CSS.WIDGET,
 									CSS.NONE,
-									// @ts-ignore
 									typeCss(this.query),
 									this.query,
 								]);
@@ -97,7 +98,12 @@ export default class Widget {
 							}
 						}
 					} catch (error: any) {
-						log(4, [EVENTS.WIDGET_UPDATE, update, error.message, error]);
+						log(4, [
+							EVENTS.WIDGET_UPDATE,
+							update,
+							error.message,
+							error,
+						]);
 					}
 					break;
 				case EVENTS.APP_READY:

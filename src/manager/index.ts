@@ -4,22 +4,18 @@ import type {
 	IResponse,
 	IStorageOptions,
 } from "buzzcasting-utils";
+import type { StorageClient } from "../storage/factory.js";
 import {
 	API,
 	CSS,
 	EVENTS,
 	hashSum,
 	log,
-	STORAGE,
 	typeCss,
 } from "buzzcasting-utils";
 import { version } from "../../package.json";
-import ApiClient from "../api/api";
-import DexieClient from "../storage/dexie";
-import KeyvalClient from "../storage/keyval";
-import LocalStorageClient from "../storage/local-storage";
-import SessionStorageClient from "../storage/session-storage";
-import WindowClient from "../storage/window";
+import ApiClient from "../api/api.js";
+import { createStorageClient } from "../storage/factory.js";
 
 interface IprocessResponse {
 	code: number;
@@ -27,13 +23,7 @@ interface IprocessResponse {
 }
 
 export class BuzzcastingStorageManager {
-	private sm:
-		| WindowClient
-		| LocalStorageClient
-		| SessionStorageClient
-		| KeyvalClient
-		| DexieClient
-		| null;
+	private sm: StorageClient | null;
 
 	private api: ApiClient;
 	private bc: BroadcastChannel | null;
@@ -50,28 +40,9 @@ export class BuzzcastingStorageManager {
 			version,
 		]);
 		this.options = options;
-		this.sm = null;
 		this.bc = new BroadcastChannel(this.options.presentation);
 		this.api = new ApiClient(options);
-		switch (options.storage) {
-			case STORAGE.DEXIE:
-				this.sm = new DexieClient(options);
-				break;
-			case STORAGE.LOCAL:
-				this.sm = new LocalStorageClient(options);
-				break;
-			case STORAGE.SESSION:
-				this.sm = new SessionStorageClient(options);
-				break;
-			case STORAGE.KEYVAL:
-				this.sm = new KeyvalClient(options);
-				break;
-			case STORAGE.WINDOW:
-				this.sm = new WindowClient(options);
-				break;
-			default:
-			// this.sm = null
-		}
+		this.sm = createStorageClient(options);
 	}
 
 	public addSubscriber(query: IQuery) {
@@ -110,11 +81,14 @@ export class BuzzcastingStorageManager {
 			}
 		});
 
-		subscriberQueries.forEach(async (apiCall) => {
-			await apiCall.then(
-				async (apiResp: any) => await this.processResponse(apiResp, params),
-			);
-		});
+		// Await every fetch: this used to be `forEach(async ...)`, which dropped
+		// the returned promises, so update() resolved while the responses were
+		// still being written and broadcast.
+		await Promise.all(
+			subscriberQueries.map(
+				async (apiCall) => await this.processResponse(await apiCall, params),
+			),
+		);
 	};
 
 	public stream = () => {
@@ -132,7 +106,7 @@ export class BuzzcastingStorageManager {
 				async (apiResp: any) =>
 					await this.processResponse(apiResp, { refresh: false }),
 			)
-			.catch((e: unknown) => {
+			.catch(() => {
 				return { code: 204, hash: "" };
 			});
 	};
@@ -192,7 +166,7 @@ export class BuzzcastingStorageManager {
 									return code;
 									// }, 500); // MTM allow tuning thru options
 								})
-								.catch((e: unknown) => {
+								.catch(() => {
 									return 500;
 								});
 						} else {
@@ -248,7 +222,7 @@ export class BuzzcastingStorageManager {
 									this.broadcastUpdate(code, apiResp);
 									return code;
 								})
-								.catch((e: unknown) => {
+								.catch(() => {
 									return 500;
 								});
 						} else {
@@ -301,7 +275,7 @@ export class BuzzcastingStorageManager {
 									this.broadcastUpdate(code, apiResp);
 									return code;
 								})
-								.catch((e: unknown) => {
+								.catch(() => {
 									return 500;
 								});
 						} else {
@@ -375,7 +349,13 @@ export class BuzzcastingStorageManager {
 	public startBroadcastListener = () => {
 		const broadcast = this.options.presentation;
 
-		log(3, ["%cchannel%c %capi", CSS.BROADCAST, CSS.NONE, CSS.API, broadcast]);
+		log(3, [
+			"%cchannel%c %capi",
+			CSS.BROADCAST,
+			CSS.NONE,
+			CSS.API,
+			broadcast,
+		]);
 		if (this.bc) {
 			this.bc.onmessage = (messageEvent: MessageEvent) => {
 				this.actions(messageEvent);
@@ -439,7 +419,7 @@ export class BuzzcastingStorageManager {
 
 	private actions = async (messageEvent: MessageEvent) => {
 		switch (messageEvent.data.event) {
-			case EVENTS.SUBSCRIBE:
+			case EVENTS.SUBSCRIBE: {
 				const query = messageEvent.data.data;
 				/**
 				 * Don't subscribre is widget is not set
@@ -457,6 +437,7 @@ export class BuzzcastingStorageManager {
 					this.addSubscriber(query);
 				}
 				break;
+			}
 			case EVENTS.UNSUBSCRIBE:
 				if (messageEvent.data.data.widget !== undefined) {
 					this.deleteSubscriber(messageEvent.data.data);

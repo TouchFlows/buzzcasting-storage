@@ -55,7 +55,12 @@ export default class DexieClient {
 			.where({ id: query.widget })
 			.last()
 			.catch(() => {
-				log(2, [`%chash%c %capi%C %chash`, CSS.API, CSS.NONE, CSS.APP]);
+				log(2, [
+					`%chash%c %capi%C %chash`,
+					CSS.API,
+					CSS.NONE,
+					CSS.APP,
+				]);
 			});
 		log(3, [
 			`%cget%c %chash%c %chash`,
@@ -108,7 +113,7 @@ export default class DexieClient {
 			.table("hashtable")
 			.clear()
 			.then(() => 201)
-			.catch((error: Error) => {
+			.catch(() => {
 				log(2, [
 					"%cclear%c %cstorage%c %chash",
 					CSS.KO,
@@ -128,7 +133,7 @@ export default class DexieClient {
 			.where({ id: query.widget })
 			.delete()
 			.then(() => 201)
-			.catch((error: Error) => {
+			.catch(() => {
 				log(2, [
 					"%cdelete%c %cstorage%c %chash",
 					CSS.KO,
@@ -194,10 +199,21 @@ export default class DexieClient {
 			.where({ id: query.widget })
 			.last()
 			.catch(() => {
-				log(2, ["%capi%C %ccloud", CSS.API, CSS.NONE, CSS.CLOUD, query.widget]);
+				log(2, [
+					"%capi%C %ccloud",
+					CSS.API,
+					CSS.NONE,
+					CSS.CLOUD,
+					query.widget,
+				]);
 			});
 		if (typeof data === "undefined") {
-			return { data: null, message: "Cloud Data error", success: false, query };
+			return {
+				data: null,
+				message: "Cloud Data error",
+				success: false,
+				query,
+			};
 		}
 		const resp = {
 			data: data?.data ?? null,
@@ -297,7 +313,12 @@ export default class DexieClient {
 			.where({ id: query.id })
 			.last()
 			.catch(() => {
-				log(2, ["%cstorage", CSS.STORAGE, `loading ${table}`, query.id]);
+				log(2, [
+					"%cstorage",
+					CSS.STORAGE,
+					`loading ${table}`,
+					query.id,
+				]);
 			});
 		if (data === undefined) {
 			return {
@@ -323,7 +344,13 @@ export default class DexieClient {
 				};
 			})
 			.catch((error: Error) => {
-				log(4, ["%cstorage", CSS.STORAGE, table, query, error.message]);
+				log(4, [
+					"%cstorage",
+					CSS.STORAGE,
+					table,
+					query,
+					error.message,
+				]);
 				return {
 					data: null,
 					message: `${table} ${query.id} save error: ${error.message}`,
@@ -338,7 +365,12 @@ export default class DexieClient {
 			.where({ id: query.id })
 			.last()
 			.catch(() => {
-				log(2, ["%cstorage", CSS.STORAGE, EVENTS.DASHBOARD_LOAD, query.id]);
+				log(2, [
+					"%cstorage",
+					CSS.STORAGE,
+					EVENTS.DASHBOARD_LOAD,
+					query.id,
+				]);
 			});
 		if (data === undefined) {
 			return {
@@ -358,7 +390,9 @@ export default class DexieClient {
 		};
 
 		const nameFilter = (dashboard: { name: string }) => {
-			return query?.name ? dashboard.name.includes(query?.name) : false;
+			return query?.name
+				? dashboard.name.includes(query?.name)
+				: false;
 		};
 
 		// let data = []
@@ -367,13 +401,22 @@ export default class DexieClient {
 			.table(API.DASHBOARD)
 			.toArray()
 			.then((res) => {
-				return query?.id ? res.filter(idFilter) : res;
+				return query?.id
+					? res.filter(idFilter)
+					: res;
 			})
 			.then((res) => {
-				return query?.name ? res.filter(nameFilter) : res;
+				return query?.name
+					? res.filter(nameFilter)
+					: res;
 			})
 			.catch(() => {
-				log(2, ["%cstorage", CSS.STORAGE, EVENTS.DASHBOARD_LOAD, query]);
+				log(2, [
+					"%cstorage",
+					CSS.STORAGE,
+					EVENTS.DASHBOARD_LOAD,
+					query,
+				]);
 			});
 
 		data !== undefined
@@ -386,7 +429,9 @@ export default class DexieClient {
 		]);
 
 		return {
-			data: data !== undefined ? { dashboards: data, query } : null,
+			data: data !== undefined
+				? { dashboards: data, query }
+				: null,
 			message:
 				data !== undefined
 					? `Dashboards loaded from storage`
@@ -419,7 +464,13 @@ export default class DexieClient {
 				};
 			})
 			.catch((error: Error) => {
-				log(4, ["%cstorage", CSS.STORAGE, API.WIDGET, query, error.message]);
+				log(4, [
+					"%cstorage",
+					CSS.STORAGE,
+					API.WIDGET,
+					query,
+					error.message,
+				]);
 				return {
 					data: null,
 					message: `Dashboard ${q.data.id} save error: ${error.message}`,
@@ -441,7 +492,13 @@ export default class DexieClient {
 				};
 			})
 			.catch((error) => {
-				log(4, ["%cstorage", CSS.STORAGE, API.DASHBOARD, query, error.message]);
+				log(4, [
+					"%cstorage",
+					CSS.STORAGE,
+					API.DASHBOARD,
+					query,
+					error.message,
+				]);
 				return {
 					data: null,
 					message: `Dashboard ${query.id} delete error: ${error.message}`,
@@ -558,7 +615,9 @@ export default class DexieClient {
 
 		const now: number = Math.floor(Date.now() / 1000);
 		const period = query?.period ?? 0;
-		query.since = period === 0 ? now - 60 * 60 * 24 * 30 : now - period;
+		query.since = period === 0
+			? now - 60 * 60 * 24 * 30
+			: now - period;
 
 		// switch(order){
 		// 	case 'utc':
@@ -596,10 +655,10 @@ export default class DexieClient {
 				.filter(beforeFilter);
 
 			if (this.options.moderation === MODERATION.APPROVED) {
-				// @ts-expect-error
+				// @ts-expect-error and() is not part of Dexie's Collection typings
 				topicMessagesCollection.and((topic) => topic.approved === 1);
 			} else {
-				// @ts-expect-error
+				// @ts-expect-error and() is not part of Dexie's Collection typings
 				topicMessagesCollection.and((topic) => topic.visible === 1);
 			}
 			topicMessagesCollection.reverse();
@@ -623,11 +682,7 @@ export default class DexieClient {
 			});
 
 			return Dexie.Promise.all(getMessages).then(async (messages) => {
-				const filtered = messages.map((message: any) => {
-					if (message !== undefined) {
-						return message.data;
-					}
-				});
+				const filtered = messages.map((message: any) => message?.data);
 				const data = {
 					data: {
 						messages: filtered,
@@ -668,7 +723,9 @@ export default class DexieClient {
 			.table(API.TOPICS)
 			.where("message_id")
 			.equals(id)
-			.modify({ visible: visible ? 1 : 0 })
+			.modify({
+				visible: visible ? 1 : 0,
+			})
 			.catch((error) => {
 				console.error(
 					"%chide%c %cstorage%c %cmessage",
@@ -688,7 +745,9 @@ export default class DexieClient {
 			.table(API.TOPICS)
 			.where("message_id")
 			.equals(id)
-			.modify({ approved: approved ? 1 : 0 })
+			.modify({
+				approved: approved ? 1 : 0,
+			})
 			.catch((error) => {
 				console.error(
 					"%capprove%c %cstorage%c %cmessage",
@@ -729,7 +788,11 @@ export default class DexieClient {
 			data?.title ?? query.widget,
 		]);
 
-		await data.data.messages.forEach(async (message: IMessage) => {
+		// Both loops below were `forEach(async ...)`, whose promises nobody
+		// awaited: setMessages() returned before the writes landed and
+		// errorCount was always read as 0. Promise.all keeps the writes
+		// concurrent while still awaiting them.
+		await Promise.all(data.data.messages.map(async (message: IMessage) => {
 			if (message.id !== null) {
 				message.topics[0] = {
 					message_id: message.id,
@@ -742,7 +805,6 @@ export default class DexieClient {
 					reach:
 						message.topics[0]?.reach || message.dynamics?.potential_reach || 0,
 					sentiment: message.topics[0]?.sentiment || 0,
-					// @ts-ignore
 					approved: message.topics[0]?.approved ? 1 : 0,
 				};
 
@@ -775,7 +837,6 @@ export default class DexieClient {
 					title,
 					widget_id: query.widget,
 					visible: message.topics[0]?.visible || 1,
-					// @ts-ignore
 					approved: message.topics[0]?.approved || 0,
 					message_id: message.id,
 					dashboard_id: query.dashboard,
@@ -812,10 +873,10 @@ export default class DexieClient {
 				 * Update topics table with messages that have become invisible
 				 * (including in other topics)
 				 */
-				await data.data.topics.forEach(async (topic: ITopic) => {
+				await Promise.all(data.data.topics.map(async (topic: ITopic) => {
 					const id = topic.message_id;
 					const show = topic.visible ? 1 : 0;
-					// @ts-ignore
+					// @ts-expect-error ITopic has no `approve`, only `approved`
 					const aprv = topic.approve ? 1 : 0;
 					const title = topic.title;
 					await this.db
@@ -836,9 +897,9 @@ export default class DexieClient {
 								error.message,
 							]);
 						});
-				});
+				}));
 			}
-		});
+		}));
 		return errorCount === 0 ? 201 : 400;
 	};
 
@@ -883,7 +944,9 @@ export default class DexieClient {
 
 		const resp = {
 			data: data?.data ?? null,
-			message: data !== undefined ? "Get Series success" : "Get Series error",
+			message: data !== undefined
+				? "Get Series success"
+				: "Get Series error",
 			success: data !== undefined,
 			query,
 		};
@@ -1002,7 +1065,9 @@ export default class DexieClient {
 		};
 
 		const nameFilter = (slide: { name: string }) => {
-			return query?.name ? slide.name.includes(query?.name) : false;
+			return query?.name
+				? slide.name.includes(query?.name)
+				: false;
 		};
 
 		// let data = []
@@ -1011,16 +1076,27 @@ export default class DexieClient {
 			.table(API.WIDGET)
 			.toArray()
 			.then((res) => {
-				return query?.dashboard ? res.filter(dashboardFilter) : res;
+				return query?.dashboard
+					? res.filter(dashboardFilter)
+					: res;
 			})
 			.then((res) => {
-				return query?.type ? res.filter(typeFilter) : res;
+				return query?.type
+					? res.filter(typeFilter)
+					: res;
 			})
 			.then((res) => {
-				return query?.name ? res.filter(nameFilter) : res;
+				return query?.name
+					? res.filter(nameFilter)
+					: res;
 			})
 			.catch(() => {
-				log(2, ["%cstorage", CSS.STORAGE, EVENTS.WIDGET_LOAD, query]);
+				log(2, [
+					"%cstorage",
+					CSS.STORAGE,
+					EVENTS.WIDGET_LOAD,
+					query,
+				]);
 			});
 
 		data !== undefined
@@ -1033,7 +1109,7 @@ export default class DexieClient {
 		]);
 
 		return {
-			// @ts-ignore
+			// @ts-expect-error IWidgets.data is typed, this is a raw Dexie array
 			data: data !== undefined ? { data, query } : null,
 			message:
 				data !== undefined
@@ -1193,14 +1269,21 @@ export default class DexieClient {
 			.where({ id: query.id })
 			.last()
 			.catch(() => {
-				log(2, ["%cstorage", CSS.STORAGE, EVENTS.SLIDE_LOAD, query.id]);
+				log(2, [
+					"%cstorage",
+					CSS.STORAGE,
+					EVENTS.SLIDE_LOAD,
+					query.id,
+				]);
 			});
 
 		return {
 			data,
 			query,
 			message:
-				data !== undefined ? `Slide loaded from storage` : `Slide load error`,
+				data !== undefined
+					? `Slide loaded from storage`
+					: `Slide load error`,
 			success: data !== undefined,
 		};
 	};
@@ -1212,10 +1295,14 @@ export default class DexieClient {
 	 */
 	getSlides = async (query: IQuery): Promise<IResponse> => {
 		const idFilter = (slide: { id: string }) => {
-			return query?.id ? slide.id === query.id : false;
+			return query?.id
+				? slide.id === query.id
+				: false;
 		};
 		const nameFilter = (slide: { name: string }) => {
-			return query?.name ? slide.name.includes(query?.name) : false;
+			return query?.name
+				? slide.name.includes(query?.name)
+				: false;
 		};
 
 		const presentationFilter = (slide: { presentation_id: string }) => {
@@ -1229,13 +1316,19 @@ export default class DexieClient {
 		const data: any = await slidesCollection
 			.toArray()
 			.then((res: any) => {
-				return query?.presentation_id ? res.filter(presentationFilter) : res;
+				return query?.presentation_id
+					? res.filter(presentationFilter)
+					: res;
 			})
 			.then((res: any) => {
-				return query?.id ? res.filter(idFilter) : res;
+				return query?.id
+					? res.filter(idFilter)
+					: res;
 			})
 			.then((res: any) => {
-				return query?.name ? res.filter(nameFilter) : res;
+				return query?.name
+					? res.filter(nameFilter)
+					: res;
 			});
 		data
 		&& data.sort((a: any, b: any) => {
@@ -1243,14 +1336,21 @@ export default class DexieClient {
 		});
 
 		data !== undefined
-		&& log(3, ["%cstorage%c %cslides", CSS.STORAGE, CSS.NONE, CSS.SLIDE, query]);
+		&& log(3, [
+			"%cstorage%c %cslides",
+			CSS.STORAGE,
+			CSS.NONE,
+			CSS.SLIDE,
+			query,
+		]);
 
 		return {
-			// @ts-ignore
 			data,
 			query, // : data !== undefined ? { data, query } : null,
 			message:
-				data !== undefined ? `Slides loaded from storage` : `Slides load error`,
+				data !== undefined
+					? `Slides loaded from storage`
+					: `Slides load error`,
 			success: data !== undefined,
 		};
 	};
@@ -1390,7 +1490,9 @@ export default class DexieClient {
 	 */
 	getPresentations = async (query?: IQuery): Promise<IResponse> => {
 		const nameFilter = (presentation: { name: string }) => {
-			return query?.name ? presentation.name.includes(query?.name) : false;
+			return query?.name
+				? presentation.name.includes(query?.name)
+				: false;
 		};
 
 		const presentationsCollection: any = this.db.table(API.PRESENTATION);
@@ -1398,7 +1500,9 @@ export default class DexieClient {
 		const data: any = await presentationsCollection
 			.toArray()
 			.then((res: any) => {
-				return query?.name ? res.filter(nameFilter) : res;
+				return query?.name
+					? res.filter(nameFilter)
+					: res;
 			});
 
 		data !== undefined
@@ -1539,8 +1643,9 @@ export default class DexieClient {
 			});
 
 		return {
-			// @ts-ignore
-			data: data !== undefined ? { preferences: data } : null,
+			data: data !== undefined
+				? { preferences: data }
+				: null,
 			message:
 				data !== undefined
 					? `Preference loaded from storage`
@@ -1557,13 +1662,17 @@ export default class DexieClient {
 	 */
 	getPreferences = async (query?: IQuery): Promise<IResponse> => {
 		const idFilter = (preference: { id: string }) => {
-			return query?.id ? (query.id = preference.id) : false;
+			return query?.id
+				? (query.id = preference.id)
+				: false;
 		};
 
 		const preferencesCollection: any = this.db.table(API.PREFERENCE);
 
 		const data: any = await preferencesCollection.toArray().then((res: any) => {
-			return query?.id ? res.filter(idFilter) : res;
+			return query?.id
+				? res.filter(idFilter)
+				: res;
 		});
 
 		data !== undefined
@@ -1576,7 +1685,7 @@ export default class DexieClient {
 		]);
 
 		return {
-			// @ts-ignore
+			// @ts-expect-error IPreferences.data is typed, this is a raw Dexie array
 			data: data !== undefined ? { preferences: data, query } : null,
 			message:
 				data !== undefined
@@ -1659,13 +1768,17 @@ export default class DexieClient {
 	 */
 	getImages = async (query?: IQuery): Promise<IResponse> => {
 		const idFilter = (id: string) => {
-			return query?.id ? id.includes(query.id) : false;
+			return query?.id
+				? id.includes(query.id)
+				: false;
 		};
 
 		const imagesCollection: any = this.db.table(API.IMAGES);
 
 		const data: any = await imagesCollection.toArray().then((res: any) => {
-			return query?.id ? res.filter(idFilter) : res;
+			return query?.id
+				? res.filter(idFilter)
+				: res;
 		});
 
 		data !== undefined
@@ -1681,7 +1794,9 @@ export default class DexieClient {
 			// @ts-expect-error query.widget is obligatory but not always
 			data: data !== undefined ? { images: data, query } : null,
 			message:
-				data !== undefined ? `Images loaded from storage` : `Images load error`,
+				data !== undefined
+					? `Images loaded from storage`
+					: `Images load error`,
 			success: data !== undefined,
 		};
 	};
