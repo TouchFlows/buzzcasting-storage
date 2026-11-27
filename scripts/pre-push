@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# Pre-push guard: refuse to push from a repository whose .git/config embeds
+# credentials in a remote URL.
+#
+# Installed as a symlink in each workspace repo's .git/hooks/pre-push (see
+# install-hooks.sh). Git passes the refs being pushed on stdin; this hook never
+# reads them, it only inspects the config, so it cannot interfere with a push
+# that has nothing to hide.
+
+set -uo pipefail
+
+# user:password@host, token-as-user@host, x-access-token style, and raw PATs.
+pattern='https?://[^/@[:space:]]+@|gh[pousr]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|x-access-token:'
+
+git_dir=$(git rev-parse --absolute-git-dir 2>/dev/null) || exit 0
+config="$git_dir/config"
+[ -f "$config" ] || exit 0
+
+if hits=$(grep -nE "$pattern" "$config"); then
+	echo "pre-push: refusing to push - $config embeds credentials:" >&2
+	printf '%s\n' "$hits" |
+		sed -E 's#(https?://)[^/@[:space:]]+@#\1<redacted>@#g; s#(gh[pousr]_|github_pat_)[A-Za-z0-9_]+#\1<redacted>#g' >&2
+	echo "pre-push: rewrite the remote as https://github.com/<owner>/<repo>.git (auth comes from 'gh auth git-credential'), then revoke the token." >&2
+	exit 1
+fi
+
+exit 0
