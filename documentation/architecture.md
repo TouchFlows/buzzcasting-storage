@@ -35,7 +35,7 @@ BuzzcastingStorageReader    — internal to Widget, a thin per-type dispatcher
                     └───────────────┬───────────────┘
                                      │
                           a storage backend (sm)
-                    (Dexie / Keyval / LocalStorage / SessionStorage / Window)
+                    (Dexie / Keyval / Window)
 ```
 
 Both `BuzzcastingStorageManager` and each `Widget`'s own `BuzzcastingStorageReader` independently construct a storage-backend client from the same `IStorageOptions.storage` setting — they don't share a client *instance*, only the same underlying persisted store (e.g. the same Dexie database name, `options.app`). A `Widget` never talks to `BuzzcastingStorageManager` directly, and never touches `ApiClient` — it only ever reads from the storage backend via its own `Reader`, and it triggers a fresh fetch by asking, over the broadcast channel, for the manager to go do one.
@@ -79,5 +79,5 @@ This asymmetry is self-consistent within each type's own write/read pair, but in
 
 ## Related reading
 
-- [storage-backends.md](./storage-backends.md) — the five interchangeable storage backends, the Dexie schema, and what's cached vs. always-fresh.
+- [storage-backends.md](./storage-backends.md) — the three interchangeable storage backends, the Dexie schema, and what's cached vs. always-fresh.
 - [known-issues.md](./known-issues.md) — real, confirmed bugs and inconsistencies in the current codebase, not hypothetical concerns.

@@ -21,6 +21,17 @@ describe("createStorageClient", () => {
 		);
 	});
 
+	it("returns null for the removed local backend", () => {
+		// `local` and `session` no longer have a client at all. The enum value
+		// still exists in buzzcasting-utils, so this is the guard that they
+		// cannot quietly resurrect a backend.
+		expect(createStorageClient(options(STORAGE.LOCAL))).toBeNull();
+	});
+
+	it("returns null for the removed session backend", () => {
+		expect(createStorageClient(options(STORAGE.SESSION))).toBeNull();
+	});
+
 	it("returns null for an unrecognised backend instead of throwing", () => {
 		// 'none' is what the tests and buzzcasting-app's builder use to run
 		// without a real backend; every sm?.x() call is then a no-op.

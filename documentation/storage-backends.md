@@ -1,43 +1,36 @@
 # Storage backends
 
-`IStorageOptions.storage` (a plain `string`, not literally typed to the `STORAGE` enum — nothing stops passing a garbage value, which silently leaves the backend client `null` and turns every `sm?.xxx()` call into a no-op) selects one of five backend clients. Both `BuzzcastingStorageManager` and `BuzzcastingStorageReader` build their own instance via `createStorageClient()` (`src/storage/factory.ts`), so the mapping below exists in exactly one place:
+`IStorageOptions.storage` (a plain `string`, not literally typed to the `STORAGE` enum — nothing stops passing a garbage value, which silently leaves the backend client `null` and turns every `sm?.xxx()` call into a no-op) selects one of three backend clients. Both `BuzzcastingStorageManager` and `BuzzcastingStorageReader` build their own instance via `createStorageClient()` (`src/storage/factory.ts`), so the mapping below exists in exactly one place:
 
 | `STORAGE` value | Client | Persistence |
 | --- | --- | --- |
 | `dexie` | `DexieClient` (`src/storage/dexie.ts`) | IndexedDB, per-tenant database named after `options.app` |
 | `keyval` | `KeyvalClient` (`src/storage/keyval.ts`) | IndexedDB via `idb-keyval`, single flat key-value store |
-| `local` | *(see gotcha below)* | — |
-| `session` | *(see gotcha below)* | — |
 | `window` | `WindowClient` (`src/storage/window.ts`) | in-memory only, no persistence across reloads |
 
-In production, `buzzcasting-app` hardcodes `storage: 'dexie'` (`src/global/options.ts`) — **Dexie is the only backend actually exercised today.** The other four exist in the codebase but aren't wired into any real deployment, which is relevant context for the bugs below: they're latent, not yet observed in production, precisely because nothing currently exercises them.
+In production, `buzzcasting-app` hardcodes `storage: 'dexie'` (`src/global/options.ts`) — **Dexie is the only backend actually exercised today.** The remaining two (`keyval`, `window`) exist in the codebase but aren't wired into any real deployment either, which is relevant context for the bugs below: they're latent, not yet observed in production, precisely because nothing currently exercises them.
 
-## ✅ `local`/`session` were swapped — fixed
+## ✅ `local` and `session` were removed
 
-`manager/index.ts` and `reader/index.ts` both had `STORAGE.LOCAL` constructing a `SessionStorageClient` and `STORAGE.SESSION` constructing a `LocalStorageClient` — confirmed via `git log -p` to have been wrong since the earliest commits in this repo's history, not a recent regression. Fixed in both places; `local` now correctly gets `LocalStorageClient` and `session` gets `SessionStorageClient`. Since production only ever configured `storage: 'dexie'` (`buzzcasting-app/src/global/options.ts`), this was latent rather than actively observed — nothing exercised the swap in practice, but anyone who did configure `storage: 'local'` expecting `window.localStorage` semantics was actually getting `window.sessionStorage` semantics, and vice versa.
+Both clients are gone (`src/storage/local-storage.ts`, `src/storage/session-storage.ts`), along with their `STORAGE.LOCAL`/`STORAGE.SESSION` branches in `createStorageClient()`.
 
-## ✅ `LocalStorageClient`'s monkeypatch called itself — fixed
+They were never real backends: `getHash` returned `"none"` and every hash method returned `404`, so the change-detection/de-dup pipeline `processResponse` exists for never triggered on them; `cleanMessages`/`hideMessage`/`approveMessage` were `console.log` stubs; there was no messages/topics model at all; and both constructors monkey-patched the global `Storage.prototype` with `setObject`/`getObject`, mutating a prototype the host app shares. Two historical bugs are worth recording now that the code is gone: the two `STORAGE` branches had been swapped (`local` constructed the session client and vice versa) since the repo's earliest commits, and `LocalStorageClient`'s monkeypatch called `this.setObject`/`this.getObject` recursively instead of `this.setItem`/`this.getItem`, which would have recursed until the stack blew the first time it ran.
 
-Independent of the swap above, `LocalStorageClient`'s constructor (`src/storage/local-storage.ts`) monkey-patched `Storage.prototype` with a bug: `setObject`/`getObject` called `this.setObject`/`this.getObject` recursively instead of the real `this.setItem`/`this.getItem` — an infinite-recursion stack overflow waiting to happen the first time either was actually invoked. Fixed to call `setItem`/`getItem`, matching what `SessionStorageClient`'s equivalent patch already did correctly.
+**Migration:** `storage: 'local'` and `storage: 'session'` now select nothing. `createStorageClient()` returns `null` for them like any other unknown value, so every `sm?.x()` call is a no-op — no cache, no hash short-circuit, and `getCloud`/`getSeries`/`getMessages` come back `undefined`. The enum members still exist in `buzzcasting-utils`; dropping them there is a separate change. Configure `dexie` instead: it is the only backend with real hash, moderation and expiry support, and the only one production ever used.
 
 ## No shared interface, only duck typing
 
-There's no common TypeScript interface or abstract base class for the backend contract — `DexieClient`/`KeyvalClient`/`LocalStorageClient`/`SessionStorageClient`/`WindowClient` are five structurally-similar but independently-typed classes, held in a plain union exported from the factory:
+There's no common TypeScript interface or abstract base class for the backend contract — `DexieClient`/`KeyvalClient`/`WindowClient` are three structurally-similar but independently-typed classes, held in a plain union exported from the factory:
 
 ```ts
 // src/storage/factory.ts
-export type StorageClient =
-	| DexieClient
-	| KeyvalClient
-	| LocalStorageClient
-	| SessionStorageClient
-	| WindowClient;
+export type StorageClient = DexieClient | KeyvalClient | WindowClient;
 
 // both BuzzcastingStorageManager and BuzzcastingStorageReader
 private sm: StorageClient | null;
 ```
 
-Only `DexieClient` has genuine hash support (`getHash`/`setHash`/`createHash`/`clearHash` backed by a real `hashtable`). **Every other backend stubs these to `"none"`/`404`** — meaning the change-detection/de-dup optimization in `processResponse` (see [architecture.md](./architecture.md)) simply never triggers on `keyval`, `local`, `session`, or `window`: every fetch is treated as new data. `cleanMessages`/`hideMessage` are similarly no-ops (just `console.log`/`console.debug`) on every non-Dexie backend.
+Only `DexieClient` has genuine hash support (`getHash`/`setHash`/`createHash`/`clearHash` backed by a real `hashtable`). **Every other backend stubs these to `"none"`/`404`** — meaning the change-detection/de-dup optimization in `processResponse` (see [architecture.md](./architecture.md)) simply never triggers on `keyval` or `window`: every fetch is treated as new data. `cleanMessages`/`hideMessage` are similarly no-ops (just `console.log`/`console.debug`) on every non-Dexie backend.
 
 `WindowClient` reads from global objects (`window.__bc.WidgetData`/`DashboardData`/`SlideData`/`PresentationData`/`Preferences`) declared in this package's own `declare global` block — but only `WidgetData` is actually initialized in its constructor (as `new Set()`); the others are read from but never initialized here, so `getDashboard`/`getSlide`/`getPresentation`/`getPreference` on this backend will throw/return `undefined` unless something else populates those globals first.
 

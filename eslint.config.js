@@ -46,10 +46,10 @@ export default antfu(
 		},
 	},
 	{
-		// The four non-Dexie backends deliberately stub out the full client
-		// surface; their parameters exist only so the signatures stay
-		// comparable with DexieClient, which is why they are never read.
-		files: ["src/storage/{keyval,local-storage,session-storage,window}.ts"],
+		// The non-Dexie backends deliberately stub out the full client surface;
+		// their parameters exist only so the signatures stay comparable with
+		// DexieClient, which is why they are never read.
+		files: ["src/storage/{keyval,window}.ts"],
 		rules: {
 			"unused-imports/no-unused-vars": ["error", { args: "none" }],
 		},

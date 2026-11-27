@@ -1,6 +1,6 @@
 # Known issues and inconsistencies
 
-Concrete, confirmed issues in the current codebase — not hypothetical concerns. Flagged here so they're not silently rediscovered (or copy-pasted forward into new code) one at a time. The two `local`/`session` storage bugs are documented in [storage-backends.md](./storage-backends.md) since they're backend-specific; everything else is here.
+Concrete, confirmed issues in the current codebase — not hypothetical concerns. Flagged here so they're not silently rediscovered (or copy-pasted forward into new code) one at a time. The `local`/`session` backends have since been deleted outright, history included — see [storage-backends.md](./storage-backends.md); everything else is here.
 
 ## API surface naming/shape mismatches
 
@@ -23,7 +23,7 @@ Covered in depth in [architecture.md](./architecture.md) — cloud is double-wra
 
 - **`BuzzcastingStorageManager.actions()`'s broadcast-message switch mixes enum members and a raw string literal**: `case "stream": //EVENTS.STREAM` — `EVENTS.STREAM` does exist and equals `"stream"`, but the raw string is used instead of the enum member, so a future rename of that enum value wouldn't be caught by the type system here.
 - **`BuzzcastingStorageReader`'s type-mismatch warnings use `console.warn` directly**, bypassing the shared `log()` utility (from `buzzcasting-utils`) that every other file in this package uses — meaning these particular warnings aren't subject to whatever log-level gating `log()`/`options.loglevel` provides elsewhere.
-- ✅ **The storage-backend selection `switch` used to be duplicated verbatim** in both `BuzzcastingStorageManager`'s and `BuzzcastingStorageReader`'s constructors (see [storage-backends.md](./storage-backends.md)), so any backend addition or fix (like the `local`/`session` swap) had to be applied twice. Both now call `createStorageClient()` from `src/storage/factory.ts`, which is the only place the `STORAGE` → client mapping exists.
+- ✅ **The storage-backend selection `switch` used to be duplicated verbatim** in both `BuzzcastingStorageManager`'s and `BuzzcastingStorageReader`'s constructors (see [storage-backends.md](./storage-backends.md)), so any backend addition or fix had to be applied twice. Both now call `createStorageClient()` from `src/storage/factory.ts`, which is the only place the `STORAGE` → client mapping exists.
 - **`Widget` imports `BuzzcastingStorageReader` from `".."`** — i.e. through this package's own `src/index.ts` barrel — rather than a direct relative import from `../reader`. Works today, but couples `Widget`'s module resolution to the barrel continuing to re-export `BuzzcastingStorageReader`.
 
 ### ✅ `Widget.destroy()` never unsubscribed from the manager's `subscribers` map — fixed
