@@ -142,6 +142,11 @@ repos=0
 # Repositories whose content was actually scanned; `repos` counts every config
 # that was checked, which is all of them even when one repository is targeted.
 scanned=0
+# Repositories already processed, keyed by git directory: the walk and the added
+# config below can name the same repository through two different paths (a
+# symlinked tmpdir, a worktree and its clone), and counting it twice skewed the
+# summary. Keyed by git directory because that is what makes two paths one repo.
+seen_repos=""
 
 # An allowlist pattern that matches no tracked file is a stale exemption: the file
 # it covered was moved or deleted, and the pattern now protects nothing while
@@ -424,6 +429,14 @@ PY
 		repo="$only_repo"
 	fi
 
+	repo_key=$(git -C "$repo" rev-parse --path-format=absolute --git-common-dir 2>/dev/null)
+	[ -n "$repo_key" ] || repo_key="$repo"
+	if printf '%s\n' "$seen_repos" | grep -Fxq -- "$repo_key"; then
+		continue
+	fi
+	seen_repos="${seen_repos}${repo_key}
+"
+
 
 	if hits=$(grep -nE "$pattern" "$config_path"); then
 		found=$((found + 1))
@@ -459,12 +472,7 @@ PY
 	fi
 done < <(
 	{
-		# Resolved, so the walked path and the requested repository's own config
-		# (rev-parse --path-format=absolute) are the same string. On macOS a
-		# tmpdir is reached through /var, whose real path is /private/var: without
-		# this, one repository was counted twice.
-		walk_root=$(cd "$root" 2>/dev/null && pwd -P) || walk_root="$root"
-		find "$walk_root" -maxdepth 4 -type f -path '*/.git/config' 2>/dev/null
+		find "$root" -maxdepth 4 -type f -path '*/.git/config' 2>/dev/null
 		# A linked worktree's `.git` is a file, so the walk above cannot match it and
 		# a root holding only worktrees matches nothing at all - which used to be an
 		# error exit rather than a scan of the content being pushed. Add the requested
