@@ -94,6 +94,69 @@ describe.skipIf(process.platform === "win32")("credential guard", () => {
 		expect(output).not.toContain(aws);
 	});
 
+	// CI has none of the pusher's machine: no .git/config, no hook, and
+	// --no-verify skips what the hook would have done. It scans the commits the
+	// push publishes instead, so the range has to be exactly that range.
+	it("scans only the commits in --range", () => {
+		const { root, repo } = workspace(false);
+		const commit = (message: string) => {
+			execFileSync("git", ["-C", repo, "add", "-A"], { stdio: "ignore" });
+			execFileSync(
+				"git",
+				["-C", repo, "-c", "user.email=t@e.com", "-c", "user.name=t", "commit", "-q", "-m", message],
+				{ stdio: "ignore" },
+			);
+			return execFileSync("git", ["-C", repo, "rev-parse", "HEAD"], {
+				encoding: "utf8",
+			}).trim();
+		};
+
+		writeFileSync(join(repo, "app.js"), "var name = 'app';\n");
+		const clean = commit("clean");
+		writeFileSync(
+			join(repo, "app.js"),
+			// Interpolated rather than written out: a literal 36-character token in
+			// this repository is itself a finding, and the guard correctly says so.
+			`var token = '${token}';`,
+		);
+		const leaking = commit("leak");
+		writeFileSync(join(repo, "app.js"), "var token = process.env.TOKEN;");
+		commit("remove");
+
+		// The range that contains the token reports it, named by commit.
+		const inRange = spawnSync("bash", [guard, "--range", `${clean}..${leaking}`, root, repo], {
+			encoding: "utf8",
+		});
+		expect(inRange.status).toBe(1);
+		expect(inRange.stderr).toContain(`credential in commits ${clean}..${leaking} of`);
+		expect(inRange.stderr).toContain("app.js:1");
+
+		// A later push that does not republish the token stays green, or every push
+		// after the fix would fail for a credential no longer in the range.
+		const after = spawnSync("bash", [guard, "--range", `${leaking}..HEAD`, root, repo], {
+			encoding: "utf8",
+		});
+		expect(after.status).toBe(0);
+	});
+
+	it("rejects a bad --range combination and an unknown range", () => {
+		// No token in .git/config: the --all/repository check runs first otherwise,
+		// and this test is about the --range guardrail.
+		const { root, repo } = workspace(false);
+
+		const combined = spawnSync("bash", [guard, "--range", "a..b", "--all", root, repo], {
+			encoding: "utf8",
+		});
+		expect(combined.status).toBe(2);
+		expect(combined.stderr).toContain("--range cannot be combined with --all");
+
+		const missing = spawnSync("bash", [guard, "--range", "nosuchref..HEAD", root, repo], {
+			encoding: "utf8",
+		});
+		expect(missing.status).toBe(2);
+		expect(missing.stderr).toContain("is not a commit range");
+	});
+
 	// A pattern can legitimately cover a file that only ever existed in history.
 	// Judging that against the index calls it stale and teaches people to ignore
 	// the warning, which defeats it.

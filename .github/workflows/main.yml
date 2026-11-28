@@ -30,3 +30,52 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm run build
       - run: pnpm run test
+
+  # The pre-push hook only guards machines that installed it, and `git push
+  # --no-verify` skips it anywhere. This scans the commits the push actually
+  # publishes, so an unscanned token cannot reach the remote just because it was
+  # committed on a machine without the hook.
+  secret-scan:
+    name: secret scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # A range needs the commits on both sides of it, and a force-push can
+          # drop the previous tip, so keep the full history.
+          fetch-depth: 0
+      - name: Install gitleaks
+        run: |
+          bash scripts/install-gitleaks.sh --dir "$RUNNER_TEMP/tools"
+          "$RUNNER_TEMP/tools/gitleaks" version
+      - name: Scan the commits this push publishes
+        env:
+          GITLEAKS_BIN: ${{ runner.temp }}/tools/gitleaks
+          EVENT_NAME: ${{ github.event_name }}
+          PUSH_BEFORE: ${{ github.event.before }}
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+        run: |
+          set -euo pipefail
+          if [ "$EVENT_NAME" = "pull_request" ]; then
+            echo "scanning the pull request: ${PR_BASE:-<new>}..HEAD"
+            if [ -n "${PR_BASE:-}" ] && git rev-parse --verify --quiet "$PR_BASE^{commit}" >/dev/null; then
+              range="$PR_BASE..HEAD"
+            else
+              range="HEAD"
+            fi
+          else
+            before="${PUSH_BEFORE:-}"
+            case "$before" in
+              0000000000000000000000000000000000000000) before="" ;;
+            esac
+            # No previous tip on a new branch, and a force-push may have dropped
+            # it; scanning everything reachable from HEAD is the safe fallback.
+            if [ -n "$before" ] && git rev-parse --verify --quiet "$before^{commit}" >/dev/null; then
+              range="$before..HEAD"
+            else
+              echo "no previous tip reachable; scanning all history reachable from HEAD"
+              range="HEAD"
+            fi
+          fi
+          echo "scanning $range"
+          bash scripts/check-git-credentials.sh --range "$range" "$PWD" "$PWD"

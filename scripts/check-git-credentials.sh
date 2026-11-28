@@ -22,7 +22,10 @@
 #   --all:        sweep every repository under root instead of just one. Each is
 #                 scanned with its own allowlist, since that is the only way one
 #                 command covers a whole workspace without losing exemptions.
-# Exit: 0 clean, 1 credentials found, 2 bad root, 3 scanner unavailable.
+#   --range A..B: scan only the commits in that revision range, the way CI checks
+#                 what a push publishes. Implies history mode; cannot be combined
+#                 with --all.
+# Exit: 0 clean, 1 credentials found, 2 bad root or bad flag, 3 scanner unavailable.
 
 set -uo pipefail
 
@@ -30,19 +33,37 @@ script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 history=0
 all=0
-while [ "${1:-}" = "--history" ] || [ "${1:-}" = "--all" ]; do
-	case "$1" in
+range=""
+while [ $# -gt 0 ]; do
+	case "${1:-}" in
 	--history) history=1 ;;
 	--all) all=1 ;;
+	--range)
+		range="${2:-}"
+		if [ -z "$range" ]; then
+			echo "check-git-credentials: --range needs a revision range, e.g. abc123..def456" >&2
+			exit 2
+		fi
+		# A range is a slice of history, so it is scanned the same way.
+		history=1
+		shift
+		;;
+	*) break ;;
 	esac
 	shift
-
 done
 
 root_given=0
 [ "$#" -ge 1 ] && root_given=1
 root="${1:-$(cd "$script_dir/../.." && pwd)}"
 only_repo="${2:-}"
+
+# Checked before the --all/repository conflict, since a caller passing --all and a
+# range needs to hear about the range: --all has no meaning for a commit range.
+if [ "$all" -eq 1 ] && [ -n "$range" ]; then
+	echo "check-git-credentials: --range cannot be combined with --all" >&2
+	exit 2
+fi
 
 if [ "$all" -eq 1 ] && [ -n "$only_repo" ]; then
 	echo "check-git-credentials: --all cannot be combined with a single repository" >&2
@@ -335,7 +356,7 @@ PY
 # later deleted is still checked - and its allowlist still applies, which is the
 # point: otherwise a known-noisy commit returns on every audit.
 scan_history() {
-	local repo="$1" scan_config report rc
+	local repo="$1" log_opts="${2:-}" scan_config report rc
 	scan_config=$(mktemp)
 	report=$(mktemp)
 	cat "$config" > "$scan_config"
@@ -343,13 +364,25 @@ scan_history() {
 		cat "$repo/.gitleaks-allowlist.toml" >> "$scan_config"
 	fi
 
-	( cd "$repo" && "$gitleaks_bin" git . --no-banner --redact --config "$scan_config" \
-		--report-format json --report-path "$report" >/dev/null 2>&1 )
+	# --log-opts narrows gitleaks' own `git log` walk to the range CI is checking.
+	# It still inspects each commit's diff, so a token added and removed inside the
+	# range is reported; restricting to the tip tree would miss it.
+	if [ -n "$log_opts" ]; then
+		( cd "$repo" && "$gitleaks_bin" git . --no-banner --redact --config "$scan_config" \
+			--log-opts "$log_opts" --report-format json --report-path "$report" >/dev/null 2>&1 )
+	else
+		( cd "$repo" && "$gitleaks_bin" git . --no-banner --redact --config "$scan_config" \
+			--report-format json --report-path "$report" >/dev/null 2>&1 )
+	fi
 	rc=$?
 
 	if [ "$rc" -eq 1 ]; then
 		found=$((found + 1))
-		echo "credential in history of ${repo}:" >&2
+		if [ -n "$log_opts" ]; then
+			echo "credential in commits ${log_opts} of ${repo}:" >&2
+		else
+			echo "credential in history of ${repo}:" >&2
+		fi
 		if command -v python3 >/dev/null 2>&1; then
 			python3 - "$report" <<'PY' >&2
 import json, sys
@@ -395,8 +428,12 @@ while IFS= read -r config_path; do
 			warn_stale_allowlist "$repo" index
 		fi
 		scanned=$((scanned + 1))
+		if [ -n "$range" ] && ! git -C "$repo" rev-list -n1 "$range" >/dev/null 2>&1; then
+			echo "check-git-credentials: '$range' is not a commit range in $repo" >&2
+			exit 2
+		fi
 		if [ "$history" -eq 1 ]; then
-			scan_history "$repo" || exit 3
+			scan_history "$repo" "$range" || exit 3
 		else
 			scan_repo "$repo" || exit 3
 		fi
