@@ -1,0 +1,53 @@
+name: Guard pin
+
+# Callers pin the shared scan to a commit, so a guard fix reaches them only when
+# the pin is bumped. This workflow compares the caller's pin with the guard's
+# current main and fails when it is behind, which surfaces as a red scheduled run
+# and a notification to the repository's watchers.
+#
+# Called by the other active repositories with
+#   uses: TouchFlows/buzzcasting-storage/.github/workflows/guard-pin.yml@<sha>
+#   with: guard-ref: <sha>
+# Scheduled workflows only run from the default branch, so the caller file has to
+# be there; the same file works on any branch via manual dispatch.
+on:
+  workflow_call:
+    inputs:
+      guard-ref:
+        description: >-
+          Commit of TouchFlows/buzzcasting-storage to fetch this check from. Bump
+          it together with the pin it is checking.
+        type: string
+        required: false
+        default: main
+
+jobs:
+  guard-pin:
+    name: guard pin
+    runs-on: ubuntu-latest
+    env:
+      GUARD_REPO: TouchFlows/buzzcasting-storage
+      GUARD_REF: ${{ inputs.guard-ref }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch the pin check
+        run: |
+          set -euo pipefail
+          curl -fsSL --retry 3 \
+            "https://raw.githubusercontent.com/${GUARD_REPO}/${GUARD_REF}/scripts/check-guard-pin.sh" \
+            -o "$RUNNER_TEMP/check-guard-pin.sh"
+      - name: Compare this repository's pin with the guard's main
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          # Authenticated because the caller's token can read this public
+          # repository, and an unauthenticated schedule would share a 60-request
+          # hourly limit across every runner in the organisation.
+          main=$(curl -fsSL --retry 3 \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${GUARD_REPO}/commits/main" |
+            python3 -c 'import json, sys; print(json.load(sys.stdin)["sha"])')
+          echo "guard main: ${main:0:7}"
+          bash "$RUNNER_TEMP/check-guard-pin.sh" .github/workflows/secret-scan.yml "$main"
