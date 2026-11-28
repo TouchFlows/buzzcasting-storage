@@ -419,7 +419,6 @@ PY
 }
 
 	while IFS= read -r config_path; do
-	repos=$((repos + 1))
 	repo=$(dirname "$(dirname "$config_path")")
 
 	# A linked worktree has a `.git` file, not a directory, so a workspace scan
@@ -436,6 +435,7 @@ PY
 	fi
 	seen_repos="${seen_repos}${repo_key}
 "
+	repos=$((repos + 1))
 
 
 	if hits=$(grep -nE "$pattern" "$config_path"); then
