@@ -459,7 +459,12 @@ PY
 	fi
 done < <(
 	{
-		find "$root" -maxdepth 4 -type f -path '*/.git/config' 2>/dev/null
+		# Resolved, so the walked path and the requested repository's own config
+		# (rev-parse --path-format=absolute) are the same string. On macOS a
+		# tmpdir is reached through /var, whose real path is /private/var: without
+		# this, one repository was counted twice.
+		walk_root=$(cd "$root" 2>/dev/null && pwd -P) || walk_root="$root"
+		find "$walk_root" -maxdepth 4 -type f -path '*/.git/config' 2>/dev/null
 		# A linked worktree's `.git` is a file, so the walk above cannot match it and
 		# a root holding only worktrees matches nothing at all - which used to be an
 		# error exit rather than a scan of the content being pushed. Add the requested
