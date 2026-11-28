@@ -504,6 +504,35 @@ describe.skipIf(process.platform === "win32")("credential guard", () => {
 		expect(result.stderr).not.toContain(token);
 	});
 
+	// The same blind spot, but with no other repository under the root: the walk
+	// matches nothing, so the run used to exit 2 ("no .git/config found") without
+	// scanning anything - and the hook now blocks on that, which is right but
+	// unhelpful when the repository was there all along.
+	it("scans a worktree whose root holds no other repository", () => {
+		const { repo } = workspace(false);
+		writeFileSync(join(repo, "app.js"), "var name = 'app';\n");
+		execFileSync("git", ["-C", repo, "add", "-A"], { stdio: "ignore" });
+		execFileSync(
+			"git",
+			["-C", repo, "-c", "user.email=t@e.com", "-c", "user.name=t", "commit", "-q", "-m", "base"],
+			{ stdio: "ignore" },
+		);
+
+		const lone = mkdtempSync(join(tmpdir(), "lone-root-"));
+		const worktree = join(lone, "wt");
+		execFileSync("git", ["-C", repo, "worktree", "add", "-q", "-b", "lone", worktree], {
+			stdio: "ignore",
+		});
+		writeFileSync(join(worktree, "leak.js"), `var token = '${token}';\n`);
+		execFileSync("git", ["-C", worktree, "add", "-A"], { stdio: "ignore" });
+
+		const result = spawnSync("bash", [guard, lone, worktree], { encoding: "utf8" });
+
+		expect(result.status).toBe(1);
+		expect(result.stderr).toContain("credential in tracked files");
+		expect(result.stderr).not.toContain("no .git/config found");
+	});
+
 	// "I cannot scan" used to mean "nothing to see": any unexpected exit code let
 	// the push through. It has to block, or the hook is advisory exactly where it
 	// matters most.

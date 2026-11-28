@@ -457,7 +457,20 @@ PY
 			scan_repo "$repo" || exit 3
 		fi
 	fi
-done < <(find "$root" -maxdepth 4 -type f -path '*/.git/config' 2>/dev/null | sort)
+done < <(
+	{
+		find "$root" -maxdepth 4 -type f -path '*/.git/config' 2>/dev/null
+		# A linked worktree's `.git` is a file, so the walk above cannot match it and
+		# a root holding only worktrees matches nothing at all - which used to be an
+		# error exit rather than a scan of the content being pushed. Add the requested
+		# repository's own config; the loop maps it back to the worktree through
+		# same_repo(). Identical paths collapse in the sort.
+		if [ -n "$only_repo" ]; then
+			git -C "$only_repo" rev-parse --path-format=absolute --git-common-dir 2>/dev/null |
+				sed 's|$|/config|'
+		fi
+	} | sort -u
+)
 
 if [ "$repos" -eq 0 ]; then
 	echo "check-git-credentials: no .git/config found under $root" >&2
