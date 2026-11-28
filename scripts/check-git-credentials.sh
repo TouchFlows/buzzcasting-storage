@@ -90,6 +90,17 @@ fi
 # file cannot scan its own repository.
 pattern='https?://[^/@[:space:]]+@|gh[pousr]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|x[-]access[-]token:'
 
+# Two paths can name the same repository: a linked worktree and its main clone
+# share a git directory but not a working tree. Comparing toplevels calls them
+# different and skips the scan; comparing git directories does not.
+same_repo() {
+	[ -n "$1" ] && [ -n "$2" ] || return 1
+	local left right
+	left=$(git -C "$1" rev-parse --path-format=absolute --git-common-dir 2>/dev/null) || return 1
+	right=$(git -C "$2" rev-parse --path-format=absolute --git-common-dir 2>/dev/null) || return 1
+	[ "$left" = "$right" ]
+}
+
 # One redaction rule for every textual report, so none can drift into echoing.
 redact() {
 	sed -E 's#(https?://)[^/@[:space:]]+@#\1<redacted>@#g; s#(gh[pousr]_|github_pat_)[A-Za-z0-9_]+#\1<redacted>#g'
@@ -402,9 +413,17 @@ PY
 	return 0
 }
 
-while IFS= read -r config_path; do
+	while IFS= read -r config_path; do
 	repos=$((repos + 1))
 	repo=$(dirname "$(dirname "$config_path")")
+
+	# A linked worktree has a `.git` file, not a directory, so a workspace scan
+	# cannot find it; the config found here belongs to its main clone. The push
+	# publishes the worktree's index, so scan the worktree, not the clone.
+	if [ -n "$only_repo" ] && same_repo "$repo" "$only_repo"; then
+		repo="$only_repo"
+	fi
+
 
 	if hits=$(grep -nE "$pattern" "$config_path"); then
 		found=$((found + 1))
@@ -421,7 +440,7 @@ while IFS= read -r config_path; do
 		printf '%s\n' "$hits" | redact >&2
 	fi
 
-	if [ -z "$only_repo" ] || [ "$(cd "$repo" 2>/dev/null && pwd -P)" = "$(cd "$only_repo" 2>/dev/null && pwd -P)" ]; then
+	if [ -z "$only_repo" ] || same_repo "$repo" "$only_repo"; then
 		if [ "$history" -eq 1 ]; then
 			warn_stale_allowlist "$repo" history
 		else
@@ -443,6 +462,13 @@ done < <(find "$root" -maxdepth 4 -type f -path '*/.git/config' 2>/dev/null | so
 if [ "$repos" -eq 0 ]; then
 	echo "check-git-credentials: no .git/config found under $root" >&2
 	exit 2
+fi
+
+# A requested repository that nothing matched would otherwise be reported as part
+# of a clean run: exit 0 having scanned none of the content being published.
+if [ -n "$only_repo" ] && [ "$scanned" -eq 0 ]; then
+	echo "check-git-credentials: ${only_repo} was not scanned; refusing to report clean" >&2
+	exit 3
 fi
 
 if [ "$found" -gt 0 ]; then

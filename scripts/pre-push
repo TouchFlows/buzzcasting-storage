@@ -51,8 +51,8 @@ case "$rc" in
 	echo "  install gitleaks (https://github.com/gitleaks/gitleaks/releases) or set GITLEAKS_BIN." >&2
 	exit 1
 	;;
-*)
-	echo "pre-push: credential check could not run (exit $rc) - push allowed without it" >&2
-	exit 0
-	;;
+	*)
+		echo "pre-push: push blocked. The credential check could not run (exit $rc), and an unscanned push is the failure this hook exists to prevent." >&2
+		exit 1
+		;;
 esac

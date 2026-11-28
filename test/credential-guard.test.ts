@@ -476,6 +476,53 @@ describe.skipIf(process.platform === "win32")("credential guard", () => {
 		expect(result.stdout).toContain("clean");
 	});
 
+	// A linked worktree has a `.git` file, so a workspace walk cannot see it and
+	// the repository being pushed is silently skipped: a clean report for content
+	// nobody looked at. The push publishes the worktree's index, so that is what
+	// has to be scanned.
+	it("scans a checkout the workspace walk cannot see", () => {
+		const { root, repo } = workspace(false);
+		writeFileSync(join(repo, "app.js"), "var name = 'app';\n");
+		execFileSync("git", ["-C", repo, "add", "-A"], { stdio: "ignore" });
+		execFileSync(
+			"git",
+			["-C", repo, "-c", "user.email=t@e.com", "-c", "user.name=t", "commit", "-q", "-m", "base"],
+			{ stdio: "ignore" },
+		);
+
+		const worktree = join(root, "wt");
+		execFileSync("git", ["-C", repo, "worktree", "add", "-q", "-b", "wt", worktree], {
+			stdio: "ignore",
+		});
+		writeFileSync(join(worktree, "leak.js"), `var token = '${token}';\n`);
+		execFileSync("git", ["-C", worktree, "add", "-A"], { stdio: "ignore" });
+
+		const result = spawnSync("bash", [guard, root, worktree], { encoding: "utf8" });
+
+		expect(result.status).toBe(1);
+		expect(result.stderr).toContain("credential in tracked files");
+		expect(result.stderr).not.toContain(token);
+	});
+
+	// "I cannot scan" used to mean "nothing to see": any unexpected exit code let
+	// the push through. It has to block, or the hook is advisory exactly where it
+	// matters most.
+	it("blocks when the checker cannot run", () => {
+		const { repo } = workspace(false);
+		const dir = mkdtempSync(join(tmpdir(), "pre-push-stub-"));
+		writeFileSync(join(dir, "check-git-credentials.sh"), "#!/usr/bin/env bash\nexit 2\n");
+		execFileSync("cp", [hook, join(dir, "pre-push")], { stdio: "ignore" });
+		symlinkSync(join(dir, "pre-push"), join(repo, ".git", "hooks", "pre-push"));
+
+		const result = spawnSync("git", ["-C", repo, "hook", "run", "pre-push"], {
+			encoding: "utf8",
+		});
+
+		expect(result.status).toBe(1);
+		expect(result.stderr).toContain("push blocked");
+		expect(result.stderr).toContain("could not run");
+	});
+
 	it("blocks the push from the pre-push hook", () => {
 		const { repo } = workspace(true);
 		symlinkSync(hook, join(repo, ".git", "hooks", "pre-push"));
